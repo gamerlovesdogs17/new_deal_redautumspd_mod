@@ -1,0 +1,130 @@
+title: Democratic Leadership Conference
+subtitle: Define the governing doctrine of the incoming administration.
+view-if: dem_conference_due = 1
+tags: event
+new-page: true
+on-arrival: dem_conference_seen = 1; dem_conference_due = 0; last_dem_conference_year = year;
+
+= Democratic Leadership Conference
+
+The Democratic coalition convenes to decide both leadership emphasis and economic doctrine for the next phase of the crisis. Your choice will shape reform pace, coalition stability, and room for cooperation with outside parties.
+
+- @huey_labor_wildcard
+- @dem_pragmatic_line
+- @dem_populist_line
+- @dem_structural_line
+
+@huey_labor_wildcard
+title: Wildcard: move Huey Long into Labor Democratic leadership.
+view-if: labor_dem_leader != "Huey Long" and huey_long_wildcard_used = 0
+on-arrival: labor_dem_leader = "Huey Long"; huey_long_wildcard_used = 1; labor_strength += 3; labor_dissent -= 3; reformist_dissent += 2; center_dissent += 1;
+go-to: dem_conference_after_huey
+
+You bring Huey Long into the inner Democratic alignment as labor-populist leadership. This boosts labor mobilization, but party regulars and conservatives become more wary.
+
+@dem_conference_after_huey
+title: Continue conference agenda
+
+With Huey Long now positioned inside the labor wing, the conference proceeds to decide economic direction.
+
+- @dem_pragmatic_line
+- @dem_populist_line
+- @dem_structural_line
+
+@dem_pragmatic_line
+title: Pragmatic New Deal Reform (FDR Line)
+on-arrival: dem_party_chair = "Roosevelt"; dem_leader = "Franklin D. Roosevelt"; dem_wing = "new_deal_liberals"; dem_economic_plan = "pragmatic_new_deal"; center_dissent -= 4; reformist_dissent -= 5; left_dissent += 2; labor_dissent += 1; z_relation += 3; ddp_relation += 4; dvp_relation += 4; kpd_relation += 1; economic_growth += 0.3 if economic_growth < 3.5; dem_spa_cooperation = 0;
+
+The conference aligns behind Roosevelt's experimental reform line: relief, public works, regulation, and stabilization. This keeps the broad coalition mostly intact, but the left complains that the pace is too cautious.
+
+@dem_populist_line
+title: Populist Redistribution (Share Our Wealth)
+on-arrival: dem_party_chair = "Long"; dem_wing = "redistribution_populists"; dem_economic_plan = "share_our_wealth"; resources += 1; workers_spd += 4; unemployed_spd += 6; labor_strength += 4; labor_dissent -= 6; left_dissent -= 2; reformist_dissent += 8; center_dissent += 6; neorevisionist_dissent += 6; dvp_relation -= 8; ddp_relation -= 6; z_relation -= 4; capital_strike_progress += 1; dem_spa_cooperation = 0; dem_leader = "Huey Long" if labor_dem_leader == "Huey Long";
+
+The party embraces a redistributionist strategy centered on taxing concentrated wealth and direct social guarantees. Popular enthusiasm rises quickly, but elite and conservative resistance hardens.
+
+@dem_structural_line
+title: Structural Transformation (Social Democratic Alignment)
+on-arrival: dem_party_chair = "Thomas Coalition"; dem_wing = "structural_left"; dem_economic_plan = "structural_transformation"; left_strength += 6; labor_strength += 5; left_dissent -= 8; labor_dissent -= 8; reformist_dissent += 12; center_dissent += 10; neorevisionist_dissent += 12; kpd_relation += 12; communist_coalition += 2; workers_spd += 5; unemployed_spd += 4; z_relation -= 10; ddp_relation -= 10; dvp_relation -= 12; coup_progress += 1; dem_spa_cooperation = 1 if kpd_relation >= 45; dem_leader = "Norman Thomas Alignment";
+
+The coalition commits to deep structural change and long-term planning, opening a path toward tactical cooperation with the socialist left. The right and business establishment react with immediate alarm.
+
+
+@gop_leadership_conference
+title: Republican Leadership Conference
+subtitle: The GOP determines its chair and strategy for the next two years.
+view-if: gop_conference_due = 1
+tags: event
+new-page: true
+on-arrival: {!
+Q.gop_conference_seen = 1;
+Q.gop_conference_due = 0;
+Q.last_gop_conference_year = Q.year;
+
+var oldGuardScore = 40;
+var moderateScore = 40;
+var reactionaryScore = 35;
+
+if (Q.dem_economic_plan == "pragmatic_new_deal") {
+    moderateScore += 15;
+    oldGuardScore += 5;
+}
+if (Q.dem_economic_plan == "share_our_wealth") {
+    oldGuardScore += 10;
+    reactionaryScore += 8;
+}
+if (Q.dem_economic_plan == "structural_transformation") {
+    reactionaryScore += 16;
+    oldGuardScore += 8;
+    moderateScore -= 10;
+}
+
+if (Q.unemployed >= 18) {
+    reactionaryScore += 6;
+}
+if (Q.pro_republic < 45) {
+    reactionaryScore += 8;
+}
+if (Q.ddp_relation >= 50 && Q.dvp_relation >= 50) {
+    moderateScore += 8;
+}
+if (Q.coup_progress >= 5) {
+    reactionaryScore += 5;
+}
+
+if (moderateScore >= oldGuardScore && moderateScore >= reactionaryScore) {
+    Q.gop_wing = "moderate_reform";
+    Q.gop_party_chair = "Landon";
+    Q.dvp_relation += 6;
+    Q.ddp_relation += 4;
+    Q.dnvp_relation = Math.min(Q.dnvp_relation, 20);
+    Q.nsdap_relation = Math.min(Q.nsdap_relation, 15);
+} else if (reactionaryScore >= oldGuardScore) {
+    Q.gop_wing = "national_conservative";
+    Q.gop_party_chair = "Fish";
+    Q.dvp_relation -= 6;
+    Q.ddp_relation -= 6;
+    Q.dnvp_relation = Math.max(Q.dnvp_relation, 22);
+    Q.nsdap_relation = Math.max(Q.nsdap_relation, 18);
+    Q.sh_strength += 50;
+    Q.sa_strength += 35;
+} else {
+    Q.gop_wing = "old_guard";
+    Q.gop_party_chair = "Hoover";
+    Q.dvp_relation -= 2;
+    Q.ddp_relation -= 3;
+    Q.dnvp_relation = Math.max(Q.dnvp_relation, 18);
+    Q.nsdap_relation = Math.max(Q.nsdap_relation, 10);
+}
+Q.gop_leader = Q.gop_party_chair;
+
+// hard cooperation limits: NUSJ and SLA never become coalition partners.
+Q.nusj_no_coop = 1;
+Q.sla_no_coop = 1;
+!}
+
+Republican delegates conclude their conference for the cycle.
+
+[? if gop_wing = "old_guard" : The Old Guard consolidates control under Hoover-aligned leadership, emphasizing fiscal restraint and opposition to expansive federal planning. ?]
+[? if gop_wing = "moderate_reform" : Moderate reform Republicans prevail, selecting a leadership line open to limited cooperation while resisting broad federal overreach. ?]
+[? if gop_wing = "national_conservative" : National conservatives gain control, adopting a confrontational anti-radical strategy that sharpens polarization and street-level tension. ?]

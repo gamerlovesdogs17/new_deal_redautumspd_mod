@@ -125,6 +125,62 @@ if (Q.month_actions >= 1) {
     Q.economic_records.push({'date': new Date(Q.year, Q.month - 1),
                              'inflation': Q.inflation,
                              'unemployment': Q.unemployed});
+    // recurring party conferences: Democrats in January, GOP in February, every two years.
+    if (Q.year >= 1933 && Q.month == 1) {
+        if (!Q.dem_conference_seen || (Q.year - Q.last_dem_conference_year) >= 2) {
+            Q.dem_conference_due = 1;
+        }
+    }
+    if (Q.year >= 1933 && Q.month == 2) {
+        if (!Q.gop_conference_seen || (Q.year - Q.last_gop_conference_year) >= 2) {
+            Q.gop_conference_due = 1;
+        }
+    }
+    // legislative support model: House coalitions for Speaker/governing capacity,
+    // Senate coalitions for bill passage and sustained policy throughput.
+    Q.governing_house_support = Q.spd_h || 0;
+    Q.governing_senate_support = Q.spd_s || 0;
+    if (Q.in_weimar_coalition) {
+        Q.governing_house_support = Q.weimar_house || Q.weimar_coalition || Q.governing_house_support;
+        Q.governing_senate_support = Q.weimar_senate || Q.weimar_coalition || Q.governing_senate_support;
+    } else if (Q.in_grand_coalition) {
+        Q.governing_house_support = Q.grand_house || Q.grand_coalition || Q.governing_house_support;
+        Q.governing_senate_support = Q.grand_senate || Q.grand_coalition || Q.governing_senate_support;
+    } else if (Q.in_left_front) {
+        Q.governing_house_support = Q.left_house || Q.left_coalition || Q.governing_house_support;
+        Q.governing_senate_support = Q.left_senate || Q.left_coalition || Q.governing_senate_support;
+    } else if (Q.in_popular_front) {
+        Q.governing_house_support = Q.popular_house || Q.popular_front_coalition || Q.governing_house_support;
+        Q.governing_senate_support = Q.popular_senate || Q.popular_front_coalition || Q.governing_senate_support;
+    } else if (Q.in_spd_majority) {
+        Q.governing_house_support = Q.spd_h || Q.spd_r;
+        Q.governing_senate_support = Q.spd_s || Q.spd_r;
+    } else if (Q.spd_toleration) {
+        Q.governing_house_support = (Q.weimar_house || Q.neo_weimar_coalition || Q.weimar_coalition || Q.governing_house_support);
+        Q.governing_senate_support = (Q.weimar_senate || Q.neo_weimar_coalition || Q.weimar_coalition || Q.governing_senate_support);
+    }
+    Q.speaker_elected = (Q.governing_house_support >= 50) ? 1 : 0;
+    Q.bill_coalition_viable = (Q.governing_senate_support >= 50) ? 1 : 0;
+    Q.legislative_gridlock = (Q.speaker_elected && Q.bill_coalition_viable) ? 0 : 1;
+    if ((Q.spd_in_government || Q.spd_toleration) && !Q.speaker_elected) {
+        Q.resources -= 1;
+        Q.pro_republic -= 1;
+        Q.center_dissent += 1;
+        Q.reformist_dissent += 1;
+    }
+    if ((Q.spd_in_government || Q.spd_toleration) && Q.speaker_elected && !Q.bill_coalition_viable) {
+        Q.resources -= 1;
+        Q.economic_growth -= 0.1;
+        Q.unemployed += 0.1;
+        Q.left_dissent += 1;
+        Q.labor_dissent += 1;
+    }
+    if ((Q.spd_in_government || Q.spd_toleration) && Q.speaker_elected && Q.bill_coalition_viable) {
+        if (Q.resources < 8) {
+            Q.resources += 1;
+        }
+        Q.pro_republic += 0.3;
+    }
     // change economic stats...
     // we're basically implicity drawing a Philips curve
     // budget deficits lead to some inflation

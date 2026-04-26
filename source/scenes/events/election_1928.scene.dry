@@ -1,4 +1,4 @@
-title: Reichstag Elections
+title: Federal Elections
 new-page: true
 tags: event
 priority: -1
@@ -11,9 +11,9 @@ face-image: img/Rothe_Wahlen_1903.jpg
 
 # the low priority means that this event is only seen after all other events are resolved for the month.
 
-= Elections, [+ month : month +] [+ year +]
+= Federal Elections, [+ month : month +] [+ year +]
 
-The Reichstag elections are to be held now.
+National legislative elections are to be held now.
 
 - @election_algorithm: May we do our best...
 - @cancel_elections
@@ -115,6 +115,45 @@ Q.neo_weimar_coalition = Q.spd_r + Q.ddp_r + Q.z_r + Q.dvp_r + Q.other_r;
 Q.hitler_right_coalition = Q.z_r + Q.dnvp_r + Q.nsdap_r;
 // Progressive coalition isn't going to be implemented as a distinct coalition but it's the coalition that lets you pass improved women's rights/gay rights
 Q.progressive_coalition = Q.spd_r + Q.kpd_r + Q.ddp_r + Q.sapd_r;
+
+// Bicameral model:
+// *_r remains the broad national vote baseline.
+// We derive separate House and Senate blocs to represent divergent chamber outcomes.
+var houseBias = {'spd': 1.04, 'kpd': 1.02, 'z': 0.98, 'ddp': 0.99, 'dvp': 0.97, 'dnvp': 0.96, 'nsdap': 1.03, 'other': 0.96, 'sapd': 1.01};
+var senateBias = {'spd': 0.96, 'kpd': 0.88, 'z': 1.08, 'ddp': 1.02, 'dvp': 1.04, 'dnvp': 1.06, 'nsdap': 1.01, 'other': 1.02, 'sapd': 0.9};
+var chamberParties = ['spd', 'kpd', 'z', 'ddp', 'dvp', 'dnvp', 'nsdap', 'other'];
+if (Q.sapd_formed) {
+    chamberParties.push('sapd');
+}
+var houseSum = 0;
+var senateSum = 0;
+for (var p of chamberParties) {
+    Q[p + '_h'] = Math.max(0, (Q[p + '_r'] || 0) * (houseBias[p] || 1));
+    Q[p + '_s'] = Math.max(0, (Q[p + '_r'] || 0) * (senateBias[p] || 1));
+    houseSum += Q[p + '_h'];
+    senateSum += Q[p + '_s'];
+}
+for (var p2 of chamberParties) {
+    Q[p2 + '_h'] = Math.round(1000 * Q[p2 + '_h'] / houseSum) / 10;
+    Q[p2 + '_s'] = Math.round(1000 * Q[p2 + '_s'] / senateSum) / 10;
+}
+Q.weimar_house = Q.spd_h + Q.ddp_h + Q.z_h - 3;
+Q.weimar_senate = Q.spd_s + Q.ddp_s + Q.z_s - 3;
+Q.grand_house = Q.spd_h + Q.ddp_h + Q.z_h + Q.dvp_h;
+Q.grand_senate = Q.spd_s + Q.ddp_s + Q.z_s + Q.dvp_s;
+Q.bourgeois_house = Q.ddp_h + Q.z_h + Q.dvp_h + Q.other_h;
+Q.bourgeois_senate = Q.ddp_s + Q.z_s + Q.dvp_s + Q.other_s;
+Q.right_house = Q.z_h + Q.dvp_h + Q.other_h + Q.dnvp_h;
+Q.right_senate = Q.z_s + Q.dvp_s + Q.other_s + Q.dnvp_s;
+Q.left_house = Q.spd_h + Q.kpd_h + (Q.sapd_h || 0);
+Q.left_senate = Q.spd_s + Q.kpd_s + (Q.sapd_s || 0);
+Q.popular_house = Q.spd_h + Q.kpd_h + Q.z_h + Q.ddp_h - 3 + (Q.sapd_h || 0);
+Q.popular_senate = Q.spd_s + Q.kpd_s + Q.z_s + Q.ddp_s - 3 + (Q.sapd_s || 0);
+Q.dem_bill_coalition = Math.max(Q.weimar_senate, Q.grand_senate, Q.popular_senate, Q.left_senate);
+Q.gridlock_risk = 0;
+if (Q.dem_bill_coalition < 50) {
+    Q.gridlock_risk = 1;
+}
 
 if (Q.kpd_relation >= 30) {
     Q.weimar_coalition += Q.sapd_r;
@@ -296,15 +335,36 @@ go-to: coalition_menu
 {!<tr><td><div class="box" style='background-color:#954B00'> </div> !} NSDAP: {!</td><td>!} [+ nsdap_r +]% {!</td><td>!} [+ str_change_nsdap +] {!</td></tr>!}
 {!</table>!}
 
+**Projected chamber breakdown (coalitions required in both chambers for reliable governing):**
+
+{!<table>!}
+{!<tr><td>Bloc</td><td>House</td><td>Senate</td></tr>!}
+{!<tr><td>Democrats (SPD)</td><td>[+ spd_h +]%</td><td>[+ spd_s +]%</td></tr>!}
+{!<tr><td>SPA (KPD)</td><td>[+ kpd_h +]%</td><td>[+ kpd_s +]%</td></tr>!}
+{!<tr><td>Farmer-Labor (Z+BVP)</td><td>[+ z_h +]%</td><td>[+ z_s +]%</td></tr>!}
+{!<tr><td>Progressive Bloc ([+ ddp_name +])</td><td>[+ ddp_h +]%</td><td>[+ ddp_s +]%</td></tr>!}
+{!<tr><td>GOP Moderates (DVP)</td><td>[+ dvp_h +]%</td><td>[+ dvp_s +]%</td></tr>!}
+{!<tr><td>Old Guard GOP (DNVP)</td><td>[+ dnvp_h +]%</td><td>[+ dnvp_s +]%</td></tr>!}
+{!<tr><td>NUSJ Bloc (NSDAP)</td><td>[+ nsdap_h +]%</td><td>[+ nsdap_s +]%</td></tr>!}
+{!</table>!}
+
 **Potential coalitions:**
 
-Weimar Coalition (SPD + Z + [+ ddp_name +]): [+ weimar_coalition +]%
+Broad reform coalition (Democrats + Farmer-Labor + Progressive Bloc): House [+ weimar_house +]% / Senate [+ weimar_senate +]%
 
-Grand Coalition (SPD + Z + BVP + [+ ddp_name +] + DVP): [+ grand_coalition +]%
+National stabilization coalition (+ GOP Moderates): House [+ grand_house +]% / Senate [+ grand_senate +]%
 
-Bourgeois Coalition (Z + BVP + [+ ddp_name +] + DVP + Others): [+ bourgeois_coalition +]%
+Center-right coalition (without Democrats): House [+ bourgeois_house +]% / Senate [+ bourgeois_senate +]%
 
-Right-wing Coalition (Z + BVP + DVP + Others + DNVP): [+ right_coalition +]%
+Right coalition (+ Old Guard GOP): House [+ right_house +]% / Senate [+ right_senate +]%
+
+Left coalition (Democrats + SPA [? if sapd_formed : + SAPD ?]): House [+ left_house +]% / Senate [+ left_senate +]%
+
+Popular front style coalition: House [+ popular_house +]% / Senate [+ popular_senate +]%
+
+[? if nusj_no_coop = 1 and sla_no_coop = 1 : NUSJ Bloc and Silver Legion-aligned forces are permanently excluded from cooperation with Democratic-led governing coalitions. ?]
+
+[? if gridlock_risk = 1 : No democratic coalition currently has a Senate majority. Even if a House governing coalition forms, legislative gridlock risk is high. ?]
 
 [? if nazi_urgency <= 1 and nsdap_r >= 15 : The rapid rise in NSDAP votes is extremely worrying. Many had believed that the party was moribund; now, some of us consider it to be the greatest threat to democracy in Germany. ?]
 

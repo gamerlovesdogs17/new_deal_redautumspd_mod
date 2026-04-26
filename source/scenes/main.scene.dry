@@ -12,9 +12,9 @@ if (Q.advisor_action_timer <= 0) {
 !}
 max-cards: 3
 
-#Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
+#Draw policy and political action cards from the main deck. Each card helps one bloc but may provoke backlash from others.
 
-[? if year = 1928 and month = 2 : The current bourgeois-right government has fallen. The next elections are slated for May of this year. ?]
+[? if year = 1928 and month = 2 : The emergency transition is underway. Congress and the coalition are already maneuvering for control of the recovery agenda. ?]
 
 - @party
 - @govt
@@ -35,9 +35,9 @@ if (Q.advisor_action_timer <= 0) {
 !}
 max-cards: 4
 
-#Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
+#Draw policy and political action cards from the main deck. Easy mode gives an extra card slot each month.
 
-[? if year = 1928 and month = 2 : The current bourgeois-right government has fallen. The next elections are slated for May of this year. ?]
+[? if year = 1928 and month = 2 : The emergency transition is underway. Congress and the coalition are already maneuvering for control of the recovery agenda. ?]
 
 - @party
 - @govt
@@ -46,14 +46,14 @@ max-cards: 4
 
 
 @party
-title: Party Affairs
+title: Democratic Coalition Affairs
 card-image: img/Vorwaerts_nr_1.png
 is-deck: true
 
 - #party_affairs
 
 @govt
-title: Government Affairs
+title: Federal Government Affairs
 view-if: time >= 6
 card-image: img/reichstag_2.jpg
 is-deck: true

@@ -38,13 +38,15 @@ The Democratic coalition convenes to decide both leadership emphasis and economi
 
 {!<svg id="dem_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
-{!<table>!}
-{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div></td><td>New Deal liberals</td><td>[+ left_strength : strength +]</td></tr>!}
-{!<tr><td><div class="box" style='background-color:#6C6C6C'> </div></td><td>Party regulars</td><td>[+ center_strength : strength +]</td></tr>!}
-{!<tr><td><div class="box" style='background-color:#8B0000'> </div></td><td>Labor Democrats</td><td>[+ labor_strength : strength +]</td></tr>!}
-{!<tr><td><div class="box" style='background-color:#D5AC27'> </div></td><td>Conservative Democrats</td><td>[+ reformist_strength : strength +]</td></tr>!}
-{!<tr><td><div class="box" style='background-color:#3f7bc1'> </div></td><td>Southern bloc</td><td>[+ neorevisionist_strength : strength +]</td></tr>!}
-{!</table>!}
+{!<span class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'></span>!} New Deal liberals: [+ left_strength : strength +]
+
+{!<span class="box" style='background-color:#6C6C6C'></span>!} Party regulars: [+ center_strength : strength +]
+
+{!<span class="box" style='background-color:#8B0000'></span>!} Labor Democrats: [+ labor_strength : strength +]
+
+{!<span class="box" style='background-color:#D5AC27'></span>!} Conservative Democrats: [+ reformist_strength : strength +]
+
+{!<span class="box" style='background-color:#3f7bc1'></span>!} Southern bloc: [+ neorevisionist_strength : strength +]
 
 - @huey_labor_wildcard
 - @dem_pragmatic_line
@@ -193,11 +195,11 @@ Republican delegates conclude their conference for the cycle.
 
 {!<svg id="gop_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
-{!<table>!}
-{!<tr><td><div class="box" style='background-color:#3f7bc1'> </div></td><td>Old Guard</td><td>[+ gop_old_guard_score +]</td></tr>!}
-{!<tr><td><div class="box" style='background-color:#D5AC27'> </div></td><td>Moderate reform</td><td>[+ gop_moderate_score +]</td></tr>!}
-{!<tr><td><div class="box" style='background-color:#954B00'> </div></td><td>National conservative</td><td>[+ gop_reactionary_score +]</td></tr>!}
-{!</table>!}
+{!<span class="box" style='background-color:#3f7bc1'></span>!} Old Guard: [+ gop_old_guard_score +]
+
+{!<span class="box" style='background-color:#D5AC27'></span>!} Moderate reform: [+ gop_moderate_score +]
+
+{!<span class="box" style='background-color:#954B00'></span>!} National conservative: [+ gop_reactionary_score +]
 
 [? if gop_wing = "old_guard" : The Old Guard consolidates control under Hoover-aligned leadership, emphasizing fiscal restraint and opposition to expansive federal planning. ?]
 [? if gop_wing = "moderate_reform" : Moderate reform Republicans prevail, selecting a leadership line open to limited cooperation while resisting broad federal overreach. ?]

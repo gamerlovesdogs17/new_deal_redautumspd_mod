@@ -279,41 +279,41 @@ Q.anti_democratic_coalition = Q.kpd_r + Q.nsdap_r;
 Q.neo_weimar_coalition = Q.spd_r + Q.ddp_r + Q.z_r + Q.dvp_r + Q.other_r;
 !}
 
-The electoral system is essentially proportional, with the proportion of Reichstag seats roughly equal to the proportion of votes.
+The electoral system projects national vote share into chamber strength.
  
 **Election results:**
 
 # 1928: 30, 1930: 25, 1932: 22
-SPD: [+ spd_r +]
+Democratic Party: [+ spd_r +]
 
 # 1928: 15, 1930: 15, 1932: 
-Z + BVP: [+ z_r +]
+Farmer-Labor: [+ z_r +]
 
 # 1928: 10, 1930: 13
-KPD: [+ kpd_r +]
+Socialist Party of America: [+ kpd_r +]
 
 # 1928: 5, 1930: 4 (as DstP)
-DDP: [+ ddp_r +]
+Liberty League: [+ ddp_r +]
 
 # 1928: 9, 1930: 5
-DVP: [+ dvp_r +]
+Republican moderates: [+ dvp_r +]
 
 # 1928: 14, 1930: 7
-DNVP: [+ dnvp_r +]
+Republican old guard: [+ dnvp_r +]
 
 # 1928: 3, 1930: 18
-NSDAP: [+ nsdap_r +]
+National Union for Social Justice: [+ nsdap_r +]
 
 # 1928: 9, 1930: 10
-Other: [+ other_r +]
+Silver Legion and others: [+ other_r +]
 
-**Potential coalitions:**
+**Potential House and Senate coalitions:**
 
-Weimar Coalition (SPD + Z + DDP): [+ weimar_coalition +]
+Broad reform coalition (Democratic Party + Farmer-Labor + Liberty League): [+ weimar_coalition +]
 
-Grand Coalition (SPD + Z + BVP + DDP + DVP): [+ grand_coalition +]
+National stabilization coalition (Democratic Party + Farmer-Labor + Liberty League + Republican moderates): [+ grand_coalition +]
 
-Bourgeois Coalition (Z + BVP + DDP + DVP + Others): [+ bourgeois_coalition +]
+Non-Democratic stabilization coalition (Farmer-Labor + Liberty League + Republican moderates + Silver Legion/others): [+ bourgeois_coalition +]
 
-Right-wing Coalition (Z + BVP + DVP + Others + DNVP): [+ right_coalition +]
+Conservative coalition (Farmer-Labor + Republican Party + Silver Legion/others): [+ right_coalition +]
 

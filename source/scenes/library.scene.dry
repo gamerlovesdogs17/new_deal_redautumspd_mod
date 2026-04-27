@@ -48,61 +48,96 @@ go-to: menu
 **1932 (late)**: The incoming administration is Democratic, but internal doctrine remains unsettled. Party conferences become decisive for strategic direction, coalition viability, and response to extremism.
 
 @curr_gov
+on-arrival: {!
+var partyNames = {
+    "SPD": "Democratic Party",
+    "KPD": "Socialist Party of America",
+    "Z": "Farmer-Labor",
+    "DVP": "Republican Party",
+    "DNVP": "Republican Party",
+    "NSDAP": "National Union for Social Justice",
+    "DDP": "Liberty League",
+    "I": "Independent"
+};
+Q.library_speaker_party_display = partyNames[Q.chancellor_party] || Q.chancellor_party || "";
+!}
 go-to: cabinet if spd_in_government; menu if not spd_in_government
 
 = Current Government
 
 President: [+ president +]
 
-Executive leader: [+ chancellor +] ([+ chancellor_party +])
+Speaker of the House: [+ chancellor +][? if library_speaker_party_display :  ([+ library_speaker_party_display +]) ?]
 
-National legislature composition:
+House composition:
 
-# 1928: 30, 1930: 25, 1932: 22
-Democrats: [+ spd_r +]%
-[? if sapd_formed and sapd_r > 0: SAPD: [+ sapd_r +]% ?]
-# 1928: 15, 1930: 15, 1932: 
-Farmer-Labor: [+ z_r +]%
-# 1928: 10, 1930: 13
-SPA: [+ kpd_r +]%
-# 1928: 5, 1930: 4 (as DstP)
-[+ ddp_name +]: [+ ddp_r +]%
-# 1928: 9, 1930: 5
-GOP Moderates: [+ dvp_r +]%
-# 1928: 14, 1930: 7
-Old Guard GOP: [+ dnvp_r +]%
-# 1928: 3, 1930: 18
-NUSJ Bloc: [+ nsdap_r +]%
-# 1928: 9, 1930: 10
-Others: [+ other_r +]%
+Democratic Party: [+ spd_h_seats +] seats ([+ spd_h +]%)
+[? if sapd_formed and sapd_h > 0: Left splinters: [+ sapd_h_seats +] seats ([+ sapd_h +]%) ?]
+Socialist Party of America: [+ kpd_h_seats +] seats ([+ kpd_h +]%)
+Farmer-Labor: [+ z_h_seats +] seats ([+ z_h +]%)
+Liberty League: [+ ddp_h_seats +] seats ([+ ddp_h +]%)
+Republican Party: [+ gop_h_seats +] seats ([+ gop_h +]%)
+National Union for Social Justice: [+ nsdap_h_seats +] seats ([+ nsdap_h +]%)
+Silver Legion: [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%)
+
+Senate composition:
+
+Democratic Party: [+ spd_s_seats +] seats ([+ spd_s +]%)
+[? if sapd_formed and sapd_s > 0: Left splinters: [+ sapd_s_seats +] seats ([+ sapd_s +]%) ?]
+Socialist Party of America: [+ kpd_s_seats +] seats ([+ kpd_s +]%)
+Farmer-Labor: [+ z_s_seats +] seats ([+ z_s +]%)
+Liberty League: [+ ddp_s_seats +] seats ([+ ddp_s +]%)
+Republican Party: [+ gop_s_seats +] seats ([+ gop_s +]%)
+National Union for Social Justice: [+ nsdap_s_seats +] seats ([+ nsdap_s +]%)
+Silver Legion: [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
 
 Democratic position: [? if spd_toleration : external support ?][? if spd_in_government : governing - ?][? if spd_toleration == 0 and spd_in_government == 0 and spd_caretaker == 0 : opposition ?][? if spd_caretaker : caretaker administration ?]
 [? if in_weimar_coalition and spd_in_government: broad reform coalition ?][? if in_grand_coalition and spd_in_government: unity coalition ?][? if in_popular_front and spd_in_government: labor-progressive front ?][? if in_left_front and spd_in_government: left coalition ?][? if in_spd_majority and spd_in_government: Democratic majority ?][? if in_minority_government and spd_in_government: minority government ?][? if in_emergency_government and spd_in_government: emergency government ?]
 
 [? if spd_in_government and not in_spd_majority and not in_left_front : Coalition dissent: [+ coalition_dissent : coalition_dissent +] ?]
 
-[? if spd_in_government and (in_left_front or in_popular_front): SPA coalition dissent: [+ kpd_coalition_dissent : coalition_dissent +] ?]
+[? if spd_in_government and (in_left_front or in_popular_front): Socialist coalition dissent: [+ kpd_coalition_dissent : coalition_dissent +] ?]
 
 @cabinet
+on-arrival: {!
+var partyNames = {
+    "SPD": "Democratic Party",
+    "KPD": "Socialist Party of America",
+    "Z": "Farmer-Labor",
+    "DVP": "Republican Party",
+    "DNVP": "Republican Party",
+    "NSDAP": "National Union for Social Justice",
+    "DDP": "Liberty League",
+    "I": "Independent"
+};
+Q.labor_minister_party_display = partyNames[Q.labor_minister_party] || Q.labor_minister_party || "";
+Q.interior_minister_party_display = partyNames[Q.interior_minister_party] || Q.interior_minister_party || "";
+Q.finance_minister_party_display = partyNames[Q.finance_minister_party] || Q.finance_minister_party || "";
+Q.economic_minister_party_display = partyNames[Q.economic_minister_party] || Q.economic_minister_party || "";
+Q.justice_minister_party_display = partyNames[Q.justice_minister_party] || Q.justice_minister_party || "";
+Q.foreign_minister_party_display = partyNames[Q.foreign_minister_party] || Q.foreign_minister_party || "";
+Q.reichswehr_minister_party_display = partyNames[Q.reichswehr_minister_party] || Q.reichswehr_minister_party || "";
+Q.agriculture_minister_party_display = partyNames[Q.agriculture_minister_party] || Q.agriculture_minister_party || "";
+!}
 go-to: menu
 
 Current cabinet:
 
-Labor: [+ labor_minister_party +]
+Labor: [+ labor_minister_party_display +]
 
-Interior: [+ interior_minister_party +]
+Interior: [+ interior_minister_party_display +]
 
-Finance: [+ finance_minister_party +]
+Finance: [+ finance_minister_party_display +]
 
-Economic: [+ economic_minister_party +]
+Economic: [+ economic_minister_party_display +]
 
-Justice: [+ justice_minister_party +]
+Justice: [+ justice_minister_party_display +]
 
-Foreign: [+ foreign_minister_party +]
+Foreign: [+ foreign_minister_party_display +]
 
-Reichswehr: [+ reichswehr_minister_party +]
+Defense: [+ reichswehr_minister_party_display +]
 
-Agriculture: [+ agriculture_minister_party +]
+Agriculture: [+ agriculture_minister_party_display +]
 
 
 @demographics
@@ -149,7 +184,7 @@ go-to: menu
 **Projected election results** (if the election were to be held now):
 
 # 1928: 30, 1930: 25, 1932: 22
-Democrats: [+ spd_votes +]%
+Democratic Party: [+ spd_votes +]%
 
 [? if sapd_formed: SAPD: [+ sapd_votes +]% ?]
 
@@ -157,66 +192,65 @@ Democrats: [+ spd_votes +]%
 Farmer-Labor: [+ z_votes +]%
 
 # 1928: 10, 1930: 13
-SPA: [+ kpd_votes +]%
+Socialist Party of America: [+ kpd_votes +]%
 
 # 1928: 5, 1930: 4 (as DstP)
 [+ ddp_name +]: [+ ddp_votes +]%
 
 # 1928: 9, 1930: 5
-GOP Moderates: [+ dvp_votes +]%
+Republican moderates: [+ dvp_votes +]%
 
 # 1928: 14, 1930: 7
-Old Guard GOP: [+ dnvp_votes +]%
+Republican old guard: [+ dnvp_votes +]%
 
 # 1928: 3, 1930: 18
-NUSJ Bloc: [+ nsdap_votes +]%
+National Union for Social Justice: [+ nsdap_votes +]%
 
 # 1928: 9, 1930: 10
 Others: [+ other_votes +]%
 
 **Detailed results for each demographic**
 
-Workers: Democrats: [+ workers_spd_display +]%, Farmer-Labor: [+ workers_z_display +]%, SPA: [+ workers_kpd_display +]%, Progressive Bloc: [+ workers_ddp_display +]%, GOP Moderates: [+ workers_dvp_display +]%; Old Guard GOP: [+ workers_dnvp_display +]%, NUSJ Bloc: [+ workers_nsdap_display +]%, Others: [+ workers_other_display +]% [? if sapd_formed: SAPD: [+ workers_sapd_display +]% ?]
+Workers: Democratic Party: [+ workers_spd_display +]%, Farmer-Labor: [+ workers_z_display +]%, Socialist Party of America: [+ workers_kpd_display +]%, Liberty League: [+ workers_ddp_display +]%, Republican moderates: [+ workers_dvp_display +]%; Republican old guard: [+ workers_dnvp_display +]%, National Union for Social Justice: [+ workers_nsdap_display +]%, Silver Legion: [+ workers_other_display +]% [? if sapd_formed: Left splinters: [+ workers_sapd_display +]% ?]
 
-New Middle Class: Democrats: [+ new_middle_spd_display +]%, Farmer-Labor: [+ new_middle_z_display +]%, SPA: [+ new_middle_kpd_display +]%, Progressive Bloc: [+ new_middle_ddp_display +]%, GOP Moderates: [+ new_middle_dvp_display +]%; Old Guard GOP: [+ new_middle_dnvp_display +]%, NUSJ Bloc: [+ new_middle_nsdap_display +]%, Others: [+ new_middle_other_display +]% [? if sapd_formed: SAPD: [+ new_middle_sapd_display +]% ?]
+New Middle Class: Democratic Party: [+ new_middle_spd_display +]%, Farmer-Labor: [+ new_middle_z_display +]%, Socialist Party of America: [+ new_middle_kpd_display +]%, Liberty League: [+ new_middle_ddp_display +]%, Republican moderates: [+ new_middle_dvp_display +]%; Republican old guard: [+ new_middle_dnvp_display +]%, National Union for Social Justice: [+ new_middle_nsdap_display +]%, Silver Legion: [+ new_middle_other_display +]% [? if sapd_formed: Left splinters: [+ new_middle_sapd_display +]% ?]
 
-Old Middle Class: Democrats: [+ old_middle_spd_display +]%, Farmer-Labor: [+ old_middle_z_display +]%, SPA: [+ old_middle_kpd_display +]%, Progressive Bloc: [+ old_middle_ddp_display +]%, GOP Moderates: [+ old_middle_dvp_display +]%; Old Guard GOP: [+ old_middle_dnvp_display +]%, NUSJ Bloc: [+ old_middle_nsdap_display +]%, Others: [+ old_middle_other_display +]% [? if sapd_formed: SAPD: [+ old_middle_sapd_display +]% ?]
+Old Middle Class: Democratic Party: [+ old_middle_spd_display +]%, Farmer-Labor: [+ old_middle_z_display +]%, Socialist Party of America: [+ old_middle_kpd_display +]%, Liberty League: [+ old_middle_ddp_display +]%, Republican moderates: [+ old_middle_dvp_display +]%; Republican old guard: [+ old_middle_dnvp_display +]%, National Union for Social Justice: [+ old_middle_nsdap_display +]%, Silver Legion: [+ old_middle_other_display +]% [? if sapd_formed: Left splinters: [+ old_middle_sapd_display +]% ?]
 
-Rural: Democrats: [+ rural_spd_display +]%, Farmer-Labor: [+ rural_z_display +]%, SPA: [+ rural_kpd_display +]%, Progressive Bloc: [+ rural_ddp_display +]%, GOP Moderates: [+ rural_dvp_display +]%; Old Guard GOP: [+ rural_dnvp_display +]%, NUSJ Bloc: [+ rural_nsdap_display +]%, Others: [+ rural_other_display +]% [? if sapd_formed: SAPD: [+ rural_sapd_display +]% ?]
+Rural: Democratic Party: [+ rural_spd_display +]%, Farmer-Labor: [+ rural_z_display +]%, Socialist Party of America: [+ rural_kpd_display +]%, Liberty League: [+ rural_ddp_display +]%, Republican moderates: [+ rural_dvp_display +]%; Republican old guard: [+ rural_dnvp_display +]%, National Union for Social Justice: [+ rural_nsdap_display +]%, Silver Legion: [+ rural_other_display +]% [? if sapd_formed: Left splinters: [+ rural_sapd_display +]% ?]
 
-Unemployed: Democrats: [+ unemployed_spd_display +]%, Farmer-Labor: [+ unemployed_z_display +]%, SPA: [+ unemployed_kpd_display +]%, Progressive Bloc: [+ unemployed_ddp_display +]%, GOP Moderates: [+ unemployed_dvp_display +]%; Old Guard GOP: [+ unemployed_dnvp_display +]%, NUSJ Bloc: [+ unemployed_nsdap_display +]%, Others: [+ unemployed_other_display +]% [? if sapd_formed: SAPD: [+ unemployed_sapd_display +]% ?]
+Unemployed: Democratic Party: [+ unemployed_spd_display +]%, Farmer-Labor: [+ unemployed_z_display +]%, Socialist Party of America: [+ unemployed_kpd_display +]%, Liberty League: [+ unemployed_ddp_display +]%, Republican moderates: [+ unemployed_dvp_display +]%; Republican old guard: [+ unemployed_dnvp_display +]%, National Union for Social Justice: [+ unemployed_nsdap_display +]%, Silver Legion: [+ unemployed_other_display +]% [? if sapd_formed: Left splinters: [+ unemployed_sapd_display +]% ?]
 
-Catholics: Democrats: [+ catholics_spd_display +]%, Farmer-Labor: [+ catholics_z_display +]%, SPA: [+ catholics_kpd_display +]%, Progressive Bloc: [+ catholics_ddp_display +]%, GOP Moderates: [+ catholics_dvp_display +]%; Old Guard GOP: [+ catholics_dnvp_display +]%, NUSJ Bloc: [+ catholics_nsdap_display +]%, Others: [+ catholics_other_display +]% [? if sapd_formed: SAPD: [+ catholics_sapd_display +]% ?]
+Catholics: Democratic Party: [+ catholics_spd_display +]%, Farmer-Labor: [+ catholics_z_display +]%, Socialist Party of America: [+ catholics_kpd_display +]%, Liberty League: [+ catholics_ddp_display +]%, Republican moderates: [+ catholics_dvp_display +]%; Republican old guard: [+ catholics_dnvp_display +]%, National Union for Social Justice: [+ catholics_nsdap_display +]%, Silver Legion: [+ catholics_other_display +]% [? if sapd_formed: Left splinters: [+ catholics_sapd_display +]% ?]
 
 @parties
 go-to: menu
 
-**Democrats (SPD variable)** - The governing coalition party in this scenario. Its internal wings include New Deal liberals, conservative Democrats, labor Democrats, and Southern Democrats.
+**Democratic Party** - The governing coalition party in this scenario. Its internal wings include New Deal liberals, conservative Democrats, labor Democrats, and Southern Democrats.
 
-**Z** - *Zentrumspartei* (Center Party) - a centrist to center-right Catholic party that supports the Republic, and has historically supported many of our labor, welfare, and anti-militarist priorities. They have often been in coalitions with us. They are often associated with the **BVP** (Bavarian People's Party), which represents Catholics in Bavaria. [? if year >= 1930 or chancellor = "Brüning" : They have appeared to take a more conservative turn recently, with the rise of Brüning and the party leader, Ludwig Kaas. ?]
+**Farmer-Labor** - A labor-populist and agrarian reform bloc that can support relief, farm debt action, and public works when relations are strong.
 
 Current relations: [+ z_relation : relationships +]
 
-# TODO: replace this with the german state party after 1930
-**Progressive Bloc ([+ ddp_name +] variable)** - Liberal and reform-oriented Republicans/independents open to selective cooperation on stabilization policy.
+**Liberty League** - Conservative anti-New Deal Democrats, business liberals, and allied independents open to selective cooperation on stabilization policy.
 
 Current relations: [+ ddp_relation : relationships +]
 
-**GOP Moderates (DVP variable)** - Cautious reform Republicans willing to bargain under pressure while resisting broad structural change.
+**Republican Party moderates** - Cautious reform Republicans willing to bargain under pressure while resisting broad structural change.
 
 Current relations: [+ dvp_relation : relationships +]
 
-**Old Guard GOP (DNVP variable)** - Hoover-aligned conservatives favoring fiscal restraint, anti-expansion policy, and firm opposition to ambitious federal intervention.
+**Republican Party old guard** - Hoover-aligned conservatives favoring fiscal restraint, anti-expansion policy, and firm opposition to ambitious federal intervention.
 
 Current relations: [+ dnvp_relation : relationships +]
 
-**SPA (KPD variable)** - Socialist Party of America alignment led by Norman Thomas. Potential tactical cooperation depends on Democratic leftward shifts and conference outcomes.
+**Socialist Party of America** - Socialist alignment led by Norman Thomas. Potential tactical cooperation depends on Democratic leftward shifts and conference outcomes.
 
 Current relations: [+ kpd_relation : relationships +]
 
-[? if sapd_formed: Left splinter alignment (SAPD variable) - minor socialist breakaway currents between the Democrats and SPA. ?]
+[? if sapd_formed: Left splinter alignment - minor socialist breakaway currents between the Democratic Party and Socialist Party of America. ?]
 
-**NUSJ Bloc (NSDAP variable)** - Father Coughlin-aligned national-populist right. Not available for cooperative coalition governance with Democratic-led governments.
+**National Union for Social Justice** - Father Coughlin-aligned national-populist right. Not available for cooperative coalition governance with Democratic-led governments.
 
 Current relations: [+ nsdap_relation : relationships +]
 
@@ -238,7 +272,7 @@ Strength: [+ rb_strength +] thousand
 
 Militarization: [+ rb_militancy : militancy +]
 
-**Socialist Action Committees**: SPA-adjacent street and strike-defense formations.
+**Socialist Action Committees**: Socialist Party-adjacent street and strike-defense formations.
 
 Strength: [+ rfb_strength +] thousand
 
@@ -328,18 +362,18 @@ This campaign begins in late 1932, after the presidential election but before th
 
 **Major party leaders at scenario start**
 
-Democrats: [+ dem_leader +]
-Republicans (GOP): [+ gop_leader +]
-SPA: [+ spa_leader +]
+Democratic Party: [+ dem_leader +]
+Republican Party: [+ gop_leader +]
+Socialist Party of America: [+ spa_leader +]
 Farmer-Labor: [+ farmer_labor_leader +]
 
 **Extra-system actors**
 
 Liberty League: [+ liberty_league_leader +]
-NUSJ: [+ nusj_leader +]
+National Union for Social Justice: [+ nusj_leader +]
 Silver Legion: [+ sla_leader +]
 
-NUSJ and Silver Legion-aligned forces are non-cooperative with Democratic-led coalition governance.
+National Union for Social Justice and Silver Legion-aligned forces are non-cooperative with Democratic-led coalition governance.
 
 **Democratic internal wing leadership**
 
@@ -366,13 +400,13 @@ Senate coalition strength affects bill passage and policy throughput.
 @figures
 title: Figures and Charts
 go-to: menu
-on-arrival: z_minus_bvp_r = z_r - 3;
+on-arrival: z_minus_bvp_r = z_r - 3; gop_r = dvp_r + dnvp_r;
 on-display: {!
 data = [
     {
         "id": "kpd",
-        "legend": "SPA",
-        "name": "SPA",
+        "legend": "Socialist Party of America",
+        "name": "Socialist Party of America",
         "seats": Q.kpd_r*5,
     }];
 if (Q.sapd_formed && Q.sapd_r) {
@@ -386,14 +420,14 @@ if (Q.sapd_formed && Q.sapd_r) {
 data = data.concat([
     {
         "id": "spd",
-        "legend": "Democrats",
-        "name": "Democrats",
+        "legend": "Democratic Party",
+        "name": "Democratic Party",
         "seats": Q.spd_r*5,
     },
     {
         "id": "ddp",
-        "legend": "Progressives",
-        "name": "Progressives",
+        "legend": "Liberty League",
+        "name": "Liberty League",
         "seats": Q.ddp_r*5,
     },
     {
@@ -410,26 +444,20 @@ data = data.concat([
     },
     {
         "id": "dvp",
-        "legend": "GOP Moderates",
-        "name": "GOP Moderates",
-        "seats": Q.dvp_r*5,
+        "legend": "Republican Party",
+        "name": "Republican Party",
+        "seats": (Q.dvp_r + Q.dnvp_r)*5,
     },
     {
         "id": "other",
-        "legend": "Other",
-        "name": "Other",
+        "legend": "Silver Legion",
+        "name": "Silver Legion",
         "seats": Q.other_r*5,
     },
     {
-        "id": "dnvp",
-        "legend": "Old Guard GOP",
-        "name": "Old Guard GOP",
-        "seats": Q.dnvp_r*5,
-    },
-    {
         "id": "nsdap",
-        "legend": "NUSJ Bloc",
-        "name": "NUSJ Bloc",
+        "legend": "National Union for Social Justice",
+        "name": "National Union for Social Justice",
         "seats": Q.nsdap_r*5,
     },
 ]);
@@ -452,7 +480,7 @@ if (d3 && window) {
     var lines = d3.linegraph(false, false,
             Q.parties,
             {'spd': '#E3000F', 'kpd': '#8B0000', 'ddp': '#DCCA4A', 'z': '#000', 'dvp': '#D5AC27', 'dnvp': '#3f7bc1', 'nsdap': '#954B00', 'other': '#a0a0a0', 'sapd': '#c40000'},
-            {'spd': 'Democrats', 'kpd': 'SPA', 'ddp': 'Progressive Bloc', 'z': 'Farmer-Labor', 'dvp': 'GOP Moderates', 'dnvp': 'Old Guard GOP', 'nsdap': 'NUSJ Bloc', 'other': 'Others', 'sapd': 'Left splinters'});
+            {'spd': 'Democratic Party', 'kpd': 'Socialist Party of America', 'ddp': 'Liberty League', 'z': 'Farmer-Labor', 'dvp': 'Republican moderates', 'dnvp': 'Republican old guard', 'nsdap': 'National Union for Social Justice', 'other': 'Silver Legion', 'sapd': 'Left splinters'});
     lines.width(width).height(400);
     //var svg = lines(Q.election_records);
     if (Q.election_records.length > 0) {
@@ -465,7 +493,7 @@ if (d3 && window) {
         var lines_2 = d3.linegraph(true, true,
             Q.parties,
             {'spd': '#E3000F', 'kpd': '#8B0000', 'ddp': '#DCCA4A', 'z': '#000', 'dvp': '#D5AC27', 'dnvp': '#3f7bc1', 'nsdap': '#954B00', 'other': '#a0a0a0', 'sapd': '#c40000'},
-            {'spd': 'Democrats', 'kpd': 'SPA', 'ddp': 'Progressive Bloc', 'z': 'Farmer-Labor', 'dvp': 'GOP Moderates', 'dnvp': 'Old Guard GOP', 'nsdap': 'NUSJ Bloc', 'other': 'Others', 'sapd': 'Left splinters'});
+            {'spd': 'Democratic Party', 'kpd': 'Socialist Party of America', 'ddp': 'Liberty League', 'z': 'Farmer-Labor', 'dvp': 'Republican moderates', 'dnvp': 'Republican old guard', 'nsdap': 'National Union for Social Justice', 'other': 'Silver Legion', 'sapd': 'Left splinters'});
         lines_2.width(width).height(400);
         d3.select("#party_support_history").datum(Q.party_support_records).call(lines_2);
     }
@@ -482,30 +510,28 @@ if (d3 && window) {
 }
 !}
 
-= National legislature composition
+= National Legislature Composition
 
 {!<svg id="reichstag" style="width: 500px; height: 250px;"> </svg>!}
 
 {!<table>!}
-{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div></td><td>!} **Democrats:** {!</td><td>!} **[+ spd_r +]%** {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div></td><td>!} **Democratic Party:** {!</td><td>!} **[+ spd_r +]%** {!</td></tr>!}
 
-[? if sapd_formed : {!<tr><td><div class="box" style='background-color:#C40000'> </div></td> <td> !}SAPD: {!</td><td>!} [+ sapd_r +]% {!</td></tr>!} ?]
+[? if sapd_formed : {!<tr><td><div class="box" style='background-color:#C40000'> </div></td> <td> !}Left splinters: {!</td><td>!} [+ sapd_r +]% {!</td></tr>!} ?]
 
-{!<tr><td><div class="box" style='background-color:#8B0000'> </div></td> <td>!}SPA: {!</td><td>!} [+ kpd_r +]% {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#8B0000'> </div></td> <td>!}Socialist Party of America: {!</td><td>!} [+ kpd_r +]% {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#DCCA4A'> </div></td><td>!} [+ ddp_name +]: {!</td><td>!} [+ ddp_r +]% {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#DCCA4A'> </div></td><td>!} Liberty League: {!</td><td>!} [+ ddp_r +]% {!</td></tr>!}
 
 {!<tr><td><div class="box" style='background-color:#000'> </div></td><td>!} Farmer-Labor: {!</td><td>!} [+ z_minus_bvp_r +]% {!</td></tr>!}
 
 {!<tr><td><div class="box" style='background-color:#69A2BE'> </div></td><td>!} Farm-Labor allied: {!</td><td>!} 3% {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#D5AC27'> </div></td><td>!} GOP Moderates: {!</td><td>!} [+ dvp_r +]% {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#D5AC27'> </div></td><td>!} Republican Party: {!</td><td>!} [+ gop_r +]% {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#a0a0a0'> </div></td><td>!} Other parties: {!</td><td>!} [+ other_r +] % {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#a0a0a0'> </div></td><td>!} Silver Legion: {!</td><td>!} [+ other_r +] % {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#3f7bc1'> </div></td><td>!} Old Guard GOP: {!</td><td>!} [+ dnvp_r +]% {!</td></tr>!}
-
-{!<tr><td><div class="box" style='background-color:#954B00'> </div></td><td>!} NUSJ Bloc: {!</td><td>!} [+ nsdap_r +]% {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#954B00'> </div></td><td>!} National Union for Social Justice: {!</td><td>!} [+ nsdap_r +]% {!</td></tr>!}
 {!</table>!}
 
 = Election history

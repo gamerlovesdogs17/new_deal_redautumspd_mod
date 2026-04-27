@@ -258,7 +258,7 @@ if (moderateScore >= oldGuardScore && moderateScore >= reactionaryScore) {
 }
 Q.gop_leader = Q.gop_party_chair;
 
-// hard cooperation limits: NUSJ and SLA never become coalition partners.
+// hard cooperation limits: National Union for Social Justice and Silver Legion never become coalition partners.
 Q.nusj_no_coop = 1;
 Q.sla_no_coop = 1;
 !}

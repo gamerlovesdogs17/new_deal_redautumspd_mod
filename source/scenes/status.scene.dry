@@ -21,14 +21,17 @@ if (typeof Q.nsdap_relation === "undefined") {
 if (typeof Q.sla_relation === "undefined") {
     Q.sla_relation = 4;
 }
-Q.gop_r = Math.round((Q.dvp_r || 0) + (Q.dnvp_r || 0));
-Q.silver_legion_r = Q.other_r || 0;
-Q.gop_h = Math.round(((Q.dvp_h || 0) + (Q.dnvp_h || 0)) * 10) / 10;
-Q.gop_s = Math.round(((Q.dvp_s || 0) + (Q.dnvp_s || 0)) * 10) / 10;
+Q.gop_r = Q.dvp_r || 0;
+Q.nusj_r = Q.dnvp_r || 0;
+Q.silver_legion_r = Q.nsdap_r || 0;
+Q.gop_h = Q.dvp_h || Q.dvp_r || 0;
+Q.gop_s = Q.dvp_s || Q.dvp_r || 0;
 Q.liberty_league_h = Q.ddp_h || Q.ddp_r || 0;
 Q.liberty_league_s = Q.ddp_s || Q.ddp_r || 0;
-Q.silver_legion_h = Q.other_h || Q.other_r || 0;
-Q.silver_legion_s = Q.other_s || Q.other_r || 0;
+Q.nusj_h = Q.dnvp_h || Q.dnvp_r || 0;
+Q.nusj_s = Q.dnvp_s || Q.dnvp_r || 0;
+Q.silver_legion_h = Q.nsdap_h || Q.nsdap_r || 0;
+Q.silver_legion_s = Q.nsdap_s || Q.nsdap_r || 0;
 if (!Q.spd_h_seats) {
     Q.spd_h_seats = Math.round(435 * (Q.spd_h || Q.spd_r || 0) / 100);
     Q.kpd_h_seats = Math.round(435 * (Q.kpd_h || Q.kpd_r || 0) / 100);
@@ -49,12 +52,14 @@ if (!Q.spd_s_seats) {
     Q.nsdap_s_seats = Math.round(96 * (Q.nsdap_s || Q.nsdap_r || 0) / 100);
     Q.other_s_seats = 96 - Q.spd_s_seats - Q.kpd_s_seats - Q.z_s_seats - Q.ddp_s_seats - Q.dvp_s_seats - Q.dnvp_s_seats - Q.nsdap_s_seats;
 }
-Q.gop_h_seats = (Q.dvp_h_seats || 0) + (Q.dnvp_h_seats || 0);
-Q.gop_s_seats = (Q.dvp_s_seats || 0) + (Q.dnvp_s_seats || 0);
+Q.gop_h_seats = Q.dvp_h_seats || 0;
+Q.gop_s_seats = Q.dvp_s_seats || 0;
 Q.liberty_league_h_seats = Q.ddp_h_seats || 0;
 Q.liberty_league_s_seats = Q.ddp_s_seats || 0;
-Q.silver_legion_h_seats = Q.other_h_seats || 0;
-Q.silver_legion_s_seats = Q.other_s_seats || 0;
+Q.nusj_h_seats = Q.dnvp_h_seats || 0;
+Q.nusj_s_seats = Q.dnvp_s_seats || 0;
+Q.silver_legion_h_seats = Q.nsdap_h_seats || 0;
+Q.silver_legion_s_seats = Q.nsdap_s_seats || 0;
 var economicPlanNames = {
     "undecided": "Undecided",
     "pragmatic_new_deal": "Pragmatic New Deal",
@@ -83,8 +88,8 @@ var partyNames = {
     "KPD": "Socialist Party of America",
     "Z": "Farmer-Labor",
     "DVP": "Republican Party",
-    "DNVP": "Republican Party",
-    "NSDAP": "National Union for Social Justice",
+    "DNVP": "National Union for Social Justice",
+    "NSDAP": "Silver Legion",
     "I": "Independent"
 };
 Q.dem_economic_plan_display = economicPlanNames[Q.dem_economic_plan] || "Undecided";
@@ -125,6 +130,10 @@ Governing House support: [+ governing_house_support +]%
 
 Governing Senate support: [+ governing_senate_support +]%
 
+House control: [? if non_dem_house_control = 1 : opposition ?][? if non_dem_house_control = 0 : Democratic-led ?]
+
+Senate control: [? if non_dem_senate_control = 1 : opposition ?][? if non_dem_senate_control = 0 : Democratic-led ?]
+
 Speaker secured: [? if speaker_elected = 1 : yes ?][? if speaker_elected = 0 : no ?]
 
 Bill coalition viable: [? if bill_coalition_viable = 1 : yes ?][? if bill_coalition_viable = 0 : no ?]
@@ -147,7 +156,7 @@ National legislature composition:
 
 {!<span class="party-gop">Republican Party</span>!}: House [+ gop_h_seats +] seats ([+ gop_h +]%) / Senate [+ gop_s_seats +] seats ([+ gop_s +]%)
 
-{!<span class="party-nusj">National Union for Social Justice</span>!}: House [+ nsdap_h_seats +] seats ([+ nsdap_h +]%) / Senate [+ nsdap_s_seats +] seats ([+ nsdap_s +]%)
+{!<span class="party-nusj">National Union for Social Justice</span>!}: House [+ nusj_h_seats +] seats ([+ nusj_h +]%) / Senate [+ nusj_s_seats +] seats ([+ nusj_s +]%)
 
 {!<span class="party-silver">Silver Legion</span>!}: House [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%) / Senate [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
 
@@ -186,11 +195,10 @@ Economic growth: [+ economic_growth_2 +]%
 {!<div class="relations-list">!}
 {!<span>!}{!<span class="party-fl">Farmer-Labor</span>!}: [+ z_relation : relationships +]{!</span>!}
 {!<span>!}{!<span class="party-liberty">Liberty League</span>!}: [+ ddp_relation : relationships +]{!</span>!}
-{!<span>!}{!<span class="party-gop">Republican moderates</span>!}: [+ dvp_relation : relationships +]{!</span>!}
+{!<span>!}{!<span class="party-gop">Republican Party</span>!}: [+ dvp_relation : relationships +]{!</span>!}
 {!<span>!}{!<span class="party-spa">Socialist Party of America</span>!}: [+ kpd_relation : relationships +]{!</span>!}
-{!<span>!}{!<span class="party-gop">Republican old guard</span>!}: [+ dnvp_relation : relationships +]{!</span>!}
-{!<span>!}{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ nsdap_relation : relationships +]{!</span>!}
-{!<span>!}{!<span class="party-silver">Silver Legion</span>!}: [+ sla_relation : relationships +]{!</span>!}
+{!<span>!}{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ dnvp_relation : relationships +]{!</span>!}
+{!<span>!}{!<span class="party-silver">Silver Legion</span>!}: [+ nsdap_relation : relationships +]{!</span>!}
 {!</div>!}
 
 = Internal Factions of the Democratic Coalition
@@ -255,13 +263,15 @@ on-arrival: {!
 Q.pro_republic_disp = Math.round(Q.pro_republic);
 Q.nationalism_disp = Math.round(Q.nationalism);
 Q.socialism_disp = Math.round(Q.socialism);
-Q.gop_votes = Math.round((Q.dvp_votes || 0) + (Q.dnvp_votes || 0));
+Q.gop_votes = Q.dvp_votes || 0;
 Q.liberty_league_votes = Q.ddp_votes || 0;
-Q.silver_legion_votes = Q.other_votes || 0;
+Q.nusj_votes = Q.dnvp_votes || 0;
+Q.silver_legion_votes = Q.nsdap_votes || 0;
 for (var c of Q.classes) {
-    Q[c + '_gop_display'] = Math.round((Q[c + '_dvp_normalized'] || 0) + (Q[c + '_dnvp_normalized'] || 0));
+    Q[c + '_gop_display'] = Math.round(Q[c + '_dvp_normalized'] || 0);
     Q[c + '_liberty_league_display'] = Q[c + '_ddp_display'];
-    Q[c + '_silver_legion_display'] = Q[c + '_other_display'];
+    Q[c + '_nusj_display'] = Q[c + '_dnvp_display'];
+    Q[c + '_silver_legion_display'] = Q[c + '_nsdap_display'];
 }
 !}
 
@@ -281,22 +291,22 @@ for (var c of Q.classes) {
 
 {!<span class="party-gop">Republican Party</span>!}: [+ gop_votes +]%
 
-{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ nsdap_votes +]%
+{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ nusj_votes +]%
 
 {!<span class="party-silver">Silver Legion</span>!}: [+ silver_legion_votes +]%
 
 **Detailed results for each demographic**
 
-Workers: {!<span class="party-dem">Democratic Party</span>!}: [+ workers_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ workers_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ workers_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ workers_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ workers_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ workers_nsdap_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ workers_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ workers_sapd_display +]% ?]
+Workers: {!<span class="party-dem">Democratic Party</span>!}: [+ workers_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ workers_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ workers_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ workers_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ workers_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ workers_nusj_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ workers_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ workers_sapd_display +]% ?]
 
-New Middle Class: {!<span class="party-dem">Democratic Party</span>!}: [+ new_middle_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ new_middle_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ new_middle_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ new_middle_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ new_middle_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ new_middle_nsdap_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ new_middle_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ new_middle_sapd_display +]% ?]
+New Middle Class: {!<span class="party-dem">Democratic Party</span>!}: [+ new_middle_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ new_middle_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ new_middle_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ new_middle_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ new_middle_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ new_middle_nusj_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ new_middle_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ new_middle_sapd_display +]% ?]
 
-Old Middle Class: {!<span class="party-dem">Democratic Party</span>!}: [+ old_middle_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ old_middle_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ old_middle_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ old_middle_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ old_middle_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ old_middle_nsdap_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ old_middle_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ old_middle_sapd_display +]% ?]
+Old Middle Class: {!<span class="party-dem">Democratic Party</span>!}: [+ old_middle_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ old_middle_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ old_middle_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ old_middle_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ old_middle_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ old_middle_nusj_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ old_middle_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ old_middle_sapd_display +]% ?]
 
-Rural: {!<span class="party-dem">Democratic Party</span>!}: [+ rural_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ rural_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ rural_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ rural_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ rural_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ rural_nsdap_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ rural_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ rural_sapd_display +]% ?]
+Rural: {!<span class="party-dem">Democratic Party</span>!}: [+ rural_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ rural_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ rural_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ rural_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ rural_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ rural_nusj_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ rural_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ rural_sapd_display +]% ?]
 
-Unemployed: {!<span class="party-dem">Democratic Party</span>!}: [+ unemployed_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ unemployed_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ unemployed_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ unemployed_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ unemployed_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ unemployed_nsdap_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ unemployed_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ unemployed_sapd_display +]% ?]
+Unemployed: {!<span class="party-dem">Democratic Party</span>!}: [+ unemployed_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ unemployed_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ unemployed_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ unemployed_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ unemployed_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ unemployed_nusj_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ unemployed_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ unemployed_sapd_display +]% ?]
 
-Catholics: {!<span class="party-dem">Democratic Party</span>!}: [+ catholics_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ catholics_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ catholics_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ catholics_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ catholics_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ catholics_nsdap_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ catholics_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ catholics_sapd_display +]% ?]
+Catholics: {!<span class="party-dem">Democratic Party</span>!}: [+ catholics_spd_display +]%, {!<span class="party-fl">Farmer-Labor</span>!}: [+ catholics_z_display +]%, {!<span class="party-spa">Socialist Party of America</span>!}: [+ catholics_kpd_display +]%, {!<span class="party-liberty">Liberty League</span>!}: [+ catholics_liberty_league_display +]%, {!<span class="party-gop">Republican Party</span>!}: [+ catholics_gop_display +]%, {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ catholics_nusj_display +]%, {!<span class="party-silver">Silver Legion</span>!}: [+ catholics_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ catholics_sapd_display +]% ?]
 
 Support for the Republic: [+ pro_republic_disp +]%

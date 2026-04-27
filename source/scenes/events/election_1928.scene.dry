@@ -102,15 +102,15 @@ if (Q.kpd_r >= Q.spd_r && Q.kpd_r >= Q.nsdap_r) {
 Q.weimar_coalition = Q.spd_r + Q.ddp_r + Q.z_r - 3;
 Q.grand_coalition = Q.spd_r + Q.ddp_r + Q.z_r + Q.dvp_r;
 Q.bourgeois_coalition = Q.ddp_r + Q.z_r + Q.dvp_r + Q.other_r;
-Q.center_right_coalition = Q.z_r + Q.ddp_r + Q.dvp_r + Q.other_r + Q.dnvp_r;
-Q.right_coalition = Q.z_r + Q.dvp_r + Q.other_r + Q.dnvp_r;
+Q.center_right_coalition = Q.z_r + Q.ddp_r + Q.dvp_r + Q.other_r;
+Q.right_coalition = Q.z_r + Q.ddp_r + Q.dvp_r + Q.other_r;
 Q.far_right_coalition = Q.dnvp_r + Q.nsdap_r;
 Q.left_coalition = Q.spd_r + Q.kpd_r + Q.sapd_r;
 // this is an absurd concept lol
 Q.popular_front_coalition = Q.spd_r + Q.kpd_r + Q.z_r + Q.ddp_r - 3 + Q.sapd_r;
 Q.anti_democratic_coalition = Q.kpd_r + Q.nsdap_r + Q.dnvp_r;
 // aka everyone except nazi, kpd, dnvp
-Q.neo_weimar_coalition = Q.spd_r + Q.ddp_r + Q.z_r + Q.dvp_r + Q.other_r;
+Q.neo_weimar_coalition = Q.spd_r + Q.ddp_r + Q.z_r + Q.dvp_r;
 // Hitler + Right-wing parties (only comes into effect if you've alienated Z too badly)
 Q.hitler_right_coalition = Q.z_r + Q.dnvp_r + Q.nsdap_r;
 // Progressive coalition isn't going to be implemented as a distinct coalition but it's the coalition that lets you pass improved women's rights/gay rights
@@ -155,10 +155,12 @@ Q.grand_house = Q.spd_h + Q.ddp_h + Q.z_h + Q.dvp_h;
 Q.grand_senate = Q.spd_s + Q.ddp_s + Q.z_s + Q.dvp_s;
 Q.bourgeois_house = Q.ddp_h + Q.z_h + Q.dvp_h + Q.other_h;
 Q.bourgeois_senate = Q.ddp_s + Q.z_s + Q.dvp_s + Q.other_s;
-Q.neo_weimar_house = Q.spd_h + Q.ddp_h + Q.z_h + Q.dvp_h + Q.other_h;
-Q.neo_weimar_senate = Q.spd_s + Q.ddp_s + Q.z_s + Q.dvp_s + Q.other_s;
-Q.right_house = Q.z_h + Q.dvp_h + Q.other_h + Q.dnvp_h;
-Q.right_senate = Q.z_s + Q.dvp_s + Q.other_s + Q.dnvp_s;
+Q.neo_weimar_house = Q.spd_h + Q.ddp_h + Q.z_h + Q.dvp_h;
+Q.neo_weimar_senate = Q.spd_s + Q.ddp_s + Q.z_s + Q.dvp_s;
+Q.constitutional_opposition_house = Q.z_h + Q.ddp_h + Q.dvp_h + Q.other_h;
+Q.constitutional_opposition_senate = Q.z_s + Q.ddp_s + Q.dvp_s + Q.other_s;
+Q.right_house = Q.constitutional_opposition_house;
+Q.right_senate = Q.constitutional_opposition_senate;
 Q.far_right_house = Q.dnvp_h + Q.nsdap_h;
 Q.far_right_senate = Q.dnvp_s + Q.nsdap_s;
 Q.left_house = Q.spd_h + Q.kpd_h + (Q.sapd_h || 0);
@@ -166,6 +168,32 @@ Q.left_senate = Q.spd_s + Q.kpd_s + (Q.sapd_s || 0);
 Q.popular_house = Q.spd_h + Q.kpd_h + Q.z_h + Q.ddp_h - 3 + (Q.sapd_h || 0);
 Q.popular_senate = Q.spd_s + Q.kpd_s + Q.z_s + Q.ddp_s - 3 + (Q.sapd_s || 0);
 Q.dem_bill_coalition = Math.max(Q.weimar_senate, Q.grand_senate, Q.popular_senate, Q.left_senate);
+Q.best_dem_house = Math.max(Q.spd_h, Q.weimar_house, Q.grand_house, Q.left_house, Q.popular_house);
+Q.best_dem_senate = Math.max(Q.spd_s, Q.weimar_senate, Q.grand_senate, Q.left_senate, Q.popular_senate);
+Q.non_dem_house = Math.max(Q.constitutional_opposition_house, Q.far_right_house);
+Q.non_dem_senate = Math.max(Q.constitutional_opposition_senate, Q.far_right_senate);
+Q.non_dem_house_seats = Q.constitutional_opposition_house >= Q.far_right_house ? (Q.z_h_seats + Q.ddp_h_seats + Q.dvp_h_seats + Q.other_h_seats) : (Q.dnvp_h_seats + Q.nsdap_h_seats);
+Q.non_dem_senate_seats = Q.constitutional_opposition_senate >= Q.far_right_senate ? (Q.z_s_seats + Q.ddp_s_seats + Q.dvp_s_seats + Q.other_s_seats) : (Q.dnvp_s_seats + Q.nsdap_s_seats);
+Q.non_dem_house_name = Q.constitutional_opposition_house >= Q.far_right_house ? "Republican-led constitutional opposition House bloc" : "NUSJ-Silver Legion House bloc";
+Q.non_dem_senate_name = Q.constitutional_opposition_senate >= Q.far_right_senate ? "Republican-led constitutional opposition Senate bloc" : "NUSJ-Silver Legion Senate bloc";
+Q.non_dem_house_desc = Q.constitutional_opposition_house >= Q.far_right_house ? "Republican Party, Liberty League, Farmer-Labor conservatives, and independents. They oppose the Democratic administration, the Socialist Party of America, and the far right." : "National Union for Social Justice and Silver Legion-aligned members. They are anti-system forces and do not cooperate with the Republican Party.";
+Q.non_dem_senate_desc = Q.constitutional_opposition_senate >= Q.far_right_senate ? "Republican Party, Liberty League, Farmer-Labor conservatives, and independents. They oppose the Democratic administration, the Socialist Party of America, and the far right." : "National Union for Social Justice and Silver Legion-aligned members. They are anti-system forces and do not cooperate with the Republican Party.";
+Q.non_dem_house_has_majority = Q.non_dem_house >= 50 ? 1 : 0;
+Q.non_dem_senate_has_majority = Q.non_dem_senate >= 50 ? 1 : 0;
+Q.can_dem_house_coalition = Q.best_dem_house >= 50 ? 1 : 0;
+Q.can_dem_senate_coalition = 0;
+if (Q.spd_s >= 50 || Q.weimar_senate >= 50 || Q.grand_senate >= 50) {
+    Q.can_dem_senate_coalition = 1;
+}
+if (Q.neo_weimar_senate >= 50 && Q.z_relation >= 50 && Q.dvp_relation >= 30) {
+    Q.can_dem_senate_coalition = 1;
+}
+if (Q.left_senate >= 50 && Q.kpd_relation >= 50 && Q.communist_coalition >= 3) {
+    Q.can_dem_senate_coalition = 1;
+}
+if (Q.popular_senate >= 50 && Q.kpd_relation >= 45 && Q.z_relation >= 45 && Q.ddp_relation >= 50 && Q.communist_coalition >= 3) {
+    Q.can_dem_senate_coalition = 1;
+}
 Q.gridlock_risk = 0;
 if (Q.dem_bill_coalition < 50) {
     Q.gridlock_risk = 1;
@@ -191,6 +219,10 @@ Q.in_minority_government = 0;
 Q.in_unity_government = 0;
 Q.spd_toleration = 0;
 Q.spd_caretaker = 0;
+Q.in_right_coalition = 0;
+Q.non_dem_house_control = 0;
+Q.non_dem_senate_control = 0;
+Q.non_dem_congressional_control = 0;
 Q.foreign_minister_party = 'DVP';
 Q.interior_minister_party = 'Z';
 Q.justice_minister_party = 'I';
@@ -224,24 +256,29 @@ Q.reichswehr_goal_completed = 0;
 Q.strike_term_seen = 0;
 
 Q.z_minus_bvp_r = Q.z_r - 3;
-Q.gop_r = Q.dvp_r + Q.dnvp_r;
-Q.old_gop_r = Q.old_dvp_r + Q.old_dnvp_r;
+Q.gop_r = Q.dvp_r;
+Q.old_gop_r = Q.old_dvp_r;
 Q.change_gop_r = Q.gop_r - Q.old_gop_r;
 Q.str_change_gop = (Q.change_gop_r > 0 ? '+' : '') + Q.change_gop_r;
 Q.liberty_league_r = Q.ddp_r;
-Q.silver_legion_r = Q.other_r;
-Q.gop_h = Q.dvp_h + Q.dnvp_h;
-Q.gop_s = Q.dvp_s + Q.dnvp_s;
-Q.gop_h_seats = Q.dvp_h_seats + Q.dnvp_h_seats;
-Q.gop_s_seats = Q.dvp_s_seats + Q.dnvp_s_seats;
+Q.nusj_r = Q.dnvp_r;
+Q.silver_legion_r = Q.nsdap_r;
+Q.gop_h = Q.dvp_h;
+Q.gop_s = Q.dvp_s;
+Q.gop_h_seats = Q.dvp_h_seats;
+Q.gop_s_seats = Q.dvp_s_seats;
 Q.liberty_league_h = Q.ddp_h;
 Q.liberty_league_s = Q.ddp_s;
 Q.liberty_league_h_seats = Q.ddp_h_seats;
 Q.liberty_league_s_seats = Q.ddp_s_seats;
-Q.silver_legion_h = Q.other_h;
-Q.silver_legion_s = Q.other_s;
-Q.silver_legion_h_seats = Q.other_h_seats;
-Q.silver_legion_s_seats = Q.other_s_seats;
+Q.nusj_h = Q.dnvp_h;
+Q.nusj_s = Q.dnvp_s;
+Q.nusj_h_seats = Q.dnvp_h_seats;
+Q.nusj_s_seats = Q.dnvp_s_seats;
+Q.silver_legion_h = Q.nsdap_h;
+Q.silver_legion_s = Q.nsdap_s;
+Q.silver_legion_h_seats = Q.nsdap_h_seats;
+Q.silver_legion_s_seats = Q.nsdap_s_seats;
 
 // understanding the enemy
 if (Q.nsdap_r >= 15) {
@@ -298,16 +335,16 @@ data = data.concat([
         "seats": Q.gop_h_seats,
     },
     {
-        "id": "other",
-        "legend": "Silver Legion",
-        "name": "Silver Legion",
-        "seats": Q.silver_legion_h_seats,
+        "id": "dnvp",
+        "legend": "National Union for Social Justice",
+        "name": "National Union for Social Justice",
+        "seats": Q.nusj_h_seats,
     },
     {
         "id": "nsdap",
-        "legend": "National Union for Social Justice",
-        "name": "National Union for Social Justice",
-        "seats": Q.nsdap_h_seats,
+        "legend": "Silver Legion",
+        "name": "Silver Legion",
+        "seats": Q.silver_legion_h_seats,
     },
 ]);
 
@@ -348,9 +385,9 @@ go-to: house_coalition_menu
 
 {!<tr><td><div class="box" style='background-color:#C1121F'> </div> !} Republican Party: {!</td><td>!} [+ gop_h_seats +] {!</td><td>!} [+ gop_h +]% {!</td><td>!} [+ str_change_gop +] {!</td></tr>!}
  
-{!<tr><td><div class="box" style='background-color:#a0a0a0'> </div> !} Silver Legion: {!</td><td>!} [+ silver_legion_h_seats +] {!</td><td>!} [+ silver_legion_h +]% {!</td><td>!} [+ str_change_other +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#954B00'> </div> !} National Union for Social Justice: {!</td><td>!} [+ nusj_h_seats +] {!</td><td>!} [+ nusj_h +]% {!</td><td>!} [+ str_change_dnvp +] {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#954B00'> </div> !} National Union for Social Justice: {!</td><td>!} [+ nsdap_h_seats +] {!</td><td>!} [+ nsdap_h +]% {!</td><td>!} [+ str_change_nsdap +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#a0a0a0'> </div> !} Silver Legion: {!</td><td>!} [+ silver_legion_h_seats +] {!</td><td>!} [+ silver_legion_h +]% {!</td><td>!} [+ str_change_nsdap +] {!</td></tr>!}
 {!</table>!}
 
 **Projected chamber breakdown** (coalitions required in both chambers for reliable governing):
@@ -365,7 +402,7 @@ Liberty League: House [+ liberty_league_h_seats +] seats ([+ liberty_league_h +]
 
 Republican Party: House [+ gop_h_seats +] seats ([+ gop_h +]%) / Senate [+ gop_s_seats +] seats ([+ gop_s +]%)
 
-National Union for Social Justice: House [+ nsdap_h_seats +] seats ([+ nsdap_h +]%) / Senate [+ nsdap_s_seats +] seats ([+ nsdap_s +]%)
+National Union for Social Justice: House [+ nusj_h_seats +] seats ([+ nusj_h +]%) / Senate [+ nusj_s_seats +] seats ([+ nusj_s +]%)
 
 Silver Legion: House [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%) / Senate [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
 
@@ -373,9 +410,9 @@ Silver Legion: House [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%) 
 
 [? if gridlock_risk = 1 : No democratic coalition currently has a Senate majority. Even if a House governing coalition forms, legislative gridlock risk is high. ?]
 
-[? if nazi_urgency <= 1 and nsdap_r >= 15 : The rapid rise in NSDAP votes is extremely worrying. Many had believed that the party was moribund; now, some of us consider it to be the greatest threat to democracy in Germany. ?]
+[? if nazi_urgency <= 1 and nsdap_r >= 15 : The rapid rise in Silver Legion votes is extremely worrying. Many had believed that the movement was marginal; now, some of us consider it one of the greatest threats to American democracy. ?]
 
-[? if anti_democratic_coalition >= 50 : Together, the anti-democratic KPD, DNVP, and NSDAP have a majority in the Reichstag. A stable governing majority will be almost impossible. ?]
+[? if anti_democratic_coalition >= 50 : Together, anti-system socialists, Republican hardliners, and the National Union for Social Justice have a national majority. A stable governing majority will be almost impossible. ?]
 
 First, organize the House. Senate bargaining comes next; each chamber gets its own coalition menu.
 
@@ -390,7 +427,7 @@ Choose a House organizing coalition. This secures the Speaker and committee cont
 - @house_stabilization
 - @house_left
 - @house_popular
-- @house_no_majority
+- @house_non_dem_coalition
 
 @house_spd_majority
 title: Democratic House majority.
@@ -412,7 +449,7 @@ The House can be organized around the Democratic Party, Farmer-Labor, and the Li
 
 @house_stabilization
 title: National stabilization House coalition.
-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates ([+ grand_house +]%)
+subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican Party ([+ grand_house +]%)
 view-if: grand_house >= 50
 on-arrival: selected_house_coalition = "National stabilization coalition"; governing_house_support = grand_house; speaker_elected = 1;
 go-to: senate_results
@@ -437,13 +474,16 @@ go-to: senate_results
 
 The House can be organized through a broad anti-reactionary coalition.
 
-@house_no_majority
-title: No clear House majority.
+@house_non_dem_coalition
+title: A non-Democratic House majority organizes.
+subtitle: [+ non_dem_house_name +] ([+ non_dem_house +]%, [+ non_dem_house_seats +] seats)
 view-if: spd_h < 50 and weimar_house < 50 and grand_house < 50 and left_house < 50 and popular_house < 50
-on-arrival: selected_house_coalition = "No clear House majority"; governing_house_support = 0; speaker_elected = 0;
+on-arrival: selected_house_coalition = non_dem_house_name; governing_house_support = 0; speaker_elected = 0; non_dem_house_control = non_dem_house_has_majority; legislative_gridlock = 1 if non_dem_house_has_majority = 0; chancellor = "Opposition Speaker" if non_dem_house_has_majority = 1; chancellor_party = "DVP" if constitutional_opposition_house >= far_right_house; chancellor_party = "DNVP" if far_right_house > constitutional_opposition_house;
 go-to: senate_results
 
-No workable House organizing coalition is immediately available.
+No Democratic-led House coalition can reach a majority. [? if non_dem_house_has_majority = 1 : The largest viable non-Democratic organizing bloc takes the Speaker and committee control by default: ?][? if non_dem_house_has_majority = 0 : No non-Democratic bloc can organize the House either; the chamber is deadlocked around the largest possible bloc: ?]
+
+[+ non_dem_house_desc +].
 
 @senate_results
 on-display: {!
@@ -453,8 +493,8 @@ var senateData = [
     {"id": "ddp", "legend": "Liberty League", "name": "Liberty League", "seats": Q.liberty_league_s_seats},
     {"id": "z", "legend": "Farmer-Labor", "name": "Farmer-Labor", "seats": Q.z_s_seats},
     {"id": "dvp", "legend": "Republican Party", "name": "Republican Party", "seats": Q.gop_s_seats},
-    {"id": "other", "legend": "Silver Legion", "name": "Silver Legion", "seats": Q.silver_legion_s_seats},
-    {"id": "nsdap", "legend": "National Union for Social Justice", "name": "National Union for Social Justice", "seats": Q.nsdap_s_seats}
+    {"id": "dnvp", "legend": "National Union for Social Justice", "name": "National Union for Social Justice", "seats": Q.nusj_s_seats},
+    {"id": "nsdap", "legend": "Silver Legion", "name": "Silver Legion", "seats": Q.silver_legion_s_seats}
 ];
 if (Q.sapd_formed && Q.sapd_s) {
     senateData.splice(1, 0, {"id": "sapd", "legend": "Left splinters", "name": "Left splinters", "seats": Q.sapd_s_seats});
@@ -479,8 +519,8 @@ if (window && d3) {
         {"id": "ddp", "legend": "Liberty League", "name": "Liberty League", "seats": Q.liberty_league_h_seats},
         {"id": "z", "legend": "Farmer-Labor", "name": "Farmer-Labor", "seats": Q.z_h_seats},
         {"id": "dvp", "legend": "Republican Party", "name": "Republican Party", "seats": Q.gop_h_seats},
-        {"id": "other", "legend": "Silver Legion", "name": "Silver Legion", "seats": Q.silver_legion_h_seats},
-        {"id": "nsdap", "legend": "National Union for Social Justice", "name": "National Union for Social Justice", "seats": Q.nsdap_h_seats}
+        {"id": "dnvp", "legend": "National Union for Social Justice", "name": "National Union for Social Justice", "seats": Q.nusj_h_seats},
+        {"id": "nsdap", "legend": "Silver Legion", "name": "Silver Legion", "seats": Q.silver_legion_h_seats}
     ]).call(parliament);
 }
 !}
@@ -505,12 +545,49 @@ Now form a Senate coalition for bill passage and confirmation fights.
 - @grand_coalition
 - @new_grand_coalition
 - @unity_government
-- @far_right_coalition
-- @no_majority
-- @brauns_dilemma
 - @left_coalition
 - @popular_front_coalition
-- @right_coalition
+- @senate_non_dem_coalition
+
+@senate_non_dem_coalition
+title: A non-Democratic Senate majority organizes.
+subtitle: [+ non_dem_senate_name +] ([+ non_dem_senate +]%, [+ non_dem_senate_seats +] seats)
+view-if: can_dem_senate_coalition = 0
+on-arrival: selected_senate_coalition = non_dem_senate_name; governing_senate_support = 0; bill_coalition_viable = 0; non_dem_senate_control = non_dem_senate_has_majority; non_dem_congressional_control = 1 if non_dem_house_control = 1 and non_dem_senate_has_majority = 1; spd_in_government = 1 if president_party = "SPD"; spd_toleration = 0; in_spd_majority = 0; in_weimar_coalition = 0; in_grand_coalition = 0; in_left_front = 0; in_popular_front = 0; legislative_gridlock = 1; pro_republic -= 2;
+go-to: divided_government_result
+
+No Democratic-led Senate coalition can reach a majority. [? if non_dem_senate_has_majority = 1 : The largest viable non-Democratic Senate bloc organizes the chamber: ?][? if non_dem_senate_has_majority = 0 : No non-Democratic bloc can organize the Senate either; the chamber is deadlocked around the largest possible bloc: ?]
+
+[+ non_dem_senate_desc +].
+
+@divided_government_result
+on-arrival: {!
+if (!Q.selected_senate_coalition && !Q.non_dem_senate_control) {
+    Q.selected_senate_coalition = "Democratic-led Senate coalition";
+    Q.governing_senate_support = Q.best_dem_senate || Q.governing_senate_support || 0;
+}
+var cabinetParty = Q.president_party || "SPD";
+Q.foreign_minister_party = cabinetParty;
+Q.interior_minister_party = cabinetParty;
+Q.justice_minister_party = cabinetParty;
+Q.labor_minister_party = cabinetParty;
+Q.reichswehr_minister_party = cabinetParty;
+Q.economic_minister_party = cabinetParty;
+Q.finance_minister_party = cabinetParty;
+Q.agriculture_minister_party = cabinetParty;
+!}
+
+Congress is divided against the administration.
+
+House: [+ selected_house_coalition +]
+
+Senate: [+ selected_senate_coalition +]
+
+[? if non_dem_house_control = 1 and non_dem_senate_control = 1 : Opposition forces control both chambers. The president keeps the executive branch, but legislation will require hostile bargaining or later elections. ?]
+[? if non_dem_house_control = 1 and non_dem_senate_control = 0 : The administration has a Senate path, but the House is controlled by the opposition. ?]
+[? if non_dem_house_control = 0 and non_dem_senate_control = 1 : The administration has a House organizing coalition, but the Senate is controlled by the opposition. ?]
+
+- @root: Continue.
 
 # TODO: black-brown coalition
 
@@ -568,8 +645,8 @@ go-to: popular_front_civil_war if coup_progress >= 10; popular_front_no_civil_wa
 Somehow, the coalition is successfully formed! The conciliatory leadership of the Center Party and KPD helped make the negotiations possible. We still need a chancellor; the only acceptable choice among the parties was Rudolf Breitscheid of the SPD, acceptable to the Center and KPD [? if president == "Hindenburg" : as well as President Hindenburg, albeit extremely reluctantly ?].
 
 @popular_front_success
-on-arrival: spd_in_government = 1; in_popular_front = 1; chancellor = "Breitscheid"; chancellor_party = "SPD"; kpd_relation += 10; coup_progress += 2; in_left_front = 0; in_weimar_coalition = 0; in_grand_coalition = 0; coalition_dissent = 0;
-go-to: popular_front_civil_war if coup_progress >= 10; popular_front_no_civil_war if coup_progress < 10
+on-arrival: selected_senate_coalition = "Popular front coalition"; governing_senate_support = popular_senate; bill_coalition_viable = 1 if non_dem_house_control = 0; spd_in_government = 1; in_popular_front = 1; chancellor = "Breitscheid"; chancellor_party = "SPD"; kpd_relation += 10; coup_progress += 2; in_left_front = 0; in_weimar_coalition = 0; in_grand_coalition = 0; coalition_dissent = 0;
+go-to: divided_government_result if non_dem_house_control = 1; popular_front_civil_war if non_dem_house_control = 0 and coup_progress >= 10; popular_front_no_civil_war if non_dem_house_control = 0 and coup_progress < 10
 achievement: volksfront
 
 Somehow, surprisingly, the coalition is successfully formed! We still need a chancellor; the only acceptable choice among the parties was Rudolf Breitscheid of the SPD, acceptable to the Center and KPD [? if president == "Hindenburg" : as well as President Hindenburg, albeit extremely reluctantly ?].
@@ -598,7 +675,7 @@ The Center manages to diffuse some of the hostility from the Reichswehr and the 
 
 @far_right_coalition
 title: Far-right coalition
-subtitle: National Union for Social Justice + reactionary conservatives ([+ far_right_senate +]%)
+subtitle: National Union for Social Justice + Silver Legion ([+ far_right_senate +]%)
 view-if: far_right_senate >= 50
 go-to: far_right_win if (year >= 1932 or nsdap_r >= 44) and president != "Braun"; far_right_fail if (year < 1932 and nsdap_r < 44) and president != "Braun"; far_right_braun if president == "Braun"
 priority: 2
@@ -693,8 +770,8 @@ go-to: left_coalition_success
 
 
 @left_coalition_success
-on-arrival: spd_in_government = 1; in_left_front = 1; chancellor = "Breitscheid"; chancellor_party = "SPD"; coup_progress += 3; capital_strike_progress += 2; in_popular_front = 0; in_grand_coalition = 0; in_weimar_coalition = 0; kpd_relation += 10
-go-to: left_coalition_civil_war if coup_progress >= 10; left_coalition_no_civil_war if coup_progress < 10
+on-arrival: selected_senate_coalition = "Labor-left coalition"; governing_senate_support = left_senate; bill_coalition_viable = 1 if non_dem_house_control = 0; spd_in_government = 1; in_left_front = 1; chancellor = "Breitscheid"; chancellor_party = "SPD"; coup_progress += 3; capital_strike_progress += 2; in_popular_front = 0; in_grand_coalition = 0; in_weimar_coalition = 0; kpd_relation += 10
+go-to: divided_government_result if non_dem_house_control = 1; left_coalition_civil_war if non_dem_house_control = 0 and coup_progress >= 10; left_coalition_no_civil_war if non_dem_house_control = 0 and coup_progress < 10
 achievement: einheitsfront
 
 Somehow, surprisingly, the left coalition is successfully formed, without appointing Thälmann as chancellor. The consensus choice for chancellor, accepted by the SPD, KPD, and President [+ president +], is Rudolf Breitscheid, who belongs to the centrist faction of the SPD, but was acceptable to the left due to his previous membership in the left-wing anti-war USPD.
@@ -803,10 +880,10 @@ The third option is to have new elections.
 
 @new_grand_coalition
 title: A constitutional stabilization coalition?
-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates + Silver Legion-aligned minor parties ([+ neo_weimar_senate +]%)
+subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican Party ([+ neo_weimar_senate +]%)
 view-if: neo_weimar_senate >= 50 and grand_senate < 50
 choose-if: z_relation >= 50 and dvp_relation >= 30
-unavailable-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates + Silver Legion-aligned minor parties ([+ neo_weimar_senate +]%) - [? if z_relation < 50 : We do not have adequate relations with Farmer-Labor. ?][? if dvp_relation < 30 : We do not have adequate relations with Republican moderates. ?]
+unavailable-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican Party ([+ neo_weimar_senate +]%) - [? if z_relation < 50 : We do not have adequate relations with Farmer-Labor. ?][? if dvp_relation < 30 : We do not have adequate relations with the Republican Party. ?]
 
 How do we convince vehemently anti-socialist parties to allow us to form a majority coalition? Our largely benevolent relations with the Center and DVP may allow us some leverage.
 
@@ -820,7 +897,8 @@ title: Use our resources to smooth over the creation of a coalition.
 subtitle: -2 resources
 unavailable-subtitle: Not enough resources (need 2).
 choose-if: resources >= 2
-on-arrival: resources -= 2; spd_in_government = 1; in_grand_coalition = 1; left_dissent += 4;
+on-arrival: selected_senate_coalition = "Constitutional stabilization coalition"; governing_senate_support = neo_weimar_senate; bill_coalition_viable = 1 if non_dem_house_control = 0; resources -= 2; spd_in_government = 1; in_grand_coalition = 1; left_dissent += 4;
+go-to: divided_government_result if non_dem_house_control = 1
 achievement: constitutional_coalition
 
 We transfer some of our campaign funds to our putative coalition partners. Some would call this corruption, but perhaps it is necessary to save our democracy.
@@ -844,7 +922,7 @@ We have assembled a new coalition under Otto Braun.
 
 @unity_government
 title: Farmer-Labor offers a national unity government under Joseph Wirth.
-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates + Silver Legion-aligned minor parties ([+ neo_weimar_senate +]%)
+subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican Party ([+ neo_weimar_senate +]%)
 view-if: z_party_leader == "Joos" and neo_weimar_senate >= 50 and weimar_senate < 50 and z_relation >= 10
 
 The Center Party leader, Joseph Joos, clearly sees the threat from the ascension of the anti-democratic extremist parties, and thus tries to negotiate a "Government of National Unity" to save the republic. This coalition would be led by Joseph Wirth, a left-leaning member of the Center Party and former chancellor, and would encompass all of the constitutional parties. Our role in this government might be limited, however.
@@ -854,9 +932,9 @@ The Center Party leader, Joseph Joos, clearly sees the threat from the ascension
 
 @unity_government_2
 title: Accept the offer!
-on-arrival: chancellor = "Wirth"; chancellor_party = "Z"; spd_in_government = 1; in_grand_coalition = 1; in_unity_government = 1; leverage = 15; z_relation += 5; dvp_relation += 4
+on-arrival: selected_senate_coalition = "National unity coalition"; governing_senate_support = neo_weimar_senate; bill_coalition_viable = 1 if non_dem_house_control = 0; chancellor = "Wirth"; chancellor_party = "Z"; spd_in_government = 1; in_grand_coalition = 1; in_unity_government = 1; leverage = 15; z_relation += 5; dvp_relation += 4
 achievement: constitutional_coalition
-go-to: ministries
+go-to: divided_government_result if non_dem_house_control = 1; ministries if non_dem_house_control = 0
 
 We have formed a new unity government of all the constitutional parties! We have a limited choice in ministries for this government.
 
@@ -919,7 +997,8 @@ There is no path to a majority government for now. The scheming around President
 title: Democratic Senate majority alone
 subtitle: Democratic Party: [+ spd_s +]%
 view-if: spd_s >= 50
-on-arrival: chancellor = "Empty"; chancellor_party = "SPD"; spd_in_government = 1; in_spd_majority = 1; pro_republic += 5; foreign_minister_party = "SPD"; foreign_minister = "Breitscheid"; interior_minister_party = "SPD"; interior_minister = "Severing"; justice_minister_party = "SPD"; justice_minister = "Radbruch"; labor_minister_party = "SPD"; labor_minister = "Wissell"; reichswehr_minister_party = "SPD"; reichswehr_minister = "Leber"; economic_minister_party = "SPD"; economic_minister = "Schmidt"; finance_minister_party = "SPD"; finance_minister = "Hilferding"; agriculture_minister_party = "SPD"; agriculture_minister = "Baade"; reichswehr_loyalty -= 0.05; 
+on-arrival: selected_senate_coalition = "Democratic Senate majority"; governing_senate_support = spd_s; bill_coalition_viable = 1 if non_dem_house_control = 0; chancellor = "Empty"; chancellor_party = "SPD"; spd_in_government = 1; in_spd_majority = 1; pro_republic += 5; foreign_minister_party = "SPD"; foreign_minister = "Breitscheid"; interior_minister_party = "SPD"; interior_minister = "Severing"; justice_minister_party = "SPD"; justice_minister = "Radbruch"; labor_minister_party = "SPD"; labor_minister = "Wissell"; reichswehr_minister_party = "SPD"; reichswehr_minister = "Leber"; economic_minister_party = "SPD"; economic_minister = "Schmidt"; finance_minister_party = "SPD"; finance_minister = "Hilferding"; agriculture_minister_party = "SPD"; agriculture_minister = "Baade"; reichswehr_loyalty -= 0.05; 
+go-to: divided_government_result if non_dem_house_control = 1
 achievement: majority_party
 
 Finally, the Democratic Party has a Senate majority. With the House already organized, the administration can move its agenda without coalition vetoes.
@@ -1108,6 +1187,7 @@ We have won the vote of no confidence, and are currently ruling under an SPD min
 title: We can form a broad reform coalition.
 subtitle: Democratic Party + Farmer-Labor + Liberty League [? if sapd_formed and kpd_relation >= 30 : + left-splinter toleration ?] ([+ weimar_senate +]%)
 view-if: weimar_senate >= 50
+go-to: divided_government_result if non_dem_house_control = 1
 on-arrival: leverage += 5; leverage += 5 if z_party_leader == "Joos"; in_weimar_coalition = 1; spd_in_government = 1; in_popular_front = 0; in_left_front = 0; foreign_minister_party = "Z"; interior_minister_party = "Z"; justice_minister_party = ddp_name; labor_minister_party = "Z"; reichswehr_minister_party = "I"; economic_minister_party = ddp_name; finance_minister_party = "Z"; agriculture_minister_party = "Z"; foreign_minister = "Wirth"; interior_minister = "Wirth"; justice_minister = "Koch-Weser"; labor_minister = "Stegerwald"; reichswehr_minister = "Groener"; economic_minister = "Dietrich"; finance_minister = "Köhler"; agriculture_minister = "Hermes";
 achievement: weimar_coalition
 
@@ -1135,9 +1215,9 @@ Rudolf Breitscheid has been chosen as Speaker.
 @grand_coalition
 title: We can form a national stabilization coalition.
 view-if: grand_senate >= 50 and grand_coalition_failed == 0
-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates ([+ grand_senate +]%)
-on-arrival: in_grand_coalition = 1; in_popular_front = 0; in_left_front = 0
-go-to: grand_coalition_spd_lead if (n_elections <= 1 and largest_party == "SPD") or (largest_party == "SPD" and spd_r >= 30) or president = "Braun"; grand_coalition_z_lead if president != "Braun" and ((n_elections > 1 and spd_r < 30) or (n_elections <= 1 and largest_party != "SPD"))
+subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican Party ([+ grand_senate +]%)
+on-arrival: selected_senate_coalition = "National stabilization coalition"; governing_senate_support = grand_senate; bill_coalition_viable = 1 if non_dem_house_control = 0; in_grand_coalition = 1; in_popular_front = 0; in_left_front = 0
+go-to: divided_government_result if non_dem_house_control = 1; grand_coalition_spd_lead if non_dem_house_control = 0 and ((n_elections <= 1 and largest_party == "SPD") or (largest_party == "SPD" and spd_r >= 30) or president = "Braun"); grand_coalition_z_lead if non_dem_house_control = 0 and president != "Braun" and ((n_elections > 1 and spd_r < 30) or (n_elections <= 1 and largest_party != "SPD"))
 
 # TODO: if there are enough votes to form a grand coalition, who leads? Does the SPD lead or does Brüning (Z) lead? In reality this depended on Hindenburg's will, basically, which in turn depended on what his camarilla supported.
 # In the first election, SPD always leads. In subsequent elections, if spd_r >= 29 then SPD leads, otherwise Z leads?
@@ -1424,7 +1504,7 @@ We are seen as responsible for the failure to form a government, and many of our
 
 
 @ministries
-go-to: presidential_cabinet if president = "Roosevelt"
+go-to: presidential_cabinet
 
 We can pick from any number of ministries. Controlling a ministry allows us to directly effect policy in that area. [? if in_left_front : Any ministry that we do not take will be given to the KPD. ?] [? if in_left_front and reichswehr_minister_party == "KPD" : If the KPD controls the Reichswehr Ministry, the army will most likely revolt. ?]
 
@@ -1432,9 +1512,20 @@ We can pick from any number of ministries. Controlling a ministry allows us to d
 - #drop_mins_1928
 
 @presidential_cabinet
-on-arrival: foreign_minister_party = "SPD"; interior_minister_party = "SPD"; justice_minister_party = "SPD"; labor_minister_party = "SPD"; reichswehr_minister_party = "SPD"; economic_minister_party = "SPD"; finance_minister_party = "SPD"; agriculture_minister_party = "SPD"; bill_coalition_viable = 1 if governing_senate_support >= 50;
+on-arrival: {!
+var cabinetParty = Q.president_party || Q.chancellor_party || "SPD";
+Q.foreign_minister_party = cabinetParty;
+Q.interior_minister_party = cabinetParty;
+Q.justice_minister_party = cabinetParty;
+Q.labor_minister_party = cabinetParty;
+Q.reichswehr_minister_party = cabinetParty;
+Q.economic_minister_party = cabinetParty;
+Q.finance_minister_party = cabinetParty;
+Q.agriculture_minister_party = cabinetParty;
+Q.bill_coalition_viable = Q.governing_senate_support >= 50 ? 1 : 0;
+!}
 
-Because the presidency controls the executive branch, Roosevelt keeps the cabinet in Democratic hands. The congressional coalition determines the Speaker, committee control, confirmations, and whether bills can pass; it does not hand cabinet departments to coalition partners.
+Because the presidency controls the executive branch, cabinet departments stay with the president's party. The congressional coalition determines the Speaker, committee control, confirmations, and whether bills can pass; it does not hand cabinet departments to coalition partners.
 
 - @root: Continue.
 

@@ -77,7 +77,7 @@ Socialist Party of America: [+ kpd_h_seats +] seats ([+ kpd_h +]%)
 Farmer-Labor: [+ z_h_seats +] seats ([+ z_h +]%)
 Liberty League: [+ ddp_h_seats +] seats ([+ ddp_h +]%)
 Republican Party: [+ gop_h_seats +] seats ([+ gop_h +]%)
-National Union for Social Justice: [+ nsdap_h_seats +] seats ([+ nsdap_h +]%)
+National Union for Social Justice: [+ nusj_h_seats +] seats ([+ nusj_h +]%)
 Silver Legion: [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%)
 
 Senate composition:
@@ -88,7 +88,7 @@ Socialist Party of America: [+ kpd_s_seats +] seats ([+ kpd_s +]%)
 Farmer-Labor: [+ z_s_seats +] seats ([+ z_s +]%)
 Liberty League: [+ ddp_s_seats +] seats ([+ ddp_s +]%)
 Republican Party: [+ gop_s_seats +] seats ([+ gop_s +]%)
-National Union for Social Justice: [+ nsdap_s_seats +] seats ([+ nsdap_s +]%)
+National Union for Social Justice: [+ nusj_s_seats +] seats ([+ nusj_s +]%)
 Silver Legion: [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
 
 Democratic position: [? if spd_toleration : external support ?][? if spd_in_government : governing - ?][? if spd_toleration == 0 and spd_in_government == 0 and spd_caretaker == 0 : opposition ?][? if spd_caretaker : caretaker administration ?]
@@ -198,30 +198,30 @@ Socialist Party of America: [+ kpd_votes +]%
 [+ ddp_name +]: [+ ddp_votes +]%
 
 # 1928: 9, 1930: 5
-Republican moderates: [+ dvp_votes +]%
+Republican Party: [+ dvp_votes +]%
 
 # 1928: 14, 1930: 7
-Republican old guard: [+ dnvp_votes +]%
+National Union for Social Justice: [+ dnvp_votes +]%
 
 # 1928: 3, 1930: 18
-National Union for Social Justice: [+ nsdap_votes +]%
+Silver Legion: [+ nsdap_votes +]%
 
 # 1928: 9, 1930: 10
 Others: [+ other_votes +]%
 
 **Detailed results for each demographic**
 
-Workers: Democratic Party: [+ workers_spd_display +]%, Farmer-Labor: [+ workers_z_display +]%, Socialist Party of America: [+ workers_kpd_display +]%, Liberty League: [+ workers_ddp_display +]%, Republican moderates: [+ workers_dvp_display +]%; Republican old guard: [+ workers_dnvp_display +]%, National Union for Social Justice: [+ workers_nsdap_display +]%, Silver Legion: [+ workers_other_display +]% [? if sapd_formed: Left splinters: [+ workers_sapd_display +]% ?]
+Workers: Democratic Party: [+ workers_spd_display +]%, Farmer-Labor: [+ workers_z_display +]%, Socialist Party of America: [+ workers_kpd_display +]%, Liberty League: [+ workers_ddp_display +]%, Republican Party: [+ workers_dvp_display +]%; National Union for Social Justice: [+ workers_dnvp_display +]%, Silver Legion: [+ workers_nsdap_display +]% [? if sapd_formed: Left splinters: [+ workers_sapd_display +]% ?]
 
-New Middle Class: Democratic Party: [+ new_middle_spd_display +]%, Farmer-Labor: [+ new_middle_z_display +]%, Socialist Party of America: [+ new_middle_kpd_display +]%, Liberty League: [+ new_middle_ddp_display +]%, Republican moderates: [+ new_middle_dvp_display +]%; Republican old guard: [+ new_middle_dnvp_display +]%, National Union for Social Justice: [+ new_middle_nsdap_display +]%, Silver Legion: [+ new_middle_other_display +]% [? if sapd_formed: Left splinters: [+ new_middle_sapd_display +]% ?]
+New Middle Class: Democratic Party: [+ new_middle_spd_display +]%, Farmer-Labor: [+ new_middle_z_display +]%, Socialist Party of America: [+ new_middle_kpd_display +]%, Liberty League: [+ new_middle_ddp_display +]%, Republican Party: [+ new_middle_dvp_display +]%; National Union for Social Justice: [+ new_middle_dnvp_display +]%, Silver Legion: [+ new_middle_nsdap_display +]% [? if sapd_formed: Left splinters: [+ new_middle_sapd_display +]% ?]
 
-Old Middle Class: Democratic Party: [+ old_middle_spd_display +]%, Farmer-Labor: [+ old_middle_z_display +]%, Socialist Party of America: [+ old_middle_kpd_display +]%, Liberty League: [+ old_middle_ddp_display +]%, Republican moderates: [+ old_middle_dvp_display +]%; Republican old guard: [+ old_middle_dnvp_display +]%, National Union for Social Justice: [+ old_middle_nsdap_display +]%, Silver Legion: [+ old_middle_other_display +]% [? if sapd_formed: Left splinters: [+ old_middle_sapd_display +]% ?]
+Old Middle Class: Democratic Party: [+ old_middle_spd_display +]%, Farmer-Labor: [+ old_middle_z_display +]%, Socialist Party of America: [+ old_middle_kpd_display +]%, Liberty League: [+ old_middle_ddp_display +]%, Republican Party: [+ old_middle_dvp_display +]%; National Union for Social Justice: [+ old_middle_dnvp_display +]%, Silver Legion: [+ old_middle_nsdap_display +]% [? if sapd_formed: Left splinters: [+ old_middle_sapd_display +]% ?]
 
-Rural: Democratic Party: [+ rural_spd_display +]%, Farmer-Labor: [+ rural_z_display +]%, Socialist Party of America: [+ rural_kpd_display +]%, Liberty League: [+ rural_ddp_display +]%, Republican moderates: [+ rural_dvp_display +]%; Republican old guard: [+ rural_dnvp_display +]%, National Union for Social Justice: [+ rural_nsdap_display +]%, Silver Legion: [+ rural_other_display +]% [? if sapd_formed: Left splinters: [+ rural_sapd_display +]% ?]
+Rural: Democratic Party: [+ rural_spd_display +]%, Farmer-Labor: [+ rural_z_display +]%, Socialist Party of America: [+ rural_kpd_display +]%, Liberty League: [+ rural_ddp_display +]%, Republican Party: [+ rural_dvp_display +]%; National Union for Social Justice: [+ rural_dnvp_display +]%, Silver Legion: [+ rural_nsdap_display +]% [? if sapd_formed: Left splinters: [+ rural_sapd_display +]% ?]
 
-Unemployed: Democratic Party: [+ unemployed_spd_display +]%, Farmer-Labor: [+ unemployed_z_display +]%, Socialist Party of America: [+ unemployed_kpd_display +]%, Liberty League: [+ unemployed_ddp_display +]%, Republican moderates: [+ unemployed_dvp_display +]%; Republican old guard: [+ unemployed_dnvp_display +]%, National Union for Social Justice: [+ unemployed_nsdap_display +]%, Silver Legion: [+ unemployed_other_display +]% [? if sapd_formed: Left splinters: [+ unemployed_sapd_display +]% ?]
+Unemployed: Democratic Party: [+ unemployed_spd_display +]%, Farmer-Labor: [+ unemployed_z_display +]%, Socialist Party of America: [+ unemployed_kpd_display +]%, Liberty League: [+ unemployed_ddp_display +]%, Republican Party: [+ unemployed_dvp_display +]%; National Union for Social Justice: [+ unemployed_dnvp_display +]%, Silver Legion: [+ unemployed_nsdap_display +]% [? if sapd_formed: Left splinters: [+ unemployed_sapd_display +]% ?]
 
-Catholics: Democratic Party: [+ catholics_spd_display +]%, Farmer-Labor: [+ catholics_z_display +]%, Socialist Party of America: [+ catholics_kpd_display +]%, Liberty League: [+ catholics_ddp_display +]%, Republican moderates: [+ catholics_dvp_display +]%; Republican old guard: [+ catholics_dnvp_display +]%, National Union for Social Justice: [+ catholics_nsdap_display +]%, Silver Legion: [+ catholics_other_display +]% [? if sapd_formed: Left splinters: [+ catholics_sapd_display +]% ?]
+Catholics: Democratic Party: [+ catholics_spd_display +]%, Farmer-Labor: [+ catholics_z_display +]%, Socialist Party of America: [+ catholics_kpd_display +]%, Liberty League: [+ catholics_ddp_display +]%, Republican Party: [+ catholics_dvp_display +]%; National Union for Social Justice: [+ catholics_dnvp_display +]%, Silver Legion: [+ catholics_nsdap_display +]% [? if sapd_formed: Left splinters: [+ catholics_sapd_display +]% ?]
 
 @parties
 go-to: menu
@@ -397,7 +397,7 @@ Senate coalition strength affects bill passage and policy throughput.
 @figures
 title: Figures and Charts
 go-to: menu
-on-arrival: z_minus_bvp_r = z_r - 3; gop_r = dvp_r + dnvp_r;
+on-arrival: z_minus_bvp_r = z_r - 3; gop_r = dvp_r; nusj_r = dnvp_r; silver_legion_r = nsdap_r;
 on-display: {!
 data = [
     {
@@ -477,7 +477,7 @@ if (d3 && window) {
     var lines = d3.linegraph(false, false,
             Q.parties,
             {'spd': '#2f65a8', 'kpd': '#8B0000', 'ddp': '#DCCA4A', 'z': '#000', 'dvp': '#C1121F', 'dnvp': '#C1121F', 'nsdap': '#954B00', 'other': '#a0a0a0', 'sapd': '#c40000'},
-            {'spd': 'Democratic Party', 'kpd': 'Socialist Party of America', 'ddp': 'Liberty League', 'z': 'Farmer-Labor', 'dvp': 'Republican moderates', 'dnvp': 'Republican old guard', 'nsdap': 'National Union for Social Justice', 'other': 'Silver Legion', 'sapd': 'Left splinters'});
+            {'spd': 'Democratic Party', 'kpd': 'Socialist Party of America', 'ddp': 'Liberty League', 'z': 'Farmer-Labor', 'dvp': 'Republican Party', 'dnvp': 'National Union for Social Justice', 'nsdap': 'Silver Legion', 'other': 'Other independents', 'sapd': 'Left splinters'});
     lines.width(width).height(400);
     //var svg = lines(Q.election_records);
     if (Q.election_records.length > 0) {
@@ -490,7 +490,7 @@ if (d3 && window) {
         var lines_2 = d3.linegraph(true, true,
             Q.parties,
             {'spd': '#2f65a8', 'kpd': '#8B0000', 'ddp': '#DCCA4A', 'z': '#000', 'dvp': '#C1121F', 'dnvp': '#C1121F', 'nsdap': '#954B00', 'other': '#a0a0a0', 'sapd': '#c40000'},
-            {'spd': 'Democratic Party', 'kpd': 'Socialist Party of America', 'ddp': 'Liberty League', 'z': 'Farmer-Labor', 'dvp': 'Republican moderates', 'dnvp': 'Republican old guard', 'nsdap': 'National Union for Social Justice', 'other': 'Silver Legion', 'sapd': 'Left splinters'});
+            {'spd': 'Democratic Party', 'kpd': 'Socialist Party of America', 'ddp': 'Liberty League', 'z': 'Farmer-Labor', 'dvp': 'Republican Party', 'dnvp': 'National Union for Social Justice', 'nsdap': 'Silver Legion', 'other': 'Other independents', 'sapd': 'Left splinters'});
         lines_2.width(width).height(400);
         d3.select("#party_support_history").datum(Q.party_support_records).call(lines_2);
     }

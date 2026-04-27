@@ -149,7 +149,7 @@ Q.kpd_party_leader = "Thälmann";
 Q.z_leader = "Brüning";
 // party leader - can be Ludwig Kaas, Joseph Joos, or Adam Stegerwald after the 1928 December conference. Joos will be most friendly to the SPD.
 Q.z_party_leader = "Marx";
-Q.nsdap_leader = "Hitler";
+Q.nsdap_leader = "William Pelley";
 
 // hmm... maybe we can play nice with Hindenburg???
 Q.hindenburg_relation = 25;
@@ -373,23 +373,30 @@ Q.dnvp_s_seats = 5;
 Q.nsdap_s_seats = 5;
 Q.other_s_seats = 1;
 Q.sapd_s_seats = 0;
-Q.gop_h = Q.dvp_h + Q.dnvp_h;
-Q.gop_s = Q.dvp_s + Q.dnvp_s;
-Q.gop_h_seats = Q.dvp_h_seats + Q.dnvp_h_seats;
-Q.gop_s_seats = Q.dvp_s_seats + Q.dnvp_s_seats;
+Q.gop_h = Q.dvp_h;
+Q.gop_s = Q.dvp_s;
+Q.gop_h_seats = Q.dvp_h_seats;
+Q.gop_s_seats = Q.dvp_s_seats;
 Q.liberty_league_h = Q.ddp_h;
 Q.liberty_league_s = Q.ddp_s;
 Q.liberty_league_h_seats = Q.ddp_h_seats;
 Q.liberty_league_s_seats = Q.ddp_s_seats;
-Q.silver_legion_h = Q.other_h;
-Q.silver_legion_s = Q.other_s;
-Q.silver_legion_h_seats = Q.other_h_seats;
-Q.silver_legion_s_seats = Q.other_s_seats;
+Q.nusj_h = Q.dnvp_h;
+Q.nusj_s = Q.dnvp_s;
+Q.nusj_h_seats = Q.dnvp_h_seats;
+Q.nusj_s_seats = Q.dnvp_s_seats;
+Q.silver_legion_h = Q.nsdap_h;
+Q.silver_legion_s = Q.nsdap_s;
+Q.silver_legion_h_seats = Q.nsdap_h_seats;
+Q.silver_legion_s_seats = Q.nsdap_s_seats;
 Q.governing_house_support = 0;
 Q.governing_senate_support = 0;
 Q.speaker_elected = 0;
 Q.bill_coalition_viable = 0;
 Q.legislative_gridlock = 0;
+Q.non_dem_house_control = 0;
+Q.non_dem_senate_control = 0;
+Q.non_dem_congressional_control = 0;
 
 // diff from prev
 Q.old_spd_r = 42;
@@ -418,6 +425,7 @@ Q.economic_records = [];
 
 // State of the government
 Q.president = "Roosevelt";
+Q.president_party = "SPD";
 // starting cabinet is a Democratic coalition under FDR
 Q.chancellor = "Rayburn";
 Q.chancellor_party = 'SPD';

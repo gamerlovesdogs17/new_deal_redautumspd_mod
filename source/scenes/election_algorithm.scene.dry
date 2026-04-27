@@ -52,6 +52,19 @@ for (var party of Q.parties) {
     //Q[party+'_votes'] = Q[party+'_votes_dec'];
     // display
 }
+
+Q.gop_votes = Math.round((Q.dvp_votes || 0) + (Q.dnvp_votes || 0));
+Q.gop_votes_disp = ((Q.dvp_votes_dec || 0) + (Q.dnvp_votes_dec || 0)).toFixed(1);
+Q.liberty_league_votes = Q.ddp_votes || 0;
+Q.liberty_league_votes_disp = Q.ddp_votes_disp;
+Q.silver_legion_votes = Q.other_votes || 0;
+Q.silver_legion_votes_disp = Q.other_votes_disp;
+
+for (var c2 of Q.classes) {
+    Q[c2 + '_gop_display'] = Math.round((Q[c2 + '_dvp_normalized'] || 0) + (Q[c2 + '_dnvp_normalized'] || 0));
+    Q[c2 + '_liberty_league_display'] = Q[c2 + '_ddp_display'];
+    Q[c2 + '_silver_legion_display'] = Q[c2 + '_other_display'];
+}
 !}
 go-to: jumpScene
 

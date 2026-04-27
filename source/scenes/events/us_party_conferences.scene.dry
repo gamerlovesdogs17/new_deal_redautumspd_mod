@@ -3,15 +3,37 @@ subtitle: Define the governing doctrine of the incoming administration.
 view-if: dem_conference_due = 1
 tags: event
 new-page: true
-on-arrival: dem_conference_seen = 1; dem_conference_due = 0; last_dem_conference_year = year;
+on-arrival: {!
+Q.dem_conference_seen = 1;
+Q.dem_conference_due = 0;
+Q.last_dem_conference_year = Q.year;
+
+var demTotal = 1154;
+var demStrengths = {
+    left: Math.max(0, Q.left_strength || 0),
+    regular: Math.max(0, Q.center_strength || 0),
+    labor: Math.max(0, Q.labor_strength || 0),
+    conservative: Math.max(0, Q.reformist_strength || 0),
+    southern: Math.max(0, Q.neorevisionist_strength || 0)
+};
+var demStrengthTotal = demStrengths.left + demStrengths.regular + demStrengths.labor + demStrengths.conservative + demStrengths.southern;
+if (demStrengthTotal <= 0) {
+    demStrengthTotal = 1;
+}
+Q.dem_left_delegates = Math.round(demTotal * demStrengths.left / demStrengthTotal);
+Q.dem_regular_delegates = Math.round(demTotal * demStrengths.regular / demStrengthTotal);
+Q.dem_labor_delegates = Math.round(demTotal * demStrengths.labor / demStrengthTotal);
+Q.dem_conservative_delegates = Math.round(demTotal * demStrengths.conservative / demStrengthTotal);
+Q.dem_southern_delegates = demTotal - Q.dem_left_delegates - Q.dem_regular_delegates - Q.dem_labor_delegates - Q.dem_conservative_delegates;
+!}
 on-display: {!
 if (window && d3) {
     var demData = [
-        {id: "spd", legend: "New Deal liberals", name: "New Deal liberals", seats: Math.round((Q.left_strength || 0) * 5)},
-        {id: "other", legend: "Party regulars", name: "Party regulars", seats: Math.round((Q.center_strength || 0) * 5)},
-        {id: "kpd", legend: "Labor Democrats", name: "Labor Democrats", seats: Math.round((Q.labor_strength || 0) * 5)},
-        {id: "dvp", legend: "Conservative Democrats", name: "Conservative Democrats", seats: Math.round((Q.reformist_strength || 0) * 5)},
-        {id: "dnvp", legend: "Southern bloc", name: "Southern bloc", seats: Math.round((Q.neorevisionist_strength || 0) * 5)}
+        {id: "spd", legend: "New Deal liberals", name: "New Deal liberals", seats: Q.dem_left_delegates || 0},
+        {id: "other", legend: "Party regulars", name: "Party regulars", seats: Q.dem_regular_delegates || 0},
+        {id: "kpd", legend: "Labor Democrats", name: "Labor Democrats", seats: Q.dem_labor_delegates || 0},
+        {id: "dvp", legend: "Conservative Democrats", name: "Conservative Democrats", seats: Q.dem_conservative_delegates || 0},
+        {id: "dnvp", legend: "Southern bloc", name: "Southern bloc", seats: Q.dem_southern_delegates || 0}
     ];
     var svg = d3.select("#dem_conference_chart");
     svg.selectAll("*").remove();
@@ -38,15 +60,15 @@ The Democratic coalition convenes to decide both leadership emphasis and economi
 
 {!<svg id="dem_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
-{!<span class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'></span>!} New Deal liberals: [+ left_strength : strength +]
+{!<span class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'></span>!} New Deal liberals: [+ dem_left_delegates +] delegates
 
-{!<span class="box" style='background-color:#6C6C6C'></span>!} Party regulars: [+ center_strength : strength +]
+{!<span class="box" style='background-color:#6C6C6C'></span>!} Party regulars: [+ dem_regular_delegates +] delegates
 
-{!<span class="box" style='background-color:#8B0000'></span>!} Labor Democrats: [+ labor_strength : strength +]
+{!<span class="box" style='background-color:#8B0000'></span>!} Labor Democrats: [+ dem_labor_delegates +] delegates
 
-{!<span class="box" style='background-color:#D5AC27'></span>!} Conservative Democrats: [+ reformist_strength : strength +]
+{!<span class="box" style='background-color:#D5AC27'></span>!} Conservative Democrats: [+ dem_conservative_delegates +] delegates
 
-{!<span class="box" style='background-color:#3f7bc1'></span>!} Southern bloc: [+ neorevisionist_strength : strength +]
+{!<span class="box" style='background-color:#3f7bc1'></span>!} Southern bloc: [+ dem_southern_delegates +] delegates
 
 - @huey_labor_wildcard
 - @dem_pragmatic_line
@@ -134,6 +156,11 @@ if (Q.coup_progress >= 5) {
 Q.gop_old_guard_score = oldGuardScore;
 Q.gop_moderate_score = moderateScore;
 Q.gop_reactionary_score = reactionaryScore;
+var gopTotal = 1154;
+var gopScoreTotal = Math.max(1, oldGuardScore + moderateScore + reactionaryScore);
+Q.gop_old_guard_delegates = Math.round(gopTotal * oldGuardScore / gopScoreTotal);
+Q.gop_moderate_delegates = Math.round(gopTotal * moderateScore / gopScoreTotal);
+Q.gop_reactionary_delegates = gopTotal - Q.gop_old_guard_delegates - Q.gop_moderate_delegates;
 
 if (moderateScore >= oldGuardScore && moderateScore >= reactionaryScore) {
     Q.gop_wing = "moderate_reform";
@@ -168,9 +195,9 @@ Q.sla_no_coop = 1;
 on-display: {!
 if (window && d3) {
     var gopData = [
-        {id: "dnvp", legend: "Old Guard", name: "Old Guard", seats: Math.round(Q.gop_old_guard_score || 0)},
-        {id: "dvp", legend: "Moderate reform", name: "Moderate reform", seats: Math.round(Q.gop_moderate_score || 0)},
-        {id: "nsdap", legend: "National conservative", name: "National conservative", seats: Math.round(Q.gop_reactionary_score || 0)}
+        {id: "dnvp", legend: "Old Guard", name: "Old Guard", seats: Q.gop_old_guard_delegates || 0},
+        {id: "dvp", legend: "Moderate reform", name: "Moderate reform", seats: Q.gop_moderate_delegates || 0},
+        {id: "nsdap", legend: "National conservative", name: "National conservative", seats: Q.gop_reactionary_delegates || 0}
     ];
     var svg = d3.select("#gop_conference_chart");
     svg.selectAll("*").remove();
@@ -195,11 +222,11 @@ Republican delegates conclude their conference for the cycle.
 
 {!<svg id="gop_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
-{!<span class="box" style='background-color:#3f7bc1'></span>!} Old Guard: [+ gop_old_guard_score +]
+{!<span class="box" style='background-color:#3f7bc1'></span>!} Old Guard: [+ gop_old_guard_delegates +] delegates
 
-{!<span class="box" style='background-color:#D5AC27'></span>!} Moderate reform: [+ gop_moderate_score +]
+{!<span class="box" style='background-color:#D5AC27'></span>!} Moderate reform: [+ gop_moderate_delegates +] delegates
 
-{!<span class="box" style='background-color:#954B00'></span>!} National conservative: [+ gop_reactionary_score +]
+{!<span class="box" style='background-color:#954B00'></span>!} National conservative: [+ gop_reactionary_delegates +] delegates
 
 [? if gop_wing = "old_guard" : The Old Guard consolidates control under Hoover-aligned leadership, emphasizing fiscal restraint and opposition to expansive federal planning. ?]
 [? if gop_wing = "moderate_reform" : Moderate reform Republicans prevail, selecting a leadership line open to limited cooperation while resisting broad federal overreach. ?]

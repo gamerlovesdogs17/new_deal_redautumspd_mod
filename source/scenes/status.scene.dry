@@ -12,6 +12,8 @@ Q.economic_growth_2 = '0';
 if (Q.economic_growth) {
     Q.economic_growth_2 = Q.economic_growth.toFixed(1);
 }
+Q.gop_r = Math.round((Q.dvp_r || 0) + (Q.dnvp_r || 0));
+Q.silver_legion_r = Q.other_r || 0;
 !}
 
 = Status
@@ -63,15 +65,13 @@ National legislature composition:
 # 1928: 10, 1930: 13
 {!<span class="tooltip-text" title="Socialist Party of America">SPA</span>!}: [+ kpd_r +]%
 # 1928: 5, 1930: 4 (as DstP)
-{!<span class="tooltip-text" title="Progressive Republicans and liberal independents">Progressive Bloc</span>!}: [+ ddp_r +]%
+{!<span class="tooltip-text" title="Liberty League and conservative anti-New Deal Democrats">Liberty League</span>!}: [+ ddp_r +]%
 # 1928: 9, 1930: 5
-{!<span class="tooltip-text" title="Moderate Republicans">GOP Moderates</span>!}: [+ dvp_r +]%
-# 1928: 14, 1930: 7
-{!<span class="tooltip-text" title="Old Guard conservatives">Old Guard GOP</span>!}: [+ dnvp_r +]%
+{!<span class="tooltip-text" title="Republican Party">GOP</span>!}: [+ gop_r +]%
 # 1928: 3, 1930: 18
-{!<span class="tooltip-text" title="National Union for Social Justice and aligned reactionary populists">NUSJ Bloc</span>!}: [+ nsdap_r +]%
+{!<span class="tooltip-text" title="National Union for Social Justice and aligned reactionary populists">NUSJ</span>!}: [+ nsdap_r +]%
 # 1928: 9, 1930: 10
-Others: [+ other_r +]%
+Silver Legion: [+ silver_legion_r +]%
 
 [? if spd_in_government = 1 : Budget: [+ budget +] ?]
 
@@ -96,15 +96,15 @@ Economic growth: [+ economic_growth_2 +]%
 
 {!<span class="tooltip-text" title="Farmer-Labor movement">Farmer-Labor</span>!}: [+ z_relation : relationships +]
 
-{!<span class="tooltip-text" title="Progressive Republicans and liberal independents">Progressive Bloc</span>!}: [+ ddp_relation : relationships +]
+{!<span class="tooltip-text" title="Liberty League and conservative anti-New Deal Democrats">Liberty League</span>!}: [+ ddp_relation : relationships +]
 
-{!<span class="tooltip-text" title="Moderate Republicans">GOP Moderates</span>!}: [+ dvp_relation : relationships +]
+{!<span class="tooltip-text" title="Moderate Republicans">GOP moderates</span>!}: [+ dvp_relation : relationships +]
 
 {!<span class="tooltip-text" title="Socialist Party of America">SPA</span>!}: [+ kpd_relation : relationships +]
 
-{!<span class="tooltip-text" title="Old Guard conservatives">Old Guard GOP</span>!}: [+ dnvp_relation : relationships +]
+{!<span class="tooltip-text" title="Old Guard conservatives">GOP old guard</span>!}: [+ dnvp_relation : relationships +]
 
-{!<span class="tooltip-text" title="National Union for Social Justice and aligned reactionary populists">NUSJ Bloc</span>!}: [+ nsdap_relation : relationships +]
+{!<span class="tooltip-text" title="National Union for Social Justice and aligned reactionary populists">NUSJ</span>!}: [+ nsdap_relation : relationships +]
 
 = Internal Factions of the Democratic Coalition
 
@@ -170,6 +170,14 @@ on-arrival: {!
 Q.pro_republic_disp = Math.round(Q.pro_republic);
 Q.nationalism_disp = Math.round(Q.nationalism);
 Q.socialism_disp = Math.round(Q.socialism);
+Q.gop_votes = Math.round((Q.dvp_votes || 0) + (Q.dnvp_votes || 0));
+Q.liberty_league_votes = Q.ddp_votes || 0;
+Q.silver_legion_votes = Q.other_votes || 0;
+for (var c of Q.classes) {
+    Q[c + '_gop_display'] = Math.round((Q[c + '_dvp_normalized'] || 0) + (Q[c + '_dnvp_normalized'] || 0));
+    Q[c + '_liberty_league_display'] = Q[c + '_ddp_display'];
+    Q[c + '_silver_legion_display'] = Q[c + '_other_display'];
+}
 !}
 
 = Projected election results
@@ -184,28 +192,26 @@ Farmer-Labor: [+ z_votes +]%
 
 SPA: [+ kpd_votes +]%
 
-Progressive Bloc: [+ ddp_votes +]%
+Liberty League: [+ liberty_league_votes +]%
 
-GOP Moderates: [+ dvp_votes +]%
+GOP: [+ gop_votes +]%
 
-Old Guard GOP: [+ dnvp_votes +]%
+NUSJ: [+ nsdap_votes +]%
 
-NUSJ Bloc: [+ nsdap_votes +]%
-
-Others: [+ other_votes +]%
+Silver Legion: [+ silver_legion_votes +]%
 
 **Detailed results for each demographic**
 
-Workers: Democrats: [+ workers_spd_display +]%, Farmer-Labor: [+ workers_z_display +]%, SPA: [+ workers_kpd_display +]%, Progressive Bloc: [+ workers_ddp_display +]%, GOP Moderates: [+ workers_dvp_display +]%; Old Guard GOP: [+ workers_dnvp_display +]%, NUSJ Bloc: [+ workers_nsdap_display +]%, Others: [+ workers_other_display +]% [? if sapd_formed: Left splinters: [+ workers_sapd_display +]% ?]
+Workers: Democrats: [+ workers_spd_display +]%, Farmer-Labor: [+ workers_z_display +]%, SPA: [+ workers_kpd_display +]%, Liberty League: [+ workers_liberty_league_display +]%, GOP: [+ workers_gop_display +]%, NUSJ: [+ workers_nsdap_display +]%, Silver Legion: [+ workers_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ workers_sapd_display +]% ?]
 
-New Middle Class: Democrats: [+ new_middle_spd_display +]%, Farmer-Labor: [+ new_middle_z_display +]%, SPA: [+ new_middle_kpd_display +]%, Progressive Bloc: [+ new_middle_ddp_display +]%, GOP Moderates: [+ new_middle_dvp_display +]%; Old Guard GOP: [+ new_middle_dnvp_display +]%, NUSJ Bloc: [+ new_middle_nsdap_display +]%, Others: [+ new_middle_other_display +]% [? if sapd_formed: Left splinters: [+ new_middle_sapd_display +]% ?]
+New Middle Class: Democrats: [+ new_middle_spd_display +]%, Farmer-Labor: [+ new_middle_z_display +]%, SPA: [+ new_middle_kpd_display +]%, Liberty League: [+ new_middle_liberty_league_display +]%, GOP: [+ new_middle_gop_display +]%, NUSJ: [+ new_middle_nsdap_display +]%, Silver Legion: [+ new_middle_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ new_middle_sapd_display +]% ?]
 
-Old Middle Class: Democrats: [+ old_middle_spd_display +]%, Farmer-Labor: [+ old_middle_z_display +]%, SPA: [+ old_middle_kpd_display +]%, Progressive Bloc: [+ old_middle_ddp_display +]%, GOP Moderates: [+ old_middle_dvp_display +]%; Old Guard GOP: [+ old_middle_dnvp_display +]%, NUSJ Bloc: [+ old_middle_nsdap_display +]%, Others: [+ old_middle_other_display +]% [? if sapd_formed: Left splinters: [+ old_middle_sapd_display +]% ?]
+Old Middle Class: Democrats: [+ old_middle_spd_display +]%, Farmer-Labor: [+ old_middle_z_display +]%, SPA: [+ old_middle_kpd_display +]%, Liberty League: [+ old_middle_liberty_league_display +]%, GOP: [+ old_middle_gop_display +]%, NUSJ: [+ old_middle_nsdap_display +]%, Silver Legion: [+ old_middle_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ old_middle_sapd_display +]% ?]
 
-Rural: Democrats: [+ rural_spd_display +]%, Farmer-Labor: [+ rural_z_display +]%, SPA: [+ rural_kpd_display +]%, Progressive Bloc: [+ rural_ddp_display +]%, GOP Moderates: [+ rural_dvp_display +]%; Old Guard GOP: [+ rural_dnvp_display +]%, NUSJ Bloc: [+ rural_nsdap_display +]%, Others: [+ rural_other_display +]% [? if sapd_formed: Left splinters: [+ rural_sapd_display +]% ?]
+Rural: Democrats: [+ rural_spd_display +]%, Farmer-Labor: [+ rural_z_display +]%, SPA: [+ rural_kpd_display +]%, Liberty League: [+ rural_liberty_league_display +]%, GOP: [+ rural_gop_display +]%, NUSJ: [+ rural_nsdap_display +]%, Silver Legion: [+ rural_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ rural_sapd_display +]% ?]
 
-Unemployed: Democrats: [+ unemployed_spd_display +]%, Farmer-Labor: [+ unemployed_z_display +]%, SPA: [+ unemployed_kpd_display +]%, Progressive Bloc: [+ unemployed_ddp_display +]%, GOP Moderates: [+ unemployed_dvp_display +]%; Old Guard GOP: [+ unemployed_dnvp_display +]%, NUSJ Bloc: [+ unemployed_nsdap_display +]%, Others: [+ unemployed_other_display +]% [? if sapd_formed: Left splinters: [+ unemployed_sapd_display +]% ?]
+Unemployed: Democrats: [+ unemployed_spd_display +]%, Farmer-Labor: [+ unemployed_z_display +]%, SPA: [+ unemployed_kpd_display +]%, Liberty League: [+ unemployed_liberty_league_display +]%, GOP: [+ unemployed_gop_display +]%, NUSJ: [+ unemployed_nsdap_display +]%, Silver Legion: [+ unemployed_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ unemployed_sapd_display +]% ?]
 
-Catholics: Democrats: [+ catholics_spd_display +]%, Farmer-Labor: [+ catholics_z_display +]%, SPA: [+ catholics_kpd_display +]%, Progressive Bloc: [+ catholics_ddp_display +]%, GOP Moderates: [+ catholics_dvp_display +]%; Old Guard GOP: [+ catholics_dnvp_display +]%, NUSJ Bloc: [+ catholics_nsdap_display +]%, Others: [+ catholics_other_display +]% [? if sapd_formed: Left splinters: [+ catholics_sapd_display +]% ?]
+Catholics: Democrats: [+ catholics_spd_display +]%, Farmer-Labor: [+ catholics_z_display +]%, SPA: [+ catholics_kpd_display +]%, Liberty League: [+ catholics_liberty_league_display +]%, GOP: [+ catholics_gop_display +]%, NUSJ: [+ catholics_nsdap_display +]%, Silver Legion: [+ catholics_silver_legion_display +]% [? if sapd_formed: Left splinters: [+ catholics_sapd_display +]% ?]
 
 Support for the Republic: [+ pro_republic_disp +]%

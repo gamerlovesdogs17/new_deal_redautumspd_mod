@@ -152,13 +152,20 @@ Economic growth: [+ economic_growth_2 +]%
 {!<div class="politics-list">!}
 {!<div class="politics-row">!}{!<span class="party-dem">Democratic Party</span>!}{!<span>!}[+ dem_leader +]{!</span>!}{!</div>!}
 {!<div class="politics-row">!}{!<span class="party-gop">Republican Party</span>!}{!<span>!}[+ gop_leader +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-spa">Socialist Party of America</span>!}{!<span>!}[+ spa_leader +] - relation: [+ kpd_relation : relationships +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-fl">Farmer-Labor</span>!}{!<span>!}[+ farmer_labor_leader +] - relation: [+ z_relation : relationships +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-liberty">Liberty League</span>!}{!<span>!}[+ liberty_league_leader +] - relation: [+ ddp_relation : relationships +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-gop">Republican moderates</span>!}{!<span>!}[+ gop_party_chair_display +] - relation: [+ dvp_relation : relationships +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-gop">Republican old guard</span>!}{!<span>!}[+ gop_leader +] - relation: [+ dnvp_relation : relationships +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-nusj">National Union for Social Justice</span>!}{!<span>!}[+ nusj_leader +] - relation: [+ nsdap_relation : relationships +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-spa">Socialist Party of America</span>!}{!<span>!}[+ spa_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-fl">Farmer-Labor</span>!}{!<span>!}[+ farmer_labor_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-liberty">Liberty League</span>!}{!<span>!}[+ liberty_league_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-nusj">National Union for Social Justice</span>!}{!<span>!}[+ nusj_leader +]{!</span>!}{!</div>!}
 {!<div class="politics-row">!}{!<span class="party-silver">Silver Legion</span>!}{!<span>!}[+ sla_leader +]{!</span>!}{!</div>!}
+{!</div>!}
+
+{!<div class="relations-list">!}
+{!<span>!}{!<span class="party-fl">Farmer-Labor</span>!}: [+ z_relation : relationships +]{!</span>!}
+{!<span>!}{!<span class="party-liberty">Liberty League</span>!}: [+ ddp_relation : relationships +]{!</span>!}
+{!<span>!}{!<span class="party-gop">Republican moderates</span>!}: [+ dvp_relation : relationships +]{!</span>!}
+{!<span>!}{!<span class="party-spa">Socialist Party of America</span>!}: [+ kpd_relation : relationships +]{!</span>!}
+{!<span>!}{!<span class="party-gop">Republican old guard</span>!}: [+ dnvp_relation : relationships +]{!</span>!}
+{!<span>!}{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ nsdap_relation : relationships +]{!</span>!}
 {!</div>!}
 
 = Internal Factions of the Democratic Coalition

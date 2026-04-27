@@ -577,28 +577,40 @@ table {
     margin: 0.5em 0 0.9em 0;
 }
 .politics-row {
-    display: grid;
-    grid-template-columns: minmax(8.5em, 42%) 1fr;
-    gap: 0.5em;
-    align-items: baseline;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     padding: 0.18em 0;
+}
+.politics-row > span:first-child {
+    display: block;
+}
+.politics-row > span:last-child {
+    display: block;
+    padding-left: 0.6em;
+}
+.relations-list {
+    display: grid;
+    gap: 0.25em;
+    margin: 0.45em 0 0.9em 0;
 }
 
 .ev-map {
     display: grid;
-    grid-template-columns: repeat(8, minmax(2.4em, 1fr));
+    grid-template-columns: repeat(11, minmax(1.65em, 1fr));
+    grid-template-rows: repeat(8, 1.65em);
     gap: 0.25em;
     margin: 0.75em 0 1em 0;
+    max-width: 33em;
 }
 .ev-state {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid rgba(0, 0, 0, 0.18);
-    padding: 0.25em 0.15em;
+    padding: 0.1em;
     text-align: center;
     background: rgba(0, 0, 0, 0.04);
-    font-size: 0.82em;
-    line-height: 1.2;
+    font-size: 0.68em;
+    line-height: 1;
 }
 .ev-state.party-dem {
     color: #fff;
@@ -649,12 +661,29 @@ table {
 .seat.dnvp {
     fill: #C1121F;
 }
-.seat.gop_old,
+.seat.dem_new_deal {
+    fill: #2f65a8;
+}
+.seat.dem_regular {
+    fill: #6C6C6C;
+}
+.seat.dem_labor {
+    fill: #8B0000;
+}
+.seat.dem_conservative {
+    fill: #D5AC27;
+}
+.seat.dem_southern {
+    fill: #3f7bc1;
+}
+.seat.gop_old {
+    fill: #7f1d1d;
+}
 .seat.gop_mod {
-    fill: #C1121F;
+    fill: #e05252;
 }
 .seat.gop_nat {
-    fill: #8f0d16;
+    fill: #3b0a0a;
 }
 .seat.nsdap {
     fill: #954B00;

@@ -60,11 +60,11 @@ if (window && d3) {
     Q.dem_populist_percent = Math.round(1000 * Q.dem_populist_delegates / demTotal) / 10;
     Q.dem_structural_percent = Math.round(1000 * Q.dem_structural_delegates / demTotal) / 10;
     var demData = [
-        {id: "spd", legend: "New Deal liberals", name: "New Deal liberals", seats: Q.dem_left_delegates || 0},
-        {id: "other", legend: "Party regulars", name: "Party regulars", seats: Q.dem_regular_delegates || 0},
-        {id: "kpd", legend: "Labor Democrats", name: "Labor Democrats", seats: Q.dem_labor_delegates || 0},
-        {id: "dvp", legend: "Conservative Democrats", name: "Conservative Democrats", seats: Q.dem_conservative_delegates || 0},
-        {id: "dnvp", legend: "Southern bloc", name: "Southern bloc", seats: Q.dem_southern_delegates || 0}
+        {id: "dem_new_deal", legend: "New Deal liberals", name: "New Deal liberals", seats: Q.dem_left_delegates || 0},
+        {id: "dem_regular", legend: "Party regulars", name: "Party regulars", seats: Q.dem_regular_delegates || 0},
+        {id: "dem_labor", legend: "Labor Democrats", name: "Labor Democrats", seats: Q.dem_labor_delegates || 0},
+        {id: "dem_conservative", legend: "Conservative Democrats", name: "Conservative Democrats", seats: Q.dem_conservative_delegates || 0},
+        {id: "dem_southern", legend: "Southern bloc", name: "Southern bloc", seats: Q.dem_southern_delegates || 0}
     ];
     var svg = d3.select("#dem_conference_chart");
     svg.selectAll("*").remove();
@@ -292,11 +292,11 @@ Republican delegates conclude their conference for the cycle.
 
 {!<svg id="gop_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
-{!<span class="box" style='background-color:#C1121F'></span>!} Old Guard: [+ gop_old_guard_delegates +] delegates
+{!<span class="box" style='background-color:#7f1d1d'></span>!} Old Guard: [+ gop_old_guard_delegates +] delegates
 
-{!<span class="box" style='background-color:#C1121F'></span>!} Moderate reform: [+ gop_moderate_delegates +] delegates
+{!<span class="box" style='background-color:#e05252'></span>!} Moderate reform: [+ gop_moderate_delegates +] delegates
 
-{!<span class="box" style='background-color:#8f0d16'></span>!} National conservative: [+ gop_reactionary_delegates +] delegates
+{!<span class="box" style='background-color:#3b0a0a'></span>!} National conservative: [+ gop_reactionary_delegates +] delegates
 
 [? if gop_wing = "old_guard" : The Old Guard consolidates control under Hoover-aligned leadership, emphasizing fiscal restraint and opposition to expansive federal planning. ?]
 [? if gop_wing = "moderate_reform" : Moderate reform Republicans prevail, selecting a leadership line open to limited cooperation while resisting broad federal overreach. ?]

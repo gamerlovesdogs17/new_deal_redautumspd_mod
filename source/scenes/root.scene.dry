@@ -69,8 +69,9 @@ Q.reformists_resigned = 0;
 // have we discovered neorevisionism?
 Q.neorevisionism = 0;
 
-// crisis_urgency indicates how seriously the SPD is taking the economic crisis - scale from 0 to 10.
-Q.crisis_urgency = 0;
+// crisis_urgency indicates how seriously the Democratic coalition is taking the economic crisis - scale from 0 to 10.
+Q.crisis_urgency = 2;
+Q.black_thursday_seen = 1;
 // nazi_urgency indicates how seriously the SPD takes the nazis - scale from 0 to 10.
 Q.nazi_urgency = 0;
 // radicalization indicates how radical the SPD's rhetoric is - scale from 0 to 10.
@@ -591,6 +592,7 @@ Q.next_election_month = 11;
 Q.next_election_time = 24;
 Q.next_presidential_election_year = 1936;
 Q.next_presidential_election_month = 11;
+Q.pres_nomination_done = 0;
 // government affairs timers
 Q.agricultural_policy_timer = 0;
 Q.domestic_enemies_timer = 0;

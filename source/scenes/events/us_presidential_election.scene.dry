@@ -1,13 +1,111 @@
+title: Presidential Nominations
+new-page: true
+tags: event
+priority: -3
+view-if: year = next_presidential_election_year and month >= 7 and month < next_presidential_election_month and pres_nomination_done = 0
+on-arrival: {!
+Q.pres_nomination_done = 1;
+Q.dem_nominee = Q.dem_leader || "Franklin D. Roosevelt";
+if (Q.dem_economic_plan == "share_our_wealth" && Q.labor_dem_leader == "Huey Long") {
+    Q.dem_nominee = "Huey Long";
+}
+if (Q.dem_economic_plan == "structural_transformation") {
+    Q.dem_nominee = "Roosevelt-Thomas Unity Ticket";
+}
+Q.rep_nominee = "Alf Landon";
+if (Q.gop_wing == "old_guard") {
+    Q.rep_nominee = "Herbert Hoover";
+}
+if (Q.gop_wing == "national_conservative") {
+    Q.rep_nominee = "Hamilton Fish";
+}
+Q.spa_nominee = Q.spa_leader || "Norman Thomas";
+Q.nusj_nominee = Q.nusj_leader || "Charles Coughlin";
+Q.dem_ticket_endorsements = "Democratic Party";
+Q.rep_ticket_endorsements = "Republican Party";
+Q.spa_ticket_endorsements = "Socialist Party of America";
+Q.nusj_ticket_endorsements = "National Union for Social Justice";
+Q.pres_dem_vote_bonus = 0;
+Q.pres_rep_vote_bonus = 0;
+Q.pres_spa_active = 1;
+Q.pres_nusj_active = 1;
+Q.pres_map_strategy = "four_way";
+!}
+
+= Presidential Nominations, [+ month : month +] [+ year +]
+
+The presidential conventions are over. No ticket can assume victory unless it can reach 270 electoral votes, so the parties spend the late summer trying to convince smaller blocs to stand down and endorse a larger ticket.
+
+{!<div class="politics-list">!}
+{!<div class="politics-row">!}{!<span class="party-dem">Democratic Party</span>!}{!<span>!}[+ dem_nominee +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-gop">Republican Party</span>!}{!<span>!}[+ rep_nominee +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-spa">Socialist Party of America</span>!}{!<span>!}[+ spa_nominee +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-nusj">National Union for Social Justice</span>!}{!<span>!}[+ nusj_nominee +]{!</span>!}{!</div>!}
+{!</div>!}
+
+What endorsement strategy should the Democratic campaign pursue?
+
+- @broad_democratic_front
+- @labor_left_front
+- @anti_reactionary_unity
+- @go_it_alone
+
+@broad_democratic_front
+title: Build a broad Democratic front.
+subtitle: Ask Farmer-Labor and the Liberty League to stand down for the Democratic ticket.
+on-arrival: pres_map_strategy = "broad_democratic"; dem_ticket_endorsements = "Democratic Party, Farmer-Labor, Liberty League"; rep_ticket_endorsements = "Republican Party"; spa_ticket_endorsements = "Socialist Party of America"; nusj_ticket_endorsements = "National Union for Social Justice"; pres_dem_vote_bonus = 8; pres_rep_vote_bonus = 1; pres_spa_active = 1; pres_nusj_active = 1; z_relation += 4; ddp_relation += 5; left_dissent += 2; labor_dissent += 2;
+
+Farmer-Labor and the Liberty League agree to back the Democratic ticket. The price is a careful platform: relief and recovery, but no revolutionary language.
+
+@labor_left_front
+title: Build a labor-left front.
+subtitle: Ask Farmer-Labor and the Socialist Party of America to stand down for the Democratic ticket.
+on-arrival: pres_map_strategy = "labor_left"; dem_ticket_endorsements = "Democratic Party, Farmer-Labor, Socialist Party of America"; rep_ticket_endorsements = "Republican Party, Liberty League"; spa_ticket_endorsements = "Withdrawn for Democratic ticket"; nusj_ticket_endorsements = "National Union for Social Justice"; pres_dem_vote_bonus = 9; pres_rep_vote_bonus = 4; pres_spa_active = 0; pres_nusj_active = 1; kpd_relation += 8; z_relation += 4; ddp_relation -= 5; reformist_dissent += 5; center_dissent += 3; workers_spd += 2; unemployed_spd += 2;
+
+Farmer-Labor and the socialists agree to consolidate behind the Democratic ticket. Conservatives recoil, but labor organizers are energized.
+
+@anti_reactionary_unity
+title: Build an anti-reactionary unity ticket.
+subtitle: Seek Farmer-Labor, Liberty League, and socialist endorsements all at once.
+choose-if: kpd_relation >= 35 and ddp_relation >= 35 and z_relation >= 35
+unavailable-subtitle: Relations with Farmer-Labor, Liberty League, and the Socialist Party must all be at least neutral.
+on-arrival: pres_map_strategy = "anti_reactionary"; dem_ticket_endorsements = "Democratic Party, Farmer-Labor, Liberty League, Socialist Party of America"; rep_ticket_endorsements = "Republican Party"; spa_ticket_endorsements = "Withdrawn for Democratic ticket"; nusj_ticket_endorsements = "National Union for Social Justice"; pres_dem_vote_bonus = 12; pres_rep_vote_bonus = 1; pres_spa_active = 0; pres_nusj_active = 1; z_relation += 3; ddp_relation += 3; kpd_relation += 3; coalition_dissent += 2; center_dissent += 4; reformist_dissent += 4; labor_dissent += 2;
+
+It is an awkward bargain, but fear of reactionary politics is strong enough to hold the endorsement pact together through November.
+
+@go_it_alone
+title: Run a Democratic-only campaign.
+subtitle: Keep the platform clear and let every other party make its own choice.
+on-arrival: pres_map_strategy = "go_it_alone"; dem_ticket_endorsements = "Democratic Party"; rep_ticket_endorsements = "Republican Party, Liberty League"; spa_ticket_endorsements = "Socialist Party of America"; nusj_ticket_endorsements = "National Union for Social Justice"; pres_dem_vote_bonus = 0; pres_rep_vote_bonus = 4; pres_spa_active = 1; pres_nusj_active = 1; center_dissent -= 1; reformist_dissent -= 1;
+
+The Democratic ticket keeps its own identity. That avoids messy concessions, but it leaves more votes scattered across rival tickets.
+
+
+@presidential_election
 title: Presidential Election
 new-page: true
 tags: event
 priority: -2
 view-if: (year = next_presidential_election_year and month >= next_presidential_election_month) or (year > next_presidential_election_year)
 on-arrival: {!
-var democraticVote = Math.max(25, Math.min(65, (Q.spd_votes || Q.spd_r || 42) + Math.max(0, (Q.z_votes || Q.z_r || 10) - 8) * 0.25));
-var republicanVote = Math.max(20, Math.min(60, (Q.gop_votes || ((Q.dvp_votes || Q.dvp_r || 18) + (Q.dnvp_votes || Q.dnvp_r || 5)))));
-var socialistVote = Math.max(0, Math.min(18, Q.kpd_votes || Q.kpd_r || 0));
-var nusjVote = Math.max(0, Math.min(25, Q.nsdap_votes || Q.nsdap_r || 0));
+if (!Q.pres_nomination_done) {
+    Q.dem_nominee = Q.dem_leader || "Franklin D. Roosevelt";
+    Q.rep_nominee = Q.gop_wing == "national_conservative" ? "Hamilton Fish" : (Q.gop_wing == "old_guard" ? "Herbert Hoover" : "Alf Landon");
+    Q.spa_nominee = Q.spa_leader || "Norman Thomas";
+    Q.nusj_nominee = Q.nusj_leader || "Charles Coughlin";
+    Q.dem_ticket_endorsements = "Democratic Party";
+    Q.rep_ticket_endorsements = "Republican Party, Liberty League";
+    Q.spa_ticket_endorsements = "Socialist Party of America";
+    Q.nusj_ticket_endorsements = "National Union for Social Justice";
+    Q.pres_dem_vote_bonus = 0;
+    Q.pres_rep_vote_bonus = 4;
+    Q.pres_spa_active = 1;
+    Q.pres_nusj_active = 1;
+}
+var baseDem = (Q.spd_votes || Q.spd_r || 42);
+var baseRep = ((Q.dvp_votes || Q.dvp_r || 18) + (Q.dnvp_votes || Q.dnvp_r || 5));
+var baseSpa = Q.pres_spa_active ? (Q.kpd_votes || Q.kpd_r || 0) : 0;
+var baseNusj = Q.pres_nusj_active ? (Q.nsdap_votes || Q.nsdap_r || 0) : 0;
 var crisisPenalty = 0;
 if ((Q.unemployed || 0) > 18) {
     crisisPenalty += 4;
@@ -15,61 +113,143 @@ if ((Q.unemployed || 0) > 18) {
 if ((Q.economic_growth || 0) < -3) {
     crisisPenalty += 3;
 }
-if ((Q.works_program || 0) > 0) {
+if ((Q.works_program || 0) > 0 || (Q.moderate_plan_progress || 0) > 0) {
     crisisPenalty -= 4;
 }
-democraticVote -= crisisPenalty;
-republicanVote += Math.max(0, crisisPenalty - 1);
-Q.dem_presidential_vote = Math.round(democraticVote);
-Q.rep_presidential_vote = Math.round(republicanVote);
-Q.spa_presidential_vote = Math.round(socialistVote);
-Q.nusj_presidential_vote = Math.round(nusjVote);
-Q.dem_electoral_votes = Math.max(0, Math.min(531, Math.round(531 * (Q.dem_presidential_vote + 6) / 62)));
-Q.rep_electoral_votes = Math.max(0, Math.min(531 - Q.dem_electoral_votes, Math.round(531 * Q.rep_presidential_vote / 100)));
-Q.other_electoral_votes = 531 - Q.dem_electoral_votes - Q.rep_electoral_votes;
-Q.presidential_winner = Q.dem_electoral_votes >= 266 ? "Roosevelt" : "Republican nominee";
+var democraticVote = baseDem + (Q.pres_dem_vote_bonus || 0) - crisisPenalty;
+var republicanVote = baseRep + (Q.pres_rep_vote_bonus || 0) + Math.max(0, crisisPenalty - 1);
+var socialistVote = baseSpa;
+var nusjVote = baseNusj;
+var totalVote = Math.max(1, democraticVote + republicanVote + socialistVote + nusjVote);
+Q.dem_presidential_vote = Math.round(1000 * democraticVote / totalVote) / 10;
+Q.rep_presidential_vote = Math.round(1000 * republicanVote / totalVote) / 10;
+Q.spa_presidential_vote = Math.round(1000 * socialistVote / totalVote) / 10;
+Q.nusj_presidential_vote = Math.round(1000 * nusjVote / totalVote) / 10;
+
+var states = [
+    ["AL",9,-8],["AZ",3,-3],["AR",9,-6],["CA",22,5],["CO",6,-2],["CT",8,4],["DE",3,2],["FL",7,-3],
+    ["GA",12,-8],["ID",4,-5],["IL",29,3],["IN",14,-3],["IA",11,-2],["KS",9,-6],["KY",11,-2],["LA",10,-7],
+    ["ME",5,4],["MD",8,2],["MA",17,5],["MI",19,2],["MN",11,4],["MS",9,-9],["MO",15,0],["MT",4,1],
+    ["NE",7,-5],["NV",3,1],["NH",4,3],["NJ",16,2],["NM",3,1],["NY",47,5],["NC",13,-4],["ND",4,1],
+    ["OH",26,0],["OK",10,-3],["OR",6,3],["PA",36,1],["RI",4,5],["SC",8,-9],["SD",4,-3],["TN",11,-4],
+    ["TX",23,-5],["UT",4,-4],["VT",3,6],["VA",11,-4],["WA",8,5],["WV",8,1],["WI",12,3],["WY",3,-4],["DC",3,8]
+];
+var demEV = 0;
+var repEV = 0;
+var spaEV = 0;
+var nusjEV = 0;
+var map = [];
+for (var i = 0; i < states.length; i++) {
+    var st = states[i];
+    var demScore = Q.dem_presidential_vote + st[2];
+    var repScore = Q.rep_presidential_vote - st[2] * 0.6;
+    var spaScore = Q.spa_presidential_vote + (st[2] > 2 ? 2 : 0);
+    var nusjScore = Q.nusj_presidential_vote + (st[2] < -4 ? 3 : 0);
+    var cls = "party-dem";
+    var label = Q.dem_nominee;
+    if (repScore > demScore && repScore >= spaScore && repScore >= nusjScore) {
+        cls = "party-gop";
+        label = Q.rep_nominee;
+        repEV += st[1];
+    } else if (spaScore > demScore && spaScore > repScore && spaScore >= nusjScore) {
+        cls = "party-spa";
+        label = Q.spa_nominee;
+        spaEV += st[1];
+    } else if (nusjScore > demScore && nusjScore > repScore && nusjScore > spaScore) {
+        cls = "party-nusj";
+        label = Q.nusj_nominee;
+        nusjEV += st[1];
+    } else {
+        demEV += st[1];
+    }
+    map.push('<span class="ev-state ' + cls + '" title="' + label + '">' + st[0] + '<br>' + st[1] + '</span>');
+}
+Q.dem_electoral_votes = demEV;
+Q.rep_electoral_votes = repEV;
+Q.spa_electoral_votes = spaEV;
+Q.nusj_electoral_votes = nusjEV;
+Q.presidential_winner = Q.dem_nominee;
+Q.presidential_winner_party = "Democratic Party";
+if (repEV >= demEV && repEV >= spaEV && repEV >= nusjEV) {
+    Q.presidential_winner = Q.rep_nominee;
+    Q.presidential_winner_party = "Republican Party";
+}
+if (spaEV > demEV && spaEV > repEV && spaEV >= nusjEV) {
+    Q.presidential_winner = Q.spa_nominee;
+    Q.presidential_winner_party = "Socialist Party of America";
+}
+if (nusjEV > demEV && nusjEV > repEV && nusjEV > spaEV) {
+    Q.presidential_winner = Q.nusj_nominee;
+    Q.presidential_winner_party = "National Union for Social Justice";
+}
+Q.presidential_map_markup = map.join("");
 !}
-on-departure: next_presidential_election_year = next_presidential_election_year + 4; next_presidential_election_month = 11;
+on-display: {!
+var mapEl = document.getElementById("pres_ev_map");
+if (mapEl) {
+    mapEl.innerHTML = Q.presidential_map_markup || "";
+}
+!}
+on-departure: next_presidential_election_year = next_presidential_election_year + 4; next_presidential_election_month = 11; pres_nomination_done = 0;
 
 = Presidential Election, [+ month : month +] [+ year +]
 
-The presidential election is held alongside the November election cycle. The congressional election still controls House and Senate composition, but the presidential result determines control of the executive branch.
+The presidential results are in. A ticket needs 270 electoral votes to win outright.
 
-{!<div class="ev-map">!}
-{!<span class="ev-state party-dem">Northeast</span><span class="ev-state party-dem">South</span><span class="ev-state party-dem">Industrial Midwest</span><span class="ev-state party-gop">Plains</span><span class="ev-state party-gop">Mountain West</span><span class="ev-state party-dem">Pacific Coast</span>!}
-{!</div>!}
+{!<div id="pres_ev_map" class="ev-map"></div>!}
 
 Electoral vote:
 
-Democratic Party: [+ dem_electoral_votes +]
+{!<span class="party-dem">Democratic Party</span>!}: [+ dem_electoral_votes +] - [+ dem_nominee +]
 
-Republican Party: [+ rep_electoral_votes +]
+{!<span class="party-gop">Republican Party</span>!}: [+ rep_electoral_votes +] - [+ rep_nominee +]
 
-Other tickets: [+ other_electoral_votes +]
+{!<span class="party-spa">Socialist Party of America</span>!}: [+ spa_electoral_votes +] - [+ spa_nominee +]
+
+{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ nusj_electoral_votes +] - [+ nusj_nominee +]
 
 Popular vote estimate:
 
-Democratic Party: [+ dem_presidential_vote +]%
+{!<span class="party-dem">Democratic Party</span>!}: [+ dem_presidential_vote +]%
 
-Republican Party: [+ rep_presidential_vote +]%
+{!<span class="party-gop">Republican Party</span>!}: [+ rep_presidential_vote +]%
 
-Socialist Party of America: [+ spa_presidential_vote +]%
+{!<span class="party-spa">Socialist Party of America</span>!}: [+ spa_presidential_vote +]%
 
-National Union for Social Justice: [+ nusj_presidential_vote +]%
+{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ nusj_presidential_vote +]%
 
-[? if presidential_winner = "Roosevelt" : Roosevelt wins another presidential mandate. ?][? if presidential_winner != "Roosevelt" : The Republican nominee wins the presidency. ?]
+Endorsements:
+
+{!<div class="endorsement-list">!}
+{!<div>!}{!<span class="party-dem">Democratic ticket</span>!}: [+ dem_ticket_endorsements +]{!</div>!}
+{!<div>!}{!<span class="party-gop">Republican ticket</span>!}: [+ rep_ticket_endorsements +]{!</div>!}
+{!<div>!}{!<span class="party-spa">Socialist ticket</span>!}: [+ spa_ticket_endorsements +]{!</div>!}
+{!<div>!}{!<span class="party-nusj">NUSJ ticket</span>!}: [+ nusj_ticket_endorsements +]{!</div>!}
+{!</div>!}
+
+[? if dem_electoral_votes >= 270 : [+ dem_nominee +] wins the presidency. ?]
+[? if rep_electoral_votes >= 270 : [+ rep_nominee +] wins the presidency. ?]
+[? if spa_electoral_votes >= 270 : [+ spa_nominee +] wins the presidency. ?]
+[? if nusj_electoral_votes >= 270 : [+ nusj_nominee +] wins the presidency. ?]
+[? if dem_electoral_votes < 270 and rep_electoral_votes < 270 and spa_electoral_votes < 270 and nusj_electoral_votes < 270 : No ticket reaches 270 electoral votes. The House will decide the presidency, making the new House coalition even more important. ?]
 
 - @accept_result
 
 @accept_result
 title: Accept the result.
 on-arrival: {!
-if (Q.presidential_winner == "Roosevelt") {
-    Q.president = "Roosevelt";
+if (Q.dem_electoral_votes >= 270 || (Q.dem_electoral_votes >= Q.rep_electoral_votes && Q.dem_electoral_votes >= Q.spa_electoral_votes && Q.dem_electoral_votes >= Q.nusj_electoral_votes)) {
+    Q.president = Q.dem_nominee;
     Q.chancellor_party = "SPD";
-} else {
-    Q.president = "Republican nominee";
+} else if (Q.rep_electoral_votes >= 270 || Q.rep_electoral_votes >= Q.spa_electoral_votes && Q.rep_electoral_votes >= Q.nusj_electoral_votes) {
+    Q.president = Q.rep_nominee;
     Q.chancellor_party = "DVP";
+} else if (Q.spa_electoral_votes >= Q.nusj_electoral_votes) {
+    Q.president = Q.spa_nominee;
+    Q.chancellor_party = "KPD";
+} else {
+    Q.president = Q.nusj_nominee;
+    Q.chancellor_party = "NSDAP";
 }
 !}
 

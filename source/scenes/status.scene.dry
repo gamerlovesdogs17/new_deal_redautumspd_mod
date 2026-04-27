@@ -147,38 +147,29 @@ Economic growth: [+ economic_growth_2 +]%
 
 @politics
 
-= Inter-bloc Relations
+= Party Leaders and Bloc Relations
 
-Party leaders: Democratic Party ([+ dem_leader +]), Republican Party ([+ gop_leader +]), Socialist Party of America ([+ spa_leader +]), Farmer-Labor ([+ farmer_labor_leader +])
-
-Extra-system actors: Liberty League ([+ liberty_league_leader +]), National Union for Social Justice ([+ nusj_leader +]), Silver Legion ([+ sla_leader +])
-
-
-{!<span class="tooltip-text" title="Farmer-Labor movement">Farmer-Labor</span>!}: [+ z_relation : relationships +]
-
-{!<span class="tooltip-text" title="Liberty League and conservative anti-New Deal Democrats">Liberty League</span>!}: [+ ddp_relation : relationships +]
-
-{!<span class="tooltip-text" title="Moderate Republicans">Republican moderates</span>!}: [+ dvp_relation : relationships +]
-
-{!<span class="tooltip-text" title="Socialist Party of America">Socialist Party of America</span>!}: [+ kpd_relation : relationships +]
-
-{!<span class="tooltip-text" title="Old Guard conservatives">Republican old guard</span>!}: [+ dnvp_relation : relationships +]
-
-{!<span class="tooltip-text" title="National Union for Social Justice and aligned reactionary populists">National Union for Social Justice</span>!}: [+ nsdap_relation : relationships +]
+{!<div class="politics-list">!}
+{!<div class="politics-row">!}{!<span class="party-dem">Democratic Party</span>!}{!<span>!}[+ dem_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-gop">Republican Party</span>!}{!<span>!}[+ gop_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-spa">Socialist Party of America</span>!}{!<span>!}[+ spa_leader +] - relation: [+ kpd_relation : relationships +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-fl">Farmer-Labor</span>!}{!<span>!}[+ farmer_labor_leader +] - relation: [+ z_relation : relationships +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-liberty">Liberty League</span>!}{!<span>!}[+ liberty_league_leader +] - relation: [+ ddp_relation : relationships +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-gop">Republican moderates</span>!}{!<span>!}[+ gop_party_chair_display +] - relation: [+ dvp_relation : relationships +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-gop">Republican old guard</span>!}{!<span>!}[+ gop_leader +] - relation: [+ dnvp_relation : relationships +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-nusj">National Union for Social Justice</span>!}{!<span>!}[+ nusj_leader +] - relation: [+ nsdap_relation : relationships +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-silver">Silver Legion</span>!}{!<span>!}[+ sla_leader +]{!</span>!}{!</div>!}
+{!</div>!}
 
 = Internal Factions of the Democratic Coalition
 
-Democratic wing leaders: New Deal Liberals ([+ new_deal_liberal_leader +]), Conservative Democrats ([+ conservative_dem_leader +]), Labor Democrats ([+ labor_dem_leader +]), Southern Democrats ([+ southern_dem_leader +])
-
-{!<span class="tooltip-text" title="New Deal liberals favor rapid federal intervention and social relief.">New Deal Liberals</span>!} strength: [+ left_strength : strength +], dissent: [+ left_dissent : dissent +]
-
-{!<span class="tooltip-text" title="Party regulars prioritize stability, deal-making, and broad electoral viability.">Party Regulars</span>!} strength: [+ center_strength : strength +], dissent: [+ center_dissent : dissent +]
-
-{!<span class="tooltip-text" title="Labor Democrats and union allies prioritize wages, bargaining rights, and jobs.">Labor Democrats</span>!} strength: [+ labor_strength : strength +], dissent: [+ labor_dissent : dissent +]
-
-{!<span class="tooltip-text" title="Conservative Democrats resist expansion and prioritize business confidence.">Conservative Democrats</span>!} strength: [+ reformist_strength : strength +], dissent: [+ reformist_dissent : dissent +]
-
-[? if neorevisionism > 0 : Southern bloc strength: [+ neorevisionist_strength : strength +], dissent: [+ neorevisionist_dissent : dissent +] ?]
+{!<div class="politics-list">!}
+{!<div class="politics-row">!}{!<span class="party-dem">New Deal Liberals</span>!}{!<span>!}[+ new_deal_liberal_leader +] - strength: [+ left_strength : strength +], dissent: [+ left_dissent : dissent +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-dem">Party Regulars</span>!}{!<span>!}[+ dem_leader +] - strength: [+ center_strength : strength +], dissent: [+ center_dissent : dissent +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-dem">Labor Democrats</span>!}{!<span>!}[+ labor_dem_leader +] - strength: [+ labor_strength : strength +], dissent: [+ labor_dissent : dissent +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-dem">Conservative Democrats</span>!}{!<span>!}[+ conservative_dem_leader +] - strength: [+ reformist_strength : strength +], dissent: [+ reformist_dissent : dissent +]{!</span>!}{!</div>!}
+[? if neorevisionism > 0 : {!<div class="politics-row">!}{!<span class="party-dem">Southern Democrats</span>!}{!<span>!}[+ southern_dem_leader +] - strength: [+ neorevisionist_strength : strength +], dissent: [+ neorevisionist_dissent : dissent +]{!</span>!}{!</div>!} ?]
+{!</div>!}
 
 
 @paramilitaries

@@ -360,15 +360,12 @@ go-to: menu
 
 This campaign begins in late 1932, after the presidential election but before the governing doctrine of the administration is fully settled. Leadership and faction control can shift over time through party conferences and crisis politics.
 
-**Major party leaders at scenario start**
+**Party leaders at scenario start**
 
 Democratic Party: [+ dem_leader +]
 Republican Party: [+ gop_leader +]
 Socialist Party of America: [+ spa_leader +]
 Farmer-Labor: [+ farmer_labor_leader +]
-
-**Extra-system actors**
-
 Liberty League: [+ liberty_league_leader +]
 National Union for Social Justice: [+ nusj_leader +]
 Silver Legion: [+ sla_leader +]
@@ -479,7 +476,7 @@ if (d3 && window) {
 
     var lines = d3.linegraph(false, false,
             Q.parties,
-            {'spd': '#E3000F', 'kpd': '#8B0000', 'ddp': '#DCCA4A', 'z': '#000', 'dvp': '#D5AC27', 'dnvp': '#3f7bc1', 'nsdap': '#954B00', 'other': '#a0a0a0', 'sapd': '#c40000'},
+            {'spd': '#2f65a8', 'kpd': '#8B0000', 'ddp': '#DCCA4A', 'z': '#000', 'dvp': '#C1121F', 'dnvp': '#C1121F', 'nsdap': '#954B00', 'other': '#a0a0a0', 'sapd': '#c40000'},
             {'spd': 'Democratic Party', 'kpd': 'Socialist Party of America', 'ddp': 'Liberty League', 'z': 'Farmer-Labor', 'dvp': 'Republican moderates', 'dnvp': 'Republican old guard', 'nsdap': 'National Union for Social Justice', 'other': 'Silver Legion', 'sapd': 'Left splinters'});
     lines.width(width).height(400);
     //var svg = lines(Q.election_records);
@@ -492,7 +489,7 @@ if (d3 && window) {
     if (!Q.historical_mode || Q.game_over) {
         var lines_2 = d3.linegraph(true, true,
             Q.parties,
-            {'spd': '#E3000F', 'kpd': '#8B0000', 'ddp': '#DCCA4A', 'z': '#000', 'dvp': '#D5AC27', 'dnvp': '#3f7bc1', 'nsdap': '#954B00', 'other': '#a0a0a0', 'sapd': '#c40000'},
+            {'spd': '#2f65a8', 'kpd': '#8B0000', 'ddp': '#DCCA4A', 'z': '#000', 'dvp': '#C1121F', 'dnvp': '#C1121F', 'nsdap': '#954B00', 'other': '#a0a0a0', 'sapd': '#c40000'},
             {'spd': 'Democratic Party', 'kpd': 'Socialist Party of America', 'ddp': 'Liberty League', 'z': 'Farmer-Labor', 'dvp': 'Republican moderates', 'dnvp': 'Republican old guard', 'nsdap': 'National Union for Social Justice', 'other': 'Silver Legion', 'sapd': 'Left splinters'});
         lines_2.width(width).height(400);
         d3.select("#party_support_history").datum(Q.party_support_records).call(lines_2);
@@ -515,7 +512,7 @@ if (d3 && window) {
 {!<svg id="reichstag" style="width: 500px; height: 250px;"> </svg>!}
 
 {!<table>!}
-{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div></td><td>!} **Democratic Party:** {!</td><td>!} **[+ spd_r +]%** {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#2f65a8; outline: 2px; outline-style: solid;'> </div></td><td>!} **Democratic Party:** {!</td><td>!} **[+ spd_r +]%** {!</td></tr>!}
 
 [? if sapd_formed : {!<tr><td><div class="box" style='background-color:#C40000'> </div></td> <td> !}Left splinters: {!</td><td>!} [+ sapd_r +]% {!</td></tr>!} ?]
 
@@ -527,7 +524,7 @@ if (d3 && window) {
 
 {!<tr><td><div class="box" style='background-color:#69A2BE'> </div></td><td>!} Farm-Labor allied: {!</td><td>!} 3% {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#D5AC27'> </div></td><td>!} Republican Party: {!</td><td>!} [+ gop_r +]% {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#C1121F'> </div></td><td>!} Republican Party: {!</td><td>!} [+ gop_r +]% {!</td></tr>!}
 
 {!<tr><td><div class="box" style='background-color:#a0a0a0'> </div></td><td>!} Silver Legion: {!</td><td>!} [+ other_r +] % {!</td></tr>!}
 

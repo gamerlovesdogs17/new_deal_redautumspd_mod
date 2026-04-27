@@ -91,7 +91,7 @@ The Democratic coalition convenes to decide both leadership emphasis and economi
 
 {!<svg id="dem_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
-{!<span class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'></span>!} New Deal liberals: [+ dem_left_delegates +] delegates
+{!<span class="box" style='background-color:#2f65a8; outline: 2px; outline-style: solid;'></span>!} New Deal liberals: [+ dem_left_delegates +] delegates
 
 {!<span class="box" style='background-color:#6C6C6C'></span>!} Party regulars: [+ dem_regular_delegates +] delegates
 
@@ -265,9 +265,9 @@ Q.sla_no_coop = 1;
 on-display: {!
 if (window && d3) {
     var gopData = [
-        {id: "dnvp", legend: "Old Guard", name: "Old Guard", seats: Q.gop_old_guard_delegates || 0},
-        {id: "dvp", legend: "Moderate reform", name: "Moderate reform", seats: Q.gop_moderate_delegates || 0},
-        {id: "nsdap", legend: "National conservative", name: "National conservative", seats: Q.gop_reactionary_delegates || 0}
+        {id: "gop_old", legend: "Old Guard", name: "Old Guard", seats: Q.gop_old_guard_delegates || 0},
+        {id: "gop_mod", legend: "Moderate reform", name: "Moderate reform", seats: Q.gop_moderate_delegates || 0},
+        {id: "gop_nat", legend: "National conservative", name: "National conservative", seats: Q.gop_reactionary_delegates || 0}
     ];
     var svg = d3.select("#gop_conference_chart");
     svg.selectAll("*").remove();
@@ -292,11 +292,11 @@ Republican delegates conclude their conference for the cycle.
 
 {!<svg id="gop_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
-{!<span class="box" style='background-color:#3f7bc1'></span>!} Old Guard: [+ gop_old_guard_delegates +] delegates
+{!<span class="box" style='background-color:#C1121F'></span>!} Old Guard: [+ gop_old_guard_delegates +] delegates
 
-{!<span class="box" style='background-color:#D5AC27'></span>!} Moderate reform: [+ gop_moderate_delegates +] delegates
+{!<span class="box" style='background-color:#C1121F'></span>!} Moderate reform: [+ gop_moderate_delegates +] delegates
 
-{!<span class="box" style='background-color:#954B00'></span>!} National conservative: [+ gop_reactionary_delegates +] delegates
+{!<span class="box" style='background-color:#8f0d16'></span>!} National conservative: [+ gop_reactionary_delegates +] delegates
 
 [? if gop_wing = "old_guard" : The Old Guard consolidates control under Hoover-aligned leadership, emphasizing fiscal restraint and opposition to expansive federal planning. ?]
 [? if gop_wing = "moderate_reform" : Moderate reform Republicans prevail, selecting a leadership line open to limited cooperation while resisting broad federal overreach. ?]

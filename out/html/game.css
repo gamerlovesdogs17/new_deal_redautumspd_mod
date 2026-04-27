@@ -564,26 +564,62 @@ table {
     padding: 0.15em 0.35em 0.15em 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
-.party-dem { color: #E3000F; font-weight: bold; }
+.party-dem { color: #2f65a8; font-weight: bold; }
 .party-spa { color: #8B0000; font-weight: bold; }
 .party-fl { color: #111; font-weight: bold; }
 .party-liberty { color: #9a7a00; font-weight: bold; }
-.party-gop { color: #2f65a8; font-weight: bold; }
+.party-gop { color: #C1121F; font-weight: bold; }
 .party-nusj { color: #954B00; font-weight: bold; }
 .party-silver { color: #666; font-weight: bold; }
+.politics-list {
+    display: grid;
+    gap: 0.35em;
+    margin: 0.5em 0 0.9em 0;
+}
+.politics-row {
+    display: grid;
+    grid-template-columns: minmax(8.5em, 42%) 1fr;
+    gap: 0.5em;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 0.18em 0;
+}
 
 .ev-map {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.35em;
+    grid-template-columns: repeat(8, minmax(2.4em, 1fr));
+    gap: 0.25em;
     margin: 0.75em 0 1em 0;
 }
 .ev-state {
     display: block;
     border: 1px solid rgba(0, 0, 0, 0.18);
-    padding: 0.35em;
+    padding: 0.25em 0.15em;
     text-align: center;
     background: rgba(0, 0, 0, 0.04);
+    font-size: 0.82em;
+    line-height: 1.2;
+}
+.ev-state.party-dem {
+    color: #fff;
+    background: #2f65a8;
+}
+.ev-state.party-gop {
+    color: #fff;
+    background: #C1121F;
+}
+.ev-state.party-spa {
+    color: #fff;
+    background: #8B0000;
+}
+.ev-state.party-nusj {
+    color: #fff;
+    background: #954B00;
+}
+.endorsement-list {
+    display: grid;
+    gap: 0.3em;
+    margin: 0.6em 0;
 }
 
 /* Styles for parties */
@@ -591,7 +627,7 @@ table {
     fill: #8B0000;
 }
 .seat.spd {
-    fill: #E3000F;
+    fill: #2f65a8;
     stroke: var(--border-color);
     stroke-width: 1.5px;
 }
@@ -605,13 +641,20 @@ table {
     fill: #69A2BE;
 }
 .seat.dvp {
-    fill: #D5AC27;
+    fill: #C1121F;
 }
 .seat.other {
     fill: #909090;
 }
 .seat.dnvp {
-    fill: #3F7BC1;
+    fill: #C1121F;
+}
+.seat.gop_old,
+.seat.gop_mod {
+    fill: #C1121F;
+}
+.seat.gop_nat {
+    fill: #8f0d16;
 }
 .seat.nsdap {
     fill: #954B00;

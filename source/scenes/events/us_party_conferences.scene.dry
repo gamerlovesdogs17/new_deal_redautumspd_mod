@@ -4,10 +4,47 @@ view-if: dem_conference_due = 1
 tags: event
 new-page: true
 on-arrival: dem_conference_seen = 1; dem_conference_due = 0; last_dem_conference_year = year;
+on-display: {!
+if (window && d3) {
+    var demData = [
+        {id: "spd", legend: "New Deal liberals", name: "New Deal liberals", seats: Math.round((Q.left_strength || 0) * 5)},
+        {id: "other", legend: "Party regulars", name: "Party regulars", seats: Math.round((Q.center_strength || 0) * 5)},
+        {id: "kpd", legend: "Labor Democrats", name: "Labor Democrats", seats: Math.round((Q.labor_strength || 0) * 5)},
+        {id: "dvp", legend: "Conservative Democrats", name: "Conservative Democrats", seats: Math.round((Q.reformist_strength || 0) * 5)},
+        {id: "dnvp", legend: "Southern bloc", name: "Southern bloc", seats: Math.round((Q.neorevisionist_strength || 0) * 5)}
+    ];
+    var svg = d3.select("#dem_conference_chart");
+    svg.selectAll("*").remove();
+    var width = 500;
+    var height = 500;
+    var screenWidth = document.getElementById('content').offsetWidth;
+    if (screenWidth < width - 50) {
+        width = screenWidth - 50;
+        height = width;
+        document.getElementById("dem_conference_chart").style.height = screenWidth/2 + "px";
+    }
+    svg.attr("width", width).attr("height", height);
+    var parliament = d3.parliament();
+    parliament.width(width).height(height).innerRadiusCoef(0.4);
+    parliament.enter.fromCenter(true).smallToBig(true);
+    parliament.exit.toCenter(false).bigToSmall(true);
+    svg.datum(demData).call(parliament);
+}
+!}
 
 = Democratic Leadership Conference
 
 The Democratic coalition convenes to decide both leadership emphasis and economic doctrine for the next phase of the crisis. Your choice will shape reform pace, coalition stability, and room for cooperation with outside parties.
+
+{!<svg id="dem_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
+
+{!<table>!}
+{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div></td><td>New Deal liberals</td><td>[+ left_strength : strength +]</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#6C6C6C'> </div></td><td>Party regulars</td><td>[+ center_strength : strength +]</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#8B0000'> </div></td><td>Labor Democrats</td><td>[+ labor_strength : strength +]</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#D5AC27'> </div></td><td>Conservative Democrats</td><td>[+ reformist_strength : strength +]</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#3f7bc1'> </div></td><td>Southern bloc</td><td>[+ neorevisionist_strength : strength +]</td></tr>!}
+{!</table>!}
 
 - @huey_labor_wildcard
 - @dem_pragmatic_line
@@ -17,10 +54,10 @@ The Democratic coalition convenes to decide both leadership emphasis and economi
 @huey_labor_wildcard
 title: Wildcard: move Huey Long into Labor Democratic leadership.
 view-if: labor_dem_leader != "Huey Long" and huey_long_wildcard_used = 0
-on-arrival: labor_dem_leader = "Huey Long"; huey_long_wildcard_used = 1; labor_strength += 3; labor_dissent -= 3; reformist_dissent += 2; center_dissent += 1;
+on-arrival: labor_dem_leader = "Huey Long"; huey_long_wildcard_used = 1; workers_spd += 5; unemployed_spd += 3; labor_strength += 8; labor_dissent += 3; reformist_dissent += 7; center_dissent += 5; neorevisionist_dissent += 5; pro_republic -= 1;
 go-to: dem_conference_after_huey
 
-You bring Huey Long into the inner Democratic alignment as labor-populist leadership. This boosts labor mobilization, but party regulars and conservatives become more wary.
+You bring Huey Long into the inner Democratic alignment as labor-populist leadership. This boosts worker enthusiasm and labor delegates, but party regulars and conservatives become much more wary.
 
 @dem_conference_after_huey
 title: Continue conference agenda
@@ -92,6 +129,10 @@ if (Q.coup_progress >= 5) {
     reactionaryScore += 5;
 }
 
+Q.gop_old_guard_score = oldGuardScore;
+Q.gop_moderate_score = moderateScore;
+Q.gop_reactionary_score = reactionaryScore;
+
 if (moderateScore >= oldGuardScore && moderateScore >= reactionaryScore) {
     Q.gop_wing = "moderate_reform";
     Q.gop_party_chair = "Landon";
@@ -122,8 +163,41 @@ Q.gop_leader = Q.gop_party_chair;
 Q.nusj_no_coop = 1;
 Q.sla_no_coop = 1;
 !}
+on-display: {!
+if (window && d3) {
+    var gopData = [
+        {id: "dnvp", legend: "Old Guard", name: "Old Guard", seats: Math.round(Q.gop_old_guard_score || 0)},
+        {id: "dvp", legend: "Moderate reform", name: "Moderate reform", seats: Math.round(Q.gop_moderate_score || 0)},
+        {id: "nsdap", legend: "National conservative", name: "National conservative", seats: Math.round(Q.gop_reactionary_score || 0)}
+    ];
+    var svg = d3.select("#gop_conference_chart");
+    svg.selectAll("*").remove();
+    var width = 500;
+    var height = 500;
+    var screenWidth = document.getElementById('content').offsetWidth;
+    if (screenWidth < width - 50) {
+        width = screenWidth - 50;
+        height = width;
+        document.getElementById("gop_conference_chart").style.height = screenWidth/2 + "px";
+    }
+    svg.attr("width", width).attr("height", height);
+    var parliament = d3.parliament();
+    parliament.width(width).height(height).innerRadiusCoef(0.4);
+    parliament.enter.fromCenter(true).smallToBig(true);
+    parliament.exit.toCenter(false).bigToSmall(true);
+    svg.datum(gopData).call(parliament);
+}
+!}
 
 Republican delegates conclude their conference for the cycle.
+
+{!<svg id="gop_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
+
+{!<table>!}
+{!<tr><td><div class="box" style='background-color:#3f7bc1'> </div></td><td>Old Guard</td><td>[+ gop_old_guard_score +]</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#D5AC27'> </div></td><td>Moderate reform</td><td>[+ gop_moderate_score +]</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#954B00'> </div></td><td>National conservative</td><td>[+ gop_reactionary_score +]</td></tr>!}
+{!</table>!}
 
 [? if gop_wing = "old_guard" : The Old Guard consolidates control under Hoover-aligned leadership, emphasizing fiscal restraint and opposition to expansive federal planning. ?]
 [? if gop_wing = "moderate_reform" : Moderate reform Republicans prevail, selecting a leadership line open to limited cooperation while resisting broad federal overreach. ?]

@@ -41,7 +41,7 @@
         window.dendryUI.dendryEngine.goToScene('mod_loader');
     }
   };
-  
+
   window.showOptions = function() {
       var save_element = document.getElementById('options');
       window.populateOptions();
@@ -56,12 +56,12 @@
           };
       }
   };
-
+  
   window.hideOptions = function() {
       var save_element = document.getElementById('options');
       save_element.style.display = "none";
   };
-
+  
   window.disableBg = function() {
       window.dendryUI.disable_bg = true;
       document.body.style.backgroundImage = 'none';
@@ -158,7 +158,6 @@
     }
   };
 
-  
   // This function allows you to modify the text before it's displayed.
   // E.g. wrapping chat-like messages in spans.
   window.displayText = function(text) {

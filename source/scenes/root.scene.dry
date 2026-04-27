@@ -106,8 +106,10 @@ Q.dem_economic_plan = "undecided";
 Q.dem_conference_due = 1;
 Q.dem_conference_seen = 0;
 Q.last_dem_conference_year = 1930;
-Q.gop_party_chair = "Hoover";
+Q.gop_party_chair = "Herbert Hoover";
 Q.gop_wing = "undecided";
+Q.gop_economic_plan = "undecided";
+Q.gop_economic_plan_display = "Undecided";
 Q.gop_conference_due = 1;
 Q.gop_conference_seen = 0;
 Q.last_gop_conference_year = 1930;
@@ -136,9 +138,10 @@ Q.z_relation = 45;
 Q.kpd_relation = 36;
 Q.ddp_relation = 40;
 Q.dvp_relation = 48;
-// DNVP and NSDAP are invariably hostile
-Q.DNVP_relation = 18;
-Q.NSDAP_relation = 8;
+// Republican hardliners, NUSJ, and the Silver Legion begin hostile.
+Q.dnvp_relation = 18;
+Q.nsdap_relation = 8;
+Q.sla_relation = 4;
 
 Q.kpd_leader = "Thälmann";
 // alternative is the Conciliators as party leader

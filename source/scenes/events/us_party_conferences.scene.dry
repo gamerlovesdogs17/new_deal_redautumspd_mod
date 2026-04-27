@@ -101,6 +101,16 @@ The Democratic coalition convenes to decide both leadership emphasis and economi
 
 {!<span class="box" style='background-color:#3f7bc1'></span>!} Southern bloc: [+ dem_southern_delegates +] delegates
 
+**Economic plan alignment**
+
+{!<div class="conference-grid">!}
+{!<div class="conference-row">!}{!<span class="party-dem">New Deal liberals</span>!}{!<span>!}Pragmatic New Deal: strong; Structural Transformation: partial; Share Our Wealth: limited.{!</span>!}{!</div>!}
+{!<div class="conference-row">!}{!<span class="party-dem">Party regulars</span>!}{!<span>!}Pragmatic New Deal: majority after FDR concessions; Share Our Wealth: small minority, larger if Huey Long leads labor; Structural Transformation: rare.{!</span>!}{!</div>!}
+{!<div class="conference-row">!}{!<span class="party-dem">Labor Democrats</span>!}{!<span>!}Share Our Wealth: strong; Structural Transformation: moderate; Pragmatic New Deal: tactical support if labor guarantees are included.{!</span>!}{!</div>!}
+{!<div class="conference-row">!}{!<span class="party-dem">Conservative Democrats</span>!}{!<span>!}Pragmatic New Deal: moderate; Share Our Wealth: hostile; Structural Transformation: opposed.{!</span>!}{!</div>!}
+{!<div class="conference-row">!}{!<span class="party-dem">Southern bloc</span>!}{!<span>!}Pragmatic New Deal: limited; Share Our Wealth: split if Huey Long is empowered; Structural Transformation: opposed.{!</span>!}{!</div>!}
+{!</div>!}
+
 - @huey_labor_wildcard
 - @dem_pragmatic_line
 - @dem_populist_line
@@ -195,66 +205,124 @@ Q.last_gop_conference_year = Q.year;
 var oldGuardScore = 40;
 var moderateScore = 40;
 var reactionaryScore = 35;
+var limitedRecoveryScore = 28;
+var fiscalOrthodoxyScore = 32;
+var nationalRetrenchmentScore = 24;
 
 if (Q.dem_economic_plan == "pragmatic_new_deal") {
     moderateScore += 15;
     oldGuardScore += 5;
+    limitedRecoveryScore += 12;
+    fiscalOrthodoxyScore += 4;
 }
 if (Q.dem_economic_plan == "share_our_wealth") {
     oldGuardScore += 10;
     reactionaryScore += 8;
+    fiscalOrthodoxyScore += 9;
+    nationalRetrenchmentScore += 8;
 }
 if (Q.dem_economic_plan == "structural_transformation") {
     reactionaryScore += 16;
     oldGuardScore += 8;
     moderateScore -= 10;
+    fiscalOrthodoxyScore += 10;
+    nationalRetrenchmentScore += 16;
 }
 
 if (Q.unemployed >= 18) {
     reactionaryScore += 6;
+    limitedRecoveryScore += 8;
+    nationalRetrenchmentScore += 5;
+}
+if (Q.economic_growth < -6) {
+    limitedRecoveryScore += 6;
+    nationalRetrenchmentScore += 4;
+}
+if (Q.inflation > 6) {
+    fiscalOrthodoxyScore += 8;
+}
+if (Q.budget <= 0) {
+    oldGuardScore += 4;
+    fiscalOrthodoxyScore += 8;
 }
 if (Q.pro_republic < 45) {
     reactionaryScore += 8;
+    nationalRetrenchmentScore += 8;
 }
 if (Q.ddp_relation >= 50 && Q.dvp_relation >= 50) {
     moderateScore += 8;
+    limitedRecoveryScore += 7;
 }
 if (Q.coup_progress >= 5) {
     reactionaryScore += 5;
+    nationalRetrenchmentScore += 7;
 }
+if (Q.nationalism >= 60) {
+    reactionaryScore += 3;
+    nationalRetrenchmentScore += 4;
+}
+if (Q.socialism >= 55) {
+    oldGuardScore += 3;
+    reactionaryScore += 4;
+    fiscalOrthodoxyScore += 3;
+}
+
+moderateScore += Math.round(limitedRecoveryScore * 0.25);
+oldGuardScore += Math.round(fiscalOrthodoxyScore * 0.25);
+reactionaryScore += Math.round(nationalRetrenchmentScore * 0.25);
 
 Q.gop_old_guard_score = oldGuardScore;
 Q.gop_moderate_score = moderateScore;
 Q.gop_reactionary_score = reactionaryScore;
+Q.gop_limited_recovery_score = limitedRecoveryScore;
+Q.gop_fiscal_orthodoxy_score = fiscalOrthodoxyScore;
+Q.gop_national_retrenchment_score = nationalRetrenchmentScore;
 var gopTotal = 1154;
 var gopScoreTotal = Math.max(1, oldGuardScore + moderateScore + reactionaryScore);
 Q.gop_old_guard_delegates = Math.round(gopTotal * oldGuardScore / gopScoreTotal);
 Q.gop_moderate_delegates = Math.round(gopTotal * moderateScore / gopScoreTotal);
 Q.gop_reactionary_delegates = gopTotal - Q.gop_old_guard_delegates - Q.gop_moderate_delegates;
 
+if (limitedRecoveryScore >= fiscalOrthodoxyScore && limitedRecoveryScore >= nationalRetrenchmentScore) {
+    Q.gop_economic_plan = "limited_recovery";
+    Q.gop_economic_plan_display = "Limited recovery program";
+    Q.gop_conference_context = "The crisis is severe enough that Republican moderates argue for relief, farm support, and selective public works without accepting the full Democratic program.";
+} else if (nationalRetrenchmentScore >= fiscalOrthodoxyScore) {
+    Q.gop_economic_plan = "national_retrenchment";
+    Q.gop_economic_plan_display = "National retrenchment";
+    Q.gop_conference_context = "Anti-radical pressure, nationalist sentiment, and street tension push the conference toward tariffs, internal security, and a hard attack on redistribution.";
+} else {
+    Q.gop_economic_plan = "fiscal_orthodoxy";
+    Q.gop_economic_plan_display = "Fiscal orthodoxy";
+    Q.gop_conference_context = "Budget anxiety and business pressure keep the party focused on balanced budgets, tax restraint, and opposition to federal planning.";
+}
+
 if (moderateScore >= oldGuardScore && moderateScore >= reactionaryScore) {
     Q.gop_wing = "moderate_reform";
-    Q.gop_party_chair = "Landon";
+    Q.gop_party_chair = "Alf Landon";
     Q.dvp_relation += 6;
     Q.ddp_relation += 4;
     Q.dnvp_relation = Math.min(Q.dnvp_relation, 20);
     Q.nsdap_relation = Math.min(Q.nsdap_relation, 15);
+    Q.sla_relation = Math.min(Q.sla_relation, 8);
 } else if (reactionaryScore >= oldGuardScore) {
     Q.gop_wing = "national_conservative";
-    Q.gop_party_chair = "Fish";
+    Q.gop_party_chair = "Hamilton Fish";
     Q.dvp_relation -= 6;
     Q.ddp_relation -= 6;
     Q.dnvp_relation = Math.max(Q.dnvp_relation, 22);
     Q.nsdap_relation = Math.max(Q.nsdap_relation, 18);
+    Q.sla_relation = Math.max(Q.sla_relation, 14);
     Q.sh_strength += 50;
     Q.sa_strength += 35;
 } else {
     Q.gop_wing = "old_guard";
-    Q.gop_party_chair = "Hoover";
+    Q.gop_party_chair = "Herbert Hoover";
     Q.dvp_relation -= 2;
     Q.ddp_relation -= 3;
     Q.dnvp_relation = Math.max(Q.dnvp_relation, 18);
     Q.nsdap_relation = Math.max(Q.nsdap_relation, 10);
+    Q.sla_relation = Math.max(Q.sla_relation, 6);
 }
 Q.gop_leader = Q.gop_party_chair;
 
@@ -297,6 +365,10 @@ Republican delegates conclude their conference for the cycle.
 {!<span class="box" style='background-color:#e05252'></span>!} Moderate reform: [+ gop_moderate_delegates +] delegates
 
 {!<span class="box" style='background-color:#3b0a0a'></span>!} National conservative: [+ gop_reactionary_delegates +] delegates
+
+Economic program adopted: **[+ gop_economic_plan_display +]**
+
+[+ gop_conference_context +]
 
 [? if gop_wing = "old_guard" : The Old Guard consolidates control under Hoover-aligned leadership, emphasizing fiscal restraint and opposition to expansive federal planning. ?]
 [? if gop_wing = "moderate_reform" : Moderate reform Republicans prevail, selecting a leadership line open to limited cooperation while resisting broad federal overreach. ?]

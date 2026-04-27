@@ -592,6 +592,22 @@ table {
     gap: 0.25em;
     margin: 0.45em 0 0.9em 0;
 }
+.conference-grid {
+    display: grid;
+    gap: 0.3em;
+    margin: 0.6em 0 0.9em 0;
+}
+.conference-row {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 0.22em 0;
+}
+.conference-row > span:first-child {
+    display: block;
+}
+.conference-row > span:last-child {
+    display: block;
+    padding-left: 0.6em;
+}
 
 .ev-map {
     display: grid;

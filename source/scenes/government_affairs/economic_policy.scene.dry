@@ -9,7 +9,7 @@ card-image: img/portraits/SchmidtRobert.jpg
 
 = Economic Policy
 
-We have already formulated an economic plan. Now we have to implement it.
+The conference has adopted an economic direction. Now the administration has to turn the platform into agencies, appropriations, and jobs.
 
 - @wtb_2
 - @wtb_2_deficit
@@ -25,25 +25,25 @@ We have already formulated an economic plan. Now we have to implement it.
 - @cancel_advisor_action
 
 @wtb_2
-title: Continue the implementation of the WTB-Plan.
+title: Continue the Share Our Wealth public works drive.
 subtitle: -3 budget
-unavailable-subtitle: Unemployment is low enough that the time for the WTB-Plan has passed.
+unavailable-subtitle: Unemployment is low enough that the emergency works drive has passed.
 view-if: wtb_implemented > 2 and budget >= 3 
 choose-if: unemployed > 8
 on-arrival: works_program += 1; budget -= 3; workers_spd += 7*(1-dissent); workers += 1 if works_program <= 4; unemployed -= 3 if unemployed > 8; unemployed_spd += 7*(1-dissent); workers_kpd -= 3; workers_nsdap -= 3; wtb_implemented += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 2; economic_growth += 1.6; economic_growth -= 0.6 if economic_growth > 5
 
-[? if works_program == 4 : We have commenced Phase 2 of the WTB-Plan. ?][? if works_program > 4 :  We have continued our implementation of the WTB-Plan. ?] In addition to public works, we are now focusing on rebuilding our industries.
+[? if works_program == 4 : We have opened the second phase of the Share Our Wealth recovery drive. ?][? if works_program > 4 :  We have continued the recovery drive. ?] In addition to public works, the administration is now focusing on rebuilding idle industries.
 
 
 @wtb_2_deficit
-title: Continue the implementation of the WTB-Plan.
+title: Continue the Share Our Wealth public works drive.
 subtitle: -3 budget - we will enter a deficit.
-unavailable-subtitle: Unemployment is low enough that we should not do deficit spending.
+unavailable-subtitle: Unemployment is low enough that deficit-financed emergency works would be hard to justify.
 view-if: wtb_implemented > 2 and budget < 3 and budget >= -3
 choose-if: unemployed > 10
 on-arrival: works_program += 1; budget -= 3; workers_spd += 6*(1-dissent); workers += 1 if works_program <= 4; unemployed -= 3 if unemployed > 8; unemployed_spd += 6*(1-dissent); workers_kpd -= 2; workers_nsdap -= 2; coalition_dissent += 1; capital_strike_progress += 1; wtb_implemented += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 3; economic_growth += 1.6; economic_growth -= 0.6 if economic_growth > 5
 
-We have continued our implementation of the WTB-Plan, despite the continued deficit spending. In addition to public works, we are now focusing on rebuilding our industries.
+We have continued the recovery drive despite the deficit. In addition to public works, the administration is now focusing on rebuilding idle industries.
 
 
 @wtb_continuation
@@ -51,43 +51,43 @@ title: Look back on our results, and continue our implementation...
 view-if: wtb_implemented >= 1 and wtb_implemented <= 2
 on-arrival: budget += 1 if works_program <= 2; unemployed -= 5 if (works_program <= 2 and unemployed > 15) else unemployed -= 3; unemployed += 3 if unemployed < 5; unemployed += 3 if unemployed < 0; workers += 2 if works_program <= 2 else workers += 1; workers_spd += 8*(1-dissent); unemployed_spd += 8*(1-dissent); workers_kpd -= 3; workers_nsdap -= 5; works_program += 1; z_relation += 3; dvp_relation += 3; coalition_dissent -= 1 if coalition_dissent >= 1; wtb_implemented += 1; capital_strike_progress -= 1 if capital_strike_progress >= 3; inflation += 1.5; inflation += 1 if unemployed < 10; economic_growth += 1.2; economic_growth -= 0.5 if economic_growth > 5
 
-Our spending on public works has resulted in a lower need for unemployment insurance and welfare, and increased tax receipts through the multiplier effect as the new money courses through the economy, recuperating some of our spending. We continue to invest most of the new revenue into the program.
+Public works spending is reducing the burden on relief rolls and lifting tax receipts as new money moves through the economy. We continue to invest much of the new revenue into the program.
 
-The economy is doing better, finally. Even the bourgeois parties are beginning to see the light.
+The economy is doing better, finally. Even some business-aligned politicians are starting to admit that action was necessary.
 
-[? if in_popular_front or in_left_front: The KPD, however, still opposes our policy of "rescuing" capitalism. ?]
+[? if in_popular_front or in_left_front: The Socialist Party of America, however, still argues that the program rescues capitalism instead of transforming it. ?]
 
 @implement_wtb_no_deficit
-title: Implement the WTB plan.
+title: Launch the Share Our Wealth recovery program.
 subtitle: -[+ wtb_budget +] budget. [? if wtb_budget == 3 : Our pro-labor policies have reduced the cost of the plan. ?]
-unavailable-subtitle: Unemployment is low enough that the time for the WTB-Plan has passed.
+unavailable-subtitle: Unemployment is low enough that the emergency recovery program has passed.
 view-if: budget >= wtb_budget and wtb_implemented == 0 and wtb_adopted == 1
 choose-if: unemployed > 8
 on-arrival: budget -= wtb_budget; works_program += 1; unemployed -= 4; workers_spd += 8*(1-dissent); unemployed_spd += 8*(1-dissent); wtb_implemented += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 2; economic_growth += 2.8; pro_republic += 3*(1-dissent);
 achievement: wirtschaftspolitik
 
-We have started to enact the WTB plan. Money is beginning to flow through the economy via investments in large-scale public works.
+We have started to enact Share Our Wealth as an actual governing program. Money is beginning to flow through the economy through large-scale public works, relief, and direct purchasing power.
 
-[? if in_popular_front or in_left_front: The KPD opposes the WTB plan, seeing it as a rescue of capitalism rather than a step towards real socialism. ?]
+[? if in_popular_front or in_left_front: The Socialist Party of America opposes the plan's limits, seeing it as a rescue of capitalism rather than a step toward real socialism. ?]
 
 @implement_wtb_deficit
-title: Implement the WTB plan.
+title: Launch the Share Our Wealth recovery program.
 subtitle: -[+ wtb_budget +] budget - we will enter deficit spending. [? if wtb_budget == 3 : Our pro-labor policies have reduced the cost of the plan. ?]
-unavailable-subtitle: Unemployment is low enough that the time for the WTB-Plan has passed.
+unavailable-subtitle: Unemployment is low enough that deficit-financed emergency works would be hard to justify.
 view-if: budget < wtb_budget and wtb_implemented == 0 and wtb_adopted == 1
 choose-if: unemployed > 8
 on-arrival: coalition_dissent += 1; coalition_dissent += 1 if historical_mode; coalition_dissent += 1 if chancellor == "Brüning"; works_program += 1; budget -= wtb_budget; unemployed -= 4; workers += 2; workers_spd += 8*(1-dissent); unemployed_spd += 8*(1-dissent); capital_strike_progress += 1; wtb_implemented += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 3; economic_growth += 3; pro_republic += 3*(1-dissent);
 achievement: wirtschaftspolitik
 
-We have entered the realm of deficit spending. Our coalition partners are disgusted, but the works plan is enacted anyway. Money is beginning to flow through the economy via investments in large-scale public works.
+We have entered the realm of deficit spending. Conservative Democrats and business allies are furious, but the works plan is enacted anyway. Money is beginning to flow through the economy through large-scale public works, relief, and direct purchasing power.
 
-[? if in_popular_front or in_left_front: The KPD opposes the WTB plan, seeing it as a rescue of capitalism rather than a step towards real socialism. ?]
+[? if in_popular_front or in_left_front: The Socialist Party of America opposes the plan's limits, seeing it as a rescue of capitalism rather than a step toward real socialism. ?]
 
 
 ####################### left economic policies (socializations)
 
 @nationalize_1
-title: Implement the Left plan for the transformation of the economy.
+title: Implement the Structural Transformation program.
 subtitle: -[+ nationalize_budget +] budget. [? if works_councils >= 3 : Our works councils have reduced the budget necessary for this program. ?] [? if socializations >= 2: Our existing socialization policies have reduced the budget necessary for this program. ?]
 view-if: nationalization_adopted == 1 and nationalization_progress == 0
 go-to: nationalize_deficit if budget < nationalize_budget; nationalize_no_deficit if budget >= nationalize_budget
@@ -99,13 +99,13 @@ achievement: wirtschaftspolitik
 
 [? if nationalization_progress == 1 : We have begun purchasing idling enterprises from the capitalists[? if works_councils >= 1: , and running them in coordination with empowered works councils ?]. By keeping production going, we can stave off the rising unemployment. ?]
 
-[? if nationalization_progress == 1 : The Left argues that this should only be a first step in the socialist transformation of the economy. Eventually, much of the economy must be brought under popular control. ?]
+[? if nationalization_progress == 1 : The Democratic left argues that this should only be a first step in the social-democratic transformation of the economy. Eventually, much of the economy must be brought under public or cooperative control. ?]
 
 [? if nationalization_progress > 1 : We purchase additional underutilized enterprises and run them in a coordinated socialist fashion with the works councils, hiring formerly laid off workers. A significant portion of the economy is now under public control. ?]
 
 @nationalize_deficit
 
-Unfortunately, we do not have the budget to begin buying out industrial facilities. Some are urging for deficit spending in order to purchase factories, while others are encouraging (currently illegal) factory takeovers by workers, or nationalization without compensation. Taking any of these actions would require a vast departure from our previous party stances.
+Unfortunately, we do not have the budget to begin buying out industrial facilities. Some allies urge deficit spending to purchase factories, while others encourage currently illegal factory takeovers by workers, or nationalization without compensation. Any of these choices would mark a sharp break from the administration's safer public line.
 
 - @nationalize_deficit_1
 - @nationalize_without_compensation
@@ -121,11 +121,11 @@ unavailable-subtitle: [? if left_strength <= reformist_strength + center_strengt
 on-arrival: nationalization_progress += 1; capital_strike_progress += 3; unemployed -= 3 if unemployed >= 6; unemployed -= 1.2 if works_councils >= 3; budget -= nationalize_budget; works_program += 1; workers_spd += 8*(1-dissent); unemployed_spd += 5*(1-dissent); coalition_dissent += 2; dvp_relation -= 6; z_relation -= 4; new_middle_spd -= 3; old_middle_spd -= 3; economy_goal_completed += 1; inflation += 3; economic_growth += 2 if economic_growth < 5;
 achievement: wirtschaftspolitik
 
-[? if woytinsky_advisor: Most of the party, even on the left, are opposed to budget deficits for any purpose, with the exception of Wladimir Woytinsky. While he did not originally support the left's "transformational" plan, he has come around, and has persuaded the party and the Finance Ministry to support budget deficits in limited cases, for the purpose of exiting from the depression. ?]
+[? if woytinsky_advisor: Most of the coalition, even on the left, remains cautious about deficits for this purpose, with the exception of Wladimir Woytinsky. While he did not originally support the transformational plan, he has come around and persuaded the Treasury to accept limited deficits as a way out of the depression. ?]
 
 [? if nationalization_progress == 1 : We have begun purchasing idling enterprises from the capitalists[? if works_councils >= 1: , and running them in coordination with empowered works councils ?]. By keeping production going, we can stave off the rising unemployment. ?]
 
-[? if nationalization_progress == 1 : The Left argues that this should only be a first step in the socialist transformation of the economy. Eventually, much of the economy must be brought under popular control. ?]
+[? if nationalization_progress == 1 : The Democratic left argues that this should only be a first step in the social-democratic transformation of the economy. Eventually, much of the economy must be brought under public or cooperative control. ?]
 
 [? if nationalization_progress > 1 : We purchase additional underutilized enterprises and run them in a coordinated socialist fashion with the works councils, hiring formerly laid off workers. A significant portion of the economy is now under public control. ?]
 
@@ -153,7 +153,7 @@ achievement: wirtschaftspolitik
 
 The capitalists are, predictably, up in arms about our policy of legalizing factory occupations. They call it illegal expropriation, and it is. Nevertheless, it is clear that they have failed, and we must take radical action.
 
-Fascists have been taking increasingly violent actions around the occupied factories, calling us thieves and looters. However, the some of the working-class supporters of the fascists have been peeled off, or at least the ones with a sense of class solidarity.
+Far-right militants have been taking increasingly violent actions around the occupied factories, calling us thieves and looters. Some working-class supporters of the far right have been peeled away, or at least the ones with a sense of class solidarity.
 
 
 @nationalize_2
@@ -166,7 +166,7 @@ go-to: nationalize_deficit if budget < nationalize_budget; nationalize_no_defici
 # Moderate economic plan
 
 @moderate_plan
-title: Implement the Reformists' job-creation plan.
+title: Implement the Pragmatic New Deal job-creation plan.
 subtitle: -2 budget.
 unavailable-subtitle: -2 budget. [? if budget < 2 : We do not have the necessary budget. ?] [? if unemployed < 8 : Unemployment is low enough that job creation is not necessary. ?]
 view-if: moderate_plan_adopted == 1
@@ -174,18 +174,18 @@ choose-if: budget >= 2 and unemployed >= 8
 on-arrival: budget -= 2; works_program += 1; unemployed -= 3 if unemployed >= 8; inflation += 1.5; workers_spd += 6*(1-dissent); unemployed_spd += 4*(1-dissent); new_middle_spd += 3*(1-dissent); old_middle_spd += 2*(1-dissent); rural_spd += 2*(1-dissent); moderate_plan_progress += 1; kpd_coalition_dissent += 1; inflation += 1 if unemployed < 10; kpd_relation -= 5 if in_popular_front or in_left_front; economic_growth += 1.6; pro_republic += 3*(1-dissent);
 achievement: wirtschaftspolitik
 
-[? if moderate_plan_progress == 1 : We have started to implement the job-creation plan! Funds are sent to build public works projects across Germany, reducing unemployment. ?]
+[? if moderate_plan_progress == 1 : We have started to implement the job-creation plan. Funds are sent to public works projects across the country, reducing unemployment. ?]
 
-[? if moderate_plan_progress > 1 : We have continued to fund the job-creation plan, using our funds to build public works throughout Germany. ?]
+[? if moderate_plan_progress > 1 : We have continued to fund the job-creation plan, using federal money to build public works throughout the country. ?]
 
-[? if unemployed >= 10 : The bourgeois approve of this plan as the "least bad" alternative, seeing it as necessary to save Germany's economy. ?]
+[? if unemployed >= 10 : Business moderates accept this plan as the least disruptive alternative, seeing it as necessary to save the economy. ?]
 
 [? if unemployed < 10 : Unemployment is low enough that the plan does not seem to have the intended effect. ?]
 
-[? if in_popular_front or in_left_front: The KPD opposes the economic plan, seeing it as a rescue of capitalism rather than a step towards real socialism. ?]
+[? if in_popular_front or in_left_front: The Socialist Party of America opposes the economic plan, seeing it as a rescue of capitalism rather than a step toward real socialism. ?]
 
 @moderate_plan_limited_budget
-title: Partially implement the Reformists' job-creation plan, with a lower cost.
+title: Partially implement the Pragmatic New Deal job-creation plan.
 subtitle: -1 budget.
 unavailable-subtitle: -1 budget. [? if budget < 1 : We do not have the necessary budget. ?] [? if unemployed < 8 : Unemployment is low enough that job creation is not necessary. ?]
 view-if: moderate_plan_adopted == 1
@@ -193,12 +193,12 @@ choose-if: budget >= 1 and unemployed >= 8
 on-arrival: budget -= 1; works_program += 1; unemployed -= 2 if unemployed >= 8; inflation += 1; workers_spd += 4*(1-dissent); unemployed_spd += 2*(1-dissent); new_middle_spd += 2*(1-dissent); old_middle_spd += 1*(1-dissent); rural_spd += 1*(1-dissent); moderate_plan_progress += 1; kpd_coalition_dissent += 1; inflation += 1 if unemployed < 10; kpd_relation -= 5 if in_popular_front or in_left_front; economic_growth += 0.7; pro_republic += 3*(1-dissent);
 achievement: wirtschaftspolitik
 
-[? if moderate_plan_progress == 1 : We have started to implement the job-creation plan! Funds are sent to build public works projects across Germany, reducing unemployment. ?]
+[? if moderate_plan_progress == 1 : We have started to implement the job-creation plan. Funds are sent to public works projects across the country, reducing unemployment. ?]
 
-[? if moderate_plan_progress > 1 : We have continued to fund the job-creation plan, using our funds to build public works throughout Germany. ?]
+[? if moderate_plan_progress > 1 : We have continued to fund the job-creation plan, using federal money to build public works throughout the country. ?]
 
-[? if unemployed >= 10 : The bourgeois approve of this plan as the "least bad" alternative, seeing it as necessary to save Germany's economy. ?]
+[? if unemployed >= 10 : Business moderates accept this plan as the least disruptive alternative, seeing it as necessary to save the economy. ?]
 
 [? if unemployed < 10 : Unemployment is low enough that the plan does not seem to have the intended effect. ?]
 
-[? if in_popular_front or in_left_front: The KPD opposes the economic plan, seeing it as a rescue of capitalism rather than a step towards real socialism. ?]
+[? if in_popular_front or in_left_front: The Socialist Party of America opposes the economic plan, seeing it as a rescue of capitalism rather than a step toward real socialism. ?]

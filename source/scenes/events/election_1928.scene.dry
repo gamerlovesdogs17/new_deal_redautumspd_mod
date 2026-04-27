@@ -99,22 +99,22 @@ if (Q.kpd_r >= Q.spd_r && Q.kpd_r >= Q.nsdap_r) {
 }
 
 // coalitions
-Q.weimar_coalition = Q.spd_r + Q.ddp_r + Q.z_r - 3;
-Q.grand_coalition = Q.spd_r + Q.ddp_r + Q.z_r + Q.dvp_r;
+Q.weimar_coalition = Q.spd_r + Q.z_r;
+Q.grand_coalition = Q.spd_r + Q.z_r + Q.dvp_r;
 Q.bourgeois_coalition = Q.ddp_r + Q.z_r + Q.dvp_r + Q.other_r;
 Q.center_right_coalition = Q.z_r + Q.ddp_r + Q.dvp_r + Q.other_r;
 Q.right_coalition = Q.z_r + Q.ddp_r + Q.dvp_r + Q.other_r;
 Q.far_right_coalition = Q.dnvp_r + Q.nsdap_r;
 Q.left_coalition = Q.spd_r + Q.kpd_r + Q.sapd_r;
 // this is an absurd concept lol
-Q.popular_front_coalition = Q.spd_r + Q.kpd_r + Q.z_r + Q.ddp_r - 3 + Q.sapd_r;
+Q.popular_front_coalition = Q.spd_r + Q.kpd_r + Q.z_r + Q.sapd_r;
 Q.anti_democratic_coalition = Q.kpd_r + Q.nsdap_r + Q.dnvp_r;
 // aka everyone except nazi, kpd, dnvp
 Q.neo_weimar_coalition = Q.spd_r + Q.ddp_r + Q.z_r + Q.dvp_r;
 // Hitler + Right-wing parties (only comes into effect if you've alienated Z too badly)
 Q.hitler_right_coalition = Q.z_r + Q.dnvp_r + Q.nsdap_r;
 // Progressive coalition isn't going to be implemented as a distinct coalition but it's the coalition that lets you pass improved women's rights/gay rights
-Q.progressive_coalition = Q.spd_r + Q.kpd_r + Q.ddp_r + Q.sapd_r;
+Q.progressive_coalition = Q.spd_r + Q.kpd_r + Q.z_r + Q.sapd_r;
 
 // Bicameral model:
 // *_r remains the broad national vote baseline.
@@ -149,10 +149,10 @@ for (var p3 of chamberParties) {
 }
 Q.other_h_seats += houseSeatsTotal - assignedHouseSeats;
 Q.other_s_seats += senateSeatsTotal - assignedSenateSeats;
-Q.weimar_house = Q.spd_h + Q.ddp_h + Q.z_h - 3;
-Q.weimar_senate = Q.spd_s + Q.ddp_s + Q.z_s - 3;
-Q.grand_house = Q.spd_h + Q.ddp_h + Q.z_h + Q.dvp_h;
-Q.grand_senate = Q.spd_s + Q.ddp_s + Q.z_s + Q.dvp_s;
+Q.weimar_house = Q.spd_h + Q.z_h;
+Q.weimar_senate = Q.spd_s + Q.z_s;
+Q.grand_house = Q.spd_h + Q.z_h + Q.dvp_h;
+Q.grand_senate = Q.spd_s + Q.z_s + Q.dvp_s;
 Q.bourgeois_house = Q.ddp_h + Q.z_h + Q.dvp_h + Q.other_h;
 Q.bourgeois_senate = Q.ddp_s + Q.z_s + Q.dvp_s + Q.other_s;
 Q.neo_weimar_house = Q.spd_h + Q.ddp_h + Q.z_h + Q.dvp_h;
@@ -165,8 +165,8 @@ Q.far_right_house = Q.dnvp_h + Q.nsdap_h;
 Q.far_right_senate = Q.dnvp_s + Q.nsdap_s;
 Q.left_house = Q.spd_h + Q.kpd_h + (Q.sapd_h || 0);
 Q.left_senate = Q.spd_s + Q.kpd_s + (Q.sapd_s || 0);
-Q.popular_house = Q.spd_h + Q.kpd_h + Q.z_h + Q.ddp_h - 3 + (Q.sapd_h || 0);
-Q.popular_senate = Q.spd_s + Q.kpd_s + Q.z_s + Q.ddp_s - 3 + (Q.sapd_s || 0);
+Q.popular_house = Q.spd_h + Q.kpd_h + Q.z_h + (Q.sapd_h || 0);
+Q.popular_senate = Q.spd_s + Q.kpd_s + Q.z_s + (Q.sapd_s || 0);
 Q.dem_bill_coalition = Math.max(Q.weimar_senate, Q.grand_senate, Q.popular_senate, Q.left_senate);
 Q.best_dem_house = Math.max(Q.spd_h, Q.weimar_house, Q.grand_house, Q.left_house, Q.popular_house);
 Q.best_dem_senate = Math.max(Q.spd_s, Q.weimar_senate, Q.grand_senate, Q.left_senate, Q.popular_senate);
@@ -191,7 +191,7 @@ if (Q.neo_weimar_senate >= 50 && Q.z_relation >= 50 && Q.dvp_relation >= 30) {
 if (Q.left_senate >= 50 && Q.kpd_relation >= 50 && Q.communist_coalition >= 3) {
     Q.can_dem_senate_coalition = 1;
 }
-if (Q.popular_senate >= 50 && Q.kpd_relation >= 45 && Q.z_relation >= 45 && Q.ddp_relation >= 50 && Q.communist_coalition >= 3) {
+if (Q.popular_senate >= 50 && Q.kpd_relation >= 45 && Q.z_relation >= 45 && Q.communist_coalition >= 3) {
     Q.can_dem_senate_coalition = 1;
 }
 Q.gridlock_risk = 0;
@@ -440,16 +440,16 @@ The Democratic Party can organize the House without outside support.
 
 @house_broad_reform
 title: Broad reform House coalition.
-subtitle: Democratic Party + Farmer-Labor + Liberty League ([+ weimar_house +]%)
+subtitle: Democratic Party + Farmer-Labor ([+ weimar_house +]%)
 view-if: weimar_house >= 50
 on-arrival: selected_house_coalition = "Broad reform coalition"; governing_house_support = weimar_house; speaker_elected = 1;
 go-to: senate_results
 
-The House can be organized around the Democratic Party, Farmer-Labor, and the Liberty League.
+The House can be organized around the Democratic Party and Farmer-Labor. The Liberty League remains outside this reform bloc, attacking the administration from the right.
 
 @house_stabilization
 title: National stabilization House coalition.
-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican Party ([+ grand_house +]%)
+subtitle: Democratic Party + Farmer-Labor + Republican Party ([+ grand_house +]%)
 view-if: grand_house >= 50
 on-arrival: selected_house_coalition = "National stabilization coalition"; governing_house_support = grand_house; speaker_elected = 1;
 go-to: senate_results
@@ -467,7 +467,7 @@ The House can be organized with Democratic and socialist support.
 
 @house_popular
 title: Popular-front House coalition.
-subtitle: Democratic Party + Socialist Party of America + Farmer-Labor + Liberty League ([+ popular_house +]%)
+subtitle: Democratic Party + Socialist Party of America + Farmer-Labor ([+ popular_house +]%)
 view-if: popular_house >= 50
 on-arrival: selected_house_coalition = "Popular front coalition"; governing_house_support = popular_house; speaker_elected = 1;
 go-to: senate_results
@@ -594,12 +594,12 @@ Senate: [+ selected_senate_coalition +]
 
 @popular_front_coalition
 title: A popular-front Senate coalition?
-subtitle: Democratic Party + Socialist Party of America + Farmer-Labor + Liberty League [? if sapd_formed: + left splinters ?]([+ popular_senate +]%)
-unavailable-subtitle: Democratic Party + Socialist Party of America + Farmer-Labor + Liberty League [? if sapd_formed: + left splinters ?]([+ popular_senate +]%) - [? if ((kpd_relation < 65 and kpd_party_leader == "Thälmann") or (kpd_relation < 45 and kpd_party_leader == "Conciliators")): We do not have good enough relations with the Socialist Party of America. ?][? if (z_relation < 45 and z_party_leader == "Joos") or (z_relation < 65 and z_party_leader != "Joos" and kpd_party_leader != "Conciliators") or (z_relation < 55 and z_party_leader != "Joos" and kpd_party_leader == "Conciliators"): We do not have good enough relations with Farmer-Labor. ?][? if communist_coalition < 3 : The socialists are unwilling to compromise enough for coalition government. ?]
+subtitle: Democratic Party + Socialist Party of America + Farmer-Labor [? if sapd_formed: + left splinters ?]([+ popular_senate +]%)
+unavailable-subtitle: Democratic Party + Socialist Party of America + Farmer-Labor [? if sapd_formed: + left splinters ?]([+ popular_senate +]%) - [? if ((kpd_relation < 65 and kpd_party_leader == "Thälmann") or (kpd_relation < 45 and kpd_party_leader == "Conciliators")): We do not have good enough relations with the Socialist Party of America. ?][? if (z_relation < 45 and z_party_leader == "Joos") or (z_relation < 65 and z_party_leader != "Joos" and kpd_party_leader != "Conciliators") or (z_relation < 55 and z_party_leader != "Joos" and kpd_party_leader == "Conciliators"): We do not have good enough relations with Farmer-Labor. ?][? if communist_coalition < 3 : The socialists are unwilling to compromise enough for coalition government. ?]
 view-if: popular_senate >= 50
-choose-if: (((kpd_relation >= 65 and kpd_party_leader == "Thälmann") or (kpd_relation >= 45 and kpd_party_leader == "Conciliators")) and ((z_relation >= 45 and z_party_leader == "Joos") or (z_relation >= 65 and z_party_leader != "Joos" and kpd_party_leader != "Conciliators") or (z_relation >= 55 and z_party_leader != "Joos" and kpd_party_leader == "Conciliators")) and ddp_relation >= 50 and communist_coalition >= 3) or (z_party_leader == "Joos" and kpd_party_leader == "Conciliators" and z_relation >= 30 and kpd_relation >= 30)
+choose-if: (((kpd_relation >= 65 and kpd_party_leader == "Thälmann") or (kpd_relation >= 45 and kpd_party_leader == "Conciliators")) and ((z_relation >= 45 and z_party_leader == "Joos") or (z_relation >= 65 and z_party_leader != "Joos" and kpd_party_leader != "Conciliators") or (z_relation >= 55 and z_party_leader != "Joos" and kpd_party_leader == "Conciliators")) and communist_coalition >= 3) or (z_party_leader == "Joos" and kpd_party_leader == "Conciliators" and z_relation >= 30 and kpd_relation >= 30)
 
-Could we really form a coalition that included both the Center and the Communists? It seems like an absurd concept, but given our good relationships with both sides, it is not an impossibility.
+Could we really form a coalition that included Farmer-Labor and the Socialist Party of America? It seems fragile, but if both sides are willing to bargain, it is not impossible. The Liberty League is not part of this coalition; they are organizing against the New Deal from the right.
 
 The far-right might attempt a coup, if such a coalition were formed.
 
@@ -868,7 +868,7 @@ on-arrival: no_majority_bruning_elections += 1
 
 There is no path to a majority government. One option would be to have a continuation of the current Brüning government; if we tolerate it, then it would retain a majority vote against no-confidence.
 
-Alternatively, we could try to form a "new grand coalition" of all constitutional parties except the NSDAP, KPD, and DNVP. The stumbling block are the minor conservative parties such as the "Economic Party of the Middle Class", who detest any hint of socialism and would ruin the country before working with Marxists.
+Alternatively, we could try to form a constitutional stabilization coalition that includes the Liberty League and Republican Party. This is not a reform coalition; it is an anti-crisis, anti-extremist arrangement where the Liberty League will demand limits on the New Deal.
 
 The third option is to have new elections.
 
@@ -885,7 +885,7 @@ view-if: neo_weimar_senate >= 50 and grand_senate < 50
 choose-if: z_relation >= 50 and dvp_relation >= 30
 unavailable-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican Party ([+ neo_weimar_senate +]%) - [? if z_relation < 50 : We do not have adequate relations with Farmer-Labor. ?][? if dvp_relation < 30 : We do not have adequate relations with the Republican Party. ?]
 
-How do we convince vehemently anti-socialist parties to allow us to form a majority coalition? Our largely benevolent relations with the Center and DVP may allow us some leverage.
+How do we convince anti-New Deal parties to allow us to form a majority coalition? Decent relations with Farmer-Labor and the Republican Party may give us enough leverage.
 
 - @use_resources
 - @toleration_bruning: No. We will tolerate a minority government.
@@ -903,50 +903,50 @@ achievement: constitutional_coalition
 
 We transfer some of our campaign funds to our putative coalition partners. Some would call this corruption, but perhaps it is necessary to save our democracy.
 
-Now, we have a new grand coalition, a "Constitutional Coalition" of all the non-fascist and non-communist parties. Leftists in our party are somewhat skeptical of this arrangement. 
+Now, we have a constitutional coalition of the anti-crisis parties willing to keep Congress working. Leftists in our party are skeptical, and the Liberty League will still resist much of the New Deal.
 
 
 Who should be Speaker of the House?
 
-- @join_bruning: For better or for worse, it must be Heinrich Brüning of the Center.
-- @braun_chancellor_new: Otto Braun for Chancellor?
+- @join_bruning: Let Farmer-Labor hold the Speaker's chair.
+- @braun_chancellor_new: John Nance Garner for Speaker?
 
 @braun_chancellor_new
 subtitle: This will reduce our leverage in the ministries.
 view-if: not historical_mode or not spd_prussia
-on-arrival: leverage -= 10; chancellor = "Braun"; chancellor_party = "SPD"
+on-arrival: leverage -= 10; chancellor = "Garner"; chancellor_party = "SPD"
 go-to: ministries
 
-We have assembled a new coalition under Otto Braun.
+We have assembled a new coalition with Garner as Speaker.
 
 
 @unity_government
-title: Farmer-Labor offers a national unity government under Joseph Wirth.
+title: Farmer-Labor offers a national unity arrangement under Floyd B. Olson.
 subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican Party ([+ neo_weimar_senate +]%)
 view-if: z_party_leader == "Joos" and neo_weimar_senate >= 50 and weimar_senate < 50 and z_relation >= 10
 
-The Center Party leader, Joseph Joos, clearly sees the threat from the ascension of the anti-democratic extremist parties, and thus tries to negotiate a "Government of National Unity" to save the republic. This coalition would be led by Joseph Wirth, a left-leaning member of the Center Party and former chancellor, and would encompass all of the constitutional parties. Our role in this government might be limited, however.
+Farmer-Labor sees the threat from the anti-system parties and tries to negotiate a national unity arrangement to keep Congress functioning. This coalition would give Floyd B. Olson the Speaker's chair and encompass the constitutional parties, including the Liberty League as a reluctant anti-extremist partner. Our role in this arrangement might be limited.
 
 - @unity_government_2
 - @reject_unity_government: No, we will not accept this offer.
 
 @unity_government_2
 title: Accept the offer!
-on-arrival: selected_senate_coalition = "National unity coalition"; governing_senate_support = neo_weimar_senate; bill_coalition_viable = 1 if non_dem_house_control = 0; chancellor = "Wirth"; chancellor_party = "Z"; spd_in_government = 1; in_grand_coalition = 1; in_unity_government = 1; leverage = 15; z_relation += 5; dvp_relation += 4
+on-arrival: selected_senate_coalition = "National unity coalition"; governing_senate_support = neo_weimar_senate; bill_coalition_viable = 1 if non_dem_house_control = 0; chancellor = "Olson"; chancellor_party = "Z"; spd_in_government = 1; in_grand_coalition = 1; in_unity_government = 1; leverage = 15; z_relation += 5; dvp_relation += 4
 achievement: constitutional_coalition
 go-to: divided_government_result if non_dem_house_control = 1; ministries if non_dem_house_control = 0
 
-We have formed a new unity government of all the constitutional parties! We have a limited choice in ministries for this government.
+We have formed a new unity arrangement of the constitutional parties. Cabinet control still follows the presidency, but congressional procedure will be tightly bargained.
 
 
 @reject_unity_government
 on-arrival: z_relation -= 8; ddp_relation -= 5; dvp_relation -= 5
 
-Our rejection of the unity government has hurt our relations with the bourgeois and center-right parties.
+Our rejection of the unity arrangement has hurt our relations with Farmer-Labor, the Liberty League, and the Republican Party.
 
 - @brauns_dilemma
 - @toleration_bruning: We will tolerate a minority government led by Brüning.
-- @toleration_wirth: We will tolerate a minority government led by Joseph Wirth.
+- @toleration_wirth: We will tolerate a minority arrangement led by Farmer-Labor.
 - @new_elections: There will be new elections.
 
 
@@ -1005,34 +1005,33 @@ Finally, the Democratic Party has a Senate majority. With the House already orga
 
 Who should be Speaker of the House?
 
-- @braun_majority_chancellor: Otto Braun for Speaker.
-- @breitscheid_majority_chancellor: Rudolf Breitscheid for Speaker.
-- @muller_majority_chancellor: Hermann Müller for Speaker.
-- @wels_majority_chancellor: Otto Wels for Speaker.
+- @braun_majority_chancellor: John Nance Garner for Speaker.
+- @breitscheid_majority_chancellor: Fiorello La Guardia for Speaker.
+- @muller_majority_chancellor: Sam Rayburn for Speaker.
+- @wels_majority_chancellor: Henry T. Rainey for Speaker.
 
 @braun_majority_chancellor
 view-if: not historical_mode or not spd_prussia
-on-arrival: chancellor = "Braun"
+on-arrival: chancellor = "Garner"
 
-[? if president == "Braun": Our experts have checked the constitution, and have discovered that there is no specific prohibition against the Chancellor also being the President (the President may not be a member of the Reichstag; there is no law saying that the Chancellor must be a member of the Reichstag). Thus, we have Chancellor-President Otto Braun. ?]
-[? if president != "Braun": Otto Braun has become chancellor of the SPD majority. ?]
+John Nance Garner has become Speaker for the Democratic majority. Conservatives are reassured, while labor Democrats are already watching him closely.
 
 @breitscheid_majority_chancellor
-on-arrival: chancellor = "Breitscheid"
+on-arrival: chancellor = "La Guardia"
 
-Rudolf Breitscheid has become chancellor of the SPD majority.
+Fiorello La Guardia has become Speaker for the Democratic majority.
 
 @muller_majority_chancellor
 view-if: muller_dead = 0
-on-arrival: chancellor = "Müller"
+on-arrival: chancellor = "Rayburn"
 
-Hermann Müller has become chancellor of the SPD majority.
+Sam Rayburn has become Speaker for the Democratic majority.
 
 @wels_majority_chancellor
 view-if: muller_dead = 1
-on-arrival: chancellor = "Wels"
+on-arrival: chancellor = "Rainey"
 
-Otto Wels has become chancellor of the SPD majority.
+Henry T. Rainey has become Speaker for the Democratic majority.
 
 # TODO: Otto Wels should be able to be chancellor of a Grand Coalition, Weimar Coalition, or SPD majority after Müller dies.
 
@@ -1185,13 +1184,13 @@ We have won the vote of no confidence, and are currently ruling under an SPD min
 
 @weimar_coalition
 title: We can form a broad reform coalition.
-subtitle: Democratic Party + Farmer-Labor + Liberty League [? if sapd_formed and kpd_relation >= 30 : + left-splinter toleration ?] ([+ weimar_senate +]%)
+subtitle: Democratic Party + Farmer-Labor [? if sapd_formed and kpd_relation >= 30 : + left-splinter toleration ?] ([+ weimar_senate +]%)
 view-if: weimar_senate >= 50
 go-to: divided_government_result if non_dem_house_control = 1
 on-arrival: leverage += 5; leverage += 5 if z_party_leader == "Joos"; in_weimar_coalition = 1; spd_in_government = 1; in_popular_front = 0; in_left_front = 0; foreign_minister_party = "Z"; interior_minister_party = "Z"; justice_minister_party = ddp_name; labor_minister_party = "Z"; reichswehr_minister_party = "I"; economic_minister_party = ddp_name; finance_minister_party = "Z"; agriculture_minister_party = "Z"; foreign_minister = "Wirth"; interior_minister = "Wirth"; justice_minister = "Koch-Weser"; labor_minister = "Stegerwald"; reichswehr_minister = "Groener"; economic_minister = "Dietrich"; finance_minister = "Köhler"; agriculture_minister = "Hermes";
 achievement: weimar_coalition
 
-We have enough Senate votes to sustain a broad reform coalition of the Democratic Party, Farmer-Labor, and the Liberty League.
+We have enough Senate votes to sustain a broad reform coalition of the Democratic Party and Farmer-Labor. The Liberty League will oppose much of the economic program from outside the coalition.
 
 Who should be Speaker of the House?
 
@@ -1203,19 +1202,19 @@ Who should be Speaker of the House?
 - @z_chancellor_wirth
 
 @breitscheid_coalition_chancellor
-title: Rudolf Breitscheid for Speaker
-subtitle: Breitscheid is viewed as friendlier towards the left of the SPD.
+title: Fiorello La Guardia for Speaker
+subtitle: La Guardia is viewed as friendlier toward labor, reformers, and the left edge of the coalition.
 view-if: year >= 1930
-on-arrival: chancellor = "Breitscheid"; chancellor_party = "SPD";
+on-arrival: chancellor = "La Guardia"; chancellor_party = "SPD";
 go-to: ministries
 
-Rudolf Breitscheid has been chosen as Speaker.
+Fiorello La Guardia has been chosen as Speaker.
 
 
 @grand_coalition
 title: We can form a national stabilization coalition.
 view-if: grand_senate >= 50 and grand_coalition_failed == 0
-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican Party ([+ grand_senate +]%)
+subtitle: Democratic Party + Farmer-Labor + Republican Party ([+ grand_senate +]%)
 on-arrival: selected_senate_coalition = "National stabilization coalition"; governing_senate_support = grand_senate; bill_coalition_viable = 1 if non_dem_house_control = 0; in_grand_coalition = 1; in_popular_front = 0; in_left_front = 0
 go-to: divided_government_result if non_dem_house_control = 1; grand_coalition_spd_lead if non_dem_house_control = 0 and ((n_elections <= 1 and largest_party == "SPD") or (largest_party == "SPD" and spd_r >= 30) or president = "Braun"); grand_coalition_z_lead if non_dem_house_control = 0 and president != "Braun" and ((n_elections > 1 and spd_r < 30) or (n_elections <= 1 and largest_party != "SPD"))
 
@@ -1398,59 +1397,58 @@ Who should be Speaker of the House?
 
 
 @muller
-title: Hermann Müller for Speaker
+title: Sam Rayburn for Speaker
 view-if: muller_dead = 0
-subtitle: Müller is popular within the party, and is the preferred candidate of the Center and other parties.
-on-arrival: spd_in_government = 1; chancellor = "Müller"; chancellor_party = "SPD"; in_grand_coalition = 1 if in_weimar_coalition == 0
+subtitle: Rayburn is a disciplined Democratic organizer and a safe choice for keeping the House in line.
+on-arrival: spd_in_government = 1; chancellor = "Rayburn"; chancellor_party = "SPD"; in_grand_coalition = 1 if in_weimar_coalition == 0
 go-to: ministries
 
-Müller's selection as Speaker is approved by all our potential allies.
+Rayburn's selection as Speaker is approved by all our potential allies.
 
 @wels
-title: Otto Wels for Speaker
+title: Henry T. Rainey for Speaker
 view-if: muller_dead = 1
-subtitle: Otto Wels is a party leader, but can he also manage the House?
-on-arrival: spd_in_government = 1; chancellor = "Wels"; chancellor_party = "SPD"; in_grand_coalition = 1 if in_weimar_coalition == 0
+subtitle: Rainey is a trusted House leader and an acceptable New Deal loyalist.
+on-arrival: spd_in_government = 1; chancellor = "Rainey"; chancellor_party = "SPD"; in_grand_coalition = 1 if in_weimar_coalition == 0
 go-to: ministries
 
-Otto Wels's selection as Speaker is approved by our potential allies.
+Rainey's selection as Speaker is approved by our potential allies.
 
 @braun
-title: Otto Braun for Speaker
+title: John Nance Garner for Speaker
 view-if: not historical_mode or not spd_prussia
-subtitle: Braun is currently the Minister-President of Prussia, and is one of our most popular leaders. However, other parties may have qualms about concentrating too much power in one man.
+subtitle: Garner can reassure conservatives, but labor and New Deal liberals will demand procedural concessions.
 
-Farmer-Labor has significant qualms about putting Braun in charge of the House coalition, given his separate power base. They ask for procedural concessions in exchange.
+Farmer-Labor has significant qualms about putting Garner in charge of the House coalition, given his hostility to aggressive redistribution. They ask for procedural concessions in exchange.
 
 - @muller
 - @wels
-- @braun_2: Let the Center have their cabinet positions.
+- @braun_2: Let Farmer-Labor have procedural concessions.
 
 @braun_2
-subtitle: Otto Braun will be Speaker.
+subtitle: John Nance Garner will be Speaker.
 view-if: not historical_mode
-on-arrival: spd_in_government = 1; chancellor = "Braun"; chancellor_party = "SPD"; leverage -= 10; in_grand_coalition = 1 if in_weimar_coalition == 0
+on-arrival: spd_in_government = 1; chancellor = "Garner"; chancellor_party = "SPD"; leverage -= 10; in_grand_coalition = 1 if in_weimar_coalition == 0
 go-to: ministries
 
-We have promised to let Farmer-Labor have more influence in House procedure in response to Braun's selection.
+We have promised to let Farmer-Labor have more influence in House procedure in response to Garner's selection.
 
 
 @z_chancellor
 title: Let Farmer-Labor have the Speaker.
-subtitle: Heinrich Brüning will be Speaker. This is unexpected and will cause internal dissent, but may stabilize the House.
-on-arrival: left_dissent += 5; center_dissent += 5; labor_dissent += 5; z_relation += 10; dvp_relation += 5; kpd_relation -= 5; in_grand_coalition = 1 if in_weimar_coalition == 0; chancellor = "Brüning"; chancellor_party = "Z"; spd_in_government = 1; leverage += 5
+subtitle: Floyd B. Olson will be Speaker. This is unexpected and will cause internal dissent, but may stabilize the House.
+on-arrival: left_dissent += 5; center_dissent += 5; labor_dissent += 5; z_relation += 10; dvp_relation += 5; kpd_relation -= 5; in_grand_coalition = 1 if in_weimar_coalition == 0; chancellor = "Olson"; chancellor_party = "Z"; spd_in_government = 1; leverage += 5
 go-to: ministries
 
 This is highly unexpected, and many in the left and center of our party are criticizing this decision.
 
-[? if year == 1928 : Since Wilhelm Marx resigned, Heinrich Brüning has been chosen as Speaker. ?]
-[? if year > 1928: Heinrich Brüning of Farmer-Labor has been chosen as Speaker. ?]
+Floyd B. Olson of Farmer-Labor has been chosen as Speaker.
 
 @z_chancellor_wirth
-title: Let Joseph Wirth of Farmer-Labor be Speaker.
+title: Let Henrik Shipstead of Farmer-Labor be Speaker.
 view-if: z_party_leader == "Joos"
-subtitle: Wirth is on the left wing of the Center Party. This may give us a better position in negotiating for other cabinet positions.
-on-arrival: left_dissent += 2; z_relation += 6; ddp_relation += 3; kpd_relation -= 5; in_grand_coalition = 1 if in_weimar_coalition == 0; chancellor = "Wirth"; chancellor_party = "Z"; spd_in_government = 1; leverage += 5
+subtitle: Shipstead is a Farmer-Labor progressive. This may give us a better position in negotiating House rules.
+on-arrival: left_dissent += 2; z_relation += 6; ddp_relation += 3; kpd_relation -= 5; in_grand_coalition = 1 if in_weimar_coalition == 0; chancellor = "Shipstead"; chancellor_party = "Z"; spd_in_government = 1; leverage += 5
 go-to: ministries
 
 

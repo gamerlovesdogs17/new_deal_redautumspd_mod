@@ -572,6 +572,20 @@ table {
 .party-nusj { color: #954B00; font-weight: bold; }
 .party-silver { color: #666; font-weight: bold; }
 
+.ev-map {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35em;
+    margin: 0.75em 0 1em 0;
+}
+.ev-state {
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    padding: 0.35em;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.04);
+}
+
 /* Styles for parties */
 .seat.kpd {
     fill: #8B0000;

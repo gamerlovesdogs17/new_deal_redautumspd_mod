@@ -162,28 +162,28 @@ With Huey Long now positioned inside the labor wing, the conference proceeds to 
 @dem_pragmatic_line
 title: Pragmatic New Deal Reform (FDR Line)
 subtitle: Estimated support: [+ dem_new_deal_delegates +] / [+ dem_total_delegates +] delegates ([+ dem_new_deal_percent +]%). Passes if FDR holds New Deal liberals and wins regulars with concessions to redistributionists, including social insurance.
-on-arrival: dem_party_chair = "Roosevelt"; dem_leader = "Franklin D. Roosevelt"; dem_wing = "new_deal_liberals"; dem_economic_plan = "pragmatic_new_deal"; center_dissent -= 4; reformist_dissent -= 5; left_dissent += 2; labor_dissent += 1; z_relation += 3; ddp_relation += 4; dvp_relation += 4; kpd_relation += 1; economic_growth += 0.3 if economic_growth < 3.5; dem_spa_cooperation = 0;
+on-arrival: dem_party_chair = "Roosevelt"; dem_leader = "Franklin D. Roosevelt"; dem_wing = "new_deal_liberals"; dem_economic_plan = "pragmatic_new_deal"; economic_plan = 2; moderate_plan_adopted = 1; center_dissent -= 4; reformist_dissent -= 5; left_dissent += 2; labor_dissent += 1; z_relation += 3; ddp_relation += 4; dvp_relation += 4; kpd_relation += 1; economic_growth += 0.3 if economic_growth < 3.5; dem_spa_cooperation = 0;
 
 The conference aligns behind Roosevelt's experimental reform line: relief, public works, regulation, and stabilization. This keeps the broad coalition mostly intact, but the left complains that the pace is too cautious.
 
 @dem_populist_line
 title: Populist Redistribution (Share Our Wealth)
 subtitle: Estimated support: [+ dem_populist_delegates +] / [+ dem_total_delegates +] delegates ([+ dem_populist_percent +]%). Usually needs Huey Long's labor delegate boost, then enough party regulars and Southern populists breaking toward redistribution.
-on-arrival: dem_party_chair = "Long"; dem_wing = "redistribution_populists"; dem_economic_plan = "share_our_wealth"; resources += 1; workers_spd += 4; unemployed_spd += 6; labor_strength += 4; labor_dissent -= 6; left_dissent -= 2; reformist_dissent += 8; center_dissent += 6; neorevisionist_dissent += 6; dvp_relation -= 8; ddp_relation -= 6; z_relation -= 4; capital_strike_progress += 1; dem_spa_cooperation = 0; dem_leader = "Huey Long" if labor_dem_leader == "Huey Long";
+on-arrival: dem_party_chair = "Long"; dem_wing = "redistribution_populists"; dem_economic_plan = "share_our_wealth"; economic_plan = 1; wtb_adopted = 1; resources += 1; workers_spd += 4; unemployed_spd += 6; labor_strength += 4; labor_dissent -= 6; left_dissent -= 2; reformist_dissent += 8; center_dissent += 6; neorevisionist_dissent += 6; dvp_relation -= 8; ddp_relation -= 6; z_relation -= 4; capital_strike_progress += 1; dem_spa_cooperation = 0; dem_leader = "Huey Long" if labor_dem_leader == "Huey Long";
 
 The party embraces a redistributionist strategy centered on taxing concentrated wealth and direct social guarantees. Popular enthusiasm rises quickly, but elite and conservative resistance hardens.
 
 @dem_structural_line
 title: Structural Transformation (Social Democratic Alignment)
 subtitle: Estimated support: [+ dem_structural_delegates +] / [+ dem_total_delegates +] delegates ([+ dem_structural_percent +]%). Needs the New Deal left plus labor delegates, with enough labor-populists and outside socialist cooperation to overcome regular and conservative resistance.
-on-arrival: dem_party_chair = "Thomas Coalition"; dem_wing = "structural_left"; dem_economic_plan = "structural_transformation"; left_strength += 6; labor_strength += 5; left_dissent -= 8; labor_dissent -= 8; reformist_dissent += 12; center_dissent += 10; neorevisionist_dissent += 12; kpd_relation += 12; communist_coalition += 2; workers_spd += 5; unemployed_spd += 4; z_relation -= 10; ddp_relation -= 10; dvp_relation -= 12; coup_progress += 1; dem_spa_cooperation = 1 if kpd_relation >= 45; dem_leader = "Norman Thomas Alignment";
+on-arrival: dem_party_chair = "Thomas Coalition"; dem_wing = "structural_left"; dem_economic_plan = "structural_transformation"; economic_plan = 3; nationalization_adopted = 1; left_strength += 6; labor_strength += 5; left_dissent -= 8; labor_dissent -= 8; reformist_dissent += 12; center_dissent += 10; neorevisionist_dissent += 12; kpd_relation += 12; communist_coalition += 2; workers_spd += 5; unemployed_spd += 4; z_relation -= 10; ddp_relation -= 10; dvp_relation -= 12; coup_progress += 1; dem_spa_cooperation = 1 if kpd_relation >= 45; dem_leader = "Norman Thomas Alignment";
 
 The coalition commits to deep structural change and long-term planning, opening a path toward tactical cooperation with the socialist left. The right and business establishment react with immediate alarm.
 
 
 @gop_leadership_conference
 title: Republican Leadership Conference
-subtitle: The GOP determines its chair and strategy for the next two years.
+subtitle: The Republican Party determines its chair and strategy for the next two years.
 view-if: gop_conference_due = 1
 tags: event
 new-page: true

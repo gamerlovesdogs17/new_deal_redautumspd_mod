@@ -1,0 +1,76 @@
+title: Presidential Election
+new-page: true
+tags: event
+priority: -2
+view-if: (year = next_presidential_election_year and month >= next_presidential_election_month) or (year > next_presidential_election_year)
+on-arrival: {!
+var democraticVote = Math.max(25, Math.min(65, (Q.spd_votes || Q.spd_r || 42) + Math.max(0, (Q.z_votes || Q.z_r || 10) - 8) * 0.25));
+var republicanVote = Math.max(20, Math.min(60, (Q.gop_votes || ((Q.dvp_votes || Q.dvp_r || 18) + (Q.dnvp_votes || Q.dnvp_r || 5)))));
+var socialistVote = Math.max(0, Math.min(18, Q.kpd_votes || Q.kpd_r || 0));
+var nusjVote = Math.max(0, Math.min(25, Q.nsdap_votes || Q.nsdap_r || 0));
+var crisisPenalty = 0;
+if ((Q.unemployed || 0) > 18) {
+    crisisPenalty += 4;
+}
+if ((Q.economic_growth || 0) < -3) {
+    crisisPenalty += 3;
+}
+if ((Q.works_program || 0) > 0) {
+    crisisPenalty -= 4;
+}
+democraticVote -= crisisPenalty;
+republicanVote += Math.max(0, crisisPenalty - 1);
+Q.dem_presidential_vote = Math.round(democraticVote);
+Q.rep_presidential_vote = Math.round(republicanVote);
+Q.spa_presidential_vote = Math.round(socialistVote);
+Q.nusj_presidential_vote = Math.round(nusjVote);
+Q.dem_electoral_votes = Math.max(0, Math.min(531, Math.round(531 * (Q.dem_presidential_vote + 6) / 62)));
+Q.rep_electoral_votes = Math.max(0, Math.min(531 - Q.dem_electoral_votes, Math.round(531 * Q.rep_presidential_vote / 100)));
+Q.other_electoral_votes = 531 - Q.dem_electoral_votes - Q.rep_electoral_votes;
+Q.presidential_winner = Q.dem_electoral_votes >= 266 ? "Roosevelt" : "Republican nominee";
+!}
+on-departure: next_presidential_election_year = next_presidential_election_year + 4; next_presidential_election_month = 11;
+
+= Presidential Election, [+ month : month +] [+ year +]
+
+The presidential election is held alongside the November election cycle. The congressional election still controls House and Senate composition, but the presidential result determines control of the executive branch.
+
+{!<div class="ev-map">!}
+{!<span class="ev-state party-dem">Northeast</span><span class="ev-state party-dem">South</span><span class="ev-state party-dem">Industrial Midwest</span><span class="ev-state party-gop">Plains</span><span class="ev-state party-gop">Mountain West</span><span class="ev-state party-dem">Pacific Coast</span>!}
+{!</div>!}
+
+Electoral vote:
+
+Democratic Party: [+ dem_electoral_votes +]
+
+Republican Party: [+ rep_electoral_votes +]
+
+Other tickets: [+ other_electoral_votes +]
+
+Popular vote estimate:
+
+Democratic Party: [+ dem_presidential_vote +]%
+
+Republican Party: [+ rep_presidential_vote +]%
+
+Socialist Party of America: [+ spa_presidential_vote +]%
+
+National Union for Social Justice: [+ nusj_presidential_vote +]%
+
+[? if presidential_winner = "Roosevelt" : Roosevelt wins another presidential mandate. ?][? if presidential_winner != "Roosevelt" : The Republican nominee wins the presidency. ?]
+
+- @accept_result
+
+@accept_result
+title: Accept the result.
+on-arrival: {!
+if (Q.presidential_winner == "Roosevelt") {
+    Q.president = "Roosevelt";
+    Q.chancellor_party = "SPD";
+} else {
+    Q.president = "Republican nominee";
+    Q.chancellor_party = "DVP";
+}
+!}
+
+The result is accepted. Congressional bargaining will still determine what can actually pass.

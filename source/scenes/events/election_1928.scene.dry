@@ -1,9 +1,9 @@
-title: Federal Elections
+title: Congressional Elections
 new-page: true
 tags: event
 priority: -1
 view-if: (year = next_election_year and month >= next_election_month) or (year > next_election_year)
-on-departure: month_actions += 1; in_election = 0; next_election_year = next_election_year + 4; n_elections += 1; next_election_time = time + 48; papen_chancellor_timer = 4;
+on-departure: month_actions += 1; in_election = 0; next_election_year = next_election_year + 2; n_elections += 1; next_election_time = time + 24; papen_chancellor_timer = 4;
 set-jump: post_election_1928
 face-image: img/Rothe_Wahlen_1903.jpg
 
@@ -11,9 +11,9 @@ face-image: img/Rothe_Wahlen_1903.jpg
 
 # the low priority means that this event is only seen after all other events are resolved for the month.
 
-= Federal Elections, [+ month : month +] [+ year +]
+= Congressional Elections, [+ month : month +] [+ year +]
 
-National legislative elections are to be held now.
+House and Senate elections are to be held now.
 
 - @election_algorithm: May we do our best...
 - @cancel_elections
@@ -259,8 +259,8 @@ on-display: {!
 data = [
     {
         "id": "kpd",
-        "legend": "SPA",
-        "name": "SPA",
+        "legend": "Socialist Party of America",
+        "name": "Socialist Party of America",
         "seats": Q.kpd_h_seats,
     }
 ];
@@ -275,8 +275,8 @@ if (Q.sapd_formed && Q.sapd_r) {
 data = data.concat([
     {
         "id": "spd",
-        "legend": "Democrats",
-        "name": "Democrats",
+        "legend": "Democratic Party",
+        "name": "Democratic Party",
         "seats": Q.spd_h_seats,
     },
     {
@@ -293,8 +293,8 @@ data = data.concat([
     },
     {
         "id": "dvp",
-        "legend": "GOP",
-        "name": "GOP",
+        "legend": "Republican Party",
+        "name": "Republican Party",
         "seats": Q.gop_h_seats,
     },
     {
@@ -305,8 +305,8 @@ data = data.concat([
     },
     {
         "id": "nsdap",
-        "legend": "NUSJ Bloc",
-        "name": "NUSJ Bloc",
+        "legend": "National Union for Social Justice",
+        "name": "National Union for Social Justice",
         "seats": Q.nsdap_h_seats,
     },
 ]);
@@ -336,37 +336,40 @@ go-to: house_coalition_menu
 
 {!<table>!} 
 {!<tr><td>Bloc</td><td>House seats</td><td>House share</td><td>National change</td></tr>!}
-{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div> !} **Democrats:** {!</td><td>!} **[+ spd_h_seats +]** {!</td><td>!} **[+ spd_h +]%** {!</td><td>!} **[+ str_change_spd +]** {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div> !} **Democratic Party:** {!</td><td>!} **[+ spd_h_seats +]** {!</td><td>!} **[+ spd_h +]%** {!</td><td>!} **[+ str_change_spd +]** {!</td></tr>!}
 
 [? if sapd_formed : {!<tr><td><div class="box" style='background-color:#C40000'> </div> !}SAPD: {!</td><td>!} [+ sapd_r +]% {!</td><td>!} [+ str_change_sapd +] {!</td></tr>!} ?]
 
-{!<tr><td><div class="box" style='background-color:#8B0000'> </div> !}SPA: {!</td><td>!} [+ kpd_h_seats +] {!</td><td>!} [+ kpd_h +]% {!</td><td>!} [+ str_change_kpd +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#8B0000'> </div> !}Socialist Party of America: {!</td><td>!} [+ kpd_h_seats +] {!</td><td>!} [+ kpd_h +]% {!</td><td>!} [+ str_change_kpd +] {!</td></tr>!}
 
 {!<tr><td><div class="box" style='background-color:#DCCA4A'> </div> !} Liberty League: {!</td><td>!} [+ liberty_league_h_seats +] {!</td><td>!} [+ liberty_league_h +]% {!</td><td>!} [+ str_change_ddp +] {!</td></tr>!}
 
 {!<tr><td><div class="box" style='background-color:#000'> </div> !} Farmer-Labor: {!</td><td>!} [+ z_h_seats +] {!</td><td>!} [+ z_h +]% {!</td><td>!} [+ str_change_z +] {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#D5AC27'> </div> !} GOP: {!</td><td>!} [+ gop_h_seats +] {!</td><td>!} [+ gop_h +]% {!</td><td>!} [+ str_change_gop +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#D5AC27'> </div> !} Republican Party: {!</td><td>!} [+ gop_h_seats +] {!</td><td>!} [+ gop_h +]% {!</td><td>!} [+ str_change_gop +] {!</td></tr>!}
  
 {!<tr><td><div class="box" style='background-color:#a0a0a0'> </div> !} Silver Legion: {!</td><td>!} [+ silver_legion_h_seats +] {!</td><td>!} [+ silver_legion_h +]% {!</td><td>!} [+ str_change_other +] {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#954B00'> </div> !} NUSJ: {!</td><td>!} [+ nsdap_h_seats +] {!</td><td>!} [+ nsdap_h +]% {!</td><td>!} [+ str_change_nsdap +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#954B00'> </div> !} National Union for Social Justice: {!</td><td>!} [+ nsdap_h_seats +] {!</td><td>!} [+ nsdap_h +]% {!</td><td>!} [+ str_change_nsdap +] {!</td></tr>!}
 {!</table>!}
 
-**Projected chamber breakdown (coalitions required in both chambers for reliable governing):**
+**Projected chamber breakdown** (coalitions required in both chambers for reliable governing):
 
-{!<table>!}
-{!<tr><td>Bloc</td><td>House</td><td>Senate</td></tr>!}
-{!<tr><td>Democrats</td><td>[+ spd_h_seats +] seats ([+ spd_h +]%)</td><td>[+ spd_s_seats +] seats ([+ spd_s +]%)</td></tr>!}
-{!<tr><td>SPA</td><td>[+ kpd_h_seats +] seats ([+ kpd_h +]%)</td><td>[+ kpd_s_seats +] seats ([+ kpd_s +]%)</td></tr>!}
-{!<tr><td>Farmer-Labor</td><td>[+ z_h_seats +] seats ([+ z_h +]%)</td><td>[+ z_s_seats +] seats ([+ z_s +]%)</td></tr>!}
-{!<tr><td>Liberty League</td><td>[+ liberty_league_h_seats +] seats ([+ liberty_league_h +]%)</td><td>[+ liberty_league_s_seats +] seats ([+ liberty_league_s +]%)</td></tr>!}
-{!<tr><td>GOP</td><td>[+ gop_h_seats +] seats ([+ gop_h +]%)</td><td>[+ gop_s_seats +] seats ([+ gop_s +]%)</td></tr>!}
-{!<tr><td>NUSJ</td><td>[+ nsdap_h_seats +] seats ([+ nsdap_h +]%)</td><td>[+ nsdap_s_seats +] seats ([+ nsdap_s +]%)</td></tr>!}
-{!<tr><td>Silver Legion</td><td>[+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%)</td><td>[+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)</td></tr>!}
-{!</table>!}
+Democratic Party: House [+ spd_h_seats +] seats ([+ spd_h +]%) / Senate [+ spd_s_seats +] seats ([+ spd_s +]%)
 
-[? if nusj_no_coop = 1 and sla_no_coop = 1 : NUSJ Bloc and Silver Legion-aligned forces are permanently excluded from cooperation with Democratic-led governing coalitions. ?]
+Socialist Party of America: House [+ kpd_h_seats +] seats ([+ kpd_h +]%) / Senate [+ kpd_s_seats +] seats ([+ kpd_s +]%)
+
+Farmer-Labor: House [+ z_h_seats +] seats ([+ z_h +]%) / Senate [+ z_s_seats +] seats ([+ z_s +]%)
+
+Liberty League: House [+ liberty_league_h_seats +] seats ([+ liberty_league_h +]%) / Senate [+ liberty_league_s_seats +] seats ([+ liberty_league_s +]%)
+
+Republican Party: House [+ gop_h_seats +] seats ([+ gop_h +]%) / Senate [+ gop_s_seats +] seats ([+ gop_s +]%)
+
+National Union for Social Justice: House [+ nsdap_h_seats +] seats ([+ nsdap_h +]%) / Senate [+ nsdap_s_seats +] seats ([+ nsdap_s +]%)
+
+Silver Legion: House [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%) / Senate [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
+
+[? if nusj_no_coop = 1 and sla_no_coop = 1 : National Union for Social Justice and Silver Legion-aligned forces are permanently excluded from cooperation with Democratic-led governing coalitions. ?]
 
 [? if gridlock_risk = 1 : No democratic coalition currently has a Senate majority. Even if a House governing coalition forms, legislative gridlock risk is high. ?]
 
@@ -391,25 +394,25 @@ Choose a House organizing coalition. This secures the Speaker and committee cont
 
 @house_spd_majority
 title: Democratic House majority.
-subtitle: Democrats ([+ spd_h +]%)
+subtitle: Democratic Party ([+ spd_h +]%)
 view-if: spd_h >= 50
 on-arrival: selected_house_coalition = "Democratic majority"; governing_house_support = spd_h; speaker_elected = 1; in_spd_majority = 1;
 go-to: senate_results
 
-Democrats can organize the House without outside support.
+The Democratic Party can organize the House without outside support.
 
 @house_broad_reform
 title: Broad reform House coalition.
-subtitle: Democrats + Farmer-Labor + Liberty League ([+ weimar_house +]%)
+subtitle: Democratic Party + Farmer-Labor + Liberty League ([+ weimar_house +]%)
 view-if: weimar_house >= 50
 on-arrival: selected_house_coalition = "Broad reform coalition"; governing_house_support = weimar_house; speaker_elected = 1;
 go-to: senate_results
 
-The House can be organized around Democrats, Farmer-Labor, and the Liberty League.
+The House can be organized around the Democratic Party, Farmer-Labor, and the Liberty League.
 
 @house_stabilization
 title: National stabilization House coalition.
-subtitle: Democrats + Farmer-Labor + Liberty League + GOP moderates ([+ grand_house +]%)
+subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates ([+ grand_house +]%)
 view-if: grand_house >= 50
 on-arrival: selected_house_coalition = "National stabilization coalition"; governing_house_support = grand_house; speaker_elected = 1;
 go-to: senate_results
@@ -418,7 +421,7 @@ The House can be organized with a broader cross-party stabilization bloc.
 
 @house_left
 title: Labor-left House coalition.
-subtitle: Democrats + SPA [? if sapd_formed: + left splinters ?]([+ left_house +]%)
+subtitle: Democratic Party + Socialist Party of America [? if sapd_formed: + left splinters ?]([+ left_house +]%)
 view-if: left_house >= 50
 on-arrival: selected_house_coalition = "Labor-left coalition"; governing_house_support = left_house; speaker_elected = 1;
 go-to: senate_results
@@ -427,7 +430,7 @@ The House can be organized with Democratic and socialist support.
 
 @house_popular
 title: Popular-front House coalition.
-subtitle: Democrats + SPA + Farmer-Labor + Liberty League ([+ popular_house +]%)
+subtitle: Democratic Party + Socialist Party of America + Farmer-Labor + Liberty League ([+ popular_house +]%)
 view-if: popular_house >= 50
 on-arrival: selected_house_coalition = "Popular front coalition"; governing_house_support = popular_house; speaker_elected = 1;
 go-to: senate_results
@@ -445,13 +448,13 @@ No workable House organizing coalition is immediately available.
 @senate_results
 on-display: {!
 var senateData = [
-    {"id": "kpd", "legend": "SPA", "name": "SPA", "seats": Q.kpd_s_seats},
-    {"id": "spd", "legend": "Democrats", "name": "Democrats", "seats": Q.spd_s_seats},
+    {"id": "kpd", "legend": "Socialist Party of America", "name": "Socialist Party of America", "seats": Q.kpd_s_seats},
+    {"id": "spd", "legend": "Democratic Party", "name": "Democratic Party", "seats": Q.spd_s_seats},
     {"id": "ddp", "legend": "Liberty League", "name": "Liberty League", "seats": Q.liberty_league_s_seats},
     {"id": "z", "legend": "Farmer-Labor", "name": "Farmer-Labor", "seats": Q.z_s_seats},
-    {"id": "dvp", "legend": "GOP", "name": "GOP", "seats": Q.gop_s_seats},
+    {"id": "dvp", "legend": "Republican Party", "name": "Republican Party", "seats": Q.gop_s_seats},
     {"id": "other", "legend": "Silver Legion", "name": "Silver Legion", "seats": Q.silver_legion_s_seats},
-    {"id": "nsdap", "legend": "NUSJ", "name": "NUSJ", "seats": Q.nsdap_s_seats}
+    {"id": "nsdap", "legend": "National Union for Social Justice", "name": "National Union for Social Justice", "seats": Q.nsdap_s_seats}
 ];
 if (Q.sapd_formed && Q.sapd_s) {
     senateData.splice(1, 0, {"id": "sapd", "legend": "Left splinters", "name": "Left splinters", "seats": Q.sapd_s_seats});
@@ -471,13 +474,13 @@ if (window && d3) {
     parliament.exit.toCenter(false).bigToSmall(true);
     d3.select("#senate").datum(senateData).call(parliament);
     d3.select("#house_recap").datum([
-        {"id": "kpd", "legend": "SPA", "name": "SPA", "seats": Q.kpd_h_seats},
-        {"id": "spd", "legend": "Democrats", "name": "Democrats", "seats": Q.spd_h_seats},
+        {"id": "kpd", "legend": "Socialist Party of America", "name": "Socialist Party of America", "seats": Q.kpd_h_seats},
+        {"id": "spd", "legend": "Democratic Party", "name": "Democratic Party", "seats": Q.spd_h_seats},
         {"id": "ddp", "legend": "Liberty League", "name": "Liberty League", "seats": Q.liberty_league_h_seats},
         {"id": "z", "legend": "Farmer-Labor", "name": "Farmer-Labor", "seats": Q.z_h_seats},
-        {"id": "dvp", "legend": "GOP", "name": "GOP", "seats": Q.gop_h_seats},
+        {"id": "dvp", "legend": "Republican Party", "name": "Republican Party", "seats": Q.gop_h_seats},
         {"id": "other", "legend": "Silver Legion", "name": "Silver Legion", "seats": Q.silver_legion_h_seats},
-        {"id": "nsdap", "legend": "NUSJ", "name": "NUSJ", "seats": Q.nsdap_h_seats}
+        {"id": "nsdap", "legend": "National Union for Social Justice", "name": "National Union for Social Justice", "seats": Q.nsdap_h_seats}
     ]).call(parliament);
 }
 !}
@@ -514,8 +517,8 @@ Now form a Senate coalition for bill passage and confirmation fights.
 
 @popular_front_coalition
 title: A popular-front Senate coalition?
-subtitle: Democrats + SPA + Farmer-Labor + Liberty League [? if sapd_formed: + left splinters ?]([+ popular_senate +]%)
-unavailable-subtitle: Democrats + SPA + Farmer-Labor + Liberty League [? if sapd_formed: + left splinters ?]([+ popular_senate +]%) - [? if ((kpd_relation < 65 and kpd_party_leader == "Thälmann") or (kpd_relation < 45 and kpd_party_leader == "Conciliators")): We do not have good enough relations with the SPA. ?][? if (z_relation < 45 and z_party_leader == "Joos") or (z_relation < 65 and z_party_leader != "Joos" and kpd_party_leader != "Conciliators") or (z_relation < 55 and z_party_leader != "Joos" and kpd_party_leader == "Conciliators"): We do not have good enough relations with Farmer-Labor. ?][? if communist_coalition < 3 : The socialists are unwilling to compromise enough for coalition government. ?]
+subtitle: Democratic Party + Socialist Party of America + Farmer-Labor + Liberty League [? if sapd_formed: + left splinters ?]([+ popular_senate +]%)
+unavailable-subtitle: Democratic Party + Socialist Party of America + Farmer-Labor + Liberty League [? if sapd_formed: + left splinters ?]([+ popular_senate +]%) - [? if ((kpd_relation < 65 and kpd_party_leader == "Thälmann") or (kpd_relation < 45 and kpd_party_leader == "Conciliators")): We do not have good enough relations with the Socialist Party of America. ?][? if (z_relation < 45 and z_party_leader == "Joos") or (z_relation < 65 and z_party_leader != "Joos" and kpd_party_leader != "Conciliators") or (z_relation < 55 and z_party_leader != "Joos" and kpd_party_leader == "Conciliators"): We do not have good enough relations with Farmer-Labor. ?][? if communist_coalition < 3 : The socialists are unwilling to compromise enough for coalition government. ?]
 view-if: popular_senate >= 50
 choose-if: (((kpd_relation >= 65 and kpd_party_leader == "Thälmann") or (kpd_relation >= 45 and kpd_party_leader == "Conciliators")) and ((z_relation >= 45 and z_party_leader == "Joos") or (z_relation >= 65 and z_party_leader != "Joos" and kpd_party_leader != "Conciliators") or (z_relation >= 55 and z_party_leader != "Joos" and kpd_party_leader == "Conciliators")) and ddp_relation >= 50 and communist_coalition >= 3) or (z_party_leader == "Joos" and kpd_party_leader == "Conciliators" and z_relation >= 30 and kpd_relation >= 30)
 
@@ -595,7 +598,7 @@ The Center manages to diffuse some of the hostility from the Reichswehr and the 
 
 @far_right_coalition
 title: Far-right coalition
-subtitle: NUSJ + reactionary conservatives ([+ far_right_senate +]%)
+subtitle: National Union for Social Justice + reactionary conservatives ([+ far_right_senate +]%)
 view-if: far_right_senate >= 50
 go-to: far_right_win if (year >= 1932 or nsdap_r >= 44) and president != "Braun"; far_right_fail if (year < 1932 and nsdap_r < 44) and president != "Braun"; far_right_braun if president == "Braun"
 priority: 2
@@ -633,8 +636,8 @@ Alternatively, Braun could use the emergency powers of the presidency. Article 4
 
 @left_coalition
 title: Is a labor-left Senate coalition possible?
-subtitle: Democrats + SPA [? if sapd_formed: + left splinters ?] ([+ left_senate +]%)
-unavailable-subtitle: Democrats + SPA [? if sapd_formed: + left splinters ?] ([+ left_senate +]%). [? if kpd_relation < 50 : We do not have adequate relations with the SPA. ?][? if communist_coalition < 3 : The socialists are too committed to their radical ways to partake in government. ?]
+subtitle: Democratic Party + Socialist Party of America [? if sapd_formed: + left splinters ?] ([+ left_senate +]%)
+unavailable-subtitle: Democratic Party + Socialist Party of America [? if sapd_formed: + left splinters ?] ([+ left_senate +]%). [? if kpd_relation < 50 : We do not have adequate relations with the Socialist Party of America. ?][? if communist_coalition < 3 : The socialists are too committed to their radical ways to partake in government. ?]
 view-if: left_senate >= 50
 choose-if: (kpd_relation >= 50 or (kpd_party_leader == "Conciliators" and kpd_relation >= 40)) and communist_coalition >= 3
 
@@ -718,7 +721,7 @@ In response to the KPD's entrance into the government, the right-wing immediatel
 
 @right_coalition
 title: Refuse to form a government, so that a right-wing coalition may be formed.
-subtitle: Farmer-Labor conservatives + GOP + Silver Legion-aligned minor parties ([+ right_senate +]%)
+subtitle: Farmer-Labor conservatives + Republican Party + Silver Legion-aligned minor parties ([+ right_senate +]%)
 unavailable-subtitle: Reactionary conservatives are not interested in a stable coalition with Farmer-Labor.
 view-if: right_senate >= 50
 choose-if: year < 1929
@@ -800,10 +803,10 @@ The third option is to have new elections.
 
 @new_grand_coalition
 title: A constitutional stabilization coalition?
-subtitle: Democrats + Farmer-Labor + Liberty League + GOP moderates + Silver Legion-aligned minor parties ([+ neo_weimar_senate +]%)
+subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates + Silver Legion-aligned minor parties ([+ neo_weimar_senate +]%)
 view-if: neo_weimar_senate >= 50 and grand_senate < 50
 choose-if: z_relation >= 50 and dvp_relation >= 30
-unavailable-subtitle: Democrats + Farmer-Labor + Liberty League + GOP moderates + Silver Legion-aligned minor parties ([+ neo_weimar_senate +]%) - [? if z_relation < 50 : We do not have adequate relations with Farmer-Labor. ?][? if dvp_relation < 30 : We do not have adequate relations with GOP moderates. ?]
+unavailable-subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates + Silver Legion-aligned minor parties ([+ neo_weimar_senate +]%) - [? if z_relation < 50 : We do not have adequate relations with Farmer-Labor. ?][? if dvp_relation < 30 : We do not have adequate relations with Republican moderates. ?]
 
 How do we convince vehemently anti-socialist parties to allow us to form a majority coalition? Our largely benevolent relations with the Center and DVP may allow us some leverage.
 
@@ -841,7 +844,7 @@ We have assembled a new coalition under Otto Braun.
 
 @unity_government
 title: Farmer-Labor offers a national unity government under Joseph Wirth.
-subtitle: Democrats + Farmer-Labor + Liberty League + GOP moderates + Silver Legion-aligned minor parties ([+ neo_weimar_senate +]%)
+subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates + Silver Legion-aligned minor parties ([+ neo_weimar_senate +]%)
 view-if: z_party_leader == "Joos" and neo_weimar_senate >= 50 and weimar_senate < 50 and z_relation >= 10
 
 The Center Party leader, Joseph Joos, clearly sees the threat from the ascension of the anti-democratic extremist parties, and thus tries to negotiate a "Government of National Unity" to save the republic. This coalition would be led by Joseph Wirth, a left-leaning member of the Center Party and former chancellor, and would encompass all of the constitutional parties. Our role in this government might be limited, however.
@@ -914,12 +917,12 @@ There is no path to a majority government for now. The scheming around President
 
 @spd_majority
 title: Democratic Senate majority alone
-subtitle: Democrats: [+ spd_s +]%
+subtitle: Democratic Party: [+ spd_s +]%
 view-if: spd_s >= 50
 on-arrival: chancellor = "Empty"; chancellor_party = "SPD"; spd_in_government = 1; in_spd_majority = 1; pro_republic += 5; foreign_minister_party = "SPD"; foreign_minister = "Breitscheid"; interior_minister_party = "SPD"; interior_minister = "Severing"; justice_minister_party = "SPD"; justice_minister = "Radbruch"; labor_minister_party = "SPD"; labor_minister = "Wissell"; reichswehr_minister_party = "SPD"; reichswehr_minister = "Leber"; economic_minister_party = "SPD"; economic_minister = "Schmidt"; finance_minister_party = "SPD"; finance_minister = "Hilferding"; agriculture_minister_party = "SPD"; agriculture_minister = "Baade"; reichswehr_loyalty -= 0.05; 
 achievement: majority_party
 
-Finally, Democrats have a Senate majority. With the House already organized, the administration can move its agenda without coalition vetoes.
+Finally, the Democratic Party has a Senate majority. With the House already organized, the administration can move its agenda without coalition vetoes.
 
 Who should be Speaker of the House?
 
@@ -1103,12 +1106,12 @@ We have won the vote of no confidence, and are currently ruling under an SPD min
 
 @weimar_coalition
 title: We can form a broad reform coalition.
-subtitle: Democrats + Farmer-Labor + Liberty League [? if sapd_formed and kpd_relation >= 30 : + left-splinter toleration ?] ([+ weimar_senate +]%)
+subtitle: Democratic Party + Farmer-Labor + Liberty League [? if sapd_formed and kpd_relation >= 30 : + left-splinter toleration ?] ([+ weimar_senate +]%)
 view-if: weimar_senate >= 50
 on-arrival: leverage += 5; leverage += 5 if z_party_leader == "Joos"; in_weimar_coalition = 1; spd_in_government = 1; in_popular_front = 0; in_left_front = 0; foreign_minister_party = "Z"; interior_minister_party = "Z"; justice_minister_party = ddp_name; labor_minister_party = "Z"; reichswehr_minister_party = "I"; economic_minister_party = ddp_name; finance_minister_party = "Z"; agriculture_minister_party = "Z"; foreign_minister = "Wirth"; interior_minister = "Wirth"; justice_minister = "Koch-Weser"; labor_minister = "Stegerwald"; reichswehr_minister = "Groener"; economic_minister = "Dietrich"; finance_minister = "Köhler"; agriculture_minister = "Hermes";
 achievement: weimar_coalition
 
-We have enough Senate votes to sustain a broad reform coalition of Democrats, Farmer-Labor, and the Liberty League.
+We have enough Senate votes to sustain a broad reform coalition of the Democratic Party, Farmer-Labor, and the Liberty League.
 
 Who should be Speaker of the House?
 
@@ -1132,7 +1135,7 @@ Rudolf Breitscheid has been chosen as Speaker.
 @grand_coalition
 title: We can form a national stabilization coalition.
 view-if: grand_senate >= 50 and grand_coalition_failed == 0
-subtitle: Democrats + Farmer-Labor + Liberty League + GOP moderates ([+ grand_senate +]%)
+subtitle: Democratic Party + Farmer-Labor + Liberty League + Republican moderates ([+ grand_senate +]%)
 on-arrival: in_grand_coalition = 1; in_popular_front = 0; in_left_front = 0
 go-to: grand_coalition_spd_lead if (n_elections <= 1 and largest_party == "SPD") or (largest_party == "SPD" and spd_r >= 30) or president = "Braun"; grand_coalition_z_lead if president != "Braun" and ((n_elections > 1 and spd_r < 30) or (n_elections <= 1 and largest_party != "SPD"))
 
@@ -1300,7 +1303,7 @@ As expected, the DVP is too set in their anti-democratic ways.
 @grand_coalition_spd_lead
 on-arrival: leverage -= 15 if dvp_relation < 20
 
-As expected, Democrats are the largest party, and this time, we are expected to take the lead role in organizing the House, including selecting the Speaker. President [+ president +] has asked us to assemble a working congressional majority.
+As expected, the Democratic Party is the largest party, and this time, we are expected to take the lead role in organizing the House, including selecting the Speaker. President [+ president +] has asked us to assemble a working congressional majority.
 
 [? if dvp_relation < 20 : As our relation with the DVP is poor, they are demanding more minister posts in order to remain part of the coalition. ?]
 

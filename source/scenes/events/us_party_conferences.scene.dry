@@ -9,6 +9,7 @@ Q.dem_conference_due = 0;
 Q.last_dem_conference_year = Q.year;
 
 var demTotal = 1154;
+Q.dem_total_delegates = demTotal;
 var demStrengths = {
     left: Math.max(0, Q.left_strength || 0),
     regular: Math.max(0, Q.center_strength || 0),
@@ -25,9 +26,39 @@ Q.dem_regular_delegates = Math.round(demTotal * demStrengths.regular / demStreng
 Q.dem_labor_delegates = Math.round(demTotal * demStrengths.labor / demStrengthTotal);
 Q.dem_conservative_delegates = Math.round(demTotal * demStrengths.conservative / demStrengthTotal);
 Q.dem_southern_delegates = demTotal - Q.dem_left_delegates - Q.dem_regular_delegates - Q.dem_labor_delegates - Q.dem_conservative_delegates;
+Q.dem_new_deal_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_regular_delegates * 0.55 + Q.dem_labor_delegates * 0.25 + Q.dem_conservative_delegates * 0.35 + Q.dem_southern_delegates * 0.2));
+Q.dem_populist_delegates = Math.round(Math.min(demTotal, Q.dem_labor_delegates + Q.dem_left_delegates * 0.35 + Q.dem_regular_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.28 : 0.12) + Q.dem_southern_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.22 : 0.1)));
+Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_labor_delegates * 0.45 + Q.dem_regular_delegates * 0.08 + (Q.dem_spa_cooperation ? 60 : 0)));
+Q.dem_new_deal_percent = Math.round(1000 * Q.dem_new_deal_delegates / demTotal) / 10;
+Q.dem_populist_percent = Math.round(1000 * Q.dem_populist_delegates / demTotal) / 10;
+Q.dem_structural_percent = Math.round(1000 * Q.dem_structural_delegates / demTotal) / 10;
 !}
 on-display: {!
 if (window && d3) {
+    var demTotal = 1154;
+    var demStrengths = {
+        left: Math.max(0, Q.left_strength || 0),
+        regular: Math.max(0, Q.center_strength || 0),
+        labor: Math.max(0, Q.labor_strength || 0),
+        conservative: Math.max(0, Q.reformist_strength || 0),
+        southern: Math.max(0, Q.neorevisionist_strength || 0)
+    };
+    var demStrengthTotal = demStrengths.left + demStrengths.regular + demStrengths.labor + demStrengths.conservative + demStrengths.southern;
+    if (demStrengthTotal <= 0) {
+        demStrengthTotal = 1;
+    }
+    Q.dem_total_delegates = demTotal;
+    Q.dem_left_delegates = Math.round(demTotal * demStrengths.left / demStrengthTotal);
+    Q.dem_regular_delegates = Math.round(demTotal * demStrengths.regular / demStrengthTotal);
+    Q.dem_labor_delegates = Math.round(demTotal * demStrengths.labor / demStrengthTotal);
+    Q.dem_conservative_delegates = Math.round(demTotal * demStrengths.conservative / demStrengthTotal);
+    Q.dem_southern_delegates = demTotal - Q.dem_left_delegates - Q.dem_regular_delegates - Q.dem_labor_delegates - Q.dem_conservative_delegates;
+    Q.dem_new_deal_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_regular_delegates * 0.55 + Q.dem_labor_delegates * 0.25 + Q.dem_conservative_delegates * 0.35 + Q.dem_southern_delegates * 0.2));
+    Q.dem_populist_delegates = Math.round(Math.min(demTotal, Q.dem_labor_delegates + Q.dem_left_delegates * 0.35 + Q.dem_regular_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.28 : 0.12) + Q.dem_southern_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.22 : 0.1)));
+    Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_labor_delegates * 0.45 + Q.dem_regular_delegates * 0.08 + (Q.dem_spa_cooperation ? 60 : 0)));
+    Q.dem_new_deal_percent = Math.round(1000 * Q.dem_new_deal_delegates / demTotal) / 10;
+    Q.dem_populist_percent = Math.round(1000 * Q.dem_populist_delegates / demTotal) / 10;
+    Q.dem_structural_percent = Math.round(1000 * Q.dem_structural_delegates / demTotal) / 10;
     var demData = [
         {id: "spd", legend: "New Deal liberals", name: "New Deal liberals", seats: Q.dem_left_delegates || 0},
         {id: "other", legend: "Party regulars", name: "Party regulars", seats: Q.dem_regular_delegates || 0},
@@ -78,7 +109,43 @@ The Democratic coalition convenes to decide both leadership emphasis and economi
 @huey_labor_wildcard
 title: Wildcard: move Huey Long into Labor Democratic leadership.
 view-if: labor_dem_leader != "Huey Long" and huey_long_wildcard_used = 0
-on-arrival: labor_dem_leader = "Huey Long"; huey_long_wildcard_used = 1; workers_spd += 5; unemployed_spd += 3; labor_strength += 8; labor_dissent += 3; reformist_dissent += 7; center_dissent += 5; neorevisionist_dissent += 5; pro_republic -= 1;
+on-arrival: {!
+Q.labor_dem_leader = "Huey Long";
+Q.huey_long_wildcard_used = 1;
+Q.workers_spd += 5;
+Q.unemployed_spd += 3;
+Q.labor_strength += 8;
+Q.labor_dissent += 3;
+Q.reformist_dissent += 7;
+Q.center_dissent += 5;
+Q.neorevisionist_dissent += 5;
+Q.pro_republic -= 1;
+
+var demTotal = 1154;
+var demStrengths = {
+    left: Math.max(0, Q.left_strength || 0),
+    regular: Math.max(0, Q.center_strength || 0),
+    labor: Math.max(0, Q.labor_strength || 0),
+    conservative: Math.max(0, Q.reformist_strength || 0),
+    southern: Math.max(0, Q.neorevisionist_strength || 0)
+};
+var demStrengthTotal = demStrengths.left + demStrengths.regular + demStrengths.labor + demStrengths.conservative + demStrengths.southern;
+if (demStrengthTotal <= 0) {
+    demStrengthTotal = 1;
+}
+Q.dem_total_delegates = demTotal;
+Q.dem_left_delegates = Math.round(demTotal * demStrengths.left / demStrengthTotal);
+Q.dem_regular_delegates = Math.round(demTotal * demStrengths.regular / demStrengthTotal);
+Q.dem_labor_delegates = Math.round(demTotal * demStrengths.labor / demStrengthTotal);
+Q.dem_conservative_delegates = Math.round(demTotal * demStrengths.conservative / demStrengthTotal);
+Q.dem_southern_delegates = demTotal - Q.dem_left_delegates - Q.dem_regular_delegates - Q.dem_labor_delegates - Q.dem_conservative_delegates;
+Q.dem_new_deal_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_regular_delegates * 0.55 + Q.dem_labor_delegates * 0.25 + Q.dem_conservative_delegates * 0.35 + Q.dem_southern_delegates * 0.2));
+Q.dem_populist_delegates = Math.round(Math.min(demTotal, Q.dem_labor_delegates + Q.dem_left_delegates * 0.35 + Q.dem_regular_delegates * 0.28 + Q.dem_southern_delegates * 0.22));
+Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_labor_delegates * 0.45 + Q.dem_regular_delegates * 0.08 + (Q.dem_spa_cooperation ? 60 : 0)));
+Q.dem_new_deal_percent = Math.round(1000 * Q.dem_new_deal_delegates / demTotal) / 10;
+Q.dem_populist_percent = Math.round(1000 * Q.dem_populist_delegates / demTotal) / 10;
+Q.dem_structural_percent = Math.round(1000 * Q.dem_structural_delegates / demTotal) / 10;
+!}
 go-to: dem_conference_after_huey
 
 You bring Huey Long into the inner Democratic alignment as labor-populist leadership. This boosts worker enthusiasm and labor delegates, but party regulars and conservatives become much more wary.
@@ -94,18 +161,21 @@ With Huey Long now positioned inside the labor wing, the conference proceeds to 
 
 @dem_pragmatic_line
 title: Pragmatic New Deal Reform (FDR Line)
+subtitle: Estimated support: [+ dem_new_deal_delegates +] / [+ dem_total_delegates +] delegates ([+ dem_new_deal_percent +]%). Passes if FDR holds New Deal liberals and wins regulars with concessions to redistributionists, including social insurance.
 on-arrival: dem_party_chair = "Roosevelt"; dem_leader = "Franklin D. Roosevelt"; dem_wing = "new_deal_liberals"; dem_economic_plan = "pragmatic_new_deal"; center_dissent -= 4; reformist_dissent -= 5; left_dissent += 2; labor_dissent += 1; z_relation += 3; ddp_relation += 4; dvp_relation += 4; kpd_relation += 1; economic_growth += 0.3 if economic_growth < 3.5; dem_spa_cooperation = 0;
 
 The conference aligns behind Roosevelt's experimental reform line: relief, public works, regulation, and stabilization. This keeps the broad coalition mostly intact, but the left complains that the pace is too cautious.
 
 @dem_populist_line
 title: Populist Redistribution (Share Our Wealth)
+subtitle: Estimated support: [+ dem_populist_delegates +] / [+ dem_total_delegates +] delegates ([+ dem_populist_percent +]%). Usually needs Huey Long's labor delegate boost, then enough party regulars and Southern populists breaking toward redistribution.
 on-arrival: dem_party_chair = "Long"; dem_wing = "redistribution_populists"; dem_economic_plan = "share_our_wealth"; resources += 1; workers_spd += 4; unemployed_spd += 6; labor_strength += 4; labor_dissent -= 6; left_dissent -= 2; reformist_dissent += 8; center_dissent += 6; neorevisionist_dissent += 6; dvp_relation -= 8; ddp_relation -= 6; z_relation -= 4; capital_strike_progress += 1; dem_spa_cooperation = 0; dem_leader = "Huey Long" if labor_dem_leader == "Huey Long";
 
 The party embraces a redistributionist strategy centered on taxing concentrated wealth and direct social guarantees. Popular enthusiasm rises quickly, but elite and conservative resistance hardens.
 
 @dem_structural_line
 title: Structural Transformation (Social Democratic Alignment)
+subtitle: Estimated support: [+ dem_structural_delegates +] / [+ dem_total_delegates +] delegates ([+ dem_structural_percent +]%). Needs the New Deal left plus labor delegates, with enough labor-populists and outside socialist cooperation to overcome regular and conservative resistance.
 on-arrival: dem_party_chair = "Thomas Coalition"; dem_wing = "structural_left"; dem_economic_plan = "structural_transformation"; left_strength += 6; labor_strength += 5; left_dissent -= 8; labor_dissent -= 8; reformist_dissent += 12; center_dissent += 10; neorevisionist_dissent += 12; kpd_relation += 12; communist_coalition += 2; workers_spd += 5; unemployed_spd += 4; z_relation -= 10; ddp_relation -= 10; dvp_relation -= 12; coup_progress += 1; dem_spa_cooperation = 1 if kpd_relation >= 45; dem_leader = "Norman Thomas Alignment";
 
 The coalition commits to deep structural change and long-term planning, opening a path toward tactical cooperation with the socialist left. The right and business establishment react with immediate alarm.

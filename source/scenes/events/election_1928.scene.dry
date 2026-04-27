@@ -137,6 +137,18 @@ for (var p2 of chamberParties) {
     Q[p2 + '_h'] = Math.round(1000 * Q[p2 + '_h'] / houseSum) / 10;
     Q[p2 + '_s'] = Math.round(1000 * Q[p2 + '_s'] / senateSum) / 10;
 }
+var houseSeatsTotal = 435;
+var senateSeatsTotal = 96;
+var assignedHouseSeats = 0;
+var assignedSenateSeats = 0;
+for (var p3 of chamberParties) {
+    Q[p3 + '_h_seats'] = Math.round(houseSeatsTotal * Q[p3 + '_h'] / 100);
+    Q[p3 + '_s_seats'] = Math.round(senateSeatsTotal * Q[p3 + '_s'] / 100);
+    assignedHouseSeats += Q[p3 + '_h_seats'];
+    assignedSenateSeats += Q[p3 + '_s_seats'];
+}
+Q.other_h_seats += houseSeatsTotal - assignedHouseSeats;
+Q.other_s_seats += senateSeatsTotal - assignedSenateSeats;
 Q.weimar_house = Q.spd_h + Q.ddp_h + Q.z_h - 3;
 Q.weimar_senate = Q.spd_s + Q.ddp_s + Q.z_s - 3;
 Q.grand_house = Q.spd_h + Q.ddp_h + Q.z_h + Q.dvp_h;
@@ -220,10 +232,16 @@ Q.liberty_league_r = Q.ddp_r;
 Q.silver_legion_r = Q.other_r;
 Q.gop_h = Q.dvp_h + Q.dnvp_h;
 Q.gop_s = Q.dvp_s + Q.dnvp_s;
+Q.gop_h_seats = Q.dvp_h_seats + Q.dnvp_h_seats;
+Q.gop_s_seats = Q.dvp_s_seats + Q.dnvp_s_seats;
 Q.liberty_league_h = Q.ddp_h;
 Q.liberty_league_s = Q.ddp_s;
+Q.liberty_league_h_seats = Q.ddp_h_seats;
+Q.liberty_league_s_seats = Q.ddp_s_seats;
 Q.silver_legion_h = Q.other_h;
 Q.silver_legion_s = Q.other_s;
+Q.silver_legion_h_seats = Q.other_h_seats;
+Q.silver_legion_s_seats = Q.other_s_seats;
 
 // understanding the enemy
 if (Q.nsdap_r >= 15) {
@@ -243,7 +261,7 @@ data = [
         "id": "kpd",
         "legend": "SPA",
         "name": "SPA",
-        "seats": Math.round(Q.kpd_r*5),
+        "seats": Q.kpd_h_seats,
     }
 ];
 if (Q.sapd_formed && Q.sapd_r) {
@@ -251,7 +269,7 @@ if (Q.sapd_formed && Q.sapd_r) {
             "id": "sapd",
             "legend": "SAPD",
             "name": "SAPD",
-            "seats": Math.round(Q.sapd_r*5),
+            "seats": Q.sapd_h_seats,
             });
 }
 data = data.concat([
@@ -259,37 +277,37 @@ data = data.concat([
         "id": "spd",
         "legend": "Democrats",
         "name": "Democrats",
-        "seats": Math.round(Q.spd_r*5),
+        "seats": Q.spd_h_seats,
     },
     {
         "id": "ddp",
         "legend": "Liberty League",
         "name": "Liberty League",
-        "seats": Math.round(Q.liberty_league_h*5),
+        "seats": Q.liberty_league_h_seats,
     },
     {
         "id": "z",
         "legend": "Farmer-Labor",
         "name": "Farmer-Labor",
-        "seats": Math.round(Q.z_h*5),
+        "seats": Q.z_h_seats,
     },
     {
         "id": "dvp",
         "legend": "GOP",
         "name": "GOP",
-        "seats": Math.round(Q.gop_h*5),
+        "seats": Q.gop_h_seats,
     },
     {
         "id": "other",
         "legend": "Silver Legion",
         "name": "Silver Legion",
-        "seats": Math.round(Q.silver_legion_h*5),
+        "seats": Q.silver_legion_h_seats,
     },
     {
         "id": "nsdap",
         "legend": "NUSJ Bloc",
         "name": "NUSJ Bloc",
-        "seats": Math.round(Q.nsdap_h*5),
+        "seats": Q.nsdap_h_seats,
     },
 ]);
 
@@ -317,50 +335,36 @@ go-to: house_coalition_menu
 {!<svg id="reichstag" style="width: 500px; height: 250px;"> </svg>!}
 
 {!<table>!} 
-{!<tr><td>Bloc</td><td>House share</td><td>National change</td></tr>!}
-{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div> !} **Democrats:** {!</td><td>!} **[+ spd_h +]%** {!</td><td>!} **[+ str_change_spd +]** {!</td></tr>!}
+{!<tr><td>Bloc</td><td>House seats</td><td>House share</td><td>National change</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#E3000F; outline: 2px; outline-style: solid;'> </div> !} **Democrats:** {!</td><td>!} **[+ spd_h_seats +]** {!</td><td>!} **[+ spd_h +]%** {!</td><td>!} **[+ str_change_spd +]** {!</td></tr>!}
 
 [? if sapd_formed : {!<tr><td><div class="box" style='background-color:#C40000'> </div> !}SAPD: {!</td><td>!} [+ sapd_r +]% {!</td><td>!} [+ str_change_sapd +] {!</td></tr>!} ?]
 
-{!<tr><td><div class="box" style='background-color:#8B0000'> </div> !}SPA: {!</td><td>!} [+ kpd_h +]% {!</td><td>!} [+ str_change_kpd +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#8B0000'> </div> !}SPA: {!</td><td>!} [+ kpd_h_seats +] {!</td><td>!} [+ kpd_h +]% {!</td><td>!} [+ str_change_kpd +] {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#DCCA4A'> </div> !} Liberty League: {!</td><td>!} [+ liberty_league_h +]% {!</td><td>!} [+ str_change_ddp +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#DCCA4A'> </div> !} Liberty League: {!</td><td>!} [+ liberty_league_h_seats +] {!</td><td>!} [+ liberty_league_h +]% {!</td><td>!} [+ str_change_ddp +] {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#000'> </div> !} Farmer-Labor: {!</td><td>!} [+ z_h +]% {!</td><td>!} [+ str_change_z +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#000'> </div> !} Farmer-Labor: {!</td><td>!} [+ z_h_seats +] {!</td><td>!} [+ z_h +]% {!</td><td>!} [+ str_change_z +] {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#D5AC27'> </div> !} GOP: {!</td><td>!} [+ gop_h +]% {!</td><td>!} [+ str_change_gop +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#D5AC27'> </div> !} GOP: {!</td><td>!} [+ gop_h_seats +] {!</td><td>!} [+ gop_h +]% {!</td><td>!} [+ str_change_gop +] {!</td></tr>!}
  
-{!<tr><td><div class="box" style='background-color:#a0a0a0'> </div> !} Silver Legion: {!</td><td>!} [+ silver_legion_h +]% {!</td><td>!} [+ str_change_other +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#a0a0a0'> </div> !} Silver Legion: {!</td><td>!} [+ silver_legion_h_seats +] {!</td><td>!} [+ silver_legion_h +]% {!</td><td>!} [+ str_change_other +] {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#954B00'> </div> !} NUSJ: {!</td><td>!} [+ nsdap_h +]% {!</td><td>!} [+ str_change_nsdap +] {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#954B00'> </div> !} NUSJ: {!</td><td>!} [+ nsdap_h_seats +] {!</td><td>!} [+ nsdap_h +]% {!</td><td>!} [+ str_change_nsdap +] {!</td></tr>!}
 {!</table>!}
 
 **Projected chamber breakdown (coalitions required in both chambers for reliable governing):**
 
 {!<table>!}
 {!<tr><td>Bloc</td><td>House</td><td>Senate</td></tr>!}
-{!<tr><td>Democrats</td><td>[+ spd_h +]%</td><td>[+ spd_s +]%</td></tr>!}
-{!<tr><td>SPA</td><td>[+ kpd_h +]%</td><td>[+ kpd_s +]%</td></tr>!}
-{!<tr><td>Farmer-Labor</td><td>[+ z_h +]%</td><td>[+ z_s +]%</td></tr>!}
-{!<tr><td>Liberty League</td><td>[+ liberty_league_h +]%</td><td>[+ liberty_league_s +]%</td></tr>!}
-{!<tr><td>GOP</td><td>[+ gop_h +]%</td><td>[+ gop_s +]%</td></tr>!}
-{!<tr><td>NUSJ</td><td>[+ nsdap_h +]%</td><td>[+ nsdap_s +]%</td></tr>!}
-{!<tr><td>Silver Legion</td><td>[+ silver_legion_h +]%</td><td>[+ silver_legion_s +]%</td></tr>!}
+{!<tr><td>Democrats</td><td>[+ spd_h_seats +] seats ([+ spd_h +]%)</td><td>[+ spd_s_seats +] seats ([+ spd_s +]%)</td></tr>!}
+{!<tr><td>SPA</td><td>[+ kpd_h_seats +] seats ([+ kpd_h +]%)</td><td>[+ kpd_s_seats +] seats ([+ kpd_s +]%)</td></tr>!}
+{!<tr><td>Farmer-Labor</td><td>[+ z_h_seats +] seats ([+ z_h +]%)</td><td>[+ z_s_seats +] seats ([+ z_s +]%)</td></tr>!}
+{!<tr><td>Liberty League</td><td>[+ liberty_league_h_seats +] seats ([+ liberty_league_h +]%)</td><td>[+ liberty_league_s_seats +] seats ([+ liberty_league_s +]%)</td></tr>!}
+{!<tr><td>GOP</td><td>[+ gop_h_seats +] seats ([+ gop_h +]%)</td><td>[+ gop_s_seats +] seats ([+ gop_s +]%)</td></tr>!}
+{!<tr><td>NUSJ</td><td>[+ nsdap_h_seats +] seats ([+ nsdap_h +]%)</td><td>[+ nsdap_s_seats +] seats ([+ nsdap_s +]%)</td></tr>!}
+{!<tr><td>Silver Legion</td><td>[+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%)</td><td>[+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)</td></tr>!}
 {!</table>!}
-
-**Potential coalitions:**
-
-Broad reform coalition (Democrats + Farmer-Labor + Liberty League): House [+ weimar_house +]% / Senate [+ weimar_senate +]%
-
-National stabilization coalition (+ GOP moderates): House [+ grand_house +]% / Senate [+ grand_senate +]%
-
-Center-right coalition (without Democrats): House [+ bourgeois_house +]% / Senate [+ bourgeois_senate +]%
-
-Right coalition (+ GOP old guard and Silver Legion-aligned minors): House [+ right_house +]% / Senate [+ right_senate +]%
-
-Left coalition (Democrats + SPA [? if sapd_formed : + SAPD ?]): House [+ left_house +]% / Senate [+ left_senate +]%
-
-Popular front style coalition: House [+ popular_house +]% / Senate [+ popular_senate +]%
 
 [? if nusj_no_coop = 1 and sla_no_coop = 1 : NUSJ Bloc and Silver Legion-aligned forces are permanently excluded from cooperation with Democratic-led governing coalitions. ?]
 
@@ -370,7 +374,7 @@ Popular front style coalition: House [+ popular_house +]% / Senate [+ popular_se
 
 [? if anti_democratic_coalition >= 50 : Together, the anti-democratic KPD, DNVP, and NSDAP have a majority in the Reichstag. A stable governing majority will be almost impossible. ?]
 
-First, organize the House. Senate bargaining comes next.
+First, organize the House. Senate bargaining comes next; each chamber gets its own coalition menu.
 
 @house_coalition_menu
 
@@ -441,16 +445,16 @@ No workable House organizing coalition is immediately available.
 @senate_results
 on-display: {!
 var senateData = [
-    {"id": "kpd", "legend": "SPA", "name": "SPA", "seats": Math.round(Q.kpd_s*5)},
-    {"id": "spd", "legend": "Democrats", "name": "Democrats", "seats": Math.round(Q.spd_s*5)},
-    {"id": "ddp", "legend": "Liberty League", "name": "Liberty League", "seats": Math.round(Q.liberty_league_s*5)},
-    {"id": "z", "legend": "Farmer-Labor", "name": "Farmer-Labor", "seats": Math.round(Q.z_s*5)},
-    {"id": "dvp", "legend": "GOP", "name": "GOP", "seats": Math.round(Q.gop_s*5)},
-    {"id": "other", "legend": "Silver Legion", "name": "Silver Legion", "seats": Math.round(Q.silver_legion_s*5)},
-    {"id": "nsdap", "legend": "NUSJ", "name": "NUSJ", "seats": Math.round(Q.nsdap_s*5)}
+    {"id": "kpd", "legend": "SPA", "name": "SPA", "seats": Q.kpd_s_seats},
+    {"id": "spd", "legend": "Democrats", "name": "Democrats", "seats": Q.spd_s_seats},
+    {"id": "ddp", "legend": "Liberty League", "name": "Liberty League", "seats": Q.liberty_league_s_seats},
+    {"id": "z", "legend": "Farmer-Labor", "name": "Farmer-Labor", "seats": Q.z_s_seats},
+    {"id": "dvp", "legend": "GOP", "name": "GOP", "seats": Q.gop_s_seats},
+    {"id": "other", "legend": "Silver Legion", "name": "Silver Legion", "seats": Q.silver_legion_s_seats},
+    {"id": "nsdap", "legend": "NUSJ", "name": "NUSJ", "seats": Q.nsdap_s_seats}
 ];
 if (Q.sapd_formed && Q.sapd_s) {
-    senateData.splice(1, 0, {"id": "sapd", "legend": "Left splinters", "name": "Left splinters", "seats": Math.round(Q.sapd_s*5)});
+    senateData.splice(1, 0, {"id": "sapd", "legend": "Left splinters", "name": "Left splinters", "seats": Q.sapd_s_seats});
 }
 if (window && d3) {
     var width = 500;
@@ -466,6 +470,15 @@ if (window && d3) {
     parliament.enter.fromCenter(true).smallToBig(true);
     parliament.exit.toCenter(false).bigToSmall(true);
     d3.select("#senate").datum(senateData).call(parliament);
+    d3.select("#house_recap").datum([
+        {"id": "kpd", "legend": "SPA", "name": "SPA", "seats": Q.kpd_h_seats},
+        {"id": "spd", "legend": "Democrats", "name": "Democrats", "seats": Q.spd_h_seats},
+        {"id": "ddp", "legend": "Liberty League", "name": "Liberty League", "seats": Q.liberty_league_h_seats},
+        {"id": "z", "legend": "Farmer-Labor", "name": "Farmer-Labor", "seats": Q.z_h_seats},
+        {"id": "dvp", "legend": "GOP", "name": "GOP", "seats": Q.gop_h_seats},
+        {"id": "other", "legend": "Silver Legion", "name": "Silver Legion", "seats": Q.silver_legion_h_seats},
+        {"id": "nsdap", "legend": "NUSJ", "name": "NUSJ", "seats": Q.nsdap_h_seats}
+    ]).call(parliament);
 }
 !}
 go-to: coalition_menu
@@ -474,6 +487,10 @@ go-to: coalition_menu
 
 House organizing coalition: [+ selected_house_coalition +]
 
+House:
+{!<svg id="house_recap" style="width: 500px; height: 250px;"> </svg>!}
+
+Senate:
 {!<svg id="senate" style="width: 500px; height: 250px;"> </svg>!}
 
 Now form a Senate coalition for bill passage and confirmation fights.
@@ -808,7 +825,7 @@ We transfer some of our campaign funds to our putative coalition partners. Some 
 Now, we have a new grand coalition, a "Constitutional Coalition" of all the non-fascist and non-communist parties. Leftists in our party are somewhat skeptical of this arrangement. 
 
 
-Who should be chancellor?
+Who should be Speaker of the House?
 
 - @join_bruning: For better or for worse, it must be Heinrich Brüning of the Center.
 - @braun_chancellor_new: Otto Braun for Chancellor?
@@ -902,14 +919,14 @@ view-if: spd_s >= 50
 on-arrival: chancellor = "Empty"; chancellor_party = "SPD"; spd_in_government = 1; in_spd_majority = 1; pro_republic += 5; foreign_minister_party = "SPD"; foreign_minister = "Breitscheid"; interior_minister_party = "SPD"; interior_minister = "Severing"; justice_minister_party = "SPD"; justice_minister = "Radbruch"; labor_minister_party = "SPD"; labor_minister = "Wissell"; reichswehr_minister_party = "SPD"; reichswehr_minister = "Leber"; economic_minister_party = "SPD"; economic_minister = "Schmidt"; finance_minister_party = "SPD"; finance_minister = "Hilferding"; agriculture_minister_party = "SPD"; agriculture_minister = "Baade"; reichswehr_loyalty -= 0.05; 
 achievement: majority_party
 
-Finally, the SPD can govern alone! Our long campaign of electioneering has paid off. We do not need to worry about coalition government; anything is possible. 
+Finally, Democrats have a Senate majority. With the House already organized, the administration can move its agenda without coalition vetoes.
 
-Who should be chancellor?
+Who should be Speaker of the House?
 
-- @braun_majority_chancellor: Otto Braun for Chancellor.
-- @breitscheid_majority_chancellor: Rudolf Breitscheid for Chancellor.
-- @muller_majority_chancellor: Hermann Müller for Chancellor.
-- @wels_majority_chancellor: Otto Wels for Chancellor.
+- @braun_majority_chancellor: Otto Braun for Speaker.
+- @breitscheid_majority_chancellor: Rudolf Breitscheid for Speaker.
+- @muller_majority_chancellor: Hermann Müller for Speaker.
+- @wels_majority_chancellor: Otto Wels for Speaker.
 
 @braun_majority_chancellor
 view-if: not historical_mode or not spd_prussia
@@ -1093,7 +1110,7 @@ achievement: weimar_coalition
 
 We have enough Senate votes to sustain a broad reform coalition of Democrats, Farmer-Labor, and the Liberty League.
 
-Who should be the chancellor?
+Who should be Speaker of the House?
 
 - @muller
 - @braun
@@ -1103,13 +1120,13 @@ Who should be the chancellor?
 - @z_chancellor_wirth
 
 @breitscheid_coalition_chancellor
-title: Rudolf Breitscheid for Chancellor
+title: Rudolf Breitscheid for Speaker
 subtitle: Breitscheid is viewed as friendlier towards the left of the SPD.
 view-if: year >= 1930
 on-arrival: chancellor = "Breitscheid"; chancellor_party = "SPD";
 go-to: ministries
 
-Rudolf Breitscheid has been appointed chancellor.
+Rudolf Breitscheid has been chosen as Speaker.
 
 
 @grand_coalition
@@ -1283,11 +1300,11 @@ As expected, the DVP is too set in their anti-democratic ways.
 @grand_coalition_spd_lead
 on-arrival: leverage -= 15 if dvp_relation < 20
 
-As expected, the SPD is the largest party, and this time, we are expected to take the lead role in the formation of the next government, including selecting the chancellor. President [+ president +] has asked us to form a majority coalition with the Center (Z), Bavarian People's (BVP), Democratic ([+ ddp_name +]), and People's (DVP) parties.
+As expected, Democrats are the largest party, and this time, we are expected to take the lead role in organizing the House, including selecting the Speaker. President [+ president +] has asked us to assemble a working congressional majority.
 
 [? if dvp_relation < 20 : As our relation with the DVP is poor, they are demanding more minister posts in order to remain part of the coalition. ?]
 
-Who should be the chancellor?
+Who should be Speaker of the House?
 
 - @muller
 - @braun
@@ -1298,56 +1315,56 @@ Who should be the chancellor?
 
 
 @muller
-title: Hermann Müller for Chancellor
+title: Hermann Müller for Speaker
 view-if: muller_dead = 0
 subtitle: Müller is popular within the party, and is the preferred candidate of the Center and other parties.
 on-arrival: spd_in_government = 1; chancellor = "Müller"; chancellor_party = "SPD"; in_grand_coalition = 1 if in_weimar_coalition == 0
 go-to: ministries
 
-Müller's appointment as chancellor is approved by all our potential allies.
+Müller's selection as Speaker is approved by all our potential allies.
 
 @wels
-title: Otto Wels for Chancellor
+title: Otto Wels for Speaker
 view-if: muller_dead = 1
-subtitle: Otto Wels is a party leader, but can he also be chancellor?
+subtitle: Otto Wels is a party leader, but can he also manage the House?
 on-arrival: spd_in_government = 1; chancellor = "Wels"; chancellor_party = "SPD"; in_grand_coalition = 1 if in_weimar_coalition == 0
 go-to: ministries
 
-Otto Wels's appointment as chancellor is approved by our potential allies.
+Otto Wels's selection as Speaker is approved by our potential allies.
 
 @braun
-title: Otto Braun for Chancellor
+title: Otto Braun for Speaker
 view-if: not historical_mode or not spd_prussia
 subtitle: Braun is currently the Minister-President of Prussia, and is one of our most popular leaders. However, other parties may have qualms about concentrating too much power in one man.
 
-The Center party has significant qualms about appointing Braun as chancellor, given that he is already Minister-President of Prussia. They ask for either more cabinet positions, or for Braun to resign his state government role. The latter is completely unacceptable.
+Farmer-Labor has significant qualms about putting Braun in charge of the House coalition, given his separate power base. They ask for procedural concessions in exchange.
 
 - @muller
 - @wels
 - @braun_2: Let the Center have their cabinet positions.
 
 @braun_2
-subtitle: Otto Braun will be Chancellor.
+subtitle: Otto Braun will be Speaker.
 view-if: not historical_mode
 on-arrival: spd_in_government = 1; chancellor = "Braun"; chancellor_party = "SPD"; leverage -= 10; in_grand_coalition = 1 if in_weimar_coalition == 0
 go-to: ministries
 
-We have promised to let the Center have more influence in the government in response to the appointment of Braun as chancellor.
+We have promised to let Farmer-Labor have more influence in House procedure in response to Braun's selection.
 
 
 @z_chancellor
-title: Let the Center Party have their chancellor.
-subtitle: Heinrich Brüning will be chancellor. This is unexpected and will cause internal dissent, but may give us a better position in negotiating for other cabinet positions.
+title: Let Farmer-Labor have the Speaker.
+subtitle: Heinrich Brüning will be Speaker. This is unexpected and will cause internal dissent, but may stabilize the House.
 on-arrival: left_dissent += 5; center_dissent += 5; labor_dissent += 5; z_relation += 10; dvp_relation += 5; kpd_relation -= 5; in_grand_coalition = 1 if in_weimar_coalition == 0; chancellor = "Brüning"; chancellor_party = "Z"; spd_in_government = 1; leverage += 5
 go-to: ministries
 
 This is highly unexpected, and many in the left and center of our party are criticizing this decision.
 
-[? if year == 1928 : Since Wilhelm Marx resigned, Heinrich Brüning has been appointed chancellor. ?]
-[? if year > 1928: Heinrich Brüning of the Center Party has been appointed chancellor. ?]
+[? if year == 1928 : Since Wilhelm Marx resigned, Heinrich Brüning has been chosen as Speaker. ?]
+[? if year > 1928: Heinrich Brüning of Farmer-Labor has been chosen as Speaker. ?]
 
 @z_chancellor_wirth
-title: Let Joseph Wirth of the Center Party be chancellor.
+title: Let Joseph Wirth of Farmer-Labor be Speaker.
 view-if: z_party_leader == "Joos"
 subtitle: Wirth is on the left wing of the Center Party. This may give us a better position in negotiating for other cabinet positions.
 on-arrival: left_dissent += 2; z_relation += 6; ddp_relation += 3; kpd_relation -= 5; in_grand_coalition = 1 if in_weimar_coalition == 0; chancellor = "Wirth"; chancellor_party = "Z"; spd_in_government = 1; leverage += 5
@@ -1404,11 +1421,19 @@ We are seen as responsible for the failure to form a government, and many of our
 
 
 @ministries
+go-to: presidential_cabinet if president = "Roosevelt"
 
 We can pick from any number of ministries. Controlling a ministry allows us to directly effect policy in that area. [? if in_left_front : Any ministry that we do not take will be given to the KPD. ?] [? if in_left_front and reichswehr_minister_party == "KPD" : If the KPD controls the Reichswehr Ministry, the army will most likely revolt. ?]
 
 - #mins_1928
 - #drop_mins_1928
+
+@presidential_cabinet
+on-arrival: foreign_minister_party = "SPD"; interior_minister_party = "SPD"; justice_minister_party = "SPD"; labor_minister_party = "SPD"; reichswehr_minister_party = "SPD"; economic_minister_party = "SPD"; finance_minister_party = "SPD"; agriculture_minister_party = "SPD"; bill_coalition_viable = 1 if governing_senate_support >= 50;
+
+Because the presidency controls the executive branch, Roosevelt keeps the cabinet in Democratic hands. The congressional coalition determines the Speaker, committee control, confirmations, and whether bills can pass; it does not hand cabinet departments to coalition partners.
+
+- @root: Continue.
 
 @labor
 title: Labor Ministry

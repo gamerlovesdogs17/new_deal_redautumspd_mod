@@ -14,13 +14,50 @@ if (Q.economic_growth) {
 }
 Q.gop_r = Math.round((Q.dvp_r || 0) + (Q.dnvp_r || 0));
 Q.silver_legion_r = Q.other_r || 0;
+Q.gop_h = Math.round(((Q.dvp_h || 0) + (Q.dnvp_h || 0)) * 10) / 10;
+Q.gop_s = Math.round(((Q.dvp_s || 0) + (Q.dnvp_s || 0)) * 10) / 10;
+Q.liberty_league_h = Q.ddp_h || Q.ddp_r || 0;
+Q.liberty_league_s = Q.ddp_s || Q.ddp_r || 0;
+Q.silver_legion_h = Q.other_h || Q.other_r || 0;
+Q.silver_legion_s = Q.other_s || Q.other_r || 0;
+if (!Q.spd_h_seats) {
+    Q.spd_h_seats = Math.round(435 * (Q.spd_h || Q.spd_r || 0) / 100);
+    Q.kpd_h_seats = Math.round(435 * (Q.kpd_h || Q.kpd_r || 0) / 100);
+    Q.z_h_seats = Math.round(435 * (Q.z_h || Q.z_r || 0) / 100);
+    Q.ddp_h_seats = Math.round(435 * (Q.ddp_h || Q.ddp_r || 0) / 100);
+    Q.dvp_h_seats = Math.round(435 * (Q.dvp_h || Q.dvp_r || 0) / 100);
+    Q.dnvp_h_seats = Math.round(435 * (Q.dnvp_h || Q.dnvp_r || 0) / 100);
+    Q.nsdap_h_seats = Math.round(435 * (Q.nsdap_h || Q.nsdap_r || 0) / 100);
+    Q.other_h_seats = 435 - Q.spd_h_seats - Q.kpd_h_seats - Q.z_h_seats - Q.ddp_h_seats - Q.dvp_h_seats - Q.dnvp_h_seats - Q.nsdap_h_seats;
+}
+if (!Q.spd_s_seats) {
+    Q.spd_s_seats = Math.round(96 * (Q.spd_s || Q.spd_r || 0) / 100);
+    Q.kpd_s_seats = Math.round(96 * (Q.kpd_s || Q.kpd_r || 0) / 100);
+    Q.z_s_seats = Math.round(96 * (Q.z_s || Q.z_r || 0) / 100);
+    Q.ddp_s_seats = Math.round(96 * (Q.ddp_s || Q.ddp_r || 0) / 100);
+    Q.dvp_s_seats = Math.round(96 * (Q.dvp_s || Q.dvp_r || 0) / 100);
+    Q.dnvp_s_seats = Math.round(96 * (Q.dnvp_s || Q.dnvp_r || 0) / 100);
+    Q.nsdap_s_seats = Math.round(96 * (Q.nsdap_s || Q.nsdap_r || 0) / 100);
+    Q.other_s_seats = 96 - Q.spd_s_seats - Q.kpd_s_seats - Q.z_s_seats - Q.ddp_s_seats - Q.dvp_s_seats - Q.dnvp_s_seats - Q.nsdap_s_seats;
+}
+Q.gop_h_seats = (Q.dvp_h_seats || 0) + (Q.dnvp_h_seats || 0);
+Q.gop_s_seats = (Q.dvp_s_seats || 0) + (Q.dnvp_s_seats || 0);
+Q.liberty_league_h_seats = Q.ddp_h_seats || 0;
+Q.liberty_league_s_seats = Q.ddp_s_seats || 0;
+Q.silver_legion_h_seats = Q.other_h_seats || 0;
+Q.silver_legion_s_seats = Q.other_s_seats || 0;
 !}
 
 = Status
 
 [+ month : month +] [+ year +]
 
-Political capital available: [+ resources +]
+{!<div class="status-grid">!}
+{!<span class="status-pill">!}Date: [+ month : month +] [+ year +]{!</span>!}
+{!<span class="status-pill">!}Political capital: [+ resources +]{!</span>!}
+{!<span class="status-pill danger">!}Unemployment: [+ unemployed_2 +]%{!</span>!}
+{!<span class="status-pill danger">!}Growth: [+ economic_growth_2 +]%{!</span>!}
+{!</div>!}
 
 Democratic position: [? if spd_toleration : external support ?][? if spd_in_government : governing - ?][? if spd_toleration == 0 and spd_in_government == 0 and spd_caretaker == 0 : opposition ?][? if spd_caretaker : caretaker administration ?]
 [? if in_weimar_coalition and spd_in_government: broad reform coalition ?][? if in_grand_coalition and spd_in_government: unity coalition ?][? if in_popular_front and spd_in_government: labor-progressive front ?][? if in_left_front and spd_in_government: left coalition ?][? if in_spd_majority and spd_in_government: Democratic majority ?][? if in_minority_government and spd_in_government: minority government ?][? if in_emergency_government and spd_in_government: emergency government ?]
@@ -57,21 +94,16 @@ Executive leader: [+ chancellor +] ([+ chancellor_party +])
 
 National legislature composition:
 
-# 1928: 30, 1930: 25, 1932: 22
-{!<span class="tooltip-text" title="Democratic Party coalition">Democrats</span>!}: [+ spd_r +]%
-[? if sapd_formed and sapd_r > 0: SAPD: [+ sapd_r +]% ?]
-# 1928: 15, 1930: 15, 1932: 
-{!<span class="tooltip-text" title="Farmer-Labor and agrarian progressives">Farmer-Labor</span>!}: [+ z_r +]%
-# 1928: 10, 1930: 13
-{!<span class="tooltip-text" title="Socialist Party of America">SPA</span>!}: [+ kpd_r +]%
-# 1928: 5, 1930: 4 (as DstP)
-{!<span class="tooltip-text" title="Liberty League and conservative anti-New Deal Democrats">Liberty League</span>!}: [+ ddp_r +]%
-# 1928: 9, 1930: 5
-{!<span class="tooltip-text" title="Republican Party">GOP</span>!}: [+ gop_r +]%
-# 1928: 3, 1930: 18
-{!<span class="tooltip-text" title="National Union for Social Justice and aligned reactionary populists">NUSJ</span>!}: [+ nsdap_r +]%
-# 1928: 9, 1930: 10
-Silver Legion: [+ silver_legion_r +]%
+{!<table class="compact-status-table">!}
+{!<tr><td>Bloc</td><td>House</td><td>Senate</td></tr>!}
+{!<tr><td><span class="party-dem">Democrats</span></td><td>!}[+ spd_h_seats +] ([+ spd_h +]%){!</td><td>!}[+ spd_s_seats +] ([+ spd_s +]%){!</td></tr>!}
+{!<tr><td><span class="party-spa">SPA</span></td><td>!}[+ kpd_h_seats +] ([+ kpd_h +]%){!</td><td>!}[+ kpd_s_seats +] ([+ kpd_s +]%){!</td></tr>!}
+{!<tr><td><span class="party-fl">Farmer-Labor</span></td><td>!}[+ z_h_seats +] ([+ z_h +]%){!</td><td>!}[+ z_s_seats +] ([+ z_s +]%){!</td></tr>!}
+{!<tr><td><span class="party-liberty">Liberty League</span></td><td>!}[+ liberty_league_h_seats +] ([+ liberty_league_h +]%){!</td><td>!}[+ liberty_league_s_seats +] ([+ liberty_league_s +]%){!</td></tr>!}
+{!<tr><td><span class="party-gop">GOP</span></td><td>!}[+ gop_h_seats +] ([+ gop_h +]%){!</td><td>!}[+ gop_s_seats +] ([+ gop_s +]%){!</td></tr>!}
+{!<tr><td><span class="party-nusj">NUSJ</span></td><td>!}[+ nsdap_h_seats +] ([+ nsdap_h +]%){!</td><td>!}[+ nsdap_s_seats +] ([+ nsdap_s +]%){!</td></tr>!}
+{!<tr><td><span class="party-silver">Silver Legion</span></td><td>!}[+ silver_legion_h_seats +] ([+ silver_legion_h +]%){!</td><td>!}[+ silver_legion_s_seats +] ([+ silver_legion_s +]%){!</td></tr>!}
+{!</table>!}
 
 [? if spd_in_government = 1 : Budget: [+ budget +] ?]
 

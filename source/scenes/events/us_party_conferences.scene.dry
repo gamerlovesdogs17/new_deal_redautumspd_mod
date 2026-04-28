@@ -8,14 +8,14 @@ Q.dem_conference_seen = 1;
 Q.dem_conference_due = 0;
 Q.last_dem_conference_year = Q.year;
 
-var demTotal = 1154;
+var demTotal = 1100;
 Q.dem_total_delegates = demTotal;
 var demStrengths = {
-    left: Math.max(0, Q.left_strength || 0),
-    regular: Math.max(0, Q.center_strength || 0),
-    labor: Math.max(0, Q.labor_strength || 0),
-    conservative: Math.max(0, Q.reformist_strength || 0),
-    southern: Math.max(0, Q.neorevisionist_strength || 0)
+    left: Math.max(0, (Q.left_strength || 0) + (Q.kpd_relation >= 45 ? 4 : 0) + (Q.dem_spa_cooperation ? 6 : 0)),
+    regular: Math.max(0, (Q.center_strength || 0) + (Q.resources >= 4 ? 3 : 0)),
+    labor: Math.max(0, (Q.labor_strength || 0) + (Q.unemployed >= 18 ? 5 : 0) + (Q.labor_dem_leader == "Huey Long" ? 8 : 0)),
+    conservative: Math.max(0, (Q.reformist_strength || 0) + (Q.ddp_relation >= 45 ? 3 : 0) + (Q.capital_strike_progress >= 3 ? 4 : 0)),
+    southern: Math.max(0, (Q.neorevisionist_strength || 0) + (Q.labor_dem_leader == "Huey Long" ? 3 : 0))
 };
 var demStrengthTotal = demStrengths.left + demStrengths.regular + demStrengths.labor + demStrengths.conservative + demStrengths.southern;
 if (demStrengthTotal <= 0) {
@@ -26,22 +26,22 @@ Q.dem_regular_delegates = Math.round(demTotal * demStrengths.regular / demStreng
 Q.dem_labor_delegates = Math.round(demTotal * demStrengths.labor / demStrengthTotal);
 Q.dem_conservative_delegates = Math.round(demTotal * demStrengths.conservative / demStrengthTotal);
 Q.dem_southern_delegates = demTotal - Q.dem_left_delegates - Q.dem_regular_delegates - Q.dem_labor_delegates - Q.dem_conservative_delegates;
-Q.dem_new_deal_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_regular_delegates * 0.55 + Q.dem_labor_delegates * 0.25 + Q.dem_conservative_delegates * 0.35 + Q.dem_southern_delegates * 0.2));
-Q.dem_populist_delegates = Math.round(Math.min(demTotal, Q.dem_labor_delegates + Q.dem_left_delegates * 0.35 + Q.dem_regular_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.28 : 0.12) + Q.dem_southern_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.22 : 0.1)));
-Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_labor_delegates * 0.45 + Q.dem_regular_delegates * 0.08 + (Q.dem_spa_cooperation ? 60 : 0)));
+Q.dem_new_deal_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates * 0.75 + Q.dem_regular_delegates * 0.65 + Q.dem_labor_delegates * 0.3 + Q.dem_conservative_delegates * 0.4 + Q.dem_southern_delegates * 0.25 + (Q.resources >= 4 ? 35 : 0)));
+Q.dem_populist_delegates = Math.round(Math.min(demTotal, Q.dem_labor_delegates * 0.9 + Q.dem_left_delegates * 0.35 + Q.dem_regular_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.32 : 0.12) + Q.dem_southern_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.28 : 0.1) + (Q.unemployed >= 20 ? 30 : 0)));
+Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates * 0.95 + Q.dem_labor_delegates * 0.5 + Q.dem_regular_delegates * 0.08 + (Q.dem_spa_cooperation ? 80 : 0) + (Q.kpd_relation >= 50 ? 35 : 0)));
 Q.dem_new_deal_percent = Math.round(1000 * Q.dem_new_deal_delegates / demTotal) / 10;
 Q.dem_populist_percent = Math.round(1000 * Q.dem_populist_delegates / demTotal) / 10;
 Q.dem_structural_percent = Math.round(1000 * Q.dem_structural_delegates / demTotal) / 10;
 !}
 on-display: {!
 if (window && d3) {
-    var demTotal = 1154;
+    var demTotal = 1100;
     var demStrengths = {
-        left: Math.max(0, Q.left_strength || 0),
-        regular: Math.max(0, Q.center_strength || 0),
-        labor: Math.max(0, Q.labor_strength || 0),
-        conservative: Math.max(0, Q.reformist_strength || 0),
-        southern: Math.max(0, Q.neorevisionist_strength || 0)
+        left: Math.max(0, (Q.left_strength || 0) + (Q.kpd_relation >= 45 ? 4 : 0) + (Q.dem_spa_cooperation ? 6 : 0)),
+        regular: Math.max(0, (Q.center_strength || 0) + (Q.resources >= 4 ? 3 : 0)),
+        labor: Math.max(0, (Q.labor_strength || 0) + (Q.unemployed >= 18 ? 5 : 0) + (Q.labor_dem_leader == "Huey Long" ? 8 : 0)),
+        conservative: Math.max(0, (Q.reformist_strength || 0) + (Q.ddp_relation >= 45 ? 3 : 0) + (Q.capital_strike_progress >= 3 ? 4 : 0)),
+        southern: Math.max(0, (Q.neorevisionist_strength || 0) + (Q.labor_dem_leader == "Huey Long" ? 3 : 0))
     };
     var demStrengthTotal = demStrengths.left + demStrengths.regular + demStrengths.labor + demStrengths.conservative + demStrengths.southern;
     if (demStrengthTotal <= 0) {
@@ -53,9 +53,9 @@ if (window && d3) {
     Q.dem_labor_delegates = Math.round(demTotal * demStrengths.labor / demStrengthTotal);
     Q.dem_conservative_delegates = Math.round(demTotal * demStrengths.conservative / demStrengthTotal);
     Q.dem_southern_delegates = demTotal - Q.dem_left_delegates - Q.dem_regular_delegates - Q.dem_labor_delegates - Q.dem_conservative_delegates;
-    Q.dem_new_deal_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_regular_delegates * 0.55 + Q.dem_labor_delegates * 0.25 + Q.dem_conservative_delegates * 0.35 + Q.dem_southern_delegates * 0.2));
-    Q.dem_populist_delegates = Math.round(Math.min(demTotal, Q.dem_labor_delegates + Q.dem_left_delegates * 0.35 + Q.dem_regular_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.28 : 0.12) + Q.dem_southern_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.22 : 0.1)));
-    Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_labor_delegates * 0.45 + Q.dem_regular_delegates * 0.08 + (Q.dem_spa_cooperation ? 60 : 0)));
+    Q.dem_new_deal_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates * 0.75 + Q.dem_regular_delegates * 0.65 + Q.dem_labor_delegates * 0.3 + Q.dem_conservative_delegates * 0.4 + Q.dem_southern_delegates * 0.25 + (Q.resources >= 4 ? 35 : 0)));
+    Q.dem_populist_delegates = Math.round(Math.min(demTotal, Q.dem_labor_delegates * 0.9 + Q.dem_left_delegates * 0.35 + Q.dem_regular_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.32 : 0.12) + Q.dem_southern_delegates * (Q.labor_dem_leader == "Huey Long" ? 0.28 : 0.1) + (Q.unemployed >= 20 ? 30 : 0)));
+    Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates * 0.95 + Q.dem_labor_delegates * 0.5 + Q.dem_regular_delegates * 0.08 + (Q.dem_spa_cooperation ? 80 : 0) + (Q.kpd_relation >= 50 ? 35 : 0)));
     Q.dem_new_deal_percent = Math.round(1000 * Q.dem_new_deal_delegates / demTotal) / 10;
     Q.dem_populist_percent = Math.round(1000 * Q.dem_populist_delegates / demTotal) / 10;
     Q.dem_structural_percent = Math.round(1000 * Q.dem_structural_delegates / demTotal) / 10;
@@ -87,7 +87,7 @@ if (window && d3) {
 
 = Democratic Leadership Conference
 
-The Democratic coalition convenes to decide both leadership emphasis and economic doctrine for the next phase of the crisis. Your choice will shape reform pace, coalition stability, and room for cooperation with outside parties.
+The Democratic coalition convenes to decide both leadership emphasis and economic doctrine for the next phase of the crisis. Delegate strength now responds to faction strength, unemployment, available patronage, and outside socialist cooperation.
 
 {!<svg id="dem_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
@@ -131,13 +131,13 @@ Q.center_dissent += 5;
 Q.neorevisionist_dissent += 5;
 Q.pro_republic -= 1;
 
-var demTotal = 1154;
+var demTotal = 1100;
 var demStrengths = {
-    left: Math.max(0, Q.left_strength || 0),
-    regular: Math.max(0, Q.center_strength || 0),
-    labor: Math.max(0, Q.labor_strength || 0),
-    conservative: Math.max(0, Q.reformist_strength || 0),
-    southern: Math.max(0, Q.neorevisionist_strength || 0)
+    left: Math.max(0, (Q.left_strength || 0) + (Q.kpd_relation >= 45 ? 4 : 0) + (Q.dem_spa_cooperation ? 6 : 0)),
+    regular: Math.max(0, (Q.center_strength || 0) + (Q.resources >= 4 ? 3 : 0)),
+    labor: Math.max(0, (Q.labor_strength || 0) + (Q.unemployed >= 18 ? 5 : 0) + (Q.labor_dem_leader == "Huey Long" ? 8 : 0)),
+    conservative: Math.max(0, (Q.reformist_strength || 0) + (Q.ddp_relation >= 45 ? 3 : 0) + (Q.capital_strike_progress >= 3 ? 4 : 0)),
+    southern: Math.max(0, (Q.neorevisionist_strength || 0) + (Q.labor_dem_leader == "Huey Long" ? 3 : 0))
 };
 var demStrengthTotal = demStrengths.left + demStrengths.regular + demStrengths.labor + demStrengths.conservative + demStrengths.southern;
 if (demStrengthTotal <= 0) {
@@ -149,9 +149,9 @@ Q.dem_regular_delegates = Math.round(demTotal * demStrengths.regular / demStreng
 Q.dem_labor_delegates = Math.round(demTotal * demStrengths.labor / demStrengthTotal);
 Q.dem_conservative_delegates = Math.round(demTotal * demStrengths.conservative / demStrengthTotal);
 Q.dem_southern_delegates = demTotal - Q.dem_left_delegates - Q.dem_regular_delegates - Q.dem_labor_delegates - Q.dem_conservative_delegates;
-Q.dem_new_deal_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_regular_delegates * 0.55 + Q.dem_labor_delegates * 0.25 + Q.dem_conservative_delegates * 0.35 + Q.dem_southern_delegates * 0.2));
-Q.dem_populist_delegates = Math.round(Math.min(demTotal, Q.dem_labor_delegates + Q.dem_left_delegates * 0.35 + Q.dem_regular_delegates * 0.28 + Q.dem_southern_delegates * 0.22));
-Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates + Q.dem_labor_delegates * 0.45 + Q.dem_regular_delegates * 0.08 + (Q.dem_spa_cooperation ? 60 : 0)));
+Q.dem_new_deal_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates * 0.75 + Q.dem_regular_delegates * 0.65 + Q.dem_labor_delegates * 0.3 + Q.dem_conservative_delegates * 0.4 + Q.dem_southern_delegates * 0.25 + (Q.resources >= 4 ? 35 : 0)));
+Q.dem_populist_delegates = Math.round(Math.min(demTotal, Q.dem_labor_delegates * 0.9 + Q.dem_left_delegates * 0.35 + Q.dem_regular_delegates * 0.32 + Q.dem_southern_delegates * 0.28 + (Q.unemployed >= 20 ? 30 : 0)));
+Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates * 0.95 + Q.dem_labor_delegates * 0.5 + Q.dem_regular_delegates * 0.08 + (Q.dem_spa_cooperation ? 80 : 0) + (Q.kpd_relation >= 50 ? 35 : 0)));
 Q.dem_new_deal_percent = Math.round(1000 * Q.dem_new_deal_delegates / demTotal) / 10;
 Q.dem_populist_percent = Math.round(1000 * Q.dem_populist_delegates / demTotal) / 10;
 Q.dem_structural_percent = Math.round(1000 * Q.dem_structural_delegates / demTotal) / 10;
@@ -204,7 +204,7 @@ Q.last_gop_conference_year = Q.year;
 
 var oldGuardScore = 40;
 var moderateScore = 40;
-var reactionaryScore = 35;
+var reactionaryScore = 25;
 var limitedRecoveryScore = 28;
 var fiscalOrthodoxyScore = 32;
 var nationalRetrenchmentScore = 24;
@@ -277,7 +277,7 @@ Q.gop_reactionary_score = reactionaryScore;
 Q.gop_limited_recovery_score = limitedRecoveryScore;
 Q.gop_fiscal_orthodoxy_score = fiscalOrthodoxyScore;
 Q.gop_national_retrenchment_score = nationalRetrenchmentScore;
-var gopTotal = 1154;
+var gopTotal = 1003;
 var gopScoreTotal = Math.max(1, oldGuardScore + moderateScore + reactionaryScore);
 Q.gop_old_guard_delegates = Math.round(gopTotal * oldGuardScore / gopScoreTotal);
 Q.gop_moderate_delegates = Math.round(gopTotal * moderateScore / gopScoreTotal);
@@ -302,17 +302,17 @@ if (moderateScore >= oldGuardScore && moderateScore >= reactionaryScore) {
     Q.gop_party_chair = "Alf Landon";
     Q.dvp_relation += 6;
     Q.ddp_relation += 4;
-    Q.dnvp_relation = Math.min(Q.dnvp_relation, 20);
-    Q.nsdap_relation = Math.min(Q.nsdap_relation, 15);
-    Q.sla_relation = Math.min(Q.sla_relation, 8);
+    Q.dnvp_relation = Math.min(Q.dnvp_relation, 12);
+    Q.nsdap_relation = Math.min(Q.nsdap_relation, 8);
+    Q.sla_relation = Math.min(Q.sla_relation, 4);
 } else if (reactionaryScore >= oldGuardScore) {
     Q.gop_wing = "national_conservative";
     Q.gop_party_chair = "Hamilton Fish";
     Q.dvp_relation -= 6;
     Q.ddp_relation -= 6;
-    Q.dnvp_relation = Math.max(Q.dnvp_relation, 22);
-    Q.nsdap_relation = Math.max(Q.nsdap_relation, 18);
-    Q.sla_relation = Math.max(Q.sla_relation, 14);
+    Q.dnvp_relation = Math.min(Math.max(Q.dnvp_relation, 14), 24);
+    Q.nsdap_relation = Math.min(Math.max(Q.nsdap_relation, 10), 18);
+    Q.sla_relation = Math.min(Math.max(Q.sla_relation, 8), 14);
     Q.sh_strength += 50;
     Q.sa_strength += 35;
 } else {
@@ -320,9 +320,9 @@ if (moderateScore >= oldGuardScore && moderateScore >= reactionaryScore) {
     Q.gop_party_chair = "Herbert Hoover";
     Q.dvp_relation -= 2;
     Q.ddp_relation -= 3;
-    Q.dnvp_relation = Math.max(Q.dnvp_relation, 18);
-    Q.nsdap_relation = Math.max(Q.nsdap_relation, 10);
-    Q.sla_relation = Math.max(Q.sla_relation, 6);
+    Q.dnvp_relation = Math.min(Math.max(Q.dnvp_relation, 10), 18);
+    Q.nsdap_relation = Math.min(Math.max(Q.nsdap_relation, 6), 12);
+    Q.sla_relation = Math.min(Math.max(Q.sla_relation, 4), 8);
 }
 Q.gop_leader = Q.gop_party_chair;
 
@@ -360,11 +360,11 @@ Republican delegates conclude their conference for the cycle.
 
 {!<svg id="gop_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
-{!<span class="box" style='background-color:#7f1d1d'></span>!} Old Guard: [+ gop_old_guard_delegates +] delegates
+{!<span class="box" style='background-color:#8C1D18'></span>!} Old Guard: [+ gop_old_guard_delegates +] delegates
 
-{!<span class="box" style='background-color:#e05252'></span>!} Moderate reform: [+ gop_moderate_delegates +] delegates
+{!<span class="box" style='background-color:#E85D75'></span>!} Moderate reform: [+ gop_moderate_delegates +] delegates
 
-{!<span class="box" style='background-color:#3b0a0a'></span>!} National conservative: [+ gop_reactionary_delegates +] delegates
+{!<span class="box" style='background-color:#3D0C02'></span>!} National conservative: [+ gop_reactionary_delegates +] delegates
 
 Economic program adopted: **[+ gop_economic_plan_display +]**
 
@@ -372,4 +372,4 @@ Economic program adopted: **[+ gop_economic_plan_display +]**
 
 [? if gop_wing = "old_guard" : The Old Guard consolidates control under Hoover-aligned leadership, emphasizing fiscal restraint and opposition to expansive federal planning. ?]
 [? if gop_wing = "moderate_reform" : Moderate reform Republicans prevail, selecting a leadership line open to limited cooperation while resisting broad federal overreach. ?]
-[? if gop_wing = "national_conservative" : National conservatives gain control, adopting a confrontational anti-radical strategy that sharpens polarization and street-level tension. ?]
+[? if gop_wing = "national_conservative" : National conservatives gain control, adopting a confrontational anti-radical strategy that sharpens polarization and street-level tension. Even this wing refuses formal coalition with NUSJ or the Silver Legion. ?]

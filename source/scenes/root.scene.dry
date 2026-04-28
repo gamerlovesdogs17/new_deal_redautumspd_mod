@@ -322,56 +322,52 @@ Q.catholics_nsdap = 5;
 Q.catholics_other = 2;
 
 
-// Current Reichstag composition
-// % of Reichstag in Jan 1928
-// source: wikipedia
-// note: the Z figures also include the BVP (Bavarian people's party)
-// since they were ideologically similar, but they were separate parties.
-// They did not have a CDU/CSU-style relationship.
-Q.spd_r = 42;
-Q.kpd_r = 12;
-Q.z_r = 10;
-Q.ddp_r = 6;
-Q.dvp_r = 18;
-Q.dnvp_r = 5;
-Q.nsdap_r = 5;
-Q.other_r = 2;
-// initial chamber projections (updated after each federal election event)
-Q.spd_h = Q.spd_r;
-Q.kpd_h = Q.kpd_r;
-Q.z_h = Q.z_r;
-Q.ddp_h = Q.ddp_r;
-Q.dvp_h = Q.dvp_r;
-Q.dnvp_h = Q.dnvp_r;
-Q.nsdap_h = Q.nsdap_r;
-Q.other_h = Q.other_r;
+// Current national party baseline at the start of the 1932 realignment.
+Q.spd_r = 53;
+Q.kpd_r = 2;
+Q.z_r = 2;
+Q.ddp_r = 3;
+Q.dvp_r = 38;
+Q.dnvp_r = 1;
+Q.nsdap_r = 1;
+Q.other_r = 0;
+// Initial chamber composition, based loosely on the 1932 congressional results
+// with minor parties mapped into the scenario's alternate-party blocs.
+Q.spd_h = 69.4;
+Q.kpd_h = 0.0;
+Q.z_h = 1.1;
+Q.ddp_h = 1.8;
+Q.dvp_h = 26.9;
+Q.dnvp_h = 0.5;
+Q.nsdap_h = 0.2;
+Q.other_h = 0.0;
 Q.sapd_h = 0;
-Q.spd_s = Q.spd_r;
-Q.kpd_s = Q.kpd_r;
-Q.z_s = Q.z_r;
-Q.ddp_s = Q.ddp_r;
-Q.dvp_s = Q.dvp_r;
-Q.dnvp_s = Q.dnvp_r;
-Q.nsdap_s = Q.nsdap_r;
-Q.other_s = Q.other_r;
+Q.spd_s = 60.4;
+Q.kpd_s = 0.0;
+Q.z_s = 1.0;
+Q.ddp_s = 1.0;
+Q.dvp_s = 37.5;
+Q.dnvp_s = 0.0;
+Q.nsdap_s = 0.0;
+Q.other_s = 0.0;
 Q.sapd_s = 0;
-Q.spd_h_seats = 183;
-Q.kpd_h_seats = 52;
-Q.z_h_seats = 44;
-Q.ddp_h_seats = 26;
-Q.dvp_h_seats = 78;
-Q.dnvp_h_seats = 22;
-Q.nsdap_h_seats = 22;
-Q.other_h_seats = 8;
+Q.spd_h_seats = 302;
+Q.kpd_h_seats = 0;
+Q.z_h_seats = 5;
+Q.ddp_h_seats = 8;
+Q.dvp_h_seats = 117;
+Q.dnvp_h_seats = 2;
+Q.nsdap_h_seats = 1;
+Q.other_h_seats = 0;
 Q.sapd_h_seats = 0;
-Q.spd_s_seats = 40;
-Q.kpd_s_seats = 12;
-Q.z_s_seats = 10;
-Q.ddp_s_seats = 6;
-Q.dvp_s_seats = 17;
-Q.dnvp_s_seats = 5;
-Q.nsdap_s_seats = 5;
-Q.other_s_seats = 1;
+Q.spd_s_seats = 58;
+Q.kpd_s_seats = 0;
+Q.z_s_seats = 1;
+Q.ddp_s_seats = 1;
+Q.dvp_s_seats = 36;
+Q.dnvp_s_seats = 0;
+Q.nsdap_s_seats = 0;
+Q.other_s_seats = 0;
 Q.sapd_s_seats = 0;
 Q.gop_h = Q.dvp_h;
 Q.gop_s = Q.dvp_s;
@@ -399,14 +395,14 @@ Q.non_dem_senate_control = 0;
 Q.non_dem_congressional_control = 0;
 
 // diff from prev
-Q.old_spd_r = 42;
-Q.old_kpd_r = 12;
-Q.old_z_r = 10;
-Q.old_ddp_r = 6;
-Q.old_dvp_r = 18;
-Q.old_dnvp_r = 5;
-Q.old_nsdap_r = 5;
-Q.old_other_r = 2;
+Q.old_spd_r = 53;
+Q.old_kpd_r = 2;
+Q.old_z_r = 2;
+Q.old_ddp_r = 3;
+Q.old_dvp_r = 38;
+Q.old_dnvp_r = 1;
+Q.old_nsdap_r = 1;
+Q.old_other_r = 0;
 
 // sapd isn't formed yet, but it may be formed
 Q.sapd_r = 0;

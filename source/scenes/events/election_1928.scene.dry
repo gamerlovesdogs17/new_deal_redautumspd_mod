@@ -157,8 +157,14 @@ Q.bourgeois_house = Q.ddp_h + Q.z_h + Q.dvp_h + Q.other_h;
 Q.bourgeois_senate = Q.ddp_s + Q.z_s + Q.dvp_s + Q.other_s;
 Q.neo_weimar_house = Q.spd_h + Q.ddp_h + Q.z_h + Q.dvp_h;
 Q.neo_weimar_senate = Q.spd_s + Q.ddp_s + Q.z_s + Q.dvp_s;
-Q.constitutional_opposition_house = Q.z_h + Q.ddp_h + Q.dvp_h + Q.other_h;
-Q.constitutional_opposition_senate = Q.z_s + Q.ddp_s + Q.dvp_s + Q.other_s;
+Q.gop_liberty_house = Q.dvp_h + Q.ddp_h + Q.other_h;
+Q.gop_liberty_senate = Q.dvp_s + Q.ddp_s + Q.other_s;
+Q.fl_defector_house = Math.min(Q.z_h, (Q.gop_wing == "moderate_reform" ? 4 : 2));
+Q.fl_defector_senate = Math.min(Q.z_s, (Q.gop_wing == "moderate_reform" ? 3 : 1));
+Q.gop_defector_house = Q.gop_liberty_house + Q.fl_defector_house;
+Q.gop_defector_senate = Q.gop_liberty_senate + Q.fl_defector_senate;
+Q.constitutional_opposition_house = Math.max(Q.gop_liberty_house, Q.gop_defector_house);
+Q.constitutional_opposition_senate = Math.max(Q.gop_liberty_senate, Q.gop_defector_senate);
 Q.right_house = Q.constitutional_opposition_house;
 Q.right_senate = Q.constitutional_opposition_senate;
 Q.far_right_house = Q.dnvp_h + Q.nsdap_h;
@@ -170,14 +176,22 @@ Q.popular_senate = Q.spd_s + Q.kpd_s + Q.z_s + (Q.sapd_s || 0);
 Q.dem_bill_coalition = Math.max(Q.weimar_senate, Q.grand_senate, Q.popular_senate, Q.left_senate);
 Q.best_dem_house = Math.max(Q.spd_h, Q.weimar_house, Q.grand_house, Q.left_house, Q.popular_house);
 Q.best_dem_senate = Math.max(Q.spd_s, Q.weimar_senate, Q.grand_senate, Q.left_senate, Q.popular_senate);
-Q.non_dem_house = Math.max(Q.constitutional_opposition_house, Q.far_right_house);
-Q.non_dem_senate = Math.max(Q.constitutional_opposition_senate, Q.far_right_senate);
-Q.non_dem_house_seats = Q.constitutional_opposition_house >= Q.far_right_house ? (Q.z_h_seats + Q.ddp_h_seats + Q.dvp_h_seats + Q.other_h_seats) : (Q.dnvp_h_seats + Q.nsdap_h_seats);
-Q.non_dem_senate_seats = Q.constitutional_opposition_senate >= Q.far_right_senate ? (Q.z_s_seats + Q.ddp_s_seats + Q.dvp_s_seats + Q.other_s_seats) : (Q.dnvp_s_seats + Q.nsdap_s_seats);
-Q.non_dem_house_name = Q.constitutional_opposition_house >= Q.far_right_house ? "Republican-led constitutional opposition House bloc" : "NUSJ-Silver Legion House bloc";
-Q.non_dem_senate_name = Q.constitutional_opposition_senate >= Q.far_right_senate ? "Republican-led constitutional opposition Senate bloc" : "NUSJ-Silver Legion Senate bloc";
-Q.non_dem_house_desc = Q.constitutional_opposition_house >= Q.far_right_house ? "Republican Party, Liberty League, Farmer-Labor conservatives, and independents. They oppose the Democratic administration, the Socialist Party of America, and the far right." : "National Union for Social Justice and Silver Legion-aligned members. They are anti-system forces and do not cooperate with the Republican Party.";
-Q.non_dem_senate_desc = Q.constitutional_opposition_senate >= Q.far_right_senate ? "Republican Party, Liberty League, Farmer-Labor conservatives, and independents. They oppose the Democratic administration, the Socialist Party of America, and the far right." : "National Union for Social Justice and Silver Legion-aligned members. They are anti-system forces and do not cooperate with the Republican Party.";
+Q.non_dem_house = Q.constitutional_opposition_house >= 50 ? Q.constitutional_opposition_house : Math.max(Q.constitutional_opposition_house, Q.far_right_house);
+Q.non_dem_senate = Q.constitutional_opposition_senate >= 50 ? Q.constitutional_opposition_senate : Math.max(Q.constitutional_opposition_senate, Q.far_right_senate);
+Q.gop_liberty_house_seats = Q.dvp_h_seats + Q.ddp_h_seats + Q.other_h_seats;
+Q.gop_liberty_senate_seats = Q.dvp_s_seats + Q.ddp_s_seats + Q.other_s_seats;
+Q.gop_defector_house_seats = Q.gop_liberty_house_seats + Math.round(435 * Q.fl_defector_house / 100);
+Q.gop_defector_senate_seats = Q.gop_liberty_senate_seats + Math.round(96 * Q.fl_defector_senate / 100);
+Q.far_right_house_seats = Q.dnvp_h_seats + Q.nsdap_h_seats;
+Q.far_right_senate_seats = Q.dnvp_s_seats + Q.nsdap_s_seats;
+Q.non_dem_house_seats = Q.constitutional_opposition_house >= 50 || Q.constitutional_opposition_house >= Q.far_right_house ? Q.gop_defector_house_seats : Q.far_right_house_seats;
+Q.non_dem_senate_seats = Q.constitutional_opposition_senate >= 50 || Q.constitutional_opposition_senate >= Q.far_right_senate ? Q.gop_defector_senate_seats : Q.far_right_senate_seats;
+Q.non_dem_house_name = Q.constitutional_opposition_house >= 50 || Q.constitutional_opposition_house >= Q.far_right_house ? "Republican-Liberty opposition House bloc" : "NUSJ-Silver Legion House bloc";
+Q.non_dem_senate_name = Q.constitutional_opposition_senate >= 50 || Q.constitutional_opposition_senate >= Q.far_right_senate ? "Republican-Liberty opposition Senate bloc" : "NUSJ-Silver Legion Senate bloc";
+Q.non_dem_house_desc = Q.constitutional_opposition_house >= 50 || Q.constitutional_opposition_house >= Q.far_right_house ? "Republican Party, Liberty League, independents, and a small number of Farmer-Labor defectors. They oppose the Democratic administration, the Socialist Party of America, NUSJ, and the Silver Legion." : "National Union for Social Justice and Silver Legion-aligned members. They are anti-system forces and can only organize if the constitutional opposition is weaker or fragmented.";
+Q.non_dem_senate_desc = Q.constitutional_opposition_senate >= 50 || Q.constitutional_opposition_senate >= Q.far_right_senate ? "Republican Party, Liberty League, independents, and a small number of Farmer-Labor defectors. They oppose the Democratic administration, the Socialist Party of America, NUSJ, and the Silver Legion." : "National Union for Social Justice and Silver Legion-aligned members. They are anti-system forces and can only organize if the constitutional opposition is weaker or fragmented.";
+Q.non_dem_house_alternatives = "Republican-Liberty: " + Q.gop_liberty_house + "%; Republican-Liberty with Farmer-Labor defectors: " + Q.gop_defector_house + "%; NUSJ-Silver Legion: " + Q.far_right_house + "%";
+Q.non_dem_senate_alternatives = "Republican-Liberty: " + Q.gop_liberty_senate + "%; Republican-Liberty with Farmer-Labor defectors: " + Q.gop_defector_senate + "%; NUSJ-Silver Legion: " + Q.far_right_senate + "%";
 Q.non_dem_house_has_majority = Q.non_dem_house >= 50 ? 1 : 0;
 Q.non_dem_senate_has_majority = Q.non_dem_senate >= 50 ? 1 : 0;
 Q.can_dem_house_coalition = Q.best_dem_house >= 50 ? 1 : 0;
@@ -485,6 +499,8 @@ No Democratic-led House coalition can reach a majority. [? if non_dem_house_has_
 
 [+ non_dem_house_desc +].
 
+Would-be non-Democratic blocs: [+ non_dem_house_alternatives +]. Only the strongest realistic bloc may organize the chamber.
+
 @senate_results
 on-display: {!
 var senateData = [
@@ -559,6 +575,8 @@ go-to: divided_government_result
 No Democratic-led Senate coalition can reach a majority. [? if non_dem_senate_has_majority = 1 : The largest viable non-Democratic Senate bloc organizes the chamber: ?][? if non_dem_senate_has_majority = 0 : No non-Democratic bloc can organize the Senate either; the chamber is deadlocked around the largest possible bloc: ?]
 
 [+ non_dem_senate_desc +].
+
+Would-be non-Democratic blocs: [+ non_dem_senate_alternatives +]. Only the strongest realistic bloc may organize the chamber.
 
 @divided_government_result
 on-arrival: {!

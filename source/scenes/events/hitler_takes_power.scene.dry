@@ -1,18 +1,19 @@
 title: The Silver Legion Takes Power.
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: The beginning of the end.
 view-if: chancellor == "Hitler" or president == "Hitler" or chancellor_party == "NSDAP"
 on-arrival: spd_in_government = 0
 tags: event
 new-page: true
 
-[? if hitler_deported and president != "Pelley" and speaker != "Pelley": The first act that Speaker [+ speaker +] takes upon assuming office is bringing Adolf Pelley back to the republic, and giving him citizenship and an official cabinet position. ?]
+[? if hitler_deported and president != "Pelley" and speaker != "Pelley": The first act of the new regime is bringing William Pelley back into the country and giving him an official position. ?]
 
 Pelley has promised a campaign of revenge against the socialists, and the Silver Legion have already spilled much blood on the streets. In his published manifesto, he promises a campaign of unspeakable horror against our Jews, and endless wars of violent expansion that will ruin all of Europe.
 
 What are we to do now?
 
 - @fight: We will fight on the streets to prevent Pelley from taking power.
-- @give_up: We will vote against the nazis in the Congress.
+- @give_up: We will vote against the Silver Legion in Congress.
 
 
 @fight
@@ -20,13 +21,13 @@ What are we to do now?
 Do we realize that this means civil war, against the full force of the state?
 
 - @civil_war: Yes.
-- @give_up: We are not ready for war. Instead, we will vote against the nazis in the Congress.
+- @give_up: We are not ready for war. Instead, we will vote against the Silver Legion in Congress.
 
 @give_up
 
 Speeches are made. Votes are held. Bullets fly in the streets. Some socialists are killed or jailed. Others flee the country. What can votes even do at this juncture?
 
-The Congress is burned, ostensibly by a foreign communist. In the wake, the Silver Legion pass decrees giving them unlimited power. They, combined with the DNVP, will win a majority at the next elections.
+Congress is attacked, ostensibly by a foreign communist. In the wake, the Silver Legion pushes through decrees giving itself unlimited power. Together with NUSJ and reactionary allies, it will dominate the next elections.
 
 the republic is lost.
 

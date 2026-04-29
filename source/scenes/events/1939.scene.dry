@@ -1,0 +1,27 @@
+title: War in Europe
+subtitle: The Second World War begins.
+new-page: true
+tags: event
+priority: 3
+view-if: year = 1939 and month >= 9
+max-visits: 1
+on-arrival: {!
+Q.ww2_tension += 3;
+Q.interventionism += 2;
+Q.isolationism += 1;
+if (Q.dem_presidential_control) {
+    Q.war_mobilization += 1;
+}
+if (Q.economic_growth < 2) {
+    Q.economic_growth += 0.5;
+}
+!}
+
+= War in Europe
+
+War has begun in Europe. The United States is not formally at war, but neutrality is no longer a quiet default. Shipping, credit, arms production, refugees, and intelligence cooperation move from committee rooms into national politics.
+
+[? if dem_presidential_control : The White House looks for every legal inch of room to aid threatened democracies without openly entering the war. ?]
+[? if not dem_presidential_control : The presidency sets the terms of neutrality, leaving Democratic New Dealers to fight from Congress, unions, newspapers, and state governments. ?]
+
+The Depression is still present, but war orders and military planning begin to change the shape of recovery.

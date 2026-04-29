@@ -1,0 +1,26 @@
+title: 1936
+subtitle: Rearmament abroad, election politics at home.
+new-page: true
+tags: event
+priority: 2
+view-if: year = 1936 and month = 1
+max-visits: 1
+on-arrival: {!
+Q.ww2_tension += 1;
+Q.isolationism += 1;
+if (Q.dem_presidential_control) {
+    Q.interventionism += 1;
+}
+if (Q.radical_momentum >= 18) {
+    Q.pro_republic -= 1;
+}
+!}
+
+= 1936
+
+Foreign rearmament is no longer an abstract newspaper story. The administration receives reports of expanding armies, air forces, and ideological clients abroad, while Congress remains more interested in domestic recovery and the presidential election.
+
+[? if dem_presidential_control : The White House begins quiet planning for naval, air, and industrial readiness, careful not to call it a war program. ?]
+[? if not dem_presidential_control : Without Democratic control of the presidency, the New Deal coalition has little command over foreign policy. Party leaders argue from Congress and the press instead. ?]
+
+The election year makes every foreign question domestic. Isolationists call preparedness a trick by bankers and arms makers; interventionists answer that a democratic republic cannot wait until danger reaches the coasts.

@@ -201,30 +201,77 @@ if (Q.month_actions >= 1) {
     }
     // legislative support model: House coalitions for Speaker/governing capacity,
     // Senate coalitions for bill passage and sustained policy throughput.
+    // Relations now erode coalition support in each chamber instead of only gating
+    // coalition formation menus. The House is more sensitive to party discipline;
+    // the Senate is more sensitive to individual allied senators defecting.
+    var relationFactor = function(relation, floor, ceiling) {
+        var r = relation || 0;
+        if (r <= floor) {
+            return 0;
+        }
+        if (r >= ceiling) {
+            return 1;
+        }
+        return (r - floor) / (ceiling - floor);
+    };
+    var houseAlly = function(votes, relation, floor, ceiling) {
+        return (votes || 0) * (0.35 + 0.65 * relationFactor(relation, floor, ceiling));
+    };
+    var senateAlly = function(votes, relation, floor, ceiling) {
+        return (votes || 0) * (0.25 + 0.75 * relationFactor(relation, floor, ceiling));
+    };
+    var coalitionPenalty = Math.max(0, Q.coalition_dissent || 0) * 0.6;
+    var kpdPenalty = Math.max(0, Q.kpd_coalition_dissent || 0) * 0.8;
+    var weimarHouseSupport = (Q.spd_h || 0) + houseAlly(Q.z_h, Q.z_relation, 25, 60);
+    var weimarSenateSupport = (Q.spd_s || 0) + senateAlly(Q.z_s, Q.z_relation, 30, 65);
+    var grandHouseSupport = weimarHouseSupport + houseAlly(Q.dvp_h, Q.dvp_relation, 30, 65) + houseAlly(Q.ddp_h || 0, Q.ddp_relation, 25, 60);
+    var grandSenateSupport = weimarSenateSupport + senateAlly(Q.dvp_s, Q.dvp_relation, 35, 70) + senateAlly(Q.ddp_s || 0, Q.ddp_relation, 30, 65);
+    var leftHouseSupport = (Q.spd_h || 0) + houseAlly((Q.kpd_h || 0) + (Q.sapd_h || 0), Q.kpd_relation, 35, 70);
+    var leftSenateSupport = (Q.spd_s || 0) + senateAlly((Q.kpd_s || 0) + (Q.sapd_s || 0), Q.kpd_relation, 40, 75);
+    var popularHouseSupport = (Q.spd_h || 0) + houseAlly((Q.kpd_h || 0) + (Q.sapd_h || 0), Q.kpd_relation, 40, 70) + houseAlly(Q.z_h, Q.z_relation, 40, 70);
+    var popularSenateSupport = (Q.spd_s || 0) + senateAlly((Q.kpd_s || 0) + (Q.sapd_s || 0), Q.kpd_relation, 45, 75) + senateAlly(Q.z_s, Q.z_relation, 45, 75);
+    Q.effective_weimar_house = Math.max(0, weimarHouseSupport - coalitionPenalty);
+    Q.effective_weimar_senate = Math.max(0, weimarSenateSupport - coalitionPenalty);
+    Q.effective_grand_house = Math.max(0, grandHouseSupport - coalitionPenalty);
+    Q.effective_grand_senate = Math.max(0, grandSenateSupport - coalitionPenalty);
+    Q.effective_left_house = Math.max(0, leftHouseSupport - kpdPenalty);
+    Q.effective_left_senate = Math.max(0, leftSenateSupport - kpdPenalty);
+    Q.effective_popular_house = Math.max(0, popularHouseSupport - coalitionPenalty - kpdPenalty);
+    Q.effective_popular_senate = Math.max(0, popularSenateSupport - coalitionPenalty - kpdPenalty);
     Q.governing_house_support = Q.spd_h || 0;
     Q.governing_senate_support = Q.spd_s || 0;
     if (Q.in_weimar_coalition) {
-        Q.governing_house_support = Q.weimar_house || Q.weimar_coalition || Q.governing_house_support;
-        Q.governing_senate_support = Q.weimar_senate || Q.weimar_coalition || Q.governing_senate_support;
+        Q.governing_house_support = Q.effective_weimar_house || Q.weimar_house || Q.weimar_coalition || Q.governing_house_support;
+        Q.governing_senate_support = Q.effective_weimar_senate || Q.weimar_senate || Q.weimar_coalition || Q.governing_senate_support;
     } else if (Q.in_grand_coalition) {
-        Q.governing_house_support = Q.grand_house || Q.grand_coalition || Q.governing_house_support;
-        Q.governing_senate_support = Q.grand_senate || Q.grand_coalition || Q.governing_senate_support;
+        Q.governing_house_support = Q.effective_grand_house || Q.grand_house || Q.grand_coalition || Q.governing_house_support;
+        Q.governing_senate_support = Q.effective_grand_senate || Q.grand_senate || Q.grand_coalition || Q.governing_senate_support;
     } else if (Q.in_left_front) {
-        Q.governing_house_support = Q.left_house || Q.left_coalition || Q.governing_house_support;
-        Q.governing_senate_support = Q.left_senate || Q.left_coalition || Q.governing_senate_support;
+        Q.governing_house_support = Q.effective_left_house || Q.left_house || Q.left_coalition || Q.governing_house_support;
+        Q.governing_senate_support = Q.effective_left_senate || Q.left_senate || Q.left_coalition || Q.governing_senate_support;
     } else if (Q.in_popular_front) {
-        Q.governing_house_support = Q.popular_house || Q.popular_front_coalition || Q.governing_house_support;
-        Q.governing_senate_support = Q.popular_senate || Q.popular_front_coalition || Q.governing_senate_support;
+        Q.governing_house_support = Q.effective_popular_house || Q.popular_house || Q.popular_front_coalition || Q.governing_house_support;
+        Q.governing_senate_support = Q.effective_popular_senate || Q.popular_senate || Q.popular_front_coalition || Q.governing_senate_support;
     } else if (Q.in_spd_majority) {
         Q.governing_house_support = Q.spd_h || Q.spd_r;
         Q.governing_senate_support = Q.spd_s || Q.spd_r;
     } else if (Q.spd_toleration) {
-        Q.governing_house_support = (Q.weimar_house || Q.neo_weimar_coalition || Q.weimar_coalition || Q.governing_house_support);
-        Q.governing_senate_support = (Q.weimar_senate || Q.neo_weimar_coalition || Q.weimar_coalition || Q.governing_senate_support);
+        Q.governing_house_support = (Q.effective_weimar_house || Q.weimar_house || Q.neo_weimar_coalition || Q.weimar_coalition || Q.governing_house_support);
+        Q.governing_senate_support = (Q.effective_weimar_senate || Q.weimar_senate || Q.neo_weimar_coalition || Q.weimar_coalition || Q.governing_senate_support);
     }
+    Q.speaker_party = Q.chancellor_party;
+    Q.speaker_party_display = Q.party_display_map[Q.speaker_party] || Q.speaker_party || "";
     Q.speaker_elected = (Q.governing_house_support >= 50) ? 1 : 0;
     Q.bill_coalition_viable = (Q.governing_senate_support >= 50) ? 1 : 0;
     Q.legislative_gridlock = (Q.speaker_elected && Q.bill_coalition_viable) ? 0 : 1;
+    Q.dem_presidential_control = (Q.president_party == "SPD" || Q.president_party == "DEM" || Q.president_party == "Democratic Party") ? 1 : 0;
+    Q.dem_house_control = (Q.spd_in_government && Q.speaker_elected && Q.speaker_party == "SPD") ? 1 : 0;
+    Q.dem_senate_control = (Q.spd_in_government && Q.bill_coalition_viable) ? 1 : 0;
+    Q.dem_congress_control = (Q.dem_house_control && Q.dem_senate_control) ? 1 : 0;
+    Q.dem_trifecta_control = (Q.dem_presidential_control && Q.dem_congress_control) ? 1 : 0;
+    Q.non_dem_house_control = Q.dem_house_control ? 0 : 1;
+    Q.non_dem_senate_control = Q.dem_senate_control ? 0 : 1;
+    Q.non_dem_congressional_control = (Q.non_dem_house_control || Q.non_dem_senate_control) ? 1 : 0;
     if ((Q.spd_in_government || Q.spd_toleration) && !Q.speaker_elected) {
         Q.resources -= 1;
         Q.pro_republic -= 1;
@@ -269,6 +316,35 @@ if (Q.month_actions >= 1) {
     Q.radical_momentum = (Q.spa_votes || Q.kpd_votes || 0) + (Q.nusj_votes || Q.dnvp_votes || 0) + (Q.silver_legion_votes || Q.nsdap_votes || 0);
     Q.radical_momentum += Math.max(0, Q.economic_stress - 8);
     Q.radical_momentum += Math.max(0, 45 - Q.pro_republic) / 2;
+    if (Q.difficulty >= 0 && (Q.spd_in_government || Q.spd_toleration)) {
+        if (Q.economic_stress >= 9) {
+            Q.new_deal_legitimacy -= 0.2;
+            Q.pro_republic -= 0.1;
+            Q.radical_momentum += 0.2;
+        }
+        if (Q.legislative_gridlock) {
+            Q.coalition_dissent += 0.1;
+        }
+        if (Q.governing_house_support < 54 || Q.governing_senate_support < 54) {
+            Q.new_deal_legitimacy -= 0.15;
+            Q.resources -= 0.1;
+        }
+    }
+    if (Q.difficulty >= 1 && (Q.spd_in_government || Q.spd_toleration)) {
+        if (Q.economic_stress >= 8) {
+            Q.new_deal_legitimacy -= 0.2;
+            Q.left_dissent += 0.2;
+            Q.labor_dissent += 0.2;
+            Q.economic_growth -= 0.05;
+        }
+        if (Q.conservative_backlash >= 6) {
+            Q.reformist_dissent += 0.2;
+            Q.capital_strike_progress += 0.05;
+        }
+        if ((Q.z_relation || 0) < 35 || (Q.dvp_relation || 0) < 35 || (Q.kpd_relation || 0) < 30) {
+            Q.coalition_dissent += 0.15;
+        }
+    }
     if (Q.spd_in_government || Q.spd_toleration) {
         if (Q.economic_stress >= 10) {
             Q.new_deal_legitimacy -= 0.3;
@@ -660,6 +736,15 @@ if (Q.month_actions >= 1) {
         }
     }
 }
+// Minimal pre-event refresh for branch flags used by event view conditions.
+Q.dem_presidential_control = (Q.president_party == "SPD" || Q.president_party == "DEM" || Q.president_party == "Democratic Party") ? 1 : 0;
+Q.dem_house_control = (Q.spd_in_government && Q.speaker_elected && Q.speaker_party == "SPD") ? 1 : 0;
+Q.dem_senate_control = (Q.spd_in_government && Q.bill_coalition_viable) ? 1 : 0;
+Q.dem_congress_control = (Q.dem_house_control && Q.dem_senate_control) ? 1 : 0;
+Q.dem_trifecta_control = (Q.dem_presidential_control && Q.dem_congress_control) ? 1 : 0;
+Q.non_dem_house_control = Q.dem_house_control ? 0 : 1;
+Q.non_dem_senate_control = Q.dem_senate_control ? 0 : 1;
+Q.non_dem_congressional_control = (Q.non_dem_house_control || Q.non_dem_senate_control) ? 1 : 0;
 Q.has_event = 0;
 // check if there are any cards in #event, and then go to main if not.
 var scene = this.game.scenes['post_event.events_choice'];
@@ -682,6 +767,77 @@ if (this.ui && this.ui.show_portraits) {
 
 if (typeof window !== "undefined" && window.generateBar) {
 }
+
+// Branch control can change during elections or coalition events before the
+// next monthly tick. Refresh it here so leadership decks update immediately.
+var immediateRelationFactor = function(relation, floor, ceiling) {
+    var r = relation || 0;
+    if (r <= floor) {
+        return 0;
+    }
+    if (r >= ceiling) {
+        return 1;
+    }
+    return (r - floor) / (ceiling - floor);
+};
+var immediateHouseAlly = function(votes, relation, floor, ceiling) {
+    return (votes || 0) * (0.35 + 0.65 * immediateRelationFactor(relation, floor, ceiling));
+};
+var immediateSenateAlly = function(votes, relation, floor, ceiling) {
+    return (votes || 0) * (0.25 + 0.75 * immediateRelationFactor(relation, floor, ceiling));
+};
+var immediateCoalitionPenalty = Math.max(0, Q.coalition_dissent || 0) * 0.6;
+var immediateKpdPenalty = Math.max(0, Q.kpd_coalition_dissent || 0) * 0.8;
+var immediateWeimarHouse = (Q.spd_h || 0) + immediateHouseAlly(Q.z_h, Q.z_relation, 25, 60);
+var immediateWeimarSenate = (Q.spd_s || 0) + immediateSenateAlly(Q.z_s, Q.z_relation, 30, 65);
+var immediateGrandHouse = immediateWeimarHouse + immediateHouseAlly(Q.dvp_h, Q.dvp_relation, 30, 65) + immediateHouseAlly(Q.ddp_h || 0, Q.ddp_relation, 25, 60);
+var immediateGrandSenate = immediateWeimarSenate + immediateSenateAlly(Q.dvp_s, Q.dvp_relation, 35, 70) + immediateSenateAlly(Q.ddp_s || 0, Q.ddp_relation, 30, 65);
+var immediateLeftHouse = (Q.spd_h || 0) + immediateHouseAlly((Q.kpd_h || 0) + (Q.sapd_h || 0), Q.kpd_relation, 35, 70);
+var immediateLeftSenate = (Q.spd_s || 0) + immediateSenateAlly((Q.kpd_s || 0) + (Q.sapd_s || 0), Q.kpd_relation, 40, 75);
+var immediatePopularHouse = (Q.spd_h || 0) + immediateHouseAlly((Q.kpd_h || 0) + (Q.sapd_h || 0), Q.kpd_relation, 40, 70) + immediateHouseAlly(Q.z_h, Q.z_relation, 40, 70);
+var immediatePopularSenate = (Q.spd_s || 0) + immediateSenateAlly((Q.kpd_s || 0) + (Q.sapd_s || 0), Q.kpd_relation, 45, 75) + immediateSenateAlly(Q.z_s, Q.z_relation, 45, 75);
+Q.effective_weimar_house = Math.max(0, immediateWeimarHouse - immediateCoalitionPenalty);
+Q.effective_weimar_senate = Math.max(0, immediateWeimarSenate - immediateCoalitionPenalty);
+Q.effective_grand_house = Math.max(0, immediateGrandHouse - immediateCoalitionPenalty);
+Q.effective_grand_senate = Math.max(0, immediateGrandSenate - immediateCoalitionPenalty);
+Q.effective_left_house = Math.max(0, immediateLeftHouse - immediateKpdPenalty);
+Q.effective_left_senate = Math.max(0, immediateLeftSenate - immediateKpdPenalty);
+Q.effective_popular_house = Math.max(0, immediatePopularHouse - immediateCoalitionPenalty - immediateKpdPenalty);
+Q.effective_popular_senate = Math.max(0, immediatePopularSenate - immediateCoalitionPenalty - immediateKpdPenalty);
+Q.governing_house_support = Q.spd_h || 0;
+Q.governing_senate_support = Q.spd_s || 0;
+if (Q.in_weimar_coalition) {
+    Q.governing_house_support = Q.effective_weimar_house || Q.weimar_house || Q.weimar_coalition || Q.governing_house_support;
+    Q.governing_senate_support = Q.effective_weimar_senate || Q.weimar_senate || Q.weimar_coalition || Q.governing_senate_support;
+} else if (Q.in_grand_coalition) {
+    Q.governing_house_support = Q.effective_grand_house || Q.grand_house || Q.grand_coalition || Q.governing_house_support;
+    Q.governing_senate_support = Q.effective_grand_senate || Q.grand_senate || Q.grand_coalition || Q.governing_senate_support;
+} else if (Q.in_left_front) {
+    Q.governing_house_support = Q.effective_left_house || Q.left_house || Q.left_coalition || Q.governing_house_support;
+    Q.governing_senate_support = Q.effective_left_senate || Q.left_senate || Q.left_coalition || Q.governing_senate_support;
+} else if (Q.in_popular_front) {
+    Q.governing_house_support = Q.effective_popular_house || Q.popular_house || Q.popular_front_coalition || Q.governing_house_support;
+    Q.governing_senate_support = Q.effective_popular_senate || Q.popular_senate || Q.popular_front_coalition || Q.governing_senate_support;
+} else if (Q.in_spd_majority) {
+    Q.governing_house_support = Q.spd_h || Q.spd_r;
+    Q.governing_senate_support = Q.spd_s || Q.spd_r;
+} else if (Q.spd_toleration) {
+    Q.governing_house_support = Q.effective_weimar_house || Q.weimar_house || Q.neo_weimar_coalition || Q.weimar_coalition || Q.governing_house_support;
+    Q.governing_senate_support = Q.effective_weimar_senate || Q.weimar_senate || Q.neo_weimar_coalition || Q.weimar_coalition || Q.governing_senate_support;
+}
+Q.speaker_party = Q.chancellor_party;
+Q.speaker_party_display = Q.party_display_map[Q.speaker_party] || Q.speaker_party || "";
+Q.speaker_elected = (Q.governing_house_support >= 50) ? 1 : 0;
+Q.bill_coalition_viable = (Q.governing_senate_support >= 50) ? 1 : 0;
+Q.legislative_gridlock = (Q.speaker_elected && Q.bill_coalition_viable) ? 0 : 1;
+Q.dem_presidential_control = (Q.president_party == "SPD" || Q.president_party == "DEM" || Q.president_party == "Democratic Party") ? 1 : 0;
+Q.dem_house_control = (Q.spd_in_government && Q.speaker_elected && Q.speaker_party == "SPD") ? 1 : 0;
+Q.dem_senate_control = (Q.spd_in_government && Q.bill_coalition_viable) ? 1 : 0;
+Q.dem_congress_control = (Q.dem_house_control && Q.dem_senate_control) ? 1 : 0;
+Q.dem_trifecta_control = (Q.dem_presidential_control && Q.dem_congress_control) ? 1 : 0;
+Q.non_dem_house_control = Q.dem_house_control ? 0 : 1;
+Q.non_dem_senate_control = Q.dem_senate_control ? 0 : 1;
+Q.non_dem_congressional_control = (Q.non_dem_house_control || Q.non_dem_senate_control) ? 1 : 0;
 !}
 go-to: events_choice if has_event = 1; main if has_event = 0 and difficulty >= 0; main.main_easy if has_event = 0 and difficulty < 0
 

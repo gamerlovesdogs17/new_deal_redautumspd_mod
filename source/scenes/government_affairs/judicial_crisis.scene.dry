@@ -2,7 +2,7 @@ title: Supreme Court Challenge
 new-page: true
 is-card: true
 tags: presidential_affairs, congressional_affairs, cabinet
-view-if: spd_in_government = 1 and judicial_crisis_timer = 0 and economic_plan > 0
+view-if: dem_trifecta_control and judicial_crisis_timer = 0 and economic_plan > 0
 on-arrival: judicial_crisis_timer = 10; month_actions += 1; supreme_court_hostility += 1 if dem_economic_plan = "structural_transformation"; supreme_court_hostility += 1 if dem_economic_plan = "share_our_wealth"; liberty_litigation += 1 if ddp_relation < 45
 card-image: img/supreme_court.jpg
 

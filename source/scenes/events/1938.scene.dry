@@ -1,0 +1,26 @@
+title: 1938
+subtitle: Crisis abroad, pressure at home.
+new-page: true
+tags: event
+priority: 2
+view-if: year = 1938 and month = 1
+max-visits: 1
+on-arrival: {!
+Q.ww2_tension += 2;
+Q.isolationism += 1;
+if (Q.foreign_policy_timer > 0) {
+    Q.foreign_policy_timer -= 2;
+}
+if (Q.interventionism >= Q.isolationism) {
+    Q.war_mobilization += 1;
+}
+!}
+
+= 1938
+
+Europe's crisis deepens, and American politics begins to divide around more than relief and recovery. Refugees, arms sales, neutrality laws, and military production all become arguments about what kind of democracy the United States intends to be.
+
+[? if radical_momentum >= 20 : Radical organizations use the foreign crisis for their own purposes. The SPA denounces capitalist war, while the national-populist right claims foreign entanglement will destroy the republic from within. ?]
+[? if radical_momentum < 20 : The party system still contains the foreign-policy argument, but the old consensus for staying aloof is weaker than it was. ?]
+
+Industrial planners quietly notice that preparedness and recovery may become the same question.

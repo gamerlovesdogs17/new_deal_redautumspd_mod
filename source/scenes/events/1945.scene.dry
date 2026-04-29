@@ -1,0 +1,24 @@
+title: 1945
+subtitle: Victory and reconversion.
+new-page: true
+tags: event
+priority: 3
+view-if: year = 1945 and month >= 8
+max-visits: 1
+on-arrival: {!
+if (Q.war_entry) {
+    Q.war_mobilization += 1;
+    Q.home_front_strain += 1;
+    Q.economic_growth -= 0.5;
+    Q.inflation += 0.8;
+}
+!}
+
+= 1945
+
+The war ends, and the United States faces reconversion. The factories that buried the Depression in production now have to become a peacetime economy without recreating mass unemployment.
+
+[? if dem_trifecta_control : A Democratic trifecta can try to turn wartime mobilization into a postwar social contract: jobs, benefits, housing, and international leadership. ?]
+[? if not dem_trifecta_control : Divided government makes reconversion a fight over demobilization, prices, strikes, contracts, and whether the New Deal state should survive its wartime usefulness. ?]
+
+Victory settles the war. It does not settle the republic.

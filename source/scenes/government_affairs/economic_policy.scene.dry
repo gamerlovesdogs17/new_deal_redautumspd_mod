@@ -3,7 +3,7 @@ new-page: true
 is-card: true
 tags: congressional_affairs, cabinet
 on-arrival: economic_policy_timer += 12; month_actions += 1; nationalize_budget = 4; nationalize_budget -= 1 if works_councils >= 2; nationalize_budget -= 1 if works_councils >= 3; nationalize_budget -= 1 if socializations + nationalization_progress >= 2; wtb_budget = 4; wtb_budget -= 1 if works_councils >= 2 or socializations >= 1 or pro_labor >= 2
-view-if: spd_in_government = 1 and (economic_minister_party == "SPD" or finance_minister_party == "SPD") and economic_policy_timer <= 0 and economic_plan > 0
+view-if: dem_congress_control and (economic_minister_party == "SPD" or finance_minister_party == "SPD") and economic_policy_timer <= 0 and economic_plan > 0
 card-image: img/portraits/SchmidtRobert.jpg
 #subtitle: Policies to address the economic crisis.
 
@@ -13,10 +13,12 @@ The conference has adopted an economic direction. Now the administration has to 
 
 - @wtb_2
 - @wtb_2_deficit
+- @wtb_review_mature
 - @wtb_continuation
 - @implement_wtb_no_deficit
 - @implement_wtb_deficit
 - @nationalize_1
+- @nationalize_review
 - @nationalize_2
 - @moderate_plan_continue
 - @moderate_plan_continue_limited
@@ -58,6 +60,16 @@ Public works spending is reducing the burden on relief rolls and lifting tax rec
 The economy is doing better, finally. Even some business-aligned politicians are starting to admit that action was necessary.
 
 [? if in_popular_front or in_left_front: The Socialist Party of America, however, still argues that the program rescues capitalism instead of transforming it. ?]
+
+@wtb_review_mature
+title: Review Share Our Wealth results and tighten administration.
+subtitle: Administrative follow-through without a new appropriation.
+unavailable-subtitle: Unemployment is low enough that the emergency works drive has passed.
+view-if: wtb_implemented > 2
+choose-if: unemployed > 8
+on-arrival: unemployed -= 1.5 if unemployed > 12 else unemployed -= 0.7; workers_spd += 3*(1-dissent); unemployed_spd += 3*(1-dissent); workers_kpd -= 1; workers_nsdap -= 2; z_relation += 1; dvp_relation += 1; ddp_relation -= 1; kpd_coalition_dissent += 1; kpd_relation -= 2 if in_popular_front or in_left_front; capital_strike_progress -= 1 if capital_strike_progress >= 2; inflation += 0.5; economic_growth += 0.5; economic_growth -= 0.2 if economic_growth > 5; wtb_implemented += 1
+
+The administration audits the works offices, shifts crews toward projects that are already moving, and uses the program's existing machinery to keep employment rising. It does not have the force of a new appropriation, but it shows results without asking Congress for more money.
 
 @implement_wtb_no_deficit
 title: Launch the Share Our Wealth recovery program.
@@ -158,6 +170,16 @@ The capitalists are, predictably, up in arms about our policy of legalizing fact
 Far-right militants have been taking increasingly violent actions around the occupied factories, calling us thieves and looters. Some working-class supporters of the far right have been peeled away, or at least the ones with a sense of class solidarity.
 
 
+@nationalize_review
+title: Review Structural Transformation results and consolidate public control.
+subtitle: Administrative consolidation without new factory purchases.
+unavailable-subtitle: Unemployment is low enough that further emergency industrial action is hard to justify.
+view-if: nationalization_adopted == 1 and nationalization_progress >= 1
+choose-if: unemployed >= 6
+on-arrival: unemployed -= 1.2 if unemployed >= 9 else unemployed -= 0.5; workers_spd += 4*(1-dissent); unemployed_spd += 3*(1-dissent); left_dissent -= 3; reformist_dissent += 2; coalition_dissent += 1 if in_grand_coalition or in_weimar_coalition; dvp_relation -= 2; z_relation -= 1; ddp_relation -= 1; capital_strike_progress += 1; economic_growth += 0.4 if economic_growth < 5; inflation += 0.4; nationalization_progress += 1
+
+The public enterprises are reorganized instead of expanded. Idle capacity is brought back into use, works councils are folded into management, and sympathetic unions help place unemployed workers in firms already under public supervision.
+
 @nationalize_2
 title: Continue the Left plan for the transformation of the economy.
 subtitle: -[+ nationalize_budget +] budget. [? if works_councils >= 3 : Our works councils have reduced the budget necessary for this program. ?] [? if socializations + nationalization_progress >= 2: Our existing socialization policies have reduced the budget necessary for this program. ?]
@@ -206,12 +228,12 @@ achievement: wirtschaftspolitik
 [? if in_popular_front or in_left_front: The Socialist Party of America opposes the economic plan, seeing it as a rescue of capitalism rather than a step toward real socialism. ?]
 
 @moderate_plan_continue
-title: Review current results and continue the Pragmatic New Deal plan.
-subtitle: -2 budget.
-unavailable-subtitle: -2 budget. [? if budget < 2 : We do not have the necessary budget. ?] [? if unemployed < 8 : Unemployment is low enough that another full jobs appropriation would be hard to justify. ?]
+title: Review current results of the Pragmatic New Deal plan.
+subtitle: Review implementation and adjust the agencies already funded.
+unavailable-subtitle: Unemployment is low enough that another jobs push would be hard to justify.
 view-if: moderate_plan_adopted == 1 and moderate_plan_progress >= 1
-choose-if: budget >= 2 and unemployed >= 8
-on-arrival: budget -= 2; works_program += 1; unemployed -= 3 if unemployed >= 12 else unemployed -= 2; inflation += 1.2; workers_spd += 5*(1-dissent); unemployed_spd += 4*(1-dissent); new_middle_spd += 2*(1-dissent); old_middle_spd += 2*(1-dissent); rural_spd += 2*(1-dissent); moderate_plan_progress += 1; z_relation += 1; ddp_relation += 1; dvp_relation += 1; kpd_coalition_dissent += 1; kpd_relation -= 4 if in_popular_front or in_left_front; economic_growth += 1.2; economic_growth -= 0.4 if economic_growth > 5; pro_republic += 2*(1-dissent);
+choose-if: unemployed >= 8
+on-arrival: works_program += 1; unemployed -= 2 if unemployed >= 12 else unemployed -= 1; inflation += 0.7; workers_spd += 4*(1-dissent); unemployed_spd += 3*(1-dissent); new_middle_spd += 2*(1-dissent); old_middle_spd += 2*(1-dissent); rural_spd += 2*(1-dissent); moderate_plan_progress += 1; z_relation += 1; ddp_relation += 1; dvp_relation += 1; kpd_coalition_dissent += 1; kpd_relation -= 3 if in_popular_front or in_left_front; economic_growth += 0.9; economic_growth -= 0.3 if economic_growth > 5; pro_republic += 2*(1-dissent);
 
 [? if moderate_plan_progress == 2 : The first New Deal works appropriation is producing visible results: jobs are moving, local governments are cooperating, and recovery has a practical shape. ?]
 
@@ -220,11 +242,11 @@ on-arrival: budget -= 2; works_program += 1; unemployed -= 3 if unemployed >= 12
 [? if unemployed >= 12 : Unemployment is still high enough that a second round is easy to defend. ?][? if unemployed < 12 : Unemployment has improved, but another round can still prevent recovery from stalling. ?]
 
 @moderate_plan_continue_limited
-title: Review current results and authorize a limited New Deal extension.
-subtitle: -1 budget.
-unavailable-subtitle: -1 budget. [? if budget < 1 : We do not have the necessary budget. ?] [? if unemployed < 8 : Unemployment is low enough that another jobs appropriation would be hard to justify. ?]
+title: Review current results and trim waste.
+subtitle: Administrative correction without a new appropriation.
+unavailable-subtitle: Unemployment is low enough that another jobs push would be hard to justify.
 view-if: moderate_plan_adopted == 1 and moderate_plan_progress >= 1
-choose-if: budget >= 1 and unemployed >= 8
-on-arrival: budget -= 1; works_program += 1; unemployed -= 1.5 if unemployed >= 10 else unemployed -= 1; inflation += 0.7; workers_spd += 3*(1-dissent); unemployed_spd += 3*(1-dissent); new_middle_spd += 1*(1-dissent); old_middle_spd += 1*(1-dissent); rural_spd += 1*(1-dissent); moderate_plan_progress += 1; ddp_relation += 1; dvp_relation += 1; kpd_coalition_dissent += 1; kpd_relation -= 3 if in_popular_front or in_left_front; economic_growth += 0.6; pro_republic += 1*(1-dissent);
+choose-if: unemployed >= 8
+on-arrival: works_program += 1; unemployed -= 1 if unemployed >= 10 else unemployed -= 0.5; inflation += 0.3; workers_spd += 2*(1-dissent); unemployed_spd += 2*(1-dissent); new_middle_spd += 1*(1-dissent); old_middle_spd += 1*(1-dissent); rural_spd += 1*(1-dissent); moderate_plan_progress += 1; ddp_relation += 1; dvp_relation += 1; kpd_coalition_dissent += 1; kpd_relation -= 2 if in_popular_front or in_left_front; economic_growth += 0.4; pro_republic += 1*(1-dissent);
 
-The administration reviews the first round and keeps the program alive with a smaller appropriation. It is fiscally easier to defend, but it cannot move unemployment as quickly as a full extension.
+The administration reviews the first round, closes weak offices, and shifts existing work toward projects that can hire quickly. It is easier to defend, but it cannot move unemployment as quickly as a major new appropriation.

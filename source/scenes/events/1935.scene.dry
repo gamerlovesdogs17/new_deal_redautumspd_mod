@@ -1,0 +1,27 @@
+title: 1935
+subtitle: The emergency becomes an era.
+new-page: true
+tags: event
+priority: 2
+view-if: year = 1935 and month = 1
+max-visits: 1
+on-arrival: {!
+Q.ww2_tension += 1;
+if (Q.economic_stress >= 10) {
+    Q.pro_republic -= 1;
+    Q.radical_momentum += 1;
+}
+if (Q.economy_stabilized || Q.return_to_normalcy) {
+    Q.new_deal_legitimacy += 2;
+}
+!}
+
+= 1935
+
+The emergency has become an era. The administration can no longer govern as if every measure is temporary. Agencies, relief offices, farm programs, labor boards, and court fights are becoming part of ordinary American politics.
+
+[? if economic_stress >= 11 : The depression is still severe enough that every promise of recovery sounds provisional. Radical parties find audiences wherever relief is late or wages collapse. ?]
+[? if economic_stress < 11 and economic_stress > 6 : Recovery is visible but uneven. The New Deal has bought time, not consensus. ?]
+[? if economic_stress <= 6 : The recovery gives the government breathing room, though the arguments created by the crisis have not disappeared. ?]
+
+Abroad, Europe and Asia are growing more dangerous. For now, Americans mostly argue over whether foreign danger should matter while so many problems remain at home.

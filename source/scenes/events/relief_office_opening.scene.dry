@@ -1,9 +1,10 @@
 title: News: Relief Office Opening
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: Federal power gets a local address.
 new-page: true
 is-card: true
 tags: event
-view-if: ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and spd_in_government = 1 and (works_program >= 1 or welfare >= 1 or agency_capacity >= 2)
+view-if: ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and (dem_congress_control or dem_presidential_control) and (works_program >= 1 or welfare >= 1 or agency_capacity >= 2)
 max-visits: 1
 on-arrival: news_cooldown_timer = 2; new_deal_legitimacy += 1 if new_deal_legitimacy < 95
 card-image: img/reichstag_1.jpg
@@ -28,6 +29,7 @@ The office runs cleanly and slowly. Nobody gets everything they want, but the fi
 @local_democrats
 title: Let local Democrats staff the desks.
 subtitle: More party strength; more patronage pressure.
+view-if: dem_house_control
 on-arrival: resources += 1; center_strength += 2; workers_spd += 2; old_middle_spd += 2; pork_barrel_pressure += 1; ddp_relation -= 1; dvp_relation -= 1
 
 County Democrats know the churches, unions, ward clubs, and courthouse habits. They also know how to turn a relief line into a party list.
@@ -35,6 +37,7 @@ County Democrats know the churches, unions, ward clubs, and courthouse habits. T
 @coalition_slots
 title: Reserve slots for coalition allies.
 subtitle: Better relations with allies; messier administration.
+view-if: dem_congress_control
 on-arrival: z_relation += 3; kpd_relation += 1; coalition_dissent -= 1 if coalition_dissent > 0; agency_capacity -= 1 if agency_capacity > 0; labor_dissent -= 1; ddp_relation -= 1
 
 Farmer-Labor and labor-left allies get enough visible places to defend the program. The office becomes politically sturdier and administratively messier.

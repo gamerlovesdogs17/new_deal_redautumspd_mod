@@ -4,7 +4,7 @@ is-card: true
 card-image: img/muller_cabinet.jpg
 tags: cabinet, presidential_affairs
 max-visits: 5
-view-if: cabinet_personnel_timer = 0
+view-if: dem_presidential_control and cabinet_personnel_timer = 0
 on-arrival: cabinet_personnel_timer = 9
 
 = Cabinet Personnel

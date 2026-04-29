@@ -1,96 +1,82 @@
 title: London Economic Conference
-subtitle: The League of Nations unites to tackle the Great Depression...
-view-if: year = 1933 and month >= 6
+subtitle: The world asks whether America will lead recovery or wreck the talks.
+view-if: year = 1933 and month >= 6 and dem_presidential_control
 on-arrival: london_economic_conference_seen = 1
 new-page: true
 max-visits: 1
-go-to: economic_recovery if unemployed < 15; no_recovery if unemployed >= 15
+go-to: economic_recovery if unemployed <= 8 and economic_growth >= 0 and inflation > -3 and inflation < 6 and economic_stress <= 6; no_recovery if unemployed > 8 or economic_growth < 0 or inflation <= -3 or inflation >= 6 or economic_stress > 6
 tags: event
 
 = London Economic Conference
 
-# TODO: if you've recovered, you get economic recovery
-# if you haven't recovered, you can either support Roosevelt or support the UK/France
+World leaders gather in London to discuss the depression, tariffs, currency stabilization, and war debts. Britain and France want stable exchange rates and predictable payments. The White House wants room to reflate prices, rescue employment, and keep domestic recovery ahead of international orthodoxy.
 
-The League of Nations is hosting a conference to discuss the state of the global economy and potential solutions to the ongoing depression. All parties want to reduce tariffs to encourage trade. However, the Western powers are at an impasse; France and to a lesser extent Britain are calling for fixed currency exchange rates, while President Roosevelt of the United States wants to print new money to stimulate demand, calling for "controlled inflation". The Europeans want to reduce their debts to the US, while America favors continued full payments.
+The conference can affect recovery, but it cannot substitute for domestic policy. If the New Deal has already eased unemployment, American negotiators arrive with far more credibility.
 
 @economic_recovery
 
-[? if wtb_adopted or budget <= 0: the republic has largely recovered from the crisis, owing in large part to the same sorts of economic policies that Roosevelt is pursuing. ?]
-[? if not wtb_adopted and budget > 0: the republic has largely recovered from the crisis, without having to resort to budget deficits or devaling the currency. ?]
+[? if wtb_adopted or budget <= 0: The United States enters the conference from a position of unusual strength: unemployment is below emergency levels, growth has resumed, and domestic policy now looks like part of the broader anti-depression turn. ?]
+[? if not wtb_adopted and budget > 0: The United States enters the conference from a position of unusual strength: unemployment is below emergency levels, growth has resumed, and the administration has avoided large deficits while doing it. ?]
 
 - @support_roosevelt
 - @support_france
-- @stable_currency_out_of_gov
 - @salvage
 - @no_business
 
 @no_recovery
 
-the republic, like the rest of the world, is still deep in the economic crisis, even if it has appeared to bottom out.
+The United States, like much of the world, is still inside the economic crisis. Conditions may have stopped collapsing, but that is not the same as recovery.
 
 - @support_roosevelt
 - @support_france
-- @stable_currency_out_of_gov
 - @salvage
 - @no_business
 
-
-@stable_currency_out_of_gov
-title: Conservative representatives call for stable currency, along with Britain and France.
-view-if: not spd_in_government
-on-arrival: west_relation += 1
-
-As expected, the conservative American bankers support Britain and France's plan to stabilize currency exchange rates. In response to the continued support for fixed currency exchange rates and the impasse on debts, the Americans pull out of the conference, leaving it with no agreements whatsoever.
-
-[? if unemployed >= 15 : Nevertheless, the world economy is slowly improving due in part to the economic stimulus and more liberal trade policies of the Roosevelt administration. ?]
-[? if unemployed < 15 : Nevertheless, the world economy is slowly improving due in part to the economic stimulus and more liberal trade policies of the Roosevelt administration as well as our own economic plan. ?]
-
-
 @support_roosevelt
-title: Support Roosevelt's ideas - we must devalue currency.
-view-if: spd_in_government
+title: Defend controlled inflation and domestic recovery first.
+view-if: dem_presidential_control
+on-arrival: inflation += 0.8; economic_growth += 0.5 if economic_growth < 5; unemployed -= 0.5 if unemployed >= 8; west_relation -= 1; new_deal_legitimacy += 1
 
-
-We support Roosevelt's plan for controlled inflation, leaving us at odds with the European powers. In response to the continued support for fixed currency exchange rates by France and Britain and the impasse on debts, the Americans pull out of the conference, leaving it with no agreements whatsoever.
+The White House refuses to bind recovery to fixed exchange rates. European delegates call it reckless; New Dealers call it the only honest answer to falling prices and mass unemployment. The conference produces little, but domestic recovery policy remains free.
 
 @support_france
-title: Support France and Britain - we must have stable currency.
-view-if: spd_in_government
-on-arrival: west_relation += 1; eu_progress += 1
+title: Accept a limited stabilization bargain with Britain and France.
+view-if: dem_presidential_control
+on-arrival: west_relation += 2; inflation -= 0.5; economic_growth -= 0.2; new_deal_legitimacy -= 1; ddp_relation += 1; dvp_relation += 1
 
-Our position brings us closer to other European powers. In response to the continued support for fixed currency exchange rates and the impasse on debts, the Americans pull out of the conference, leaving it with no agreements whatsoever.
+American delegates offer a narrow currency and debt framework. It reassures bankers and foreign ministries, but New Dealers warn that the administration has traded away flexibility before recovery is secure.
 
 
 @salvage
-title: Can we try to salvage the negotiations?
-view-if: spd_in_government
+title: Try to salvage a looser anti-depression agreement.
+view-if: dem_presidential_control
 
 How should we try to salvage the negotiations?
 
-- @salvage_currency: Try to convince France and Britain that slowly controlled inflation is possible and desirable.
-- @salvage_debts: Try to convince the US to reduce war debts for the sake of peace.
+- @salvage_currency: Sell a looser currency framework.
+- @salvage_debts: Offer a limited war-debt settlement.
 - @no_business: Nothing can be done.
 
 @salvage_currency
 choose-if: woytinsky_advisor = 1 and wtb_implemented > 1
-unavailable-subtitle: Wladimir Woytinsky would be extremely helpful right now.
+unavailable-subtitle: Harry Hopkins and the public works record would be extremely helpful right now.
 on-arrival: unemployed -= 2 if unemployed >= 10; unemployed -= 1.5 if unemployed >= 5; inflation += 1.5; workers_spd += 4*(1-dissent); new_middle_spd += 3*(1-dissent); economic_growth += 1.5 if economic_growth < 3
 
-Wladimir Woytinsky, now part of our delegation to the conference, uses our successful implementation of the public works plan in order to argue for loosening currency valuation. The argument is at least somewhat convincing, and an agreement is reached, leading to increased inflation and demand stimulus throughout the world.
+Hopkins uses the public works record to argue that reflation can be managed rather than feared. The argument is at least somewhat convincing, and a looser agreement gives the world economy a modest demand push.
 
 @salvage_debts
-choose-if: reparations <= -2 and pacifism >= 3 and (rearmament_exposed or west_relation >= 3)
-unavailable-subtitle: We cannot argue for pacifism in our current state.
+choose-if: pacifism >= 3 or west_relation >= 3
+unavailable-subtitle: We do not have the diplomatic credibility for a debt settlement.
 on-arrival: budget += 1; unemployed -= 1 if unemployed >= 10; unemployed -= 1 if unemployed >= 5; inflation += 1 if inflation < 0; new_middle_spd += 4*(1-dissent); workers_spd += 3*(1-dissent); economic_growth += 1 if economic_growth < 3
 
-We try to argue that reducing war debts will reduce the risk of a future European war, using our successful disarmament and the reduction in Versailles reparation payments as an argument. The argument is at least somewhat convincing to the Americans, leading to an agreement to reduce debts from the Great War. This indirectly also improves our economy.
+The administration offers a limited settlement on war debts in exchange for trade and currency cooperation. It is not grand internationalism, but it reduces pressure on the talks and gives recovery a little more room.
 
 @no_business
-title: This conference is none of our concern.
-view-if: spd_in_government
+title: Let the conference collapse.
+view-if: dem_presidential_control
+on-arrival: west_relation -= 1; isolationism += 1
 
-The conference collapses, as expected. In response to the continued support for fixed currency exchange rates and the impasse on debts, the Americans pull out of the conference, leaving it with no agreements whatsoever.
+The conference collapses. The White House keeps its freedom of action, but the world reads the decision as proof that America will not subordinate domestic recovery to international coordination.
 
-[? if unemployed >= 15 : Nevertheless, the world economy is slowly improving due in part to the economic stimulus and more liberal trade policies of the Roosevelt administration. ?]
-[? if unemployed < 15 : Nevertheless, the world economy is slowly improving due in part to the economic stimulus and more liberal trade policies of the Roosevelt administration as well as our own economic plan. ?]
+[? if unemployed > 8 : Domestic unemployment remains too high to claim the crisis is over. ?]
+[? if unemployed <= 8 and economic_growth >= 0 : The economy is still improving, but the recovery is now openly an American project rather than a coordinated world settlement. ?]

@@ -1,0 +1,28 @@
+title: 1943
+subtitle: War strain and democratic discipline.
+new-page: true
+tags: event
+priority: 2
+view-if: year = 1943 and month = 1
+max-visits: 1
+on-arrival: {!
+if (Q.war_entry) {
+    Q.home_front_strain += 1;
+    Q.inflation += 1;
+    if (Q.pro_republic < 70) {
+        Q.pro_republic += 1;
+    }
+}
+if (Q.radical_momentum >= 22) {
+    Q.pro_republic -= 1;
+}
+!}
+
+= 1943
+
+The war tests democratic discipline. Price controls, rationing, draft administration, war contracts, and anti-subversion campaigns make the federal government more present in daily life than even the early New Deal did.
+
+[? if radical_momentum >= 22 : Radical currents do not disappear in wartime. Some are suppressed, some wrap themselves in patriotism, and some shift their critique from depression politics to the war state. ?]
+[? if radical_momentum < 22 : War mobilization pushes many anti-system movements to the margins, though not without expanding federal police and surveillance powers. ?]
+
+The question for postwar America is becoming clear: will wartime capacity be dismantled, redirected, or made permanent?

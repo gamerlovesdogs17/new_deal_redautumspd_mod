@@ -1,11 +1,12 @@
 title: News: Sit-Down Strike Wave
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: Industrial workers test how far the New Deal will go.
 new-page: true
 is-card: true
 tags: event
-view-if: spd_in_government = 1 and ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and (labor_militancy >= 5 or cio_momentum >= 2 or unemployed >= 18)
+view-if: dem_congress_control and ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and radical_pressure_timer = 0 and (labor_militancy >= 5 or cio_momentum >= 2 or unemployed >= 18)
 max-visits: 1
-on-arrival: labor_militancy += 1; cio_momentum += 1; labor_dissent += 2; capital_strike_progress += 1; news_cooldown_timer = 3
+on-arrival: labor_militancy += 1; cio_momentum += 1; labor_dissent += 2; capital_strike_progress += 1; news_cooldown_timer = 3; radical_pressure_timer = 2
 card-image: img/adgb_logo.svg
 
 = News: Sit-Down Strike Wave

@@ -1,0 +1,31 @@
+title: 1941
+subtitle: The arsenal becomes a war state.
+new-page: true
+tags: event
+priority: 3
+view-if: year = 1941 and month >= 12
+max-visits: 1
+on-arrival: {!
+Q.ww2_tension += 4;
+Q.war_entry = 1;
+Q.war_mobilization += 3;
+Q.interventionism += 3;
+Q.isolationism -= 2;
+if (Q.isolationism < 0) {
+    Q.isolationism = 0;
+}
+Q.economic_growth += 2;
+if (Q.unemployed > 6) {
+    Q.unemployed -= 2;
+}
+Q.home_front_strain += 1;
+!}
+
+= 1941
+
+The United States enters the Second World War. The old argument over whether the country can stay apart from the crisis collapses in a matter of days, replaced by arguments over mobilization, civil liberties, labor discipline, and who will control the war state.
+
+[? if dem_trifecta_control : Democratic control of the presidency and Congress lets the New Deal state merge quickly with war mobilization. Agencies that once managed relief now manage production, wages, contracts, and logistics. ?]
+[? if not dem_trifecta_control : Divided control makes mobilization more contentious. The war still expands the federal state, but every new power is fought over by coalition partners, conservatives, and regional blocs. ?]
+
+The Depression does not end through market confidence. It is overwhelmed by mobilization.

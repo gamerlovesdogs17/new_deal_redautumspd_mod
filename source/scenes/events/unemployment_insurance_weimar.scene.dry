@@ -1,4 +1,5 @@
 title: Unemployment Insurance Crisis
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: Our unemployment insurance programs need additional funding...
 new-page: true
 view-if: spd_in_government = 1 and (year = 1930 or year = 1931 or year = 1932) and month == 3 and (spd_in_government and (in_grand_coalition = 0 or constructive_vonc or president == "Braun")) and unemployment_insurance_timer = 0 and unemployed >= unemployment_insurance_threshold + 4

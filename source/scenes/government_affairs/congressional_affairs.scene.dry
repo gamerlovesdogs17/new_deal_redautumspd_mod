@@ -4,12 +4,12 @@ is-card: true
 card-image: img/reichstag_1.jpg
 tags: congressional_affairs
 max-visits: 8
-view-if: congressional_affairs_timer = 0
+view-if: (dem_house_control or dem_senate_control) and congressional_affairs_timer = 0
 on-arrival: congressional_affairs_timer = 6
 
 = Congressional Affairs
 
-The President can propose, but Congress decides what survives contact with committees, floor rules, and senators who know exactly how much their vote is worth.
+Congress decides what survives contact with committees, floor rules, and senators who know exactly how much their vote is worth.
 
 [? if non_dem_house_control = 1 : The House is controlled by the opposition, so only defensive or cross-party tactics are realistic. ?]
 [? if non_dem_senate_control = 1 : The Senate is controlled by the opposition, making confirmations and ambitious bills much harder. ?]
@@ -25,7 +25,7 @@ The President can propose, but Congress decides what survives contact with commi
 
 @house_whip
 title: Build a House whip operation.
-view-if: non_dem_house_control = 0
+view-if: dem_house_control
 on-arrival: {! 
 Q.house_whip_operation += 1;
 Q.governing_house_support += 2;
@@ -37,16 +37,23 @@ if (Q.resources > 0) {
 if (Q.coalition_dissent > 0) {
     Q.coalition_dissent -= 1;
 }
+if (Q.in_weimar_coalition || Q.in_grand_coalition || Q.in_popular_front) {
+    Q.z_relation += 1;
+}
+if (Q.in_grand_coalition) {
+    Q.dvp_relation += 1;
+}
 !}
 
 The Speaker's allies count votes before the floor fight begins. It is not glamorous, but bills stop dying by surprise.
 
 @senate_bargain
 title: Court pivotal senators.
+view-if: dem_senate_control
 on-arrival: {! 
 Q.senate_whip_operation += 1;
 Q.governing_senate_support += 2;
-Q.z_relation += 2;
+Q.z_relation += 1;
 Q.ddp_relation += 1;
 if (Q.gop_wing == "moderate_reform") {
     Q.dvp_relation += 1;
@@ -61,7 +68,7 @@ Senators are less impressed by national waves than by post offices, dams, judges
 
 @committee_chairs
 title: Empower friendly committee chairs.
-view-if: non_dem_house_control = 0
+view-if: dem_house_control
 on-arrival: {! 
 Q.committee_control += 2;
 Q.agency_capacity += 1;
@@ -94,6 +101,12 @@ title: Cut a narrow deal with the constitutional opposition.
 on-arrival: {! 
 Q.dvp_relation += 4;
 Q.ddp_relation += 3;
+if (Q.in_weimar_coalition || Q.in_popular_front) {
+    Q.z_relation -= 1;
+}
+if (Q.in_left_front || Q.in_popular_front) {
+    Q.kpd_relation -= 2;
+}
 if (Q.gop_obstruction > 0) {
     Q.gop_obstruction -= 1;
 }

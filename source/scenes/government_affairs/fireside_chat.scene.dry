@@ -2,7 +2,7 @@ title: Fireside Chat
 new-page: true
 is-card: true
 tags: presidential_affairs
-view-if: spd_in_government = 1 and fireside_chat_timer = 0
+view-if: dem_presidential_control and fireside_chat_timer = 0
 on-arrival: fireside_chat_timer = 4; month_actions += 1
 card-image: img/radio.svg
 

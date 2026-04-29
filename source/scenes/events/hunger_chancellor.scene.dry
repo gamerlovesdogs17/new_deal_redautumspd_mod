@@ -1,8 +1,8 @@
 title: The Hunger Speaker
 subtitle: Popular discontent with Speaker [+ speaker +] rises.
 new-page: true
-view-if: year >= 1931 and month >= 2 and unemployed >= 18 and welfare < 0 and works_program == 0
-on-arrival: workers_spd *= 0.9 if chancellor_party == "SPD"; workers_spd *= 0.9 if spd_in_government == 1; workers_nsdap += 5 if spd_in_government; workers_kpd += 5 if spd_in_government; unemployed_nsdap += 5 if spd_in_government
+view-if: ((year = 1931 and month >= 2) or year > 1931) and unemployed >= 18 and welfare < 0 and works_program == 0 and news_cooldown_timer = 0 and (dem_congress_control or dem_presidential_control or spd_toleration = 1)
+on-arrival: workers_spd *= 0.9 if speaker_party == "SPD"; workers_spd *= 0.9 if dem_congress_control; workers_nsdap += 5 if dem_congress_control or spd_toleration; workers_kpd += 5 if dem_congress_control or spd_toleration; unemployed_nsdap += 5 if dem_congress_control or spd_toleration; news_cooldown_timer = 3
 tags: event
 max-visits: 1
 face-image: img/Kollwitz_Hospital.jpg
@@ -13,8 +13,27 @@ People are calling Speaker [+ speaker +] the Hunger Speaker because of his perce
 
 [? if spd_toleration == 1 : As we are currently tolerating the [+ speaker +] government, this could very well reflect badly on us. ?]
 
+- @emergency_relief_bill: Push an emergency relief bill through Congress.
+- @works_order: Use executive authority to open temporary works offices.
 - @maintain_toleration: Maintain the current governing arrangement.
 - @break_toleration: Break toleration; vote against this government.
+- @accept_blame: Admit there is no immediate answer.
+
+@emergency_relief_bill
+subtitle: Requires congressional control and 1 budget.
+view-if: dem_congress_control
+choose-if: budget >= 1
+unavailable-subtitle: We need congressional control and 1 budget.
+on-arrival: budget -= 1; welfare += 1; unemployed -= 1.5 if unemployed >= 2; works_program += 1; new_deal_legitimacy += 3; pro_republic += 2; workers_spd += 3; unemployed_spd += 4; capital_strike_progress += 1; coalition_dissent += 1 if in_grand_coalition or in_weimar_coalition
+
+Congress moves emergency relief before the nickname hardens into political fact. It is expensive and coalition partners grumble, but the lines outside relief offices shorten.
+
+@works_order
+subtitle: Requires White House control.
+view-if: dem_presidential_control
+on-arrival: resources -= 1 if resources > 0; agency_capacity += 1; works_program += 1; unemployed -= 1 if unemployed >= 2; new_deal_legitimacy += 2; pro_republic += 1; opposition_pressure += 1
+
+The White House orders agencies to stretch every appropriation and open temporary works offices where the unemployment lines are worst. It helps, but opponents call it government by improvisation.
 
 @maintain_toleration
 subtitle: It is necessary to preserve democracy.
@@ -32,3 +51,9 @@ on-arrival: next_election_time = time+3 if next_election_time >= time+3; next_el
 We have definitively broken with the [+ speaker +] government, and have voted against them in a vote of no confidence.
 
 New elections have been set for [+ next_election_month : month +] [+ next_election_year +].
+
+@accept_blame
+subtitle: Saves resources; the public anger remains.
+on-arrival: new_deal_legitimacy -= 2; pro_republic -= 1; labor_dissent += 2; left_dissent += 2
+
+The administration waits for existing policy to work. The hungry do not experience that as patience.

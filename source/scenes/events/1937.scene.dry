@@ -1,0 +1,30 @@
+title: 1937
+subtitle: Recovery is tested.
+new-page: true
+tags: event
+priority: 2
+view-if: year = 1937 and month = 1
+max-visits: 1
+on-arrival: {!
+Q.ww2_tension += 1;
+if (Q.budget > -2 && Q.economic_growth > 0) {
+    Q.economic_growth -= 1.2;
+    Q.unemployed += 1.2;
+    Q.economic_stress += 1;
+}
+if (Q.dem_congress_control && Q.dem_presidential_control) {
+    Q.new_deal_legitimacy += 1;
+} else {
+    Q.legislative_gridlock = 1;
+    Q.new_deal_legitimacy -= 1;
+}
+!}
+
+= 1937
+
+The recovery is tested by renewed contraction and budget pressure. Conservatives blame federal experimentation, labor blames premature restraint, and local officials worry that relief offices will again become the center of political life.
+
+[? if dem_trifecta_control : With the White House and Congress aligned, the administration can answer the downturn with new appropriations and agency coordination. ?]
+[? if not dem_trifecta_control : Divided control makes the downturn harder to answer. Every appropriation becomes a test of who truly owns the recovery. ?]
+
+The lesson is clear: the Depression can return politically even when the charts say the worst has passed.

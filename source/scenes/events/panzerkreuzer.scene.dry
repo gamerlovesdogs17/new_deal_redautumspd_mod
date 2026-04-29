@@ -1,4 +1,5 @@
 title: Naval Appropriations Fight
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: A political question
 tags: event, govt_affairs
 is-card: true

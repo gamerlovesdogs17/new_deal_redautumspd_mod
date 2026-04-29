@@ -120,18 +120,35 @@ Q.endgame_score -= Math.max(0, Q.conservative_backlash || 0) * 3;
 Q.endgame_score -= Math.max(0, Q.constitutional_stress || 0) * 12;
 Q.endgame_score -= Math.max(0, Q.coup_progress || 0) * 8;
 Q.endgame_score -= Math.max(0, Q.capital_strike_progress || 0) * 6;
-Q.economy_stabilized = ((Q.unemployed || 0) <= 10 && (Q.economic_growth || -99) >= -1 && (Q.economic_stress || 99) <= 8 && (Q.inflation || 0) < 8 && (Q.budget || 0) > -6) ? 1 : 0;
-Q.economy_improving = ((Q.unemployed || 0) <= 16 && (Q.economic_growth || -99) >= -3 && (Q.economic_stress || 99) <= 12 && (Q.inflation || 0) < 10) ? 1 : 0;
+Q.final_economic_stress = 0;
+if ((Q.unemployed || 0) > 10) {
+    Q.final_economic_stress += ((Q.unemployed || 0) - 10) / 2;
+}
+if ((Q.economic_growth || 0) < 0) {
+    Q.final_economic_stress += Math.abs(Q.economic_growth || 0) / 2;
+}
+if ((Q.inflation || 0) <= -3) {
+    Q.final_economic_stress += Math.abs((Q.inflation || 0) + 3) / 2;
+}
+if ((Q.inflation || 0) >= 6) {
+    Q.final_economic_stress += ((Q.inflation || 0) - 6) / 2;
+}
+if (Q.final_economic_stress > 20) {
+    Q.final_economic_stress = 20;
+}
+Q.economic_stress = Q.final_economic_stress;
+Q.economy_stabilized = ((Q.unemployed || 0) <= 8 && (Q.economic_growth || -99) >= 0 && Q.final_economic_stress <= 6 && (Q.inflation || 0) > -3 && (Q.inflation || 0) < 6 && (Q.budget || 0) > -4 && (Q.new_deal_legitimacy || 0) >= 60) ? 1 : 0;
+Q.economy_improving = ((Q.unemployed || 0) <= 14 && (Q.economic_growth || -99) >= -2 && Q.final_economic_stress <= 10 && (Q.inflation || 0) > -5 && (Q.inflation || 0) < 8 && (Q.new_deal_legitimacy || 0) >= 45) ? 1 : 0;
 if (Q.chancellor == "Hitler" || Q.president == "Hitler" || Q.chancellor_party == "NSDAP" || Q.total_defeat) {
     Q.endgame_path = "authoritarian_takeover";
     Q.authoritarian_takeover = 1;
-} else if ((Q.constitutional_stress || 0) >= 5 || (Q.radical_momentum || 0) >= 30 || (Q.long_war || 0)) {
+} else if ((Q.constitutional_stress || 0) >= 5 || (Q.radical_momentum || 0) >= 30 || Q.final_economic_stress >= 14 || ((Q.unemployed || 0) >= 22 && (Q.economic_growth || 0) < -5) || (Q.long_war || 0)) {
     Q.endgame_path = "systemic_rupture";
     Q.systemic_rupture = 1;
-} else if (Q.endgame_score >= 165 && Q.economy_stabilized && (Q.pro_republic || 0) >= 55) {
+} else if (Q.endgame_score >= 180 && Q.economy_stabilized && (Q.pro_republic || 0) >= 60) {
     Q.endgame_path = "democratic_stabilization";
     Q.democratic_stabilization = 1;
-} else if (!Q.economy_improving || (Q.conservative_backlash || 0) >= 8 || (Q.capital_strike_progress || 0) >= 5 || !Q.spd_in_government) {
+} else if (!Q.economy_improving || Q.final_economic_stress >= 11 || (Q.conservative_backlash || 0) >= 8 || (Q.capital_strike_progress || 0) >= 5 || !Q.spd_in_government) {
     Q.endgame_path = "managed_reaction";
     Q.managed_reaction = 1;
 } else {
@@ -141,6 +158,186 @@ if (Q.chancellor == "Hitler" || Q.president == "Hitler" || Q.chancellor_party ==
 if ((Q.welfare > 0 && Q.judicial_reform >= 2 && Q.womens_work >= 1 && Q.family_law >= 1 && Q.upper_tax_rates > Q.lower_tax_rates && Q.works_councils > 0 && Q.eu > 0)) {
     this.achieve('heidelberger_programm');
 }
+Q.final_spa_support = Q.spa_votes || Q.kpd_votes || 0;
+Q.final_nusj_support = Q.nusj_votes || Q.dnvp_votes || 0;
+Q.final_silver_support = Q.silver_legion_votes || Q.nsdap_votes || 0;
+Q.final_right_radical_support = Q.final_nusj_support + Q.final_silver_support;
+Q.final_left_radical_support = Q.final_spa_support;
+Q.final_radical_support = Q.final_left_radical_support + Q.final_right_radical_support;
+Q.final_unemployed_display = Math.round((Q.unemployed || 0) * 10) / 10;
+Q.final_growth_display = Math.round((Q.economic_growth || 0) * 10) / 10;
+Q.final_inflation_display = Math.round((Q.inflation || 0) * 10) / 10;
+Q.final_stress_display = Math.round((Q.final_economic_stress || 0) * 10) / 10;
+Q.final_legitimacy_display = Math.round((Q.new_deal_legitimacy || 0) * 10) / 10;
+Q.final_radical_momentum_display = Math.round((Q.radical_momentum || 0) * 10) / 10;
+Q.final_backlash_display = Math.round((Q.conservative_backlash || 0) * 10) / 10;
+Q.final_labor_militancy_display = Math.round((Q.labor_militancy || 0) * 10) / 10;
+Q.final_spa_support_display = Math.round(Q.final_spa_support * 10) / 10;
+Q.final_right_radical_support_display = Math.round(Q.final_right_radical_support * 10) / 10;
+Q.post_history_title = "After the Emergency";
+if (Q.endgame_path == "democratic_stabilization") {
+    Q.post_history_title = "The Stabilized New Deal";
+} else if (Q.endgame_path == "contested_new_deal") {
+    Q.post_history_title = "The Unfinished New Deal";
+} else if (Q.endgame_path == "managed_reaction") {
+    Q.post_history_title = "The Narrow Republic";
+} else if (Q.endgame_path == "systemic_rupture") {
+    Q.post_history_title = "The Broken Republic";
+} else if (Q.endgame_path == "authoritarian_takeover") {
+    Q.post_history_title = "The Authoritarian Settlement";
+}
+if (Q.endgame_path == "democratic_stabilization") {
+    if ((Q.radical_momentum || 0) >= 20 || Q.final_radical_support >= 20) {
+        Q.post_history_overview = "Later historians describe the administration as having defeated the immediate depression without fully defeating the politics the depression created. The New Deal becomes the central governing settlement, but the SPA, NUSJ, and Silver Legion remain too strong to be dismissed as marginal protest movements.";
+    } else if ((Q.conservative_backlash || 0) >= 7 || (Q.supreme_court_hostility || 0) >= 5) {
+        Q.post_history_overview = "The New Deal survives, but its second phase is a legal and institutional war. Recovery gives the administration room to govern, while courts, business organizations, and conservative Democrats fight to narrow what the victory means.";
+    } else {
+        Q.post_history_overview = "The emergency years become the founding myth of a durable New Deal order. Recovery, public legitimacy, and constitutional reform give later administrations a usable model for democratic crisis government.";
+    }
+} else if (Q.endgame_path == "contested_new_deal") {
+    if ((Q.final_economic_stress || 0) >= 8 || (Q.unemployed || 0) >= 12) {
+        Q.post_history_overview = "The New Deal enters the history books as a partial rescue rather than a settlement. It prevents collapse, but mass unemployment and regional hardship keep American politics volatile through the rest of the decade.";
+    } else if ((Q.radical_momentum || 0) >= 20 || Q.final_radical_support >= 18) {
+        Q.post_history_overview = "The economy improves enough to deny the extremists their easiest argument, but not enough to empty their meetings. American politics hardens into a three-sided struggle between New Dealers, socialists, and the national-populist right.";
+    } else {
+        Q.post_history_overview = "The New Deal survives as a working emergency program, but not yet as a permanent order. Its legacy depends on whether successors can turn uneven recovery into ordinary prosperity.";
+    }
+} else if (Q.endgame_path == "managed_reaction") {
+    if ((Q.final_economic_stress || 0) >= 11 || (Q.unemployed || 0) >= 16) {
+        Q.post_history_overview = "The republic survives, but the public remembers the emergency years as a promise broken by continued hardship. Conservative restraint does not end radical politics; it gives radicals a new argument that the constitutional parties protected property before people.";
+    } else if ((Q.conservative_backlash || 0) >= 8 || (Q.capital_strike_progress || 0) >= 5) {
+        Q.post_history_overview = "The decade closes with business, courts, and conservative blocs having forced the New Deal into a smaller shape. The economy is no longer in free fall, but the reform coalition never fully regains the initiative.";
+    } else {
+        Q.post_history_overview = "The republic chooses caution over transformation. The result is a survivable but uninspiring settlement, one that keeps elected government alive while leaving the deeper causes of the crisis unresolved.";
+    }
+} else if (Q.endgame_path == "systemic_rupture") {
+    if ((Q.final_economic_stress || 0) >= 16) {
+        Q.post_history_overview = "Economic breakdown becomes the central fact of the post-ending history. Institutions remain on paper, but breadlines, evictions, and collapsing confidence make normal constitutional politics feel increasingly ceremonial.";
+    } else if ((Q.radical_momentum || 0) >= 30 || Q.final_radical_support >= 25) {
+        Q.post_history_overview = "The republic enters a period of permanent emergency politics. Radical parties do not merely protest the system; they organize parallel loyalties that compete with Congress, courts, and state governments.";
+    } else {
+        Q.post_history_overview = "The constitutional order survives formally, but the emergency years break its habits of restraint. Every major faction leaves the crisis believing that ordinary politics failed them.";
+    }
+} else if (Q.endgame_path == "authoritarian_takeover") {
+    if (Q.final_right_radical_support >= Q.final_left_radical_support) {
+        Q.post_history_overview = "The post-ending history is written by reactionary victors. The Silver Legion and its allies use the crisis to identify democracy, labor politics, and the New Deal itself as enemies of national rebirth.";
+    } else {
+        Q.post_history_overview = "Authoritarian rule arrives through the collapse of democratic institutions rather than a clean popular mandate. Even where the left remains strong, it is pushed into illegality, exile, or armed resistance.";
+    }
+} else {
+    Q.post_history_overview = "The emergency years leave no simple verdict. The future of the republic depends less on the formal ending than on the social forces still alive when the credits roll.";
+}
+if (Q.economy_stabilized) {
+    Q.post_history_economy = "Economy: The Depression is broadly defeated by the standards of the emergency years. Unemployment is down to " + Q.final_unemployed_display + "%, growth is " + Q.final_growth_display + "%, and the final stress index is " + Q.final_stress_display + ".";
+} else if (Q.economy_improving) {
+    Q.post_history_economy = "Economy: The crisis is easing, but not conquered. Unemployment is " + Q.final_unemployed_display + "%, growth is " + Q.final_growth_display + "%, and the final stress index is " + Q.final_stress_display + ". Later accounts treat this as recovery with a question mark.";
+} else {
+    Q.post_history_economy = "Economy: The Depression remains politically dangerous. Unemployment is " + Q.final_unemployed_display + "%, growth is " + Q.final_growth_display + "%, inflation is " + Q.final_inflation_display + "%, and the final stress index is " + Q.final_stress_display + ".";
+}
+if ((Q.radical_momentum || 0) >= 24 || Q.final_radical_support >= 24) {
+    if (Q.final_right_radical_support > Q.final_left_radical_support + 4) {
+        Q.post_history_radicals = "Radical politics: The main unresolved threat comes from the right. NUSJ and Silver Legion support totals about " + Q.final_right_radical_support_display + "%, and the radical momentum index is " + Q.final_radical_momentum_display + ". Even a recovery ending would be remembered as politically fragile.";
+    } else if (Q.final_left_radical_support > Q.final_right_radical_support + 4) {
+        Q.post_history_radicals = "Radical politics: The strongest pressure comes from the socialist left. SPA support is about " + Q.final_spa_support_display + "%, and the radical momentum index is " + Q.final_radical_momentum_display + ". The New Deal faces demands to move from relief and regulation toward structural transformation.";
+    } else {
+        Q.post_history_radicals = "Radical politics: Both left and right remain dangerous. The radical momentum index is " + Q.final_radical_momentum_display + ", with neither side discredited enough for ordinary two-party politics to resume cleanly.";
+    }
+} else if ((Q.radical_momentum || 0) >= 12 || Q.final_radical_support >= 14) {
+    Q.post_history_radicals = "Radical politics: Extremist and anti-system movements survive as a real opposition current, but they have not yet broken the party system. Their future depends on whether recovery reaches ordinary households.";
+} else {
+    Q.post_history_radicals = "Radical politics: The anti-system parties leave the emergency years weakened. They still exist, but their claim that democracy cannot govern has lost much of its force.";
+}
+if ((Q.new_deal_legitimacy || 0) >= 70 && (Q.pro_republic || 0) >= 60) {
+    Q.post_history_democracy = "Democratic legitimacy: The republic exits the emergency with real public credit. The New Deal is not just a policy program; it becomes proof that democratic government can act under pressure.";
+} else if ((Q.new_deal_legitimacy || 0) >= 45 && (Q.pro_republic || 0) >= 45) {
+    Q.post_history_democracy = "Democratic legitimacy: The public has not abandoned constitutional government, but trust is conditional. The next recession, strike wave, or court confrontation could reopen the crisis.";
+} else {
+    Q.post_history_democracy = "Democratic legitimacy: Confidence is badly damaged. Even if formal institutions survive, many Americans now treat democracy as one factional weapon among others.";
+}
+if ((Q.conservative_backlash || 0) >= 8 || (Q.supreme_court_hostility || 0) >= 5 || (Q.capital_strike_progress || 0) >= 5) {
+    Q.post_history_institutions = "Institutions: Conservative backlash is the dominant institutional problem. Court hostility, capital resistance, and coalition vetoes make the post-emergency state harder to govern than the formal ending suggests.";
+} else if ((Q.constitutional_reform || 0) >= 2 || Q.constructive_vonc || Q.presidential_powers) {
+    Q.post_history_institutions = "Institutions: Constitutional reforms give the republic stronger guardrails than it had at the start. Later presidents and speakers inherit a system less vulnerable to sudden collapse.";
+} else {
+    Q.post_history_institutions = "Institutions: The old constitutional machinery mostly remains in place. That preserves continuity, but it also means several pre-crisis weaknesses survive into the next era.";
+}
+if ((Q.labor_militancy || 0) >= 6 || (Q.cio_momentum || 0) >= 3) {
+    Q.post_history_labor = "Labor: Organized labor emerges powerful, impatient, and difficult to contain. Whether this becomes a democratic mass base or a new source of instability depends on how much of the recovery workers actually receive.";
+} else if ((Q.labor_dissent || 0) >= 35 || (Q.left_dissent || 0) >= 35) {
+    Q.post_history_labor = "Labor: The labor-left base remains embittered. It did not necessarily abandon democracy, but it no longer trusts the administration to deliver without pressure.";
+} else {
+    Q.post_history_labor = "Labor: The labor movement remains inside the constitutional coalition. Its leaders expect rewards for their loyalty, especially jobs, bargaining rights, and social guarantees.";
+}
+Q.post_history_opening = "";
+Q.post_history_politics = "";
+Q.post_history_society = "";
+Q.post_history_parties = "";
+Q.post_history_legacy = "";
+if (Q.endgame_path == "democratic_stabilization") {
+    Q.post_history_opening = "By the later 1930s, the United States is recognizably a New Deal republic. Federal relief, public works, banking supervision, and national political management become ordinary instruments of government rather than desperate emergency improvisations.";
+    if ((Q.radical_momentum || 0) >= 20 || Q.final_radical_support >= 20) {
+        Q.post_history_politics = "That stability is not the same as consensus. The administration defeats the immediate depression while leaving a large radical electorate intact, so Congress becomes a permanent contest over whether the New Deal should be deepened, rolled back, or replaced by something more militant.";
+    } else if ((Q.conservative_backlash || 0) >= 7 || (Q.supreme_court_hostility || 0) >= 5) {
+        Q.post_history_politics = "The major battles of the next decade move from breadlines to institutions. Courts, business federations, and conservative Democrats test every new agency, forcing Roosevelt's successors to spend as much energy defending the state as expanding it.";
+    } else {
+        Q.post_history_politics = "The two-party system reorganizes around acceptance of federal responsibility for recovery. Republicans and Liberty League conservatives remain competitive, but they campaign against excess and waste rather than against the existence of the New Deal state.";
+    }
+    Q.post_history_society = "Socially, the emergency leaves a stronger labor movement, a more politically visible unemployed constituency, and a countryside tied more tightly to Washington. The federal government becomes the place Americans expect to answer bank failures, farm collapse, and mass joblessness.";
+    Q.post_history_parties = "The Democratic coalition becomes broad but tense: urban workers, reform liberals, Southern committee chairs, labor-populists, and cautious institutionalists all claim a share of the victory. Its future depends on whether that coalition can survive once fear stops holding it together.";
+    Q.post_history_legacy = "In schoolbooks, the period is remembered as the moment democratic government proved it could act. In party memoirs, it is remembered less cleanly: a victory purchased through bargaining, patronage, legal fights, and compromises that later reformers never stop arguing about.";
+} else if (Q.endgame_path == "contested_new_deal") {
+    Q.post_history_opening = "The United States leaves the emergency years with the New Deal alive but unsettled. Washington has become more powerful, but the country has not agreed on whether that power represents democratic rescue, partisan machine-building, or a temporary wartime-style exception.";
+    if ((Q.final_economic_stress || 0) >= 8 || (Q.unemployed || 0) >= 12) {
+        Q.post_history_politics = "Because unemployment remains painfully visible, every election after 1935 becomes a referendum on whether partial recovery is enough. County relief offices, labor halls, radio priests, socialist locals, and conservative business leagues all compete to explain why prosperity has not arrived.";
+    } else if ((Q.radical_momentum || 0) >= 20 || Q.final_radical_support >= 18) {
+        Q.post_history_politics = "The economy improves just enough to keep the administration standing, but not enough to restore the old party system. The SPA, NUSJ, and Silver Legion turn the late 1930s into a politics of mass meetings, loyalty campaigns, and competing claims to speak for the betrayed American people.";
+    } else {
+        Q.post_history_politics = "The next phase is legislative rather than revolutionary. The administration tries to convert emergency agencies into permanent law, while conservatives and local machines try to keep the New Deal dependent on yearly bargains.";
+    }
+    Q.post_history_society = "Ordinary Americans experience the period unevenly. Some cities see work crews, reopened banks, and rising wages; other regions remain trapped in debt, foreclosure, and seasonal relief. That unevenness becomes the central fact of post-game politics.";
+    Q.post_history_parties = "The Democratic Party does not collapse, but it stops being a simple vehicle for Roosevelt's will. Labor Democrats want guarantees, conservative Democrats want limits, and outside radicals keep pressuring the coalition from both directions.";
+    Q.post_history_legacy = "Later historians call this the unfinished New Deal: too successful to dismiss, too incomplete to settle the country's arguments, and too dependent on emergency politics to feel permanent.";
+} else if (Q.endgame_path == "managed_reaction") {
+    Q.post_history_opening = "The constitutional republic survives, but the post-game United States is a narrower, more cautious country than New Dealers promised. The language of emergency remains, while the policy imagination contracts.";
+    if ((Q.final_economic_stress || 0) >= 11 || (Q.unemployed || 0) >= 16) {
+        Q.post_history_politics = "With mass unemployment still dominating public life, conservative restraint becomes politically explosive. The administration's opponents argue that democracy saved procedure and abandoned people, while defenders insist that worse disorder was avoided only by slowing the reform drive.";
+    } else if ((Q.conservative_backlash || 0) >= 8 || (Q.capital_strike_progress || 0) >= 5) {
+        Q.post_history_politics = "Business resistance, hostile courts, and conservative committee chairs set the boundaries of the late 1930s. Relief continues, but planning, labor rights, and redistribution are cut down into programs acceptable to property and the bench.";
+    } else {
+        Q.post_history_politics = "Politics settles into a wary center. Congress keeps enough relief to prevent collapse, but avoids the deeper institutional fights that would have made the New Deal a true reconstruction of American capitalism.";
+    }
+    Q.post_history_society = "For workers and farmers, the result feels like survival without deliverance. Some households escape the worst of the depression, but the memory of hunger and eviction remains close enough to shape unions, churches, veterans' groups, and local party machines.";
+    Q.post_history_parties = "The Democratic coalition becomes defensive. Its right wing claims credit for preserving order, its labor wing claims betrayal, and its reform liberals spend the next elections trying to recover an agenda that was traded away piece by piece.";
+    Q.post_history_legacy = "The era is remembered as the Narrow Republic: elected government endured, but the lesson many Americans drew was that constitutional survival and social recovery were not the same thing.";
+} else if (Q.endgame_path == "systemic_rupture") {
+    Q.post_history_opening = "The United States enters the late 1930s as a republic in name and a permanent emergency in practice. No single faction has won the crisis, but the habits that made constitutional politics workable have broken down.";
+    if ((Q.final_economic_stress || 0) >= 16 || ((Q.unemployed || 0) >= 22 && (Q.economic_growth || 0) < -5)) {
+        Q.post_history_politics = "The depression does not recede into memory; it becomes the organizing fact of public life. State governments improvise, Congress lurches between relief and panic, and national leaders increasingly speak as if ordinary elections cannot solve ordinary hunger.";
+    } else if ((Q.radical_momentum || 0) >= 30 || Q.final_radical_support >= 25) {
+        Q.post_history_politics = "Radical organizations become parallel civic worlds. SPA locals, NUSJ clubs, Silver Legion networks, unions, veterans' committees, and defense leagues compete for loyalty in ways that make formal party labels less important than street presence and organizational discipline.";
+    } else {
+        Q.post_history_politics = "The rupture is institutional more than ideological. Courts, Congress, states, and the executive all survive, but each treats the others as obstacles to national rescue rather than legitimate partners.";
+    }
+    Q.post_history_society = "Public life hardens. Strikes, farm actions, relief protests, patriotic rallies, and anti-radical policing become recurring features of American politics. The line between electioneering and mobilization grows thin.";
+    Q.post_history_parties = "The old parties remain on ballots, but they no longer contain the country. Every faction builds auxiliaries outside Congress because no one trusts Congress to decide the future by itself.";
+    Q.post_history_legacy = "Later writers describe these years as the broken republic: not yet dictatorship, not yet civil war everywhere, but a country where every institution was waiting for the next blow.";
+} else if (Q.endgame_path == "authoritarian_takeover") {
+    Q.post_history_opening = "The post-game history of the United States is written under coercion. The collapse of elected government turns the New Deal from a governing program into an accusation used against democracy, labor, and pluralism.";
+    if (Q.final_right_radical_support >= Q.final_left_radical_support) {
+        Q.post_history_politics = "The right consolidates by presenting itself as the only force that can end depression, disorder, and class conflict. Silver Legion cadres, national-populist broadcasters, business allies, and security officials divide the spoils of the new order while purging the old reform coalition.";
+    } else {
+        Q.post_history_politics = "The authoritarian settlement is unstable from the beginning because the socialist left remains too large to disappear. Repression drives organizers into underground papers, exile networks, unions, and local resistance rather than eliminating them.";
+    }
+    Q.post_history_society = "Relief becomes loyalty policy. Jobs, food, permits, and police protection are distributed through political obedience, and communities learn quickly that survival depends on the new regime's categories of loyalty and suspicion.";
+    Q.post_history_parties = "The Democratic Party is broken apart. Some conservatives accommodate the new order, some New Dealers retreat into private life, and labor militants become the core of opposition memory.";
+    Q.post_history_legacy = "In later democratic histories, if they are ever written openly, the emergency years are treated as the warning that economic collapse can turn constitutional government into evidence for its own prosecution.";
+} else {
+    Q.post_history_opening = "The emergency years end without a clean national story. The United States that follows is shaped by unresolved fights over relief, recovery, courts, labor, race, region, and the meaning of democracy under economic pressure.";
+    Q.post_history_politics = "No party can plausibly claim that the old order survived unchanged. Every coalition carries the memory of emergency bargaining into ordinary politics.";
+    Q.post_history_society = "The depression leaves Americans more willing to demand action from Washington and less willing to believe that hardship is purely private failure.";
+    Q.post_history_parties = "The party system survives, but it is more brittle, more ideological, and more dependent on organized blocs than before.";
+    Q.post_history_legacy = "The period becomes a disputed inheritance rather than a settled founding myth.";
+}
 !}
 
 = End
@@ -149,6 +346,7 @@ if ((Q.welfare > 0 && Q.judicial_reform >= 2 && Q.womens_work >= 1 && Q.family_l
 @eg_menu
 
 - #endings
+- @post_ending_history
 - @end_game: End game.
 
 
@@ -220,6 +418,23 @@ go-to: eg_menu
 The formal republic survives on paper, but the constitutional order is badly cracked. Street movements, emergency arguments, coalition breakdowns, and radical voting blocs have made normal government feel temporary.
 
 No single faction has won the crisis. That is not the same as stability. The country is entering a new phase where every institution will be tested again.
+
+@post_ending_history
+title: Post-ending history
+tags: endings
+go-to: eg_menu
+
+= [+ post_history_title +]
+
+[+ post_history_opening +]
+
+[+ post_history_politics +]
+
+[+ post_history_society +]
+
+[+ post_history_parties +]
+
+[+ post_history_legacy +]
 
 @authoritarian_takeover
 view-if: endgame_path == "authoritarian_takeover"
@@ -327,19 +542,19 @@ Our government has enacted a public works program!
 
 @unemployment_reduced
 title: Unemployment has been reduced from its peak.
-view-if: unemployed <= 16 and unemployed >= 10 and economic_growth >= -3 and year >= 1930
+view-if: economy_improving and not economy_stabilized and year >= 1935
 tags: endings
 go-to: eg_menu
 
 While still uncomfortably high, unemployment levels are no longer at the worst emergency peak. This is a partial success, not the end of the depression.
 
 @unemployment_reduced_2
-title: Unemployment has been successfully reduced!
-view-if: unemployed < 10 and economic_growth >= -1 and year >= 1930
+title: Unemployment has been brought below emergency levels.
+view-if: economy_stabilized and year >= 1935
 tags: endings
 go-to: eg_menu
 
-Unemployment has fallen substantially, and the broader economy is no longer contracting sharply. This is a real recovery, even if the settlement remains politically contested.
+Unemployment has fallen substantially, growth has resumed, and the broader economy is no longer in emergency contraction. This is a real recovery, even if the settlement remains politically contested.
 
 
 

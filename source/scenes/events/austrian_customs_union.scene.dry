@@ -1,4 +1,5 @@
 title: Austrian customs union
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: The Foreign Ministry seeks closer ties to Austria...
 new-page: true
 on-arrival: customs_union_seen = 1

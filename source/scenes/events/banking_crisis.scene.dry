@@ -1,4 +1,5 @@
 title: Banking Crisis
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: Bank runs threaten the recovery.
 new-page: true
 on-arrival: banking_crisis_seen = 1; banking_confidence = 0 if not banking_confidence; workers_kpd += 2; workers_dnvp += 2; workers_nsdap += 2; new_middle_nsdap += 2; old_middle_nsdap += 3; unemployed += 2; crisis_urgency += 1; new_deal_legitimacy -= 4 if spd_in_government; economic_growth -= 1.2; banking_confidence -= 2;
@@ -21,14 +22,14 @@ The crisis is financial, but the costs will be borne by workers, farmers, and th
 
 @bank_holiday
 title: Declare a bank holiday.
-view-if: spd_in_government = 1
+view-if: dem_presidential_control
 on-arrival: banking_confidence += 4; new_deal_legitimacy += 5; pro_republic += 2; resources += 1; economic_growth += 0.6; unemployed -= 0.8; ddp_relation += 2; dvp_relation += 2
 
 The President declares a temporary bank holiday and reopens solvent banks under federal supervision. It is dramatic, but the public sees command instead of drift.
 
 @deposit_insurance
 title: Create deposit insurance.
-view-if: spd_in_government = 1
+view-if: dem_congress_control
 subtitle: -1 budget
 choose-if: budget >= 1
 unavailable-subtitle: Requires 1 budget.
@@ -38,7 +39,7 @@ The administration guarantees ordinary deposits and dares bankers to oppose it. 
 
 @liquidity_only
 title: Provide emergency liquidity only.
-view-if: spd_in_government = 1
+view-if: dem_presidential_control
 subtitle: A quieter Federal Reserve response.
 on-arrival: banking_confidence += 2; economic_growth += 0.3; old_middle_spd += 2; ddp_relation += 3; dvp_relation += 3; workers_spd -= 1; unemployed_spd -= 1; labor_dissent += 2
 

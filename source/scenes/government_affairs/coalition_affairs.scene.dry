@@ -3,7 +3,7 @@ new-page: true
 is-card: true
 tags: congressional_affairs
 on-arrival: month_actions += 1; coalition_affairs_timer = 5
-view-if: spd_in_government = 1 and coalition_dissent >= 1 and coalition_affairs_timer = 0
+view-if: dem_house_control and coalition_dissent >= 1 and coalition_affairs_timer = 0
 card-image: img/muller_cabinet.jpg
 
 = Hold the Democratic Tent Together
@@ -28,33 +28,34 @@ subtitle: -2 political capital
 view-if: historical_mode = 0
 unavailable-subtitle: Not enough political capital.
 choose-if: resources >= 2
-on-arrival: resources -= 2; coalition_dissent -= 2; pork_barrel_pressure += 1; governor_network += 1; committee_control += 1; new_deal_legitimacy -= 1; conservative_backlash += 1
+on-arrival: resources -= 2; coalition_dissent -= 2; z_relation += 2 if in_weimar_coalition or in_grand_coalition or in_popular_front; dvp_relation += 2 if in_grand_coalition; ddp_relation += 1 if in_grand_coalition; kpd_relation += 2 if in_left_front or in_popular_front; pork_barrel_pressure += 1; governor_network += 1; committee_control += 1; new_deal_legitimacy -= 1; conservative_backlash += 1
 
 Patronage, committee favors, and local projects calm the congressional coalition. It is not elegant, but it keeps bills moving.
 
 @labor_concessions
 subtitle: Raises labor expectations and business resistance.
-on-arrival: coalition_dissent -= 1; labor_dissent -= 5; left_dissent -= 2; workers_spd += 3; unemployed_spd += 2; cio_momentum += 1; labor_militancy += 1; ddp_relation -= 3; dvp_relation -= 3; capital_strike_progress += 1; new_deal_legitimacy += 1
+on-arrival: coalition_dissent -= 1; labor_dissent -= 5; left_dissent -= 2; workers_spd += 3; unemployed_spd += 2; cio_momentum += 1; labor_militancy += 1; kpd_relation += 2 if in_left_front or in_popular_front; z_relation += 1 if in_popular_front; ddp_relation -= 3; dvp_relation -= 4; capital_strike_progress += 1; new_deal_legitimacy += 1
 
 The administration promises a clearer labor-rights bill and more sympathetic enforcement. Labor Democrats come back into line, while business-oriented allies warn that the White House is losing discipline.
 
 @conservative_concessions
 subtitle: Calms conservatives, angers labor and New Deal liberals.
-on-arrival: coalition_dissent = 0; reformist_dissent -= 5; neorevisionist_dissent -= 4; ddp_relation += 4; dvp_relation += 3; left_dissent += 4; labor_dissent += 5; workers_spd -= 2; unemployed_spd -= 2; capital_strike_progress -= 1 if capital_strike_progress > 0; conservative_backlash -= 1 if conservative_backlash > 0; new_deal_legitimacy -= 2
+on-arrival: coalition_dissent = 0; reformist_dissent -= 5; neorevisionist_dissent -= 4; z_relation += 2 if in_weimar_coalition or in_grand_coalition; ddp_relation += 4; dvp_relation += 4; kpd_relation -= 3 if in_left_front or in_popular_front; left_dissent += 4; labor_dissent += 5; workers_spd -= 2; unemployed_spd -= 2; capital_strike_progress -= 1 if capital_strike_progress > 0; conservative_backlash -= 1 if conservative_backlash > 0; new_deal_legitimacy -= 2
 
 The White House slows the most aggressive parts of the recovery agenda and lets conservative Democrats claim a procedural victory. The floor count improves, but labor notices.
 
 @fdr_personal
 subtitle: Uses presidential prestige.
+view-if: dem_presidential_control
 choose-if: new_deal_legitimacy >= 45
 unavailable-subtitle: New Deal legitimacy must be at least 45.
-on-arrival: coalition_dissent -= 2; new_deal_legitimacy -= 3; radio_reach += 1; center_dissent -= 3; z_relation += 2; ddp_relation += 1; dvp_relation += 1
+on-arrival: coalition_dissent -= 2; new_deal_legitimacy -= 3; radio_reach += 1; center_dissent -= 3; z_relation += 3; ddp_relation += 2; dvp_relation += 2; kpd_relation += 1 if in_left_front or in_popular_front
 
 Roosevelt intervenes directly with faction leaders, governors, committee chairs, and radio allies. The coalition holds, but personal authority is a finite resource.
 
 @reset
 subtitle: Accept a narrower governing base.
-on-arrival: coalition_dissent = 0; in_grand_coalition = 0; in_weimar_coalition = 0; in_popular_front = 0; in_minority_government = 1; governing_house_support = spd_h; governing_senate_support = spd_s; bill_coalition_viable = 0; bill_coalition_viable = 1 if governing_senate_support >= 50; speaker_elected = 0; speaker_elected = 1 if governing_house_support >= 50; left_dissent -= 2; labor_dissent -= 2; reformist_dissent += 6; neorevisionist_dissent += 5; ddp_relation -= 5; dvp_relation -= 4; z_relation -= 3; legislative_gridlock = 0; legislative_gridlock = 1 if governing_senate_support < 50
+on-arrival: coalition_dissent = 0; in_grand_coalition = 0; in_weimar_coalition = 0; in_popular_front = 0; in_minority_government = 1; governing_house_support = spd_h; governing_senate_support = spd_s; bill_coalition_viable = 0; bill_coalition_viable = 1 if governing_senate_support >= 50; speaker_elected = 0; speaker_elected = 1 if governing_house_support >= 50; dem_house_control = 0; dem_house_control = 1 if speaker_elected and speaker_party = "SPD"; dem_senate_control = 0; dem_senate_control = 1 if bill_coalition_viable; dem_congress_control = 0; dem_congress_control = 1 if dem_house_control and dem_senate_control; dem_trifecta_control = 0; dem_trifecta_control = 1 if dem_presidential_control and dem_congress_control; non_dem_house_control = 1 if not dem_house_control; non_dem_house_control = 0 if dem_house_control; non_dem_senate_control = 1 if not dem_senate_control; non_dem_senate_control = 0 if dem_senate_control; left_dissent -= 2; labor_dissent -= 2; reformist_dissent += 6; neorevisionist_dissent += 5; ddp_relation -= 5; dvp_relation -= 4; z_relation -= 3; legislative_gridlock = 0; legislative_gridlock = 1 if not speaker_elected or not bill_coalition_viable
 
 The administration stops pretending that every faction can be satisfied at once. A smaller New Deal bloc is easier to discipline, but every hard vote now has to be bargained separately.
 

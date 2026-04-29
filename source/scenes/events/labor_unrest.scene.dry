@@ -1,4 +1,5 @@
 title: Labor Unrest
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: Clashes between workers and employers in the Ruhr...
 view-if: year = 1928 and month = 12 and spd_in_government and labor_minister_party != "SPD"
 max-visits: 1

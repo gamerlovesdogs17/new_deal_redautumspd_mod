@@ -444,10 +444,15 @@ Q.party_regular_dissent = Q.center_dissent;
 Q.labor_dem_dissent = Q.labor_dissent;
 Q.conservative_dem_dissent = Q.reformist_dissent;
 Q.southern_dem_dissent = Q.neorevisionist_dissent;
-Q.governing_house_support = 0;
-Q.governing_senate_support = 0;
-Q.speaker_elected = 0;
-Q.bill_coalition_viable = 0;
+Q.governing_house_support = Q.spd_h;
+Q.governing_senate_support = Q.spd_s;
+Q.speaker_elected = 1;
+Q.bill_coalition_viable = 1;
+Q.dem_presidential_control = 1;
+Q.dem_house_control = 1;
+Q.dem_senate_control = 1;
+Q.dem_congress_control = 1;
+Q.dem_trifecta_control = 1;
 Q.legislative_gridlock = 0;
 Q.non_dem_house_control = 0;
 Q.non_dem_senate_control = 0;
@@ -627,7 +632,7 @@ Q.timers = ['advisor_action', 'confronting_nazis', 'crisis_program',
             'fireside_chat',
             'spa_farmer_labor_pressure', 'nusj_silver_escalation',
             'labor_organization_pressure', 'radical_pressure',
-            'news_cooldown',
+            'news_cooldown', 'opposition_strategy',
             'state_governors', 'farm_crisis', 'cabinet_personnel',
             'congressional_affairs',
             'constitutional_reform', 'labor_rights',
@@ -667,6 +672,13 @@ Q.next_election_time = 24;
 Q.next_presidential_election_year = 1936;
 Q.next_presidential_election_month = 11;
 Q.pres_nomination_done = 0;
+Q.ww2_tension = 0;
+Q.isolationism = 2;
+Q.interventionism = 1;
+Q.war_mobilization = 0;
+Q.lend_lease = 0;
+Q.war_entry = 0;
+Q.home_front_strain = 0;
 // government affairs timers
 Q.agricultural_policy_timer = 0;
 Q.domestic_enemies_timer = 0;

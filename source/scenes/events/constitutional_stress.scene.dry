@@ -1,9 +1,10 @@
 title: Constitutional Stress
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: The crisis is testing the rules themselves.
 new-page: true
 is-card: true
 tags: event
-view-if: ((year = 1933 and month >= 3) or year > 1933) and spd_in_government = 1 and news_cooldown_timer = 0 and constitutional_stress < 4 and (pro_republic < 45 or supreme_court_hostility >= 5 or conservative_backlash >= 9 or radical_momentum >= 24)
+view-if: ((year = 1933 and month >= 3) or year > 1933) and (dem_presidential_control or dem_house_control or dem_senate_control) and news_cooldown_timer = 0 and constitutional_stress < 4 and (pro_republic < 45 or supreme_court_hostility >= 5 or conservative_backlash >= 9 or radical_momentum >= 24)
 max-visits: 2
 on-arrival: constitutional_stress += 1; news_cooldown_timer = 4
 card-image: img/reichstag.jpg

@@ -4,7 +4,7 @@ is-card: true
 card-image: img/map_2.jpg
 tags: presidential_affairs
 max-visits: 6
-view-if: state_governors_timer = 0
+view-if: dem_presidential_control and state_governors_timer = 0
 on-arrival: state_governors_timer = 7
 
 = State Governors

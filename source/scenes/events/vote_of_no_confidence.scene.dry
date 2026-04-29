@@ -1,8 +1,9 @@
 title: The Right calls a vote of no confidence against the current government!
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: We have angered our coalition partners too much...
 new-page: true
 on-arrival: tried_supporting_kpd = 0
-view-if: spd_in_government = 1 and spd_r < 50 and not constructive_vonc and (((in_grand_coalition = 1 or in_popular_front = 1 or in_minority_government = 1) and coalition_dissent >= 4) or (in_weimar_coalition = 1 and coalition_dissent >= 5) or constitutional_stress >= 4)
+view-if: 0
 tags: event
 go-to: vonc_menu
 

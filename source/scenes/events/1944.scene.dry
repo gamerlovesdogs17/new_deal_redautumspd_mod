@@ -1,0 +1,24 @@
+title: 1944
+subtitle: Planning the peace before the war is over.
+new-page: true
+tags: event
+priority: 2
+view-if: year = 1944 and month = 1
+max-visits: 1
+on-arrival: {!
+if (Q.war_entry) {
+    Q.war_mobilization += 1;
+    if (Q.dem_congress_control) {
+        Q.new_deal_legitimacy += 1;
+    }
+}
+!}
+
+= 1944
+
+Even before victory, the parties begin fighting over the peace. Veterans' benefits, jobs, reconversion, public housing, full employment, farm prices, and international security all become postwar questions.
+
+[? if dem_congress_control : With congressional control, New Dealers can draft a postwar program instead of merely defending wartime agencies. ?]
+[? if not dem_congress_control : Without congressional control, postwar planning becomes a bargaining exercise with conservatives who want demobilization to mean rollback. ?]
+
+The Depression generation expects the government to prevent a return to breadlines. Business expects the government to release controls. Labor expects the sacrifices of war to purchase security.

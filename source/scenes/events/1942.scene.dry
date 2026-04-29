@@ -1,0 +1,26 @@
+title: 1942
+subtitle: The home front.
+new-page: true
+tags: event
+priority: 2
+view-if: year = 1942 and month = 1
+max-visits: 1
+on-arrival: {!
+if (Q.war_entry) {
+    Q.war_mobilization += 2;
+    Q.home_front_strain += 1;
+    Q.economic_growth += 1.5;
+    if (Q.unemployed > 4) {
+        Q.unemployed -= 1.5;
+    }
+    Q.inflation += 1.2;
+}
+!}
+
+= 1942
+
+The home front becomes a second battlefield. War contracts bring work, but also shortages, migration, labor disputes, price controls, and bitter fights over who benefits from mobilization.
+
+[? if labor_militancy >= 6 : Organized labor enters the war years strong enough to demand a place in production planning. Business leaders call this coercion; union leaders call it democracy in industry. ?]
+[? if conservative_backlash >= 8 : Conservatives use wartime discipline to argue against the more radical parts of the New Deal, insisting that production requires order, property rights, and fewer experiments. ?]
+[? if conservative_backlash < 8 and labor_militancy < 6 : The administration keeps a workable home-front bargain: wages, contracts, and production targets are all contested, but the system holds. ?]

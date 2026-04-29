@@ -1,8 +1,9 @@
 title: SPA and Farmer-Labor Pressure
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 new-page: true
 is-card: true
 tags: event
-view-if: spd_in_government = 1 and ((year = 1933 and month >= 3) or year > 1933) and spa_farmer_labor_pressure_timer = 0 and radical_pressure_timer = 0 and (economic_stress >= 10 or kpd_relation >= 50 or z_relation >= 55)
+view-if: dem_congress_control and ((year = 1933 and month >= 3) or year > 1933) and spa_farmer_labor_pressure_timer = 0 and radical_pressure_timer = 0 and (economic_stress >= 10 or kpd_relation >= 50 or z_relation >= 55)
 on-arrival: spa_farmer_labor_pressure_timer = 16; radical_pressure_timer = 5; month_actions += 1
 card-image: img/reichstag.jpg
 

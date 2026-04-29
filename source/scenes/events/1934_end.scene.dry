@@ -1,15 +1,39 @@
-title: A New Day for the Republic
-subtitle: Has democracy finally triumphed?
+title: Postwar Reckoning
+subtitle: What kind of republic survived the Depression and the war years?
 tags: event
 priority: 3
-view-if: year >= 1935 and month >= 1
+view-if: year >= 1946 and month >= 1
 max-visits: 1
 on-arrival: {!
+Q.endgame_preview_stress = 0;
+if ((Q.unemployed || 0) > 10) {
+    Q.endgame_preview_stress += ((Q.unemployed || 0) - 10) / 2;
+}
+if ((Q.economic_growth || 0) < 0) {
+    Q.endgame_preview_stress += Math.abs(Q.economic_growth || 0) / 2;
+}
+if ((Q.inflation || 0) <= -3) {
+    Q.endgame_preview_stress += Math.abs((Q.inflation || 0) + 3) / 2;
+}
+if ((Q.inflation || 0) >= 6) {
+    Q.endgame_preview_stress += ((Q.inflation || 0) - 6) / 2;
+}
+if (Q.endgame_preview_stress > 20) {
+    Q.endgame_preview_stress = 20;
+}
 !}
 new-page: true
 go-to: game_over_1934
 
-= A New Day in the Republic
+= Postwar Reckoning
 
-The emergency years are ending. The depression, the courts, the street movements, the party conferences, and the coalition bargains have all left marks on the republic. The question now is not whether the old order survived unchanged. It did not. The question is what kind of settlement replaced it.
+The calendar has reached the end of the extended scenario, but history has not politely resolved itself.
+
+[? if unemployed <= 8 and economic_growth >= 0 and inflation > -3 and inflation < 6 and endgame_preview_stress <= 6 : The depression has been pushed below emergency levels. The question now is whether the New Deal settlement can govern ordinary politics as well as it governed crisis. ?]
+
+[? if not (unemployed <= 8 and economic_growth >= 0 and inflation > -3 and inflation < 6 and endgame_preview_stress <= 6) and endgame_preview_stress < 11 : The worst pressures have eased in some places, but the depression is not over. Recovery remains uneven, politically contested, and vulnerable to another shock. ?]
+
+[? if endgame_preview_stress >= 11 : The republic reaches 1935 with the depression still defining public life. Mass unemployment, contraction, and deflation have turned the end of the scenario into a reckoning, not a victory lap. ?]
+
+The Depression, the courts, street movements, party conferences, coalition bargains, and the Second World War have all left marks on the republic. The question now is what kind of United States those years have produced.
 

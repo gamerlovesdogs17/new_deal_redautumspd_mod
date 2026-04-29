@@ -58,7 +58,7 @@ is-deck: true
 @presidential
 title: White House and Administration
 subtitle: Executive messaging, cabinet direction, governors, courts, and national crisis management.
-view-if: president_party = "SPD" or president_party = "DEM" or president_party = "Democratic Party"
+view-if: dem_presidential_control
 card-image: img/reichstag_2.jpg
 is-deck: true
 
@@ -67,6 +67,7 @@ is-deck: true
 @congressional
 title: Congress, Coalition, and Policy
 subtitle: Legislation, committee control, patronage, farm policy, labor policy, and bargaining.
+view-if: dem_house_control or dem_senate_control
 card-image: img/reichstag_1.jpg
 is-deck: true
 

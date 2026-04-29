@@ -1,4 +1,5 @@
 title: Civil War
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 audio: music/communist/A_las_barricadas.ogg
 on-arrival: {!
 Q.rb_strength = Math.round(Q.rb_strength);
@@ -87,7 +88,7 @@ go-to: war_menu
 
 = The Array of Forces
 
-Our enemies are the nationalist Liberty League auxiliaries, with [+ sh_strength +] thousand troops, and the Silver Legion SA, with [+ sa_strength +] thousand troops. The loyalties of the Defense Department, with its [+ reichswehr_strength +] thousand regular soldiers, and state police, with [+ prussian_police_strength +] thousand members, are unclear.
+Our enemies are the nationalist Liberty League auxiliaries, with [+ sh_strength +] thousand troops, and the Silver Legion militia, with [+ sa_strength +] thousand troops. The loyalties of the Defense Department, with its [+ reichswehr_strength +] thousand regular soldiers, and state police, with [+ prussian_police_strength +] thousand members, are unclear.
 
 [? if speaker_party == "SPA" or president == "Thälmann" : The SPA's paramilitary, the SPA defense guards, is leading the battle, and we are their co-combatants. ?]
 
@@ -112,7 +113,7 @@ max-visits: 1
 go-to: war_menu
 on-arrival: war_choices += 1
 
-We have urged the Defense Department to stand down, to avoid killing their countrymen. [? if reichswehr_loyalty < 0.2 : Unfortunately, few heed our calls; the Reichswhere detest us. ?][? if reichswehr_loyalty >= 0.2 and reichswehr_loyalty < 0.4 : Some officers and troops heed our calls to not fight against us. Some even join us. ?][? if reichswehr_loyalty >= 0.4 and reichswehr_loyalty < 0.6 : The Defense Department is split. Many avoid taking a side, or join our side. ?][? if reichswehr_loyalty >= 0.6 : Surprisingly, the majority of the Defense Department is on our side! Our preparations have worked. ?]
+We have urged the Defense Department to stand down, to avoid killing their countrymen. [? if reichswehr_loyalty < 0.2 : Unfortunately, few heed our calls; the officer corps detests us. ?][? if reichswehr_loyalty >= 0.2 and reichswehr_loyalty < 0.4 : Some officers and troops heed our calls to not fight against us. Some even join us. ?][? if reichswehr_loyalty >= 0.4 and reichswehr_loyalty < 0.6 : The Defense Department is split. Many avoid taking a side, or join our side. ?][? if reichswehr_loyalty >= 0.6 : Surprisingly, the majority of the Defense Department is on our side! Our preparations have worked. ?]
 
 @kpd_help
 max-visits: 1
@@ -129,7 +130,7 @@ max-visits: 1
 go-to: war_menu
 on-arrival: war_choices += 1
 
-A general strike stopped the Kapp Putsch in 1920, and it can stop fascism today. [? if normalized_workers_total > 70 : The workers are largely united with us. ?][? if normalized_workers_total >= 50 and normalized_workers_total <= 70 : There is some dissent within labor, but a majority of workers support the general strike. ?][? if normalized_workers_total > 30 and normalized_workers_total < 50 : However, there is substantial dissent within labor, and less than half support the general strike. ?][? if normalized_workers_total <= 30 : However, labor is deeply divided, and most workers do not heed the call to strike. ?]
+A general strike can stop a fascist seizure of power. [? if normalized_workers_total > 70 : The workers are largely united with us. ?][? if normalized_workers_total >= 50 and normalized_workers_total <= 70 : There is some dissent within labor, but a majority of workers support the general strike. ?][? if normalized_workers_total > 30 and normalized_workers_total < 50 : However, there is substantial dissent within labor, and less than half support the general strike. ?][? if normalized_workers_total <= 30 : However, labor is deeply divided, and most workers do not heed the call to strike. ?]
 
 
 @loyal_police
@@ -159,7 +160,7 @@ go-to: defeat if total_defeat = 1; long_war if long_war = 1; republic_victory if
 
 = Total Defeat
 
-Our forces are no match for those of the reactionaries. Democratic Defense League fighters are quickly overpowered by the forces of the Liberty League auxiliaries, SA, and Defense Department. Many are killed before the rest surrender. Our remaining leaders flee the country or face execution, as the reactionaries take absolute power over the republic.
+Our forces are no match for those of the reactionaries. Democratic Defense League fighters are quickly overpowered by the forces of the Liberty League auxiliaries, Silver Legion, and Defense Department. Many are killed before the rest surrender. Our remaining leaders flee the country or face execution, as the reactionaries take absolute power over the republic.
 
 Our resistance will be recorded in the history books, and in the future, our names will be honored. But for now, all is lost.
 
@@ -176,7 +177,7 @@ The war settles into fixed battle lines. This will not be a quick coup, but a lo
 
 @game_over_menu
 
-While we might want to call for foreign assistance, the foreign powers see the "state Coup" as a purely internal matter.
+While we might want to call for foreign assistance, foreign governments see the coup as a purely internal matter.
 
 - @game_over
 
@@ -184,9 +185,9 @@ While we might want to call for foreign assistance, the foreign powers see the "
 
 @long_war_intervention
 
-- @west_aid: Perhaps we can receive aid from the Western powers, France and Britain.
+- @west_aid: Perhaps we can receive aid from friendly democracies.
 - @soviet_aid: Perhaps we can receive aid from the Soviet Union.
-- @east_aid: Perhaps our eastern neighbors, Poland and Czechoslovakia, can help us. If they know anything, they do not want fascists coming to power in the republic.
+- @east_aid: Perhaps sympathetic governments abroad can help us. They know what a fascist America would mean.
 - @game_over: Game over.
 
 @west_aid
@@ -196,7 +197,7 @@ on-arrival: west_aid += 1
 max-visits: 1
 go-to: long_war_intervention
 
-We send a call for help to the West, but their governments are divided on whether or not to support us. We have to survive on our own until they make a decision.
+We send a call for help to friendly democracies, but their governments are divided on whether or not to support us. We have to survive on our own until they make a decision.
 
 @soviet_aid
 choose-if: (soviet_relation >= 1 and kpd_relation >= 50) or (kpd_relation >= 75)
@@ -214,13 +215,13 @@ unavailable-subtitle: Our relations are not strong enough.
 max-visits: 1
 go-to: long_war_intervention
 
-Poland and Czechoslovakia are largely too absorbed in their own problems to be of much help, but weapons and volunteers filter through the parts of the borders that we control.
+Sympathetic governments are largely too absorbed in their own problems to be of much help, but weapons, money, and volunteers filter through the channels we still control.
 
 @republic_victory
 
 = Victory for the Republic
 
-The battle lines hold, and the SA, Liberty League auxiliaries, and pro-coup Defense Department forces are defeated. Today, the forces of the republic prevail over the fascists and the reactionaries. There is a new revolution in the republic. Let us hope it produces a longer-lasting peace than the previous one.
+The battle lines hold, and the Silver Legion, Liberty League auxiliaries, and pro-coup Defense Department forces are defeated. Today, the forces of the republic prevail over the fascists and the reactionaries. There is a new democratic settlement in the republic. Let us hope it produces a lasting peace.
 
 - @game_over: Game over.
 

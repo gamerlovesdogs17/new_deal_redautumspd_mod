@@ -1,9 +1,10 @@
 title: News: Liberty League Test Case
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: A New Deal agency is dragged into court.
 new-page: true
 is-card: true
 tags: event
-view-if: spd_in_government = 1 and ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and supreme_court_hostility >= 3 and liberty_litigation >= 1
+view-if: (dem_presidential_control or dem_congress_control) and ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and supreme_court_hostility >= 3 and liberty_litigation >= 1
 max-visits: 1
 on-arrival: opposition_pressure += 1; supreme_court_hostility += 1; constitutional_stress += 1; news_cooldown_timer = 3
 card-image: img/reichstag.jpg

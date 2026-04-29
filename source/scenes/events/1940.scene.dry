@@ -1,0 +1,28 @@
+title: 1940
+subtitle: Arsenal or fortress?
+new-page: true
+tags: event
+priority: 2
+view-if: year = 1940 and month = 1
+max-visits: 1
+on-arrival: {!
+Q.ww2_tension += 2;
+if (Q.dem_congress_control) {
+    Q.war_mobilization += 1;
+    Q.economic_growth += 0.6;
+    if (Q.unemployed > 8) {
+        Q.unemployed -= 0.8;
+    }
+} else {
+    Q.isolationism += 1;
+}
+!}
+
+= 1940
+
+The country argues over whether it should become an arsenal for threatened democracies or a fortress behind oceans. The answer depends as much on congressional control as on presidential speeches.
+
+[? if dem_congress_control : Congress can fund preparedness, shipbuilding, and industrial conversion. The program creates jobs, but also revives fears of militarized recovery. ?]
+[? if not dem_congress_control : Without reliable congressional control, preparedness moves slowly and through narrower executive channels. The administration cannot simply will an arsenal into being. ?]
+
+War production begins to do what ordinary recovery never fully did in some regions: put factories, ports, and rail yards back to work.

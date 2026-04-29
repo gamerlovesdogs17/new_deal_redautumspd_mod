@@ -1,4 +1,5 @@
 title: The SPA checks on our progress in accomplishing the coalition's goals...
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 view-if: (in_popular_front or in_left_front) and (kpd_ultimatum_timer = 0 or (welfare_goal_completed and agriculture_goal_completed and economy_goal_completed and finance_goal_completed and labor_goal_completed and reichswehr_goal_completed)) and kpd_goals_seen = 1 and kpd_ultimatum_seen = 0 and spd_in_government
 on-arrival: {!
 Q.kpd_ultimatum_seen = 1;
@@ -61,12 +62,11 @@ At the start of this government, the SPA presented a list of goals for the coali
 @goals_failed
 on-arrival: kpd_relation -= 10; workers_spd -= 8; unemployed_spd -= 8;
 
-Unfortunately, we have failed to accomplish all of the goals the SPA set out. They plan to call a vote of no confidence against our government, and have already begun mounting a propaganda campaign to delegitimize our government in the eyes of the workers.
+Unfortunately, we have failed to accomplish all of the goals the SPA set out. They plan to break with the administration and have already begun mounting a propaganda campaign to delegitimize the New Deal in the eyes of workers.
 
 - @appeal: Appeal to the Communists to have patience - we are trying!
-- @kpd_vote_of_no_confidence.support_center: Could we form a new government based on the Center Party and [+ ddp_name +] (and possibly DVP)?
-- @kpd_vote_of_no_confidence.let_it_happen: Let the vote happen.
-- @no_vonc: They cannot call a vote of no confidence due to the constitutional reforms, but they can obstruct our government at every opportunity.
+- @break_with_spa: Break with the SPA and govern through the remaining coalition.
+- @no_vonc: Accept that they will obstruct us at every opportunity.
 
 @appeal
 choose-if: (kpd_score >= 4 and kpd_relation > 50 and kpd_appeal_seen = 0) or kpd_party_leader = "Conciliators"
@@ -75,12 +75,17 @@ on-arrival: kpd_ultimatum_seen = 0; kpd_ultimatum_timer += 6; kpd_appeal_seen = 
 
 We argue that we are working hard to achieve the coalition's goals, and in the name of proletarian solidarity, we must make this coalition function. Surprisingly, the SPA hears our pleas, and is willing to give us six more months before the coalition goals must be achieved.
 
+@break_with_spa
+on-arrival: in_popular_front = 0; in_left_front = 0; in_minority_government = 1; kpd_relation -= 8; kpd_coalition_dissent = 0; coalition_dissent += 1; legislative_gridlock = 1; workers_spd -= 4; unemployed_spd -= 4
+
+The administration formally breaks with the SPA. It avoids an obsolete parliamentary collapse, but it leaves Congress harder to manage and gives the left a clear line of attack against the New Deal.
+
 
 @goals_success
 on-arrival: workers_spd += 8; unemployed_spd += 8; kpd_relation += 10; workers_kpd += 5; kpd_coalition_success += 1
 go-to: popular_front_achievement if in_popular_front; united_front_achievement if in_left_front
 
-Against all expectations, the SPA's goals have all been met! Apparently the Communists did not prepare for this eventuality, a worker's government successfully built through democratic means. They will continue to "tolerate" our government for the rest of our term, while still acting as a watchdog against conservative backsliding.
+Against all expectations, the SPA's goals have all been met. The party did not prepare for this eventuality: a worker-backed reform administration successfully built through democratic means. They will continue to tolerate the administration for the rest of the term, while still acting as a watchdog against conservative backsliding.
 
 
 @popular_front_achievement
@@ -92,7 +97,6 @@ on-arrival: united_front_success += 1
 achievement: einheitsfront_2
 
 @no_vonc
-view-if: constructive_vonc
 on-arrival: in_popular_front = 0; in_left_front = 0; in_minority_government = 1;
 
 We have been effectively made a minority government, and the SPA intends to obstruct our attempts to pass policy.

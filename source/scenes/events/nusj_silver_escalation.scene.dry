@@ -1,8 +1,9 @@
 title: NUSJ and Silver Legion Escalation
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 new-page: true
 is-card: true
 tags: event
-view-if: spd_in_government = 1 and ((year = 1933 and month >= 3) or year > 1933) and nusj_silver_escalation_timer = 0 and radical_pressure_timer = 0 and (opposition_pressure >= 4 or radical_momentum >= 18 or dnvp_votes + nsdap_votes >= 14 or radio_reach >= 4)
+view-if: (dem_presidential_control or dem_house_control or dem_senate_control) and ((year = 1933 and month >= 3) or year > 1933) and nusj_silver_escalation_timer = 0 and radical_pressure_timer = 0 and (opposition_pressure >= 4 or radical_momentum >= 18 or dnvp_votes + nsdap_votes >= 14 or radio_reach >= 4)
 on-arrival: nusj_silver_escalation_timer = 18; radical_pressure_timer = 5; month_actions += 1
 card-image: img/sa_march.jpg
 

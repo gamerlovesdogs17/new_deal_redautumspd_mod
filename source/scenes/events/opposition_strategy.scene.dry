@@ -2,8 +2,8 @@ title: Opposition Strategy
 new-page: true
 is-card: true
 tags: event
-view-if: 0
-on-arrival: opposition_strategy_timer = 7; month_actions += 1
+view-if: ((year = 1933 and month >= 3) or year > 1933) and opposition_strategy_timer = 0 and radical_pressure_timer = 0 and (dem_presidential_control or dem_house_control or dem_senate_control) and (opposition_pressure >= 2 or conservative_backlash >= 5 or radical_momentum >= 12 or legislative_gridlock = 1)
+on-arrival: opposition_strategy_timer = 9; radical_pressure_timer = 3; month_actions += 1
 card-image: img/reichstag.jpg
 
 = Opposition Strategy
@@ -18,30 +18,35 @@ The opposition is not passive. Republicans, the Liberty League, the Socialist Pa
 
 @gop_obstruction
 title: GOP obstruction in Congress.
+view-if: dem_house_control or dem_senate_control or legislative_gridlock
 on-arrival: gop_obstruction += 1; opposition_pressure += 1; resources -= 1 if resources > 0; governing_senate_support -= 2 if governing_senate_support > 2; dvp_relation -= 4
 
 Republican leadership slows committee work, forces procedural votes, and tries to make every bill look chaotic.
 
 @liberty_court_campaign
 title: Liberty League funds a court campaign.
+view-if: dem_presidential_control or dem_congress_control
 on-arrival: liberty_litigation += 1; opposition_pressure += 1; supreme_court_hostility += 1; ddp_relation -= 5; capital_strike_progress += 1
 
 The Liberty League turns legal resistance into a national fundraising machine. Every agency lawyer now expects a lawsuit.
 
 @spa_left_pressure
 title: SPA attacks from the left.
+view-if: dem_congress_control or economic_stress >= 10
 on-arrival: opposition_pressure += 1; kpd_relation -= 3; workers_kpd += 3; unemployed_kpd += 3; left_dissent += 3; labor_dissent += 2
 
 Norman Thomas and the Socialist Party accuse the administration of saving capitalism from itself. Their critique bites hardest where unemployment remains severe.
 
 @nusj_radio_campaign
 title: NUSJ radio offensive.
+view-if: dem_presidential_control or radio_reach >= 2 or opposition_pressure >= 3
 on-arrival: opposition_pressure += 1; workers_dnvp += 3; unemployed_dnvp += 4; old_middle_dnvp += 2; pro_republic -= 2; dnvp_relation -= 3
 
 Father Coughlin's network pushes a populist attack on bankers, bureaucracy, and the administration. The message is ugly, but it travels.
 
 @silver_street_drive
 title: Silver Legion street mobilization.
+view-if: radical_momentum >= 12 or coup_progress >= 3 or sa_strength >= 200
 on-arrival: opposition_pressure += 1; sa_strength += 60; sa_militancy += 0.05; workers_nsdap += 2; unemployed_nsdap += 3; coup_progress += 1; pro_republic -= 2
 
 The Silver Legion recruits through spectacle and intimidation. They are not large enough to govern, but they can poison public life.

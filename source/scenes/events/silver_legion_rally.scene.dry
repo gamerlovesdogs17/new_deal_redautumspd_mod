@@ -3,9 +3,9 @@ subtitle: Uniforms and threats move from rumor to spectacle.
 new-page: true
 is-card: true
 tags: event
-view-if: ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and (nsdap_votes >= 5 or sa_strength >= 250 or coup_progress >= 4)
+view-if: ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and radical_pressure_timer = 0 and (dem_presidential_control or dem_house_control or dem_senate_control) and (nsdap_votes >= 5 or sa_strength >= 250 or coup_progress >= 4)
 max-visits: 1
-on-arrival: sa_strength += 100; sa_militancy += 0.04; opposition_pressure += 1; coup_progress += 1; pro_republic -= 1; news_cooldown_timer = 3
+on-arrival: sa_strength += 100; sa_militancy += 0.04; opposition_pressure += 1; coup_progress += 1; pro_republic -= 1; news_cooldown_timer = 3; radical_pressure_timer = 2
 card-image: img/sa_march.jpg
 
 = News: Silver Legion Rally

@@ -1,6 +1,7 @@
 title: Statehouse Coup
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: The executive attempts to overthrow a state government.
-view-if: (chancellor = "Papen" or chancellor = "Schleicher") and president = "Hindenburg" and year >= 1932 and month >= 8 and spd_in_government == 0 and spd_prussia = 1 and not presidential_powers
+view-if: 0
 on-arrival: prussian_coup_seen = 1
 new-page: true
 tags: event

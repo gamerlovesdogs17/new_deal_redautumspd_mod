@@ -1,7 +1,8 @@
 title: Suspension of the Austrian parliament
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 new-page: true
 subtitle: Our southern neighbor is sliding into dictatorship.
-view-if: year = 1933 and (month = 3 or month = 4) and ((spd_in_government and foreign_minister_party = "SPD") or (austria_relation >= 1))
+view-if: 0
 max-visits: 1
 on-arrival: austrian_parliament_seen = 1
 face-image: img/Dollfuss.jpg

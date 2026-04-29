@@ -1,6 +1,7 @@
 title: Conservative Emergency Schemes
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: Conservative operators claim to have a plan to save the republic...
-view-if: year >= 1932 and president = "Hindenburg" and chancellor = "Schleicher" and spd_in_government = 0 and largest_party = "NSDAP" and hitler_deported = 0 and not presidential_powers
+view-if: 0
 on-arrival: economic_growth += 1; budget -= 1; unemployed -= 3 if unemployed > 10; rural_dnvp += 3; old_middle_dnvp += 3; new_middle_dnvp += 3; workers_dnvp += 3
 new-page: true
 max-visits: 1

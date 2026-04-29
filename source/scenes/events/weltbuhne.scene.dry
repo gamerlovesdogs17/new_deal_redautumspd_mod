@@ -1,4 +1,5 @@
 title: The Free Press Trial
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 new-page: true
 subtitle: A magazine is tried for revealing military secrets...
 view-if: year = 1929 and (month = 8 or month = 9) and judicial_reform < 4

@@ -1,4 +1,5 @@
 title: The Conclusion of the Free Press Case
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 subtitle: Carl von Ossietzky and collaborators are finally sentenced.
 new-page: true
 view-if: year = 1931 and month >= 11 and weltbuhne_seen = 1 and not weltbuhne_dropped

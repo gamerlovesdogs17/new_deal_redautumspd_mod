@@ -1,8 +1,9 @@
 title: Labor Organization Pressure
+# LEADERSHIP-DEPENDANT TODO: Recheck this event against House, Senate, and presidential control; do not rely only on spd_in_government/chancellor_party.
 new-page: true
 is-card: true
 tags: event
-view-if: spd_in_government = 1 and ((year = 1933 and month >= 3) or year > 1933) and labor_organization_pressure_timer = 0 and radical_pressure_timer = 0 and (labor_militancy >= 6 or cio_momentum + afl_momentum >= 4 or unemployed >= 18)
+view-if: dem_congress_control and ((year = 1933 and month >= 3) or year > 1933) and labor_organization_pressure_timer = 0 and radical_pressure_timer = 0 and (labor_militancy >= 6 or cio_momentum + afl_momentum >= 4 or unemployed >= 18)
 on-arrival: labor_organization_pressure_timer = 14; radical_pressure_timer = 4; month_actions += 1
 card-image: img/adgb_logo.svg
 

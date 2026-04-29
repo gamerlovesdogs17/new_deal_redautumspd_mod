@@ -1,0 +1,44 @@
+title: NUSJ and Silver Legion Escalation
+new-page: true
+is-card: true
+tags: event
+view-if: spd_in_government = 1 and ((year = 1933 and month >= 3) or year > 1933) and nusj_silver_escalation_timer = 0 and radical_pressure_timer = 0 and (opposition_pressure >= 4 or radical_momentum >= 18 or dnvp_votes + nsdap_votes >= 14 or radio_reach >= 4)
+on-arrival: nusj_silver_escalation_timer = 18; radical_pressure_timer = 5; month_actions += 1
+card-image: img/sa_march.jpg
+
+= NUSJ and Silver Legion Escalation
+
+Coughlinite radio networks and Silver Legion organizers are feeding each other. One turns resentment into a national audience; the other turns it into uniforms, intimidation, and street violence.
+
+- @federal_investigation
+- @state_guard_response
+- @radio_counteroffensive
+- @wait_out_right
+
+@federal_investigation
+title: Open a federal investigation.
+subtitle: Reduces far-right organization; angers civil-liberties critics.
+on-arrival: resources -= 1 if resources > 0; dnvp_relation -= 4; nsdap_relation -= 5; radio_reach -= 1 if radio_reach > 0; sa_strength -= 70 if sa_strength >= 70; sa_militancy -= 0.03 if sa_militancy >= 0.03; opposition_pressure -= 1 if opposition_pressure > 0; coup_progress -= 1 if coup_progress > 0; pro_republic += 2; kpd_relation -= 1
+
+Federal investigators follow money, weapons, and broadcast coordination. The right calls it persecution. The administration calls it law enforcement.
+
+@state_guard_response
+title: Coordinate governors, police, and the Guard.
+subtitle: Checks street violence; carries repression risk.
+on-arrival: governor_network += 1; interior_police_loyalty += 0.05; sa_strength -= 90 if sa_strength >= 90; sa_militancy -= 0.04 if sa_militancy >= 0.04; coup_progress -= 1 if coup_progress > 0; pro_republic += 1; kpd_relation -= 3; workers_kpd += 2; labor_dissent += 1
+
+Allied governors receive quiet federal support to keep armed politics off the streets. It works best where state governments are friendly, and worst where sheriffs sympathize with the men they are supposed to contain.
+
+@radio_counteroffensive
+title: Answer Coughlin on the air.
+subtitle: Uses legitimacy and patronage rather than police power.
+on-arrival: resources -= 1 if resources > 0; radio_reach -= 2 if radio_reach >= 2; dnvp_relation -= 3; old_middle_dnvp -= 3 if old_middle_dnvp > 3; unemployed_dnvp -= 2 if unemployed_dnvp > 2; new_deal_legitimacy += 3 if new_deal_legitimacy < 95; opposition_pressure -= 1 if opposition_pressure > 0
+
+The White House, friendly bishops, labor radio, and local Democratic machines answer the NUSJ in its own medium. The attack does not vanish, but it loses some of its monopoly on anger.
+
+@wait_out_right
+title: Wait for the right to overreach.
+subtitle: Saves resources; escalation continues.
+on-arrival: opposition_pressure += 1; radio_reach += 1; sa_strength += 80; sa_militancy += 0.04; workers_dnvp += 2; unemployed_dnvp += 3; workers_nsdap += 2; unemployed_nsdap += 2; coup_progress += 1; pro_republic -= 2
+
+The administration banks on the NUSJ and Silver Legion discrediting themselves. They may, eventually. For now, they organize.

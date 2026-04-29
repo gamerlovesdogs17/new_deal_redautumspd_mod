@@ -1,5 +1,5 @@
 title: Capital Strike
-subtitle: Germany's industries are idling...
+subtitle: America's industries are idling...
 view-if: (capital_strike_progress >= 10 or budget <= -5) and spd_in_government
 new-page: true
 max-visits: 1
@@ -8,7 +8,7 @@ tags: event
 
 = Capital Strike
 
-Our policies have greatly angered the capitalists. Investment has fallen, and factories are idling, preventing the workers from fulfilling their jobs. Meanwhile, the bourgeois press is a constant chorus of venomous invective directed at us and our economic policies.
+Our policies have greatly angered the capitalists. Investment has fallen, and factories are idling, preventing the workers from fulfilling their jobs. Meanwhile, the conservative press is a constant chorus of venomous invective directed at us and our economic policies.
 
 What can we do?
 

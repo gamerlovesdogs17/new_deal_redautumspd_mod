@@ -14,45 +14,45 @@ face-image: img/portraits/MüllerHermann.jpg
 on-arrival: muller_died_in_office = 1
 # TODO: achievement for muller dying in office
 
-Chancellor Hermann Müller has died while in office. He will be greatly missed. But now, we must select a new Chancellor.
+Speaker Hermann Müller has died while in office. He will be greatly missed. But now, we must select a new Speaker.
 
-- @braun_chancellor: Otto Braun (SPD) for Chancellor.
-- @wels_chancellor: Otto Wels (SPD) for Chancellor.
-- @breitscheid_chancellor: Rudolf Breitscheid (SPD) for Chancellor.
-- @bruning_chancellor: Let Heinrich Bruning of the Center Party become Chancellor.
-- @wirth_chancellor: Joseph Wirth of the Center Party should be Chancellor.
+- @braun_speaker: Otto Braun (SPD) for Speaker.
+- @wels_speaker: Otto Wels (SPD) for Speaker.
+- @breitscheid_speaker: Rudolf Breitscheid (SPD) for Speaker.
+- @bruning_speaker: Let Heinrich Bruning of the Center Party become Speaker.
+- @wirth_speaker: Joseph Wirth of the Center Party should be Speaker.
 
-@braun_chancellor
+@braun_speaker
 on-arrival: chancellor = "Braun"; chancellor_party = "SPD"; z_relation -= 5; dvp_relation -= 5
 subtitle: The Center Party is worried about having so much power in one man.
 
-Our coalition partners are reluctant to accept the new Chancellor, but they do not make loud objections.
+Our coalition partners are reluctant to accept the new Speaker, but they do not make loud objections.
 
 
-@wels_chancellor
+@wels_speaker
 on-arrival: chancellor = "Wels"; chancellor_party = "SPD"; z_relation -= 3; dvp_relation -= 3
-subtitle: He is a good organizer, but is he also a good chancellor?
+subtitle: He is a good organizer, but is he also a good speaker?
 
-Our coalition partners are reluctant to accept the new Chancellor, but they do not make loud objections.
+Our coalition partners are reluctant to accept the new Speaker, but they do not make loud objections.
 
-@breitscheid_chancellor
+@breitscheid_speaker
 on-arrival: chancellor = "Breitscheid"; chancellor_party = "SPD"; z_relation -= 5; dvp_relation -= 5; kpd_relation += 1
 subtitle: The Center Party is worried about his left-leaning tendencies.
 
-Our coalition partners are reluctant to accept the new Chancellor, but they do not make loud objections.
+Our coalition partners are reluctant to accept the new Speaker, but they do not make loud objections.
 
-@bruning_chancellor
+@bruning_speaker
 on-arrival: chancellor = "Brüning"; chancellor_party = "Z"; z_relation += 5; dvp_relation += 5
 subtitle: The Center Party claims it is their turn...
 
-The Center Party is grateful that we have supported Brüning for Chancellor.
+The Center Party is grateful that we have supported Brüning for Speaker.
 
-@wirth_chancellor
+@wirth_speaker
 on-arrival: chancellor = "Wirth"; chancellor_party = "Z"; z_relation += 5; dvp_relation += 2
 view-if: z_party_leader = "Joos"
 subtitle: As a moderate member of the Center Party, he could represent unity.
 
-Our coalition partners accept Joseph Wirth of the Center Party as the new Chancellor.
+Our coalition partners accept Joseph Wirth of the Center Party as the new Speaker.
 
 
 @not_pm

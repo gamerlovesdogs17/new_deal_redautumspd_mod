@@ -1,0 +1,49 @@
+title: Supreme Court Challenge
+new-page: true
+is-card: true
+tags: presidential_affairs, congressional_affairs, cabinet
+view-if: spd_in_government = 1 and judicial_crisis_timer = 0 and economic_plan > 0
+on-arrival: judicial_crisis_timer = 10; month_actions += 1; supreme_court_hostility += 1 if dem_economic_plan = "structural_transformation"; supreme_court_hostility += 1 if dem_economic_plan = "share_our_wealth"; liberty_litigation += 1 if ddp_relation < 45
+card-image: img/supreme_court.jpg
+
+= Supreme Court Challenge
+
+Major New Deal measures are moving toward the courts. Business attorneys, Liberty League donors, and conservative judges argue that the administration has exceeded federal power.
+
+Court hostility: [+ supreme_court_hostility +]
+
+- @compromise
+- @court_packing
+- @constitutional_amendment
+- @defy_court
+- @easy_discard
+
+@compromise
+title: Rewrite the program around narrower statutory authority.
+subtitle: Safer legally, weaker economically.
+on-arrival: supreme_court_hostility -= 1; new_deal_legitimacy += 3; economic_growth -= 0.2; workers_spd -= 2; unemployed_spd -= 2; ddp_relation += 4; dvp_relation += 3; left_dissent += 4; labor_dissent += 3
+
+The administration narrows the program and dares the Court to strike down a more carefully drafted law. Conservatives are somewhat mollified, but workers see the retreat.
+
+@court_packing
+title: Threaten to expand the Court.
+subtitle: High reward, high backlash.
+on-arrival: supreme_court_hostility -= 2; new_deal_legitimacy -= 5; pro_republic -= 3; resources -= 1; left_dissent -= 2; labor_dissent -= 2; reformist_dissent += 7; center_dissent += 5; ddp_relation -= 8; dvp_relation -= 8; capital_strike_progress += 1
+
+The Court suddenly becomes more cautious, but the opposition calls it an assault on constitutional government. The fight will echo through every future reform.
+
+@constitutional_amendment
+title: Seek a constitutional amendment for federal economic authority.
+subtitle: Slow, legitimate, expensive. -2 political capital.
+choose-if: resources >= 2
+unavailable-subtitle: Requires 2 political capital.
+on-arrival: resources -= 2; supreme_court_hostility -= 1; new_deal_legitimacy += 8; pro_republic += 3; z_relation += 2; dvp_relation += 2; economic_growth -= 0.1
+
+Instead of fighting case by case, we start a national campaign for clear federal authority over economic reconstruction. It is slow, but it puts the argument before the country.
+
+@defy_court
+title: Publicly denounce the Court and keep pushing.
+subtitle: Mobilizes the base, damages legitimacy.
+on-arrival: workers_spd += 4; unemployed_spd += 4; left_dissent -= 4; labor_dissent -= 3; new_deal_legitimacy -= 9; pro_republic -= 6; ddp_relation -= 10; dvp_relation -= 9; coup_progress += 1; capital_strike_progress += 1
+
+The administration declares that no court can be allowed to freeze the nation in depression. The base cheers; constitutional moderates recoil.

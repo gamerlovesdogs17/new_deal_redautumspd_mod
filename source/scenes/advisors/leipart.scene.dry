@@ -1,13 +1,13 @@
-title: Theodor Leipart
+title: William Green
 is-pinned-card: true
 tags: advisor, labor
 card-image: img/portraits/LeipartTheodor.jpg
 view-if: leipart_advisor = 1
 new-page: true 
 
-= Theodor Leipart
+= William Green
 
-Leipart is a leader of the ADGB, the largest federation of socialist trade unions.
+Green is an AFL labor leader with deep ties to craft unions and cautious labor officials. He can steady labor relations without promising an industrial revolution.
 
 - @organizing
 - @depression
@@ -29,10 +29,10 @@ We have increased our organizing among the workers.
 title: Addressing the economic crisis
 subtitle: Formulate a plan to get us out of this mess.
 choose-if: advisor_action_timer <= 0 and wtb_adopted = 0 and black_thursday_seen
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if black_thursday_seen == 0 : We are not currently in an economic crisis. ?][? if wtb_adopted > 0 : We have already adopted the WTB-Plan. ?]
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if black_thursday_seen == 0 : We are not currently in an economic crisis. ?][? if wtb_adopted > 0 : We have already adopted an economic plan. ?]
 on-arrival: advisor_action_timer = 6; wtb_support += 2; center_dissent += 10; labor_strength += 1
 
-The WTB-Plan, standing for its primary supporters Woytinsky, Tarnow, and Baade, has been adopted as the unions' plan for getting us out of the depression. Leipart canvasses in favor of this policy throughout the party and the unions.
+Green canvasses throughout the party and the unions for a public works plan to pull the country out of the depression.
 
 @union_unity
 title: Union-party coordination
@@ -41,4 +41,4 @@ choose-if: advisor_action_timer <= 0
 unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?]
 on-arrival: advisor_action_timer = 6; labor_dissent -= 5; labor_strength += 5
 
-We have reduced tensions with the Labor faction, and increased its strength in the party.
+We have reduced tensions with the Labor Democrats, and increased their strength in the party.

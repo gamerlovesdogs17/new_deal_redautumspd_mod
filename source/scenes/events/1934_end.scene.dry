@@ -1,15 +1,15 @@
-title: A New Day in Germany
+title: A New Day for the Republic
 subtitle: Has democracy finally triumphed?
 tags: event
 priority: 3
-view-if: 0
+view-if: year >= 1935 and month >= 1
 max-visits: 1
 on-arrival: {!
 !}
 new-page: true
 go-to: game_over_1934
 
-= A New Day in Germany
+= A New Day in the Republic
 
-After the death of Hindenburg and the presidential election of 1934, it seems as if an era of history is closing. The worst years of political and economic crisis are over, and Nazism's days are numbered. Perhaps Germany will finally enter into a new era of genuine peace...
+The emergency years are ending. The depression, the courts, the street movements, the party conferences, and the coalition bargains have all left marks on the republic. The question now is not whether the old order survived unchanged. It did not. The question is what kind of settlement replaced it.
 

@@ -1,13 +1,13 @@
-title: Kurt Schumacher
+title: Smedley Butler
 is-pinned-card: true
 tags: advisor, neorevisionist
 card-image: img/portraits/SchumacherKurt.jpg
 view-if: schumacher_advisor = 1
 new-page: true 
 
-= Kurt Schumacher
+= Smedley Butler
 
-A Great War veteran and a neorevisionist leader, Kurt Schumacher argues for a strong resistance against the Nazis.
+Smedley Butler is a decorated Marine veteran turned anti-fascist speaker, urging the Democratic coalition to confront the Silver Legion and other enemies of constitutional government.
 
 - @emergency_fundraising
 - @build_reichsbanner
@@ -22,23 +22,23 @@ unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +
 on-arrival: advisor_action_timer = 6; resources += dues
 #view-if: difficulty < 1
 
-# Schumacher's emergency fundraising is available on all difficulties.
+# Butler's emergency fundraising is available on all difficulties.
 
 We have gained +[+ dues +] resources.
 
 @build_reichsbanner
-title: Reichsbanner
-subtitle: Schumacher supports providing more resources to the Reichsbanner.
+title: Democratic Defense League
+subtitle: Butler supports providing more resources to democratic veterans, stewards, and anti-fascist organizers.
 choose-if: advisor_action_timer = 0
 unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?]
 on-arrival: advisor_action_timer = 6; reichsbanner_timer -= 6; last_advisor_action = 1
 go-to: reichsbanner
 
 @moderate_economic_plan
-title: Support the reformist economic plan
-subtitle: Call for a limited program of job creation without deficit spending.
+title: Support the Pragmatic New Deal plan
+subtitle: Butler can back a limited job-creation program that avoids open-ended deficit spending.
 choose-if: advisor_action_timer = 0 and moderate_plan_adopted = 0 and black_thursday_seen = 1
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?] [? if moderate_economic_plan = 0 : We have already adopted the reformist economic plan. ?] [? if black_thursday_seen == 0 : We are not currently in an economic crisis. ?]
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?] [? if moderate_plan_adopted > 0 : We have already adopted the Pragmatic New Deal plan. ?] [? if black_thursday_seen == 0 : We are not currently in an economic crisis. ?]
 on-arrival: advisor_action_timer = 6
 go-to: crisis_program.support_moderate
 

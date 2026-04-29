@@ -1,15 +1,15 @@
-title: Coup in Prussia
-subtitle: The Chancellor attempts to overthrow the Prussian government.
+title: Statehouse Coup
+subtitle: The executive attempts to overthrow a state government.
 view-if: (chancellor = "Papen" or chancellor = "Schleicher") and president = "Hindenburg" and year >= 1932 and month >= 8 and spd_in_government == 0 and spd_prussia = 1 and not presidential_powers
 on-arrival: prussian_coup_seen = 1
 new-page: true
 tags: event
 max-visits: 1
-face-image: img/Reichswehr.jpg
+face-image: img/Defense Department.jpg
 
-= Coup in Prussia
+= Coup in key states
 
-A crisis! Chancellor [+ chancellor +] has ordered the dismissal of the Prussian government in a procedure known as the *Reichsexecution*. His argument is that the Prussian state government is unable to maintain order due to the battles on the streets between the SA, Reichsbanner, and other paramilitaries. This is despite his own government legalizing them.
+A crisis! Speaker [+ speaker +] has ordered the dismissal of the state government in a procedure known as the *Reichsexecution*. His argument is that the state state government is unable to maintain order due to the battles on the streets between the SA, Democratic Defense League, and other paramilitaries. This is despite his own government legalizing them.
 
 The legality of the action is questionable. Many of our members are ready to resist.
 
@@ -19,11 +19,11 @@ The legality of the action is questionable. Many of our members are ready to res
 
 @defend
 title: Fight against the overthrow attempt!
-subtitle: Labor will call a general strike. The Reichsbanner and the loyal elements of the Prussian police will resist the coup.
+subtitle: Labor will call a general strike. Civic-defense leagues and loyal elements of the state police will resist the coup.
 unavailable-subtitle: We do not have the forces to resist.
 choose-if: rb_strength*rb_militancy >= 200
 
-The Reichswehr and Stahlhelm are already surrounding Berlin, and the SA is supporting them. This could be civil war. We do realize that, correct? 
+The Defense Department and Liberty League auxiliaries are already surrounding Berlin, and the SA is supporting them. This could be civil war. We do realize that, correct? 
 
 - @defend_2: We will fight, even if it leads to a civil war.
 - @surrender
@@ -37,7 +37,7 @@ on-arrival: sa_strength *= 0.8; sh_strength *= 0.8; pro_republic += 10; workers_
 achievement: bollwerk_der_demokratie
 go-to: defend_2_victory_2
 
-Our forces confront the government troops and their reactionary auxiliaries, and somehow, our enemies retreat without a fight! They were overwhelmed by our display of strength, and have chosen to slink away. Chancellor [+ chancellor +] withdraws the dismissal of the Prussian government, at least for now.
+Our forces confront the government troops and their reactionary auxiliaries, and somehow, our enemies retreat without a fight! They were overwhelmed by our display of strength, and have chosen to slink away. Speaker [+ speaker +] withdraws the dismissal of the state government, at least for now.
 
 The show of force has reinvigorated support for the republic and for the SPD, and has weakened the fascists.
 
@@ -55,7 +55,7 @@ Our forces confront the government troops and their supporters on the streets of
 
 
 @surrender
-title: Give up on the Prussian government.
+title: Give up on the state government.
 on-arrival: spd_prussia = 0; workers_spd -= 5; left_dissent += 10; labor_dissent += 10; rb_militancy = rb_militancy/2; rb_strength -= 1000;
 
-A pall of hopelessness and despair descends over social democracy. We have failed. Many in the Reichsbanner simply quit, demoralized by their leaders' lack of a call to action.
+A pall of hopelessness and despair descends over social democracy. We have failed. Many in the Democratic Defense League simply quit, demoralized by their leaders' lack of a call to action.

@@ -1,0 +1,40 @@
+title: News: Bank Holiday Aftermath
+subtitle: The panic breaks, but trust has to be rebuilt.
+new-page: true
+is-card: true
+tags: event
+view-if: ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and banking_crisis_seen = 1 and banking_confidence >= 2
+max-visits: 1
+on-arrival: news_cooldown_timer = 3; old_middle_spd += 1; new_middle_spd += 1
+card-image: img/reichstag.jpg
+
+= News: Bank Holiday Aftermath
+
+Lines outside reopened banks are shorter than feared. Depositors are still nervous, but the first wave of panic has broken, and local papers are starting to print stories about businesses making payroll again.
+
+This is the kind of quiet success that can disappear if no one claims it.
+
+- @claim_reform: Claim it as proof of New Deal competence.
+- @credit_banks: Share credit with local banks.
+- @move_on: Let the news pass.
+
+@claim_reform
+title: Claim it as proof of New Deal competence.
+subtitle: Raises legitimacy; irritates conservative opponents.
+on-arrival: new_deal_legitimacy += 3 if new_deal_legitimacy < 95; pro_republic += 1; ddp_relation -= 1; dvp_relation -= 1; kpd_relation -= 1
+
+The administration presents the reopening as evidence that democratic government can act quickly without surrendering to panic.
+
+@credit_banks
+title: Share credit with local banks.
+subtitle: Better business relations; less party credit.
+on-arrival: banking_confidence += 1; ddp_relation += 2; dvp_relation += 2; old_middle_spd += 2; labor_dissent += 1; new_deal_legitimacy += 1 if new_deal_legitimacy < 95
+
+Friendly bankers and local officials are invited into the victory lap. The line is less populist, but it makes another panic less likely.
+
+@move_on
+title: Let the news pass.
+subtitle: No cost, little gain.
+on-arrival: banking_confidence += 1; opposition_pressure += 1
+
+The administration moves to the next bill. Opponents move to the next accusation.

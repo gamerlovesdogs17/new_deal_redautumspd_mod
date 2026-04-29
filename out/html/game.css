@@ -199,16 +199,19 @@ blockquote + blockquote.attribution {
   float: right;
   right: 0.4em;
 }
-#qualities {
+#qualities,
+#strategic_qualities {
   text-indent: 0;
   line-height: 1.3em;
   font-size: 0.95em;
 }
-#qualities p {
+#qualities p,
+#strategic_qualities p {
   text-indent: 0;
   margin-bottom: 0.55em;
 }
-#qualities h1 {
+#qualities h1,
+#strategic_qualities h1 {
   font-size: 0.95em;
   font-weight: normal;
   text-align: left;
@@ -219,8 +222,32 @@ blockquote + blockquote.attribution {
   text-shadow: rgba(255, 255, 255, 0.75) 2px 2px 2px,
                rgba(0, 0, 0, 0.1) -1px -1px 2px;
 }
-#qualities h1 + p:first-line {
+#qualities h1 + p:first-line,
+#strategic_qualities h1 + p:first-line {
   font-weight: normal;
+}
+
+#strategy_sidebar {
+  display: block;
+}
+
+.strategic-list {
+  display: grid;
+  gap: 0.35em;
+}
+
+.strategic-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.4em;
+  align-items: baseline;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 0.25em;
+}
+
+.strategic-row span:last-child {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 
@@ -478,7 +505,8 @@ img {
       line-height: 160%;
       padding: 1em 1em 1.5em 1em;
   }
-  #qualities {
+  #qualities,
+  #strategic_qualities {
       font-size: 1em;
   }
   #tools_wrapper {

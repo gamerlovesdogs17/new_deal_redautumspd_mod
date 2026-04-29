@@ -1,13 +1,13 @@
-title: Otto Wels
+title: James Farley
 is-pinned-card: true
 tags: advisor, centrist
 card-image: img/portraits/WelsOtto.jpg
 view-if: wels_advisor = 1
 new-page: true
 
-= Otto Wels
+= James Farley
 
-Wels is the long-time chairman of the SPD. He is a gifted organizer and a member of the centrist faction.
+Farley is Roosevelt's party organizer and patronage chief. He keeps county chairs, state bosses, and campaign donors pointed in roughly the same direction.
 
 - @clear_agenda
 - @party_discipline
@@ -53,8 +53,8 @@ We have gained +[+ dues +] resources.
 @snap_election
 title: Snap Election
 subtitle: Call a snap election.
-unavailable-subtitle: [? if chancellor != "Wels" : Wels must be Chancellor or President. ?][? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?]
-choose-if: advisor_action_timer == 0 and (chancellor == "Wels")
+unavailable-subtitle: [? if speaker != "Farley" : Farley must be Speaker or President. ?][? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?]
+choose-if: advisor_action_timer == 0 and (chancellor == "Farley")
 on-arrival: advisor_action_timer = 6; time_to_election = 3
 call: set_next_election_time
 

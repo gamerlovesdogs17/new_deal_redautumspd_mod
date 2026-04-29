@@ -1,0 +1,42 @@
+title: News: Liberty League Test Case
+subtitle: A New Deal agency is dragged into court.
+new-page: true
+is-card: true
+tags: event
+view-if: spd_in_government = 1 and ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and supreme_court_hostility >= 3 and liberty_litigation >= 1
+max-visits: 1
+on-arrival: opposition_pressure += 1; supreme_court_hostility += 1; constitutional_stress += 1; news_cooldown_timer = 3
+card-image: img/reichstag.jpg
+
+= News: Liberty League Test Case
+
+The Liberty League has found its case. A conservative district judge has accepted a challenge to one of the administration's recovery agencies, giving business papers a clean headline: **Can the New Deal govern by emergency?**
+
+The legal question is narrow. The political question is not. Every hostile editorial treats the case as a referendum on whether the administration is rebuilding democracy or smuggling in permanent executive power.
+
+- @lawyers: Fund a careful legal defense.
+- @popular_case: Make the agency's beneficiaries visible.
+- @quiet: Keep the fight quiet.
+
+@lawyers
+title: Fund a careful legal defense.
+subtitle: -1 resources. Lowers court risk.
+choose-if: resources >= 1
+unavailable-subtitle: Not enough resources.
+on-arrival: resources -= 1; supreme_court_hostility -= 1 if supreme_court_hostility > 0; liberty_litigation -= 1 if liberty_litigation > 0; agency_capacity += 1
+
+The administration sends its best lawyers and avoids a grandstanding brief. The point is to win the case, not to give the Court a reason to strike broadly.
+
+@popular_case
+title: Make the agency's beneficiaries visible.
+subtitle: Raises legitimacy, but politicizes the Court fight.
+on-arrival: new_deal_legitimacy += 3 if new_deal_legitimacy < 95; workers_spd += 2; rural_spd += 2; supreme_court_hostility += 1; ddp_relation -= 2
+
+Relief recipients, farmers, and local officials testify in public. The case becomes harder for opponents to describe as abstract constitutional housekeeping.
+
+@quiet
+title: Keep the fight quiet.
+subtitle: Avoids escalation, but lets the opposition define the story.
+on-arrival: liberty_litigation += 1; ddp_relation += 1; new_deal_legitimacy -= 1
+
+The White House refuses to turn a court case into a national circus. The opposition has no such restraint.

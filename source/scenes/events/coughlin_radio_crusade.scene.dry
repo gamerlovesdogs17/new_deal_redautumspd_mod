@@ -1,0 +1,42 @@
+title: News: Coughlin's Sunday Broadcast
+subtitle: The NUSJ turns resentment into a weekly ritual.
+new-page: true
+is-card: true
+tags: event
+view-if: ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and (dnvp_votes >= 6 or radio_reach >= 2 or opposition_pressure >= 3)
+max-visits: 1
+on-arrival: radio_reach += 1; opposition_pressure += 1; old_middle_dnvp += 3; unemployed_dnvp += 3; pro_republic -= 1; news_cooldown_timer = 3
+card-image: img/reichstag.jpg
+
+= News: Coughlin's Sunday Broadcast
+
+Father Coughlin has turned his broadcast into a national political instrument. He attacks bankers, relief administrators, socialists, internationalists, and the White House in the same breath, then offers the NUSJ as the only honest voice left.
+
+The message is contradictory, but it is emotionally precise. In towns where the banks failed and relief checks arrive late, contradiction is not the main thing people hear.
+
+- @answer_airwaves: Answer him on the air.
+- @local_clergy: Work through local clergy and party machines.
+- @ignore_sermon: Ignore the sermon.
+
+@answer_airwaves
+title: Answer him on the air.
+subtitle: -1 resources. Slows NUSJ radio growth.
+choose-if: resources >= 1
+unavailable-subtitle: Not enough resources.
+on-arrival: resources -= 1; radio_reach -= 1 if radio_reach > 0; new_deal_legitimacy += 2 if new_deal_legitimacy < 95; old_middle_dnvp -= 2 if old_middle_dnvp > 2
+
+Friendly stations carry a direct rebuttal: the crisis is real, but demagoguery is not relief.
+
+@local_clergy
+title: Work through local clergy and party machines.
+subtitle: Narrows the damage in Catholic and urban communities.
+on-arrival: catholics_spd += 3; old_middle_spd += 2; dnvp_relation -= 2; z_relation += 2
+
+The response is less dramatic than a national speech, but more credible in the places where Coughlin's voice is strongest.
+
+@ignore_sermon
+title: Treat it as noise.
+subtitle: Saves resources; NUSJ momentum grows.
+on-arrival: radio_reach += 1; workers_dnvp += 2; unemployed_dnvp += 2; pro_republic -= 1
+
+The administration has legislation to pass and strikes to settle. Coughlin fills the silence.

@@ -1,13 +1,13 @@
-title: Rudolf Wissell
+title: Robert Wagner
 is-pinned-card: true
 tags: advisor, labor
 card-image: img/portraits/WissellRudolf.jpg
 view-if: wissell_advisor = 1
 new-page: true 
 
-= Rudolf Wissell
+= Robert Wagner
 
-Wissell is a labor economist working for the ADGB, the federation of free trade unions, and has been a labor minister on multiple occasions. His priority is to improve conditions for organized workers.
+Wagner is a labor lawyer and senator whose priority is turning union demands into enforceable workplace protections.
 
 - @labor_rights_
 - @union_unity
@@ -15,9 +15,9 @@ Wissell is a labor economist working for the ADGB, the federation of free trade 
 
 @labor_rights_
 title: Labor Rights
-subtitle: As Labor Minister, Wissell can help set regulations for working conditions.
+subtitle: Wagner can help set Labor Department rules for working conditions.
 choose-if: advisor_action_timer <= 0 and spd_in_government and labor_minister_party = "SPD"
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if labor_minister_party != "SPD" : The SPD does not control the Labor Ministry. ?]
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if labor_minister_party != "SPD" : The Democratic Party does not control the Labor Department. ?]
 on-arrival: advisor_action_timer = 6; labor_rights_timer -= 10; last_advisor_action = 1
 go-to: labor_rights
 
@@ -29,5 +29,5 @@ choose-if: advisor_action_timer <= 0
 unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?]
 on-arrival: advisor_action_timer = 6; labor_dissent -= 5; labor_strength += 5
 
-We have reduced tensions with the Labor faction, and increased its strength in the party.
+We have reduced tensions with the Labor Democrats, and increased their strength in the party.
 

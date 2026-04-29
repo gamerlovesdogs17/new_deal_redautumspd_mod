@@ -186,6 +186,22 @@
       dendryUI.dendryEngine._runActions(scene.onArrival);
       var displayContent = dendryUI.dendryEngine._makeDisplayContent(scene.content, true);
       $('#qualities').append(dendryUI.contentToHTML.convert(displayContent));
+      window.updateStrategySidebar();
+  };
+
+  window.updateStrategySidebar = function() {
+      var strategyPanel = $('#strategic_qualities');
+      if (!strategyPanel.length) {
+          return;
+      }
+      strategyPanel.empty();
+      var scene = dendryUI.game.scenes['status.strategic_dashboard'];
+      if (!scene) {
+          return;
+      }
+      dendryUI.dendryEngine._runActions(scene.onArrival);
+      var displayContent = dendryUI.dendryEngine._makeDisplayContent(scene.content, true);
+      strategyPanel.append(dendryUI.contentToHTML.convert(displayContent));
   };
 
   window.changeTab = function(newTab, tabId) {

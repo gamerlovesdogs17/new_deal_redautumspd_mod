@@ -24,6 +24,15 @@ if (typeof Q.sla_relation === "undefined") {
 Q.gop_r = Q.dvp_r || 0;
 Q.nusj_r = Q.dnvp_r || 0;
 Q.silver_legion_r = Q.nsdap_r || 0;
+Q.dem_r = Q.spd_r || 0;
+Q.spa_r = Q.kpd_r || 0;
+Q.fl_r = Q.z_r || 0;
+Q.dem_h = Q.spd_h || Q.spd_r || 0;
+Q.dem_s = Q.spd_s || Q.spd_r || 0;
+Q.spa_h = Q.kpd_h || Q.kpd_r || 0;
+Q.spa_s = Q.kpd_s || Q.kpd_r || 0;
+Q.fl_h = Q.z_h || Q.z_r || 0;
+Q.fl_s = Q.z_s || Q.z_r || 0;
 Q.gop_h = Q.dvp_h || Q.dvp_r || 0;
 Q.gop_s = Q.dvp_s || Q.dvp_r || 0;
 Q.liberty_league_h = Q.ddp_h || Q.ddp_r || 0;
@@ -54,6 +63,12 @@ if (!Q.spd_s_seats) {
 }
 Q.gop_h_seats = Q.dvp_h_seats || 0;
 Q.gop_s_seats = Q.dvp_s_seats || 0;
+Q.dem_h_seats = Q.spd_h_seats || 0;
+Q.dem_s_seats = Q.spd_s_seats || 0;
+Q.spa_h_seats = Q.kpd_h_seats || 0;
+Q.spa_s_seats = Q.kpd_s_seats || 0;
+Q.fl_h_seats = Q.z_h_seats || 0;
+Q.fl_s_seats = Q.z_s_seats || 0;
 Q.liberty_league_h_seats = Q.ddp_h_seats || 0;
 Q.liberty_league_s_seats = Q.ddp_s_seats || 0;
 Q.nusj_h_seats = Q.dnvp_h_seats || 0;
@@ -86,10 +101,13 @@ var leaderNames = {
 var partyNames = {
     "SPD": "Democratic Party",
     "KPD": "Socialist Party of America",
+    "SPA": "Socialist Party of America",
     "Z": "Farmer-Labor",
+    "DDP": "Liberty League",
     "DVP": "Republican Party",
     "DNVP": "National Union for Social Justice",
     "NSDAP": "Silver Legion",
+    "Silver Legion": "Silver Legion",
     "I": "Independent"
 };
 var partyTags = {
@@ -114,6 +132,26 @@ Q.gop_economic_plan_display = republicanEconomicPlanNames[Q.gop_economic_plan] |
 Q.gop_party_chair_display = leaderNames[Q.gop_party_chair] || Q.gop_party_chair || "undecided";
 Q.gop_leader_display = leaderNames[Q.gop_leader] || Q.gop_leader || Q.gop_party_chair_display;
 Q.chancellor_party_display = partyNames[Q.chancellor_party] || Q.chancellor_party || "";
+var speakerNameMap = {
+    "Brüning": "Floyd B. Olson",
+    "BrÃ¼ning": "Floyd B. Olson",
+    "Wirth": "Henrik Shipstead",
+    "Papen": "the conservative caretaker",
+    "Schleicher": "the conservative operator",
+    "Hitler": "William Pelley",
+    "Thälmann": "Norman Thomas",
+    "ThÃ¤lmann": "Norman Thomas",
+    "Breitscheid": "Fiorello La Guardia",
+    "Müller": "Sam Rayburn",
+    "MÃ¼ller": "Sam Rayburn"
+};
+Q.speaker = speakerNameMap[Q.chancellor] || Q.chancellor;
+Q.speaker_party = Q.chancellor_party;
+Q.speaker_party_display = partyNames[Q.speaker_party] || Q.speaker_party || "";
+Q.economic_stress_display = Math.round((Q.economic_stress || 0) * 10) / 10;
+Q.labor_militancy_display = Math.round((Q.labor_militancy || 0) * 10) / 10;
+Q.conservative_backlash_display = Math.round((Q.conservative_backlash || 0) * 10) / 10;
+Q.radical_momentum_display = Math.round((Q.radical_momentum || 0) * 10) / 10;
 !}
 
 = Status
@@ -158,15 +196,15 @@ Bill coalition viable: [? if bill_coalition_viable = 1 : yes ?][? if bill_coalit
 
 President: [+ president +]
 
-Speaker of the House: [+ chancellor +][? if chancellor_party_display :  ([+ chancellor_party_display +]) ?]
+Speaker of the House: [+ speaker +][? if speaker_party_display :  ([+ speaker_party_display +]) ?]
 
 National legislature composition:
 
-{!<span class="party-dem tooltip-text" title="Democratic Party - New Deal governing coalition.">DEM</span>!}: House [+ spd_h_seats +] seats ([+ spd_h +]%) / Senate [+ spd_s_seats +] seats ([+ spd_s +]%)
+{!<span class="party-dem tooltip-text" title="Democratic Party - New Deal governing coalition.">DEM</span>!}: House [+ dem_h_seats +] seats ([+ dem_h +]%) / Senate [+ dem_s_seats +] seats ([+ dem_s +]%)
 
-{!<span class="party-spa tooltip-text" title="Socialist Party of America - democratic socialist left opposition.">SPA</span>!}: House [+ kpd_h_seats +] seats ([+ kpd_h +]%) / Senate [+ kpd_s_seats +] seats ([+ kpd_s +]%)
+{!<span class="party-spa tooltip-text" title="Socialist Party of America - democratic socialist left opposition.">SPA</span>!}: House [+ spa_h_seats +] seats ([+ spa_h +]%) / Senate [+ spa_s_seats +] seats ([+ spa_s +]%)
 
-{!<span class="party-fl tooltip-text" title="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>!}: House [+ z_h_seats +] seats ([+ z_h +]%) / Senate [+ z_s_seats +] seats ([+ z_s +]%)
+{!<span class="party-fl tooltip-text" title="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>!}: House [+ fl_h_seats +] seats ([+ fl_h +]%) / Senate [+ fl_s_seats +] seats ([+ fl_s +]%)
 
 {!<span class="party-liberty tooltip-text" title="Liberty League - anti-New Deal conservative liberal split.">LL</span>!}: House [+ liberty_league_h_seats +] seats ([+ liberty_league_h +]%) / Senate [+ liberty_league_s_seats +] seats ([+ liberty_league_s +]%)
 
@@ -193,6 +231,59 @@ Economic growth: [+ economic_growth_2 +]%
 
 
 # = Public Opinion
+
+@strategic_dashboard
+title: Strategic Dashboard
+on-arrival: {!
+Q.banking_confidence_display = Q.banking_confidence || 0;
+Q.new_deal_legitimacy_display = Math.round((Q.new_deal_legitimacy || 0) * 10) / 10;
+Q.economic_stress_display = Math.round((Q.economic_stress || 0) * 10) / 10;
+Q.labor_militancy_display = Math.round((Q.labor_militancy || 0) * 10) / 10;
+Q.conservative_backlash_display = Math.round((Q.conservative_backlash || 0) * 10) / 10;
+Q.radical_momentum_display = Math.round((Q.radical_momentum || 0) * 10) / 10;
+Q.supreme_court_hostility_display = Q.supreme_court_hostility || 0;
+Q.opposition_pressure_display = Q.opposition_pressure || 0;
+Q.liberty_litigation_display = Q.liberty_litigation || 0;
+Q.gop_obstruction_display = Q.gop_obstruction || 0;
+Q.radio_reach_display = Q.radio_reach || 0;
+Q.governor_network_display = Q.governor_network || 0;
+Q.farm_relief_display = Q.farm_relief || 0;
+Q.agency_capacity_display = Q.agency_capacity || 0;
+Q.cabinet_style_display = Q.cabinet_style || "regular";
+Q.committee_control_display = Q.committee_control || 0;
+Q.house_whip_operation_display = Q.house_whip_operation || 0;
+Q.senate_whip_operation_display = Q.senate_whip_operation || 0;
+Q.pork_barrel_pressure_display = Q.pork_barrel_pressure || 0;
+Q.capital_strike_display = Math.round((Q.capital_strike_progress || 0) * 10) / 10;
+Q.coup_risk_display = Math.round((Q.coup_progress || 0) * 10) / 10;
+!}
+
+= Strategic Dashboard
+
+{!<div class="strategic-list">!}
+{!<div class="strategic-row">!}{!<span>!}New Deal legitimacy{!</span>!}{!<span>!}[? if new_deal_legitimacy >= 65 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ new_deal_legitimacy_display +]%{!</span>!} ?][? if new_deal_legitimacy < 65 and new_deal_legitimacy >= 40 : {!<span style="color:#b58900;font-weight:bold">!}[+ new_deal_legitimacy_display +]%{!</span>!} ?][? if new_deal_legitimacy < 40 : {!<span style="color:#c62828;font-weight:bold">!}[+ new_deal_legitimacy_display +]%{!</span>!} ?]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Economic stress index{!</span>!}{!<span>!}[? if economic_stress <= 6 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ economic_stress_display +]{!</span>!} ?][? if economic_stress > 6 and economic_stress < 12 : {!<span style="color:#b58900;font-weight:bold">!}[+ economic_stress_display +]{!</span>!} ?][? if economic_stress >= 12 : {!<span style="color:#c62828;font-weight:bold">!}[+ economic_stress_display +]{!</span>!} ?]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Labor militancy index{!</span>!}{!<span>!}[? if labor_militancy <= 3 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ labor_militancy_display +]{!</span>!} ?][? if labor_militancy > 3 and labor_militancy < 6 : {!<span style="color:#b58900;font-weight:bold">!}[+ labor_militancy_display +]{!</span>!} ?][? if labor_militancy >= 6 : {!<span style="color:#c62828;font-weight:bold">!}[+ labor_militancy_display +]{!</span>!} ?]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Conservative backlash index{!</span>!}{!<span>!}[? if conservative_backlash <= 4 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ conservative_backlash_display +]{!</span>!} ?][? if conservative_backlash > 4 and conservative_backlash < 8 : {!<span style="color:#b58900;font-weight:bold">!}[+ conservative_backlash_display +]{!</span>!} ?][? if conservative_backlash >= 8 : {!<span style="color:#c62828;font-weight:bold">!}[+ conservative_backlash_display +]{!</span>!} ?]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Radical momentum index{!</span>!}{!<span>!}[? if radical_momentum <= 10 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ radical_momentum_display +]{!</span>!} ?][? if radical_momentum > 10 and radical_momentum < 20 : {!<span style="color:#b58900;font-weight:bold">!}[+ radical_momentum_display +]{!</span>!} ?][? if radical_momentum >= 20 : {!<span style="color:#c62828;font-weight:bold">!}[+ radical_momentum_display +]{!</span>!} ?]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Banking confidence{!</span>!}{!<span>!}[? if banking_confidence_display >= 55 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ banking_confidence_display +]{!</span>!} ?][? if banking_confidence_display < 55 and banking_confidence_display >= 35 : {!<span style="color:#b58900;font-weight:bold">!}[+ banking_confidence_display +]{!</span>!} ?][? if banking_confidence_display < 35 : {!<span style="color:#c62828;font-weight:bold">!}[+ banking_confidence_display +]{!</span>!} ?]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Agency capacity{!</span>!}{!<span>!}[+ agency_capacity_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Governor network{!</span>!}{!<span>!}[+ governor_network_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Farm relief{!</span>!}{!<span>!}[+ farm_relief_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Labor alignment{!</span>!}{!<span>!}[+ labor_movement_alignment +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Court hostility{!</span>!}{!<span>!}[? if supreme_court_hostility <= 2 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ supreme_court_hostility_display +]{!</span>!} ?][? if supreme_court_hostility > 2 and supreme_court_hostility < 5 : {!<span style="color:#b58900;font-weight:bold">!}[+ supreme_court_hostility_display +]{!</span>!} ?][? if supreme_court_hostility >= 5 : {!<span style="color:#c62828;font-weight:bold">!}[+ supreme_court_hostility_display +]{!</span>!} ?]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Opposition pressure{!</span>!}{!<span>!}[? if opposition_pressure <= 2 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ opposition_pressure_display +]{!</span>!} ?][? if opposition_pressure > 2 and opposition_pressure < 5 : {!<span style="color:#b58900;font-weight:bold">!}[+ opposition_pressure_display +]{!</span>!} ?][? if opposition_pressure >= 5 : {!<span style="color:#c62828;font-weight:bold">!}[+ opposition_pressure_display +]{!</span>!} ?]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Liberty litigation{!</span>!}{!<span>!}[+ liberty_litigation_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}GOP obstruction{!</span>!}{!<span>!}[+ gop_obstruction_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Radio reach{!</span>!}{!<span>!}[+ radio_reach_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Cabinet style{!</span>!}{!<span>!}[+ cabinet_style_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Committee control{!</span>!}{!<span>!}[+ committee_control_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}House whip{!</span>!}{!<span>!}[+ house_whip_operation_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Senate whip{!</span>!}{!<span>!}[+ senate_whip_operation_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Local-project pressure{!</span>!}{!<span>!}[+ pork_barrel_pressure_display +]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Capital strike risk /10{!</span>!}{!<span>!}[? if capital_strike_progress <= 2 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ capital_strike_display +]{!</span>!} ?][? if capital_strike_progress > 2 and capital_strike_progress < 6 : {!<span style="color:#b58900;font-weight:bold">!}[+ capital_strike_display +]{!</span>!} ?][? if capital_strike_progress >= 6 : {!<span style="color:#c62828;font-weight:bold">!}[+ capital_strike_display +]{!</span>!} ?]{!</span>!}{!</div>!}
+{!<div class="strategic-row">!}{!<span>!}Coup risk /10{!</span>!}{!<span>!}[? if coup_progress <= 2 : {!<span style="color:#2e7d32;font-weight:bold">!}[+ coup_risk_display +]{!</span>!} ?][? if coup_progress > 2 and coup_progress < 6 : {!<span style="color:#b58900;font-weight:bold">!}[+ coup_risk_display +]{!</span>!} ?][? if coup_progress >= 6 : {!<span style="color:#c62828;font-weight:bold">!}[+ coup_risk_display +]{!</span>!} ?]{!</span>!}{!</div>!}
+{!</div>!}
 
 @politics
 

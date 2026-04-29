@@ -12,12 +12,13 @@ if (Q.advisor_action_timer <= 0) {
 !}
 max-cards: 3
 
-#Draw policy and political action cards from the main deck. Each card helps one bloc but may provoke backlash from others.
+#Choose a command area for the month. Congress handles bills and coalition votes, the White House handles executive strategy, and the party deck handles Democratic organization and outside-party relations.
 
 [? if year = 1928 and month = 2 : The emergency transition is underway. Congress and the coalition are already maneuvering for control of the recovery agenda. ?]
 
+- @congressional
+- @presidential
 - @party
-- @govt
 - #advisor
 - @shuffle_leadership_pinned
 
@@ -35,27 +36,38 @@ if (Q.advisor_action_timer <= 0) {
 !}
 max-cards: 4
 
-#Draw policy and political action cards from the main deck. Easy mode gives an extra card slot each month.
+#Choose a command area for the month. Congress handles bills and coalition votes, the White House handles executive strategy, and the party deck handles Democratic organization and outside-party relations. Easy mode gives an extra card slot each month.
 
 [? if year = 1928 and month = 2 : The emergency transition is underway. Congress and the coalition are already maneuvering for control of the recovery agenda. ?]
 
+- @congressional
+- @presidential
 - @party
-- @govt
 - #advisor
 - @shuffle_leadership_pinned
 
 
 @party
-title: Democratic Coalition Affairs
+title: Party Organization and Factions
+subtitle: Campaigns, party machinery, faction fights, and SPA/Farmer-Labor relations.
 card-image: img/Vorwaerts_nr_1.png
 is-deck: true
 
 - #party_affairs
 
-@govt
-title: Federal Government Affairs
-view-if: time >= 6
+@presidential
+title: White House and Administration
+subtitle: Executive messaging, cabinet direction, governors, courts, and national crisis management.
+view-if: president_party = "SPD" or president_party = "DEM" or president_party = "Democratic Party"
 card-image: img/reichstag_2.jpg
 is-deck: true
 
-- #govt_affairs
+- #presidential_affairs
+
+@congressional
+title: Congress, Coalition, and Policy
+subtitle: Legislation, committee control, patronage, farm policy, labor policy, and bargaining.
+card-image: img/reichstag_1.jpg
+is-deck: true
+
+- #congressional_affairs

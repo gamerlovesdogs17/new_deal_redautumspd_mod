@@ -1,7 +1,7 @@
 title: Labor Rights
 new-page: true
 is-card: true
-tags: govt_affairs, cabinet
+tags: congressional_affairs, cabinet
 on-arrival: labor_rights_timer += 10; month_actions += 1
 view-if: spd_in_government = 1 and labor_minister_party = "SPD" and labor_rights_timer <= 0 and labor_affairs_seen = 1
 card-image: img/portraits/WissellRudolf.jpg
@@ -31,9 +31,9 @@ With control of the Labor Ministry, we can set national standards for labor. Our
 view-if: working_hours < 2
 on-arrival: working_hours += 1; labor_dissent -= 8; left_dissent -= 5; labor_strength += 5; workers_spd += 7*(1-dissent); dvp_relation -= 4; coalition_dissent += 1; capital_strike_progress += 1 if dvp_relation <= 30; labor_goal_completed = 1; inflation += 0.1; economic_growth -= 0.1
 
-While a 40-hour work week was declared during the German Revolution in 1918, enforcement has become increasingly porous over the years. The capitalists have successfully added numerous exceptions and loopholes, returning to the old regime of forced overtime for workers.
+While a 40-hour work week was declared during the American Revolution in 1918, enforcement has become increasingly porous over the years. The capitalists have successfully added numerous exceptions and loopholes, returning to the old regime of forced overtime for workers.
 
-Now, with the force of the Labor Ministry, we are finally enforcing the rights of workers to their own time. The bourgeoisie and their political representatives are displeased.
+Now, with the force of the Labor Ministry, we are finally enforcing the rights of workers to their own time. The conservative elite and their political representatives are displeased.
 
 @shorten_hours
 view-if: working_hours >= 2 and black_thursday_seen = 1
@@ -46,7 +46,7 @@ Some in the labor movement argue that by reducing the maximum number of hours wo
 @safety
 on-arrival: workers_safety += 1; labor_dissent -= 5; labor_strength += 2; workers_spd += 5*(1-dissent); capital_strike_progress += 1 if workers_safety >= 3
 
-The Labor Ministry works on developing and enforcing safety regulations, in order to ensure healty working conditions for the proletariat. [? if workers_safety >= 3 : Businesses have begun to argue that our focus on safety is overbearing and unnecessary, interfering with the economy. ?]
+The Labor Ministry works on developing and enforcing safety regulations, in order to ensure healty working conditions for the working class. [? if workers_safety >= 3 : Businesses have begun to argue that our focus on safety is overbearing and unnecessary, interfering with the economy. ?]
 
 @unemployment_insurance
 view-if: unemployed >= unemployment_insurance_threshold + 4
@@ -63,7 +63,7 @@ With the onset of the Depression and its throngs of unemployed, our unemployment
 subtitle: The workers will regard this as a betrayal.
 on-arrival: workers_spd -= 0.12*workers_spd; unemployed_spd -= 0.2*unemployed_spd; workers_kpd += 6; workers_nsdap += 6; unemployed_kpd += 5; unemployed_nsdap += 5; left_dissent += 15; center_dissent += 10; labor_dissent += 15; reformist_dissent += 5; welfare -= 2; budget += 1; unemployed += 3; pro_republic -= 4; kpd_relation -= 8; inflation -= 2; unemployment_insurance_threshold = unemployed; unemployment_insurance_timer = 10; economic_growth -= 0.2;
 
-For budgetary reasons, we have cut unemployment insurance benefits. Unfortunately, our reasons for fiscal discipline are alien to the workers. They are furious at our betrayal, as are a good portion of our membership throughout the factions. Our loss is the KPD's gain, and even the NSDAP, those lapdogs of the bourgeoisie, have joined in criticizing us for our austerity.
+For budgetary reasons, we have cut unemployment insurance benefits. Unfortunately, our reasons for fiscal discipline are alien to the workers. They are furious at our betrayal, as are a good portion of our membership throughout the factions. Our loss is the SPA's gain, and even the Silver Legion, those lapdogs of the conservative elite, have joined in criticizing us for our austerity.
 
 
 

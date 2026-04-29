@@ -1,0 +1,42 @@
+title: News: Silver Legion Rally
+subtitle: Uniforms and threats move from rumor to spectacle.
+new-page: true
+is-card: true
+tags: event
+view-if: ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and (nsdap_votes >= 5 or sa_strength >= 250 or coup_progress >= 4)
+max-visits: 1
+on-arrival: sa_strength += 100; sa_militancy += 0.04; opposition_pressure += 1; coup_progress += 1; pro_republic -= 1; news_cooldown_timer = 3
+card-image: img/sa_march.jpg
+
+= News: Silver Legion Rally
+
+The Silver Legion has staged its largest rally yet. Pelley speaks beneath banners and floodlights, promising to cleanse the republic of bankers, socialists, immigrants, and traitors.
+
+The numbers are still smaller than the headlines imply. The danger is that spectacle can make a minority look inevitable.
+
+- @veterans_counterrally: Organize a democratic veterans counter-rally.
+- @deny_permits: Push cities to deny permits.
+- @monitor_only: Monitor them and avoid a martyrdom story.
+
+@veterans_counterrally
+title: Organize a democratic veterans counter-rally.
+subtitle: Requires some defense organization.
+choose-if: rb_strength >= 150
+unavailable-subtitle: Democratic defense groups are not organized enough.
+on-arrival: rb_strength += 60; pro_republic += 3; workers_nsdap -= 2 if workers_nsdap > 2; unemployed_nsdap -= 2 if unemployed_nsdap > 2; coup_progress -= 1 if coup_progress > 0
+
+Veterans, union stewards, church groups, and local Democrats fill the streets without copying the Legion's politics.
+
+@deny_permits
+title: Push cities to deny permits.
+subtitle: Slows the rally circuit; civil-liberties criticism rises.
+on-arrival: sa_strength -= 80 if sa_strength >= 80; sa_militancy += 0.02; kpd_relation -= 2; ddp_relation -= 2; constitutional_stress += 1
+
+Mayors and police chiefs find every procedural reason to block the next rallies. It works, but not cleanly.
+
+@monitor_only
+title: Monitor them and avoid a martyrdom story.
+subtitle: Saves political capital; organization continues.
+on-arrival: sa_strength += 80; radio_reach += 1; coup_progress += 1
+
+Federal investigators watch, collect names, and wait. The Legion keeps marching.

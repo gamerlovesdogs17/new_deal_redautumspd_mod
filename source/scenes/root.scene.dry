@@ -110,7 +110,7 @@ Q.gop_party_chair = "Herbert Hoover";
 Q.gop_wing = "undecided";
 Q.gop_economic_plan = "undecided";
 Q.gop_economic_plan_display = "Undecided";
-Q.gop_conference_due = 1;
+Q.gop_conference_due = 0;
 Q.gop_conference_seen = 0;
 Q.last_gop_conference_year = 1930;
 Q.dem_spa_cooperation = 0;
@@ -226,7 +226,7 @@ Q.nsdap_banned = 0;
 Q.coup_progress = 0;
 Q.capital_strike_progress = 0;
 
-Q.budget = 1;
+Q.budget = 2;
 
 // Proportion of different social groups
 // source: https://surface.syr.edu/cgi/viewcontent.cgi?filename=3&article=1016&context=books&type=additional page 45, table 3.4 - using 1925 figures
@@ -265,70 +265,73 @@ Q.parties = ['spd', 'kpd', 'z', 'ddp', 'dvp', 'dnvp', 'nsdap', 'other'];
 // TODO: add 'sapd' later on
 Q.sapd_formed = 0;
 
-// Support for party by social group
-// they don't have to sum to 100 since the electoral calculations will be normalized.
-Q.workers_spd = 58;
-Q.workers_kpd = 16;
-Q.workers_z = 9;
-Q.workers_ddp = 4;
-Q.workers_dvp = 5;
-Q.workers_dnvp = 4;
-Q.workers_nsdap = 8;
-Q.workers_other = 2;
+// Support for party by social group. These are U.S. 1932-style coalition
+// baselines using the legacy engine party keys:
+// SPD = Democrats, KPD = SPA, Z = Farmer-Labor, DDP = Liberty League,
+// DVP = GOP, DNVP = NUSJ, NSDAP = Silver Legion.
+// They do not need to sum exactly, but these start near 100 for readability.
+Q.workers_spd = 51;
+Q.workers_kpd = 8;
+Q.workers_z = 4;
+Q.workers_ddp = 2;
+Q.workers_dvp = 27;
+Q.workers_dnvp = 5;
+Q.workers_nsdap = 2;
+Q.workers_other = 1;
 
-Q.old_middle_spd = 18;
+Q.old_middle_spd = 37;
 Q.old_middle_kpd = 3;
-Q.old_middle_z = 6;
-Q.old_middle_ddp = 10;
-Q.old_middle_dvp = 28;
-Q.old_middle_dnvp = 15;
-Q.old_middle_nsdap = 18;
-Q.old_middle_other = 4;
+Q.old_middle_z = 2;
+Q.old_middle_ddp = 7;
+Q.old_middle_dvp = 40;
+Q.old_middle_dnvp = 6;
+Q.old_middle_nsdap = 4;
+Q.old_middle_other = 1;
 
-Q.new_middle_spd = 24;
+Q.new_middle_spd = 42;
 Q.new_middle_kpd = 3;
-Q.new_middle_z = 7;
-Q.new_middle_ddp = 12;
-Q.new_middle_dvp = 28;
-Q.new_middle_dnvp = 11;
-Q.new_middle_nsdap = 15;
-Q.new_middle_other = 3;
+Q.new_middle_z = 2;
+Q.new_middle_ddp = 7;
+Q.new_middle_dvp = 36;
+Q.new_middle_dnvp = 5;
+Q.new_middle_nsdap = 4;
+Q.new_middle_other = 1;
 
-Q.rural_spd = 20;
-Q.rural_kpd = 2;
-Q.rural_z = 24;
-Q.rural_ddp = 4;
-Q.rural_dvp = 20;
-Q.rural_dnvp = 16;
-Q.rural_nsdap = 10;
-Q.rural_other = 5;
+Q.rural_spd = 46;
+Q.rural_kpd = 3;
+Q.rural_z = 10;
+Q.rural_ddp = 2;
+Q.rural_dvp = 31;
+Q.rural_dnvp = 5;
+Q.rural_nsdap = 2;
+Q.rural_other = 1;
 
-Q.unemployed_spd = 48;
-Q.unemployed_kpd = 22;
-Q.unemployed_z = 7;
-Q.unemployed_ddp = 2;
-Q.unemployed_dvp = 6;
-Q.unemployed_dnvp = 4;
-Q.unemployed_nsdap = 12;
-Q.unemployed_other = 2;
+Q.unemployed_spd = 47;
+Q.unemployed_kpd = 12;
+Q.unemployed_z = 4;
+Q.unemployed_ddp = 1;
+Q.unemployed_dvp = 27;
+Q.unemployed_dnvp = 5;
+Q.unemployed_nsdap = 3;
+Q.unemployed_other = 1;
 
 Q.catholics_spd = 52;
-Q.catholics_kpd = 6;
-Q.catholics_z = 20;
-Q.catholics_ddp = 5;
-Q.catholics_dvp = 8;
-Q.catholics_dnvp = 4;
-Q.catholics_nsdap = 5;
-Q.catholics_other = 2;
+Q.catholics_kpd = 5;
+Q.catholics_z = 4;
+Q.catholics_ddp = 2;
+Q.catholics_dvp = 29;
+Q.catholics_dnvp = 5;
+Q.catholics_nsdap = 2;
+Q.catholics_other = 1;
 
 
 // Current national party baseline at the start of the 1932 realignment.
-Q.spd_r = 53;
-Q.kpd_r = 2;
-Q.z_r = 2;
+Q.spd_r = 48;
+Q.kpd_r = 6;
+Q.z_r = 4;
 Q.ddp_r = 3;
-Q.dvp_r = 38;
-Q.dnvp_r = 1;
+Q.dvp_r = 35;
+Q.dnvp_r = 3;
 Q.nsdap_r = 1;
 Q.other_r = 0;
 // Initial chamber composition, based loosely on the 1932 congressional results
@@ -385,6 +388,62 @@ Q.silver_legion_h = Q.nsdap_h;
 Q.silver_legion_s = Q.nsdap_s;
 Q.silver_legion_h_seats = Q.nsdap_h_seats;
 Q.silver_legion_s_seats = Q.nsdap_s_seats;
+// Canonical U.S. bloc aliases. The legacy variables remain as compatibility
+// backing fields until older scenes are migrated.
+Q.party_engine_map = {
+    "dem": "spd",
+    "spa": "kpd",
+    "fl": "z",
+    "liberty_league": "ddp",
+    "gop": "dvp",
+    "nusj": "dnvp",
+    "silver_legion": "nsdap"
+};
+Q.party_display_map = {
+    "SPD": "Democratic Party",
+    "KPD": "Socialist Party of America",
+    "SPA": "Socialist Party of America",
+    "Z": "Farmer-Labor",
+    "DDP": "Liberty League",
+    "DVP": "Republican Party",
+    "DNVP": "National Union for Social Justice",
+    "NSDAP": "Silver Legion",
+    "I": "Independent"
+};
+Q.dem_r = Q.spd_r;
+Q.spa_r = Q.kpd_r;
+Q.fl_r = Q.z_r;
+Q.liberty_league_r = Q.ddp_r;
+Q.gop_r = Q.dvp_r;
+Q.nusj_r = Q.dnvp_r;
+Q.dem_h = Q.spd_h;
+Q.dem_s = Q.spd_s;
+Q.spa_h = Q.kpd_h;
+Q.spa_s = Q.kpd_s;
+Q.fl_h = Q.z_h;
+Q.fl_s = Q.z_s;
+Q.dem_h_seats = Q.spd_h_seats;
+Q.dem_s_seats = Q.spd_s_seats;
+Q.spa_h_seats = Q.kpd_h_seats;
+Q.spa_s_seats = Q.kpd_s_seats;
+Q.fl_h_seats = Q.z_h_seats;
+Q.fl_s_seats = Q.z_s_seats;
+Q.fl_relation = Q.z_relation;
+Q.spa_relation = Q.kpd_relation;
+Q.liberty_league_relation = Q.ddp_relation;
+Q.gop_relation = Q.dvp_relation;
+Q.nusj_relation = Q.dnvp_relation;
+Q.silver_legion_relation = Q.nsdap_relation;
+Q.new_deal_liberal_strength = Q.left_strength;
+Q.party_regular_strength = Q.center_strength;
+Q.labor_dem_strength = Q.labor_strength;
+Q.conservative_dem_strength = Q.reformist_strength;
+Q.southern_dem_strength = Q.neorevisionist_strength;
+Q.new_deal_liberal_dissent = Q.left_dissent;
+Q.party_regular_dissent = Q.center_dissent;
+Q.labor_dem_dissent = Q.labor_dissent;
+Q.conservative_dem_dissent = Q.reformist_dissent;
+Q.southern_dem_dissent = Q.neorevisionist_dissent;
 Q.governing_house_support = 0;
 Q.governing_senate_support = 0;
 Q.speaker_elected = 0;
@@ -395,12 +454,12 @@ Q.non_dem_senate_control = 0;
 Q.non_dem_congressional_control = 0;
 
 // diff from prev
-Q.old_spd_r = 53;
-Q.old_kpd_r = 2;
-Q.old_z_r = 2;
+Q.old_spd_r = 48;
+Q.old_kpd_r = 6;
+Q.old_z_r = 4;
 Q.old_ddp_r = 3;
-Q.old_dvp_r = 38;
-Q.old_dnvp_r = 1;
+Q.old_dvp_r = 35;
+Q.old_dnvp_r = 3;
 Q.old_nsdap_r = 1;
 Q.old_other_r = 0;
 
@@ -425,6 +484,8 @@ Q.president_party = "SPD";
 // starting cabinet is a Democratic coalition under FDR
 Q.chancellor = "Rayburn";
 Q.chancellor_party = 'SPD';
+Q.speaker = Q.chancellor;
+Q.speaker_party = Q.chancellor_party;
 Q.spd_in_government = 1;
 Q.z_in_government = 0;
 Q.ddp_in_government = 0;
@@ -562,12 +623,18 @@ Q.timers = ['advisor_action', 'confronting_nazis', 'crisis_program',
             'police', 'prussian_affairs', 'shuffle_cabinet', 'social_welfare',
             'homosexual_rights', 'economic_policy', 'coalition_affairs',
             'war_guilt', 'womens_rights', 'economic_democracy',
-            'dealing_with_toleration',
+            'dealing_with_toleration', 'judicial_crisis', 'labor_movement',
+            'fireside_chat',
+            'spa_farmer_labor_pressure', 'nusj_silver_escalation',
+            'labor_organization_pressure', 'radical_pressure',
+            'news_cooldown',
+            'state_governors', 'farm_crisis', 'cabinet_personnel',
+            'congressional_affairs',
             'constitutional_reform', 'labor_rights',
             'education_science', 'curriculum',
             // events
             'emergency_cuts', 'unemployment_insurance',
-            'sa_ban', 'sh_ban', 'papen_chancellor',
+            'sa_ban', 'sh_ban', 'papen_speaker',
             'kpd_policy', 'kpd_ultimatum', 'popular_front_dispute',
             'high_inflation', 'banking_crisis', 'march_on_berlin',
             'understanding_enemy', 'schleichers_schemes'];
@@ -618,6 +685,48 @@ Q.womens_rights_timer = 0;
 Q.homosexual_rights_timer = 0;
 Q.economic_democracy_timer = 0;
 Q.coalition_affairs_timer = 0;
+Q.judicial_crisis_timer = 0;
+Q.labor_movement_timer = 0;
+Q.fireside_chat_timer = 0;
+Q.opposition_strategy_timer = 0;
+Q.spa_farmer_labor_pressure_timer = 5;
+Q.nusj_silver_escalation_timer = 6;
+Q.labor_organization_pressure_timer = 5;
+Q.radical_pressure_timer = 5;
+Q.news_cooldown_timer = 2;
+Q.state_governors_timer = 0;
+Q.farm_crisis_timer = 0;
+Q.cabinet_personnel_timer = 0;
+Q.congressional_affairs_timer = 0;
+Q.supreme_court_hostility = 2;
+Q.new_deal_legitimacy = 50;
+Q.economic_stress = 8;
+Q.labor_militancy = 1;
+Q.conservative_backlash = 2;
+Q.radical_momentum = 4;
+Q.labor_movement_alignment = "unsettled";
+Q.cio_momentum = 0;
+Q.afl_momentum = 0;
+Q.radio_reach = 1;
+Q.opposition_pressure = 0;
+Q.liberty_litigation = 0;
+Q.gop_obstruction = 0;
+Q.governor_network = 0;
+Q.farm_relief = 0;
+Q.agency_capacity = 0;
+Q.cabinet_style = "regular";
+Q.southern_resistance = 0;
+Q.plains_distress = 3;
+Q.tenant_farmer_support = 0;
+Q.committee_control = 1;
+Q.house_whip_operation = 0;
+Q.senate_whip_operation = 0;
+Q.pork_barrel_pressure = 0;
+Q.constitutional_stress = 0;
+Q.democratic_stabilization = 0;
+Q.managed_reaction = 0;
+Q.authoritarian_takeover = 0;
+Q.systemic_rupture = 0;
 // event timers
 Q.emergency_cuts_timer = 0;
 Q.unemployment_insurance_timer = 0;
@@ -627,47 +736,47 @@ Q.kpd_ultimatum_timer = 0;
 Q.march_on_berlin_timer = 0;
 
 
-// all the initial advisors are centrists.
-Q.wels_advisor = 1; // Otto Wels
-Q.muller_advisor = 1; // Hermann Müller
+// all the initial advisors are party regulars/administration centrists.
+Q.wels_advisor = 1; // James Farley
+Q.muller_advisor = 1; // John Nance Garner
 Q.muller_dead = 0;
 // okay I know Arthur Crispien was a leader irl but i couldn't find much interesting about him...
-Q.crispien_advisor = 0; // Arthur Crispien
-Q.hilferding_advisor = 1; // Rudolf Hilferding
+Q.crispien_advisor = 0; // reserved
+Q.hilferding_advisor = 1; // Rexford Tugwell
 
 // left advisors
-Q.sender_advisor = 0; // Toni Sender
-Q.levi_advisor = 0; // Paul Levi
+Q.sender_advisor = 0; // Mary McLeod Bethune
+Q.levi_advisor = 0; // Upton Sinclair
 Q.levi_dead = 0;
-Q.rosenfeld_advisor = 0; // Kurt Rosenfeld
-Q.seydewitz_advisor = 0; // Max Seydewitz
+Q.rosenfeld_advisor = 0; // Morris Hillquit
+Q.seydewitz_advisor = 0; // A. J. Muste
 
 // centrist alternate advisors
-Q.pfulf_advisor = 0; // Antonie Pfülf
-Q.breitscheid_advisor = 0; // Rudolf Breitscheid
+Q.pfulf_advisor = 0; // Eleanor Roosevelt
+Q.breitscheid_advisor = 0; // Cordell Hull
 
 // Reformist advisors
-Q.severing_advisor = 0; // Carl Severing
-Q.braun_advisor = 0; // Otto Braun
-Q.juchacz_advisor = 0; // Marie Juchacz
-Q.baade_advisor = 0; // Fritz Baade
+Q.severing_advisor = 0; // Harold Ickes
+Q.braun_advisor = 0; // Herbert Lehman
+Q.juchacz_advisor = 0; // Frances Perkins
+Q.baade_advisor = 0; // Henry A. Wallace
 
 // Labor advisors
-Q.leipart_advisor = 0; // Theodor Leipart
-Q.aufhauser_advisor = 0; // Siegfried Aufhäuser
-Q.woytinsky_advisor = 0; // Wladimir Woytinsky (post-1930)
-Q.wissell_advisor = 0; // Rudolf Wissell
+Q.leipart_advisor = 0; // William Green
+Q.aufhauser_advisor = 0; // Sidney Hillman
+Q.woytinsky_advisor = 0; // Harry Hopkins
+Q.wissell_advisor = 0; // Robert Wagner
 
 // Revisionist advisors
-Q.mierendorff_advisor = 0; // Carlo Mierendorf (post-1930)
+Q.mierendorff_advisor = 0; // Henry Wallace
 
-Q.leber_advisor = 0; // Julius Leber (post-1930)
-Q.schumacher_advisor = 0; // Kurt Schumacher (post-1930)
+Q.leber_advisor = 0; // Fiorello La Guardia
+Q.schumacher_advisor = 0; // Smedley Butler
 
 // Nonfactional advisors
-Q.hirschfeld_advisor = 0; // Magnus Hirschfeld
-Q.radbruch_advisor = 0; // Gustav Radbruch
-Q.stampfer_advisor = 0; // Friedrich Stampfer
+Q.hirschfeld_advisor = 0; // Pauli Murray
+Q.radbruch_advisor = 0; // Felix Frankfurter
+Q.stampfer_advisor = 0; // Robert Sherwood
 !}
 set-bg: img/map_2.jpg
 new-page: true
@@ -690,7 +799,7 @@ on-arrival: difficulty = -1; resources = 5; dues = 3; rb_strength = 2500; kpd_re
 go-to: 1928_main
 
 @1928_hard
-on-arrival: difficulty = 1; resources = 1; dues = 1; rb_strength = 1000; reformist_dissent = 24; left_dissent = 34; labor_dissent = 32; center_dissent = 28; z_relation = 34; kpd_relation = 24; dvp_relation = 36; budget = 3;
+on-arrival: difficulty = 1; resources = 1; dues = 1; rb_strength = 1000; reformist_dissent = 24; left_dissent = 34; labor_dissent = 32; center_dissent = 28; z_relation = 34; kpd_relation = 24; dvp_relation = 36; budget = 1;
 go-to: 1928_main
 
 @1928_historical

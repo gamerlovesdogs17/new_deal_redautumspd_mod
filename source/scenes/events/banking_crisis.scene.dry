@@ -1,48 +1,61 @@
 title: Banking Crisis
-subtitle: The collapse of the German banking system...
+subtitle: Bank runs threaten the recovery.
 new-page: true
-on-arrival: banking_crisis_seen = 1; workers_kpd += 5; workers_nsdap += 3; new_middle_nsdap += 3; old_middle_nsdap += 4; rural_nsdap += 3; unemployed += 3; crisis_urgency += 1; workers_spd -= 4 if spd_in_government; new_middle_spd -= 5 if spd_in_government; old_middle_spd -= 5 if spd_in_government; rural_spd -= 4 if spd_in_government; economic_growth -= 1;
+on-arrival: banking_crisis_seen = 1; banking_confidence = 0 if not banking_confidence; workers_kpd += 2; workers_dnvp += 2; workers_nsdap += 2; new_middle_nsdap += 2; old_middle_nsdap += 3; unemployed += 2; crisis_urgency += 1; new_deal_legitimacy -= 4 if spd_in_government; economic_growth -= 1.2; banking_confidence -= 2;
 tags: event
-view-if: customs_union = 1 and banking_crisis_timer = 0
+view-if: banking_crisis_timer = 0 and ((year = 1933 and month >= 3) or year > 1933) and banking_crisis_seen = 0
 max-visits: 1
 face-image: img/danat_bank.jpg
 
 = Banking Crisis
 
-The Darmstädter und Nationalbank, or Danat Bank, has collapsed! Along with it goes much of the German banking system. The cause seemed to be due to the government's pursuit of a customs union with Austria, which led to de facto international sanctions.
+Bank runs spread across the country. Depositors line up before dawn, local banks beg for liquidity, and governors demand a federal answer before panic becomes habit.
 
-This is a bourgeois dispute, but the costs will be borne by the proletariat. The people are facing ever-increasing hunger and poverty, and perhaps we are partly to blame.
+The crisis is financial, but the costs will be borne by workers, farmers, and the unemployed unless the administration acts quickly.
 
-- @nothing_to_do: There is nothing we can do.
-- @stabilization: Take action to stabilize the economy!
-- @austerity: Chancellor [+ chancellor +]'s response is, as always, more austerity.
-- @end_toleration: We are tired of austerity. End the toleration arrangement!
+- @bank_holiday
+- @deposit_insurance
+- @liquidity_only
+- @do_nothing
+- @end_toleration
 
-@nothing_to_do
+@bank_holiday
+title: Declare a bank holiday.
 view-if: spd_in_government = 1
-on-arrival: welfare -= 1; workers_spd -= 3; unemployed_spd -= 3; pro_republic -= 3
+on-arrival: banking_confidence += 4; new_deal_legitimacy += 5; pro_republic += 2; resources += 1; economic_growth += 0.6; unemployed -= 0.8; ddp_relation += 2; dvp_relation += 2
 
-There is, essentially, nothing we can do.
+The President declares a temporary bank holiday and reopens solvent banks under federal supervision. It is dramatic, but the public sees command instead of drift.
 
-@stabilization
+@deposit_insurance
+title: Create deposit insurance.
 view-if: spd_in_government = 1
 subtitle: -1 budget
 choose-if: budget >= 1
-on-arrival: workers_spd += 3*(1-dissent); new_middle_spd += 3*(1-dissent); old_middle_spd += 2*(1-dissent); rural_spd += 2*(1-dissent); unemployed -= 2; inflation += 1 if inflation < 0; budget -= 1; workers_nsdap -= 3; economic_growth += 0.9;
+unavailable-subtitle: Requires 1 budget.
+on-arrival: banking_confidence += 5; budget -= 1; new_deal_legitimacy += 4; old_middle_spd += 4; new_middle_spd += 3; workers_spd += 2; economic_growth += 0.8; ddp_relation -= 2; dvp_relation -= 2
 
-In the face of the banking crisis, we have taken emergency action to stabilize the economy by injecting money into the banking system. It might not be enough, but it temporarily staunches the bleeding.
+The administration guarantees ordinary deposits and dares bankers to oppose it. Small savers breathe again, while financial conservatives complain about moral hazard.
 
-@austerity
-view-if: spd_in_government = 0
-on-arrival: welfare -= 1; workers_spd -= 3; unemployed_spd -= 3; pro_republic -= 3; economic_growth -= 1;
+@liquidity_only
+title: Provide emergency liquidity only.
+view-if: spd_in_government = 1
+subtitle: A quieter Federal Reserve response.
+on-arrival: banking_confidence += 2; economic_growth += 0.3; old_middle_spd += 2; ddp_relation += 3; dvp_relation += 3; workers_spd -= 1; unemployed_spd -= 1; labor_dissent += 2
 
-Chancellor [+ chancellor +] responds to the banking crisis with more cuts to welfare.
+The administration works through emergency liquidity and quiet bank supervision. Panic eases somewhat, but it feels too much like rescuing bankers first.
+
+@do_nothing
+title: Let the panic burn itself out.
+on-arrival: welfare -= 1; workers_spd -= 3; unemployed_spd -= 4; old_middle_spd -= 3; pro_republic -= 4; economic_growth -= 1; banking_confidence -= 2
+
+The federal government hesitates. The public does not experience hesitation as prudence; it experiences it as abandonment.
 
 @end_toleration
+title: End the toleration arrangement.
 view-if: spd_toleration = 1
 on-arrival: time_to_election = 3; spd_in_government = 0; in_grand_coalition = 0; spd_toleration = 0;
 call: set_next_election_time
 
-We are tired of [+ chancellor +]'s policy of austerity. After [+ chancellor +]'s attempt to use emergency powers to pass another welfare cut, we have worked with the other parties to reverse this policy. In response, the Reichstag has been dissolved, and new elections called.
+We are tired of the opposition's policy of austerity. After another attempt to force cuts through the crisis, we work to collapse the arrangement and force new elections.
 
 New elections have been set for [+ next_election_month : month +] [+ next_election_year +].

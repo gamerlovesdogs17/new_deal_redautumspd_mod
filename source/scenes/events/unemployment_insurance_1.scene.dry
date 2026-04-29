@@ -10,11 +10,11 @@ face-image: img/Kollwitz_Arbeitslosigkeit.jpg
 
 = Unemployment Insurance Crisis
 
-The economic crisis has caused mass layoffs all throughout Germany, affecting the industrial working class the hardest. Our welfare spending is increasing due to the greater need.
+The economic crisis has caused mass layoffs all throughout the republic, affecting the industrial working class the hardest. Our welfare spending is increasing due to the greater need.
 
 In the midst of all this, our right-wing coalition partners in the DVP and Center parties have a plan to cut benefits for the unemployed, lower taxes on the rich, and raise taxes on the working class, as part of a plan to balance the budget and discipline labor. They do not see a possibility for compromise. If we do not accept, they could blow up the coalition.
 
-[? if unemployment_insurance_crisis = 2 : This is the second such ultimatum thrown by the Right. Obviously, the bourgeoisie are trying to remove us from the government. ?]
+[? if unemployment_insurance_crisis = 2 : This is the second such ultimatum thrown by the Right. Obviously, the conservative elite are trying to remove us from the government. ?]
 
 - @tax_rich: Why can't we simply tax the rich?
 - @gift: This is a gift to the Communists.
@@ -23,7 +23,7 @@ In the midst of all this, our right-wing coalition partners in the DVP and Cente
 max-visits: 1
 go-to: what_do
 
-The bourgeois parties, as representatives of the rich industrialists, would not have that.
+The conservative parties, as representatives of the rich industrialists, would not have that.
 
 @gift
 go-to: what_do
@@ -45,25 +45,25 @@ on-arrival: time_to_election = 3; spd_in_government = 0; in_grand_coalition = 0;
 
 # TODO: if Braun is president, don't do this...
 
-Fine. If the bourgeoisie wish to blow up the government, let them do so. Socialists will not be complicit in the destruction of the working class.
+Fine. If the conservative elite wish to blow up the government, let them do so. Socialists will not be complicit in the destruction of the working class.
 
-[? if chancellor_party = "SPD" : Heinrich Brüning of the Center Party has been appointed Chancellor. ?] Brüning now leads an all-bourgeois cabinet. Using the emergency powers of Article 48, Brüning and President Hindenburg have passed the welfare cuts over the objections of the Reichstag.
+[? if speaker_party = "SPD" : Heinrich Brüning of the Center Party has been appointed Speaker. ?] Brüning now leads an all-conservative cabinet. Using the emergency powers of Article 48, Brüning and President the old president have passed the welfare cuts over the objections of the Congress.
 
 New elections have been set for [+ next_election_month : month +] [+ next_election_year +].
 
 @accept
 on-arrival: workers_spd -= 0.15*workers_spd; unemployed_spd -= 0.3*unemployed_spd; workers_kpd += 7; workers_nsdap += 7; unemployed_kpd += 5; unemployed_nsdap += 5; left_dissent += 15; center_dissent += 10; labor_dissent += 15; reformist_dissent += 5; welfare -= 2; budget += 1; unemployed += 3; month += 1; pro_republic -= 4; kpd_relation -= 8; inflation -= 2; economic_growth -= 0.6
 
-Unfortunately, we must accept this ultimatum if we are to maintain this coalition. The Nazis and Communists are waiting in the wings for us to fail, ready to pounce upon the instability that would result from a breakup of the governing coalition.
+Unfortunately, we must accept this ultimatum if we are to maintain this coalition. The Silver Legion and Communists are waiting in the wings for us to fail, ready to pounce upon the instability that would result from a breakup of the governing coalition.
 
-The workers are furious at our betrayal, as are a good portion of our membership throughout the factions. Our loss is the KPD's gain, and even the NSDAP, those lapdogs of the bourgeoisie, have joined in criticizing us for our austerity.
+The workers are furious at our betrayal, as are a good portion of our membership throughout the factions. Our loss is the SPA's gain, and even the Silver Legion, those lapdogs of the conservative elite, have joined in criticizing us for our austerity.
 
 
 @compromise
 unavailable-subtitle: We do not have good enough relations with the right-wing parties.
 choose-if: dvp_relation >= 35
 
-Thanks to our good relations, the DVP have offered a compromise that raises some taxes on the wealthy, along with lesser welfare cuts. Our members have mixed opinions on accepting this compromise. Reformists and Centrists support maintaining our government to keep the fascists and communists out, while Labor generally opposes any cuts, and the Left is opposed to compromises with the bourgeoisie.
+Thanks to our good relations, the DVP have offered a compromise that raises some taxes on the wealthy, along with lesser welfare cuts. Our members have mixed opinions on accepting this compromise. Reformists and Centrists support maintaining our government to keep the fascists and communists out, while Labor generally opposes any cuts, and the Left is opposed to compromises with the conservative elite.
 
 - @accept_compromise: Accept the compromise.
 - @destroy: Reject the compromise and let this government fall.
@@ -71,4 +71,4 @@ Thanks to our good relations, the DVP have offered a compromise that raises some
 @accept_compromise
 on-arrival: workers_spd -= 5; unemployed_spd -= 6; workers_kpd += 5; unemployed_kpd += 3; unemployed_nsdap += 3; left_dissent += 10; labor_dissent += 8; center_dissent += 5; welfare -= 1; budget += 1; month += 1; kpd_relation -= 4; inflation -= 1; economic_growth -= 0.3
 
-We have accepted the compromise offered by the bourgeoisie. Many of the workers and unemployed see this as a betrayal, although we present it as the successful aversion of a much worse alternative.
+We have accepted the compromise offered by the conservative elite. Many of the workers and unemployed see this as a betrayal, although we present it as the successful aversion of a much worse alternative.

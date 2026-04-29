@@ -1,0 +1,40 @@
+title: News: Relief Office Opening
+subtitle: Federal power gets a local address.
+new-page: true
+is-card: true
+tags: event
+view-if: ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and spd_in_government = 1 and (works_program >= 1 or welfare >= 1 or agency_capacity >= 2)
+max-visits: 1
+on-arrival: news_cooldown_timer = 2; new_deal_legitimacy += 1 if new_deal_legitimacy < 95
+card-image: img/reichstag_1.jpg
+
+= News: Relief Office Opening
+
+A federal relief office has opened in a county courthouse that once treated Washington as a distant rumor. The line outside mixes unemployed workers, farm families, local officials, and party men trying to learn who now controls the paperwork.
+
+Patronage can make the office useful. It can also make it look bought.
+
+- @professional_staff: Keep the office professional.
+- @local_democrats: Let local Democrats staff the desks.
+- @coalition_slots: Reserve slots for coalition allies.
+
+@professional_staff
+title: Keep the office professional.
+subtitle: Better capacity; less political warmth.
+on-arrival: agency_capacity += 2; new_deal_legitimacy += 2 if new_deal_legitimacy < 95; center_strength += 1; z_relation -= 1; kpd_relation -= 1
+
+The office runs cleanly and slowly. Nobody gets everything they want, but the files are in order.
+
+@local_democrats
+title: Let local Democrats staff the desks.
+subtitle: More party strength; more patronage pressure.
+on-arrival: resources += 1; center_strength += 2; workers_spd += 2; old_middle_spd += 2; pork_barrel_pressure += 1; ddp_relation -= 1; dvp_relation -= 1
+
+County Democrats know the churches, unions, ward clubs, and courthouse habits. They also know how to turn a relief line into a party list.
+
+@coalition_slots
+title: Reserve slots for coalition allies.
+subtitle: Better relations with allies; messier administration.
+on-arrival: z_relation += 3; kpd_relation += 1; coalition_dissent -= 1 if coalition_dissent > 0; agency_capacity -= 1 if agency_capacity > 0; labor_dissent -= 1; ddp_relation -= 1
+
+Farmer-Labor and labor-left allies get enough visible places to defend the program. The office becomes politically sturdier and administratively messier.

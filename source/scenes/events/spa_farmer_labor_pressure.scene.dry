@@ -1,0 +1,37 @@
+title: SPA and Farmer-Labor Pressure
+new-page: true
+is-card: true
+tags: event
+view-if: spd_in_government = 1 and ((year = 1933 and month >= 3) or year > 1933) and spa_farmer_labor_pressure_timer = 0 and radical_pressure_timer = 0 and (economic_stress >= 10 or kpd_relation >= 50 or z_relation >= 55)
+on-arrival: spa_farmer_labor_pressure_timer = 16; radical_pressure_timer = 5; month_actions += 1
+card-image: img/reichstag.jpg
+
+= SPA and Farmer-Labor Pressure
+
+The left opposition and the Farmer-Labor bloc are testing the administration from different directions. SPA organizers want proof that the New Deal will not stop at relief. Farmer-Labor allies want rural and workplace concessions before they spend more political capital for the administration.
+
+- @left_labor_plank
+- @farm_labor_bargain
+- @isolate_spa
+- @easy_discard
+
+@left_labor_plank
+title: Negotiate a left-labor plank.
+subtitle: SPA relations and labor morale improve; conservative backlash rises.
+on-arrival: kpd_relation += 6; z_relation += 2; labor_dissent -= 4; left_dissent -= 4; workers_spd += 3; unemployed_spd += 2; workers_kpd -= 2 if workers_kpd > 2; ddp_relation -= 4; dvp_relation -= 3; conservative_backlash += 1; capital_strike_progress += 1; dem_spa_cooperation = 1 if kpd_relation >= 50
+
+The administration agrees to a public plank on relief, union rights, and stronger public works. SPA leaders still attack the Democrats as too cautious, but their members see something worth extracting from cooperation.
+
+@farm_labor_bargain
+title: Cut a Farmer-Labor farm and workplace bargain.
+subtitle: Farmer-Labor support improves; budget pressure and business criticism rise.
+on-arrival: z_relation += 7; farm_relief += 1; plains_distress -= 1 if plains_distress > 0; rural_spd += 4; tenant_farmer_support += 1; labor_dissent -= 2; budget -= 1 if budget > 0; ddp_relation -= 2; dvp_relation -= 2; new_deal_legitimacy += 2 if new_deal_legitimacy < 95
+
+Farmer-Labor leaders secure visible rural relief, a stronger floor for collective bargaining, and enough patronage to defend the deal back home. It is expensive, but it keeps the progressive wing inside the governing orbit.
+
+@isolate_spa
+title: Isolate the SPA and hold the center.
+subtitle: Calms moderates; pushes some workers toward the Socialist Party.
+on-arrival: kpd_relation -= 7; z_relation -= 2; workers_kpd += 4; unemployed_kpd += 3; left_dissent += 5; labor_dissent += 2; ddp_relation += 3; dvp_relation += 2; conservative_backlash -= 1 if conservative_backlash > 0; dem_spa_cooperation = 0
+
+The administration refuses to bargain with Norman Thomas and treats the SPA as an opposition party, not a partner. Moderates are relieved, but the left reads it as proof that Democratic reform has strict limits.

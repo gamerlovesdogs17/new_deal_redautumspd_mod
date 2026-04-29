@@ -1,13 +1,13 @@
-title: Siegfried Aufhäuser
+title: Sidney Hillman
 is-pinned-card: true
-tags: advisor, reformist
+tags: advisor, labor
 card-image: img/portraits/AufhäuserSiegfried.jpg
 view-if: aufhauser_advisor = 1
 new-page: true 
 
-= Siegfried Aufhäuser
+= Sidney Hillman
 
-Aufhäuser is a leader of the AfA-Bund, the federation of socialist white-collar trade unions.
+Hillman is a union organizer with strong ties to garment workers, industrial labor, and urban progressives. He can bridge labor militancy and practical New Deal administration.
 
 - @white_collar
 - @union_unity
@@ -31,21 +31,21 @@ choose-if: advisor_action_timer <= 0
 unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?]
 on-arrival: advisor_action_timer = 6; labor_dissent -= 10;
 
-We have reduced tensions with the Labor faction.
+We have reduced tensions with the Labor Democrats.
 
 @crisis
 title: Addressing the economic crisis
-subtitle: Aufhäuser can help support a left-wing economic program.
+subtitle: Hillman can help build support for a labor-forward recovery program.
 choose-if: advisor_action_timer <= 0 and nationalization_adopted == 0 and black_thursday_seen == 1 and nationalization_support <= 3
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if black_thursday_seen == 0 : We are not currently in an economic crisis. ?][? if nationalization_adopted > 0 : We have already adopted the Left plan. ?]
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if black_thursday_seen == 0 : We are not currently in an economic crisis. ?][? if nationalization_adopted > 0 : We have already adopted the Structural Transformation plan. ?]
 on-arrival: advisor_action_timer = 6; 
 go-to: crisis_program.support_left 
 
 @moderate_economic_plan
-title: Support the reformist economic plan
-subtitle: Aufhäuser can also support a moderate economic plan.
+title: Support the Pragmatic New Deal plan
+subtitle: Hillman can support a pragmatic jobs program if labor receives a seat at the table.
 choose-if: advisor_action_timer = 0 and moderate_plan_adopted = 0 and black_thursday_seen = 1
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?] [? if moderate_economic_plan = 0 : We have already adopted the reformist economic plan. ?] [? if black_thursday_seen == 0 : We are not currently in an economic crisis. ?]
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?] [? if moderate_plan_adopted > 0 : We have already adopted the Pragmatic New Deal plan. ?] [? if black_thursday_seen == 0 : We are not currently in an economic crisis. ?]
 on-arrival: advisor_action_timer = 6
 go-to: crisis_program.support_moderate
 

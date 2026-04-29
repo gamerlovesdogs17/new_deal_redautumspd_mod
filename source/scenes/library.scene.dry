@@ -5,7 +5,7 @@ go-to: menu
 
 = The Library
 
-This library contains reference information for the U.S. crisis scenario, including institutions, parties, blocs, and coalition mechanics.
+This library contains reference information for the U.S. crisis scenario, including institutions, parties, blocs, coalition mechanics, and the endgame settlement.
 
 @menu
 
@@ -19,6 +19,7 @@ This library contains reference information for the U.S. crisis scenario, includ
 - @factions: Internal factions
 - @figures: Figures and charts
 - @leaders_factions_us: Leaders and faction alignments (U.S. scenario)
+- @endgame_settlements: Endgame settlements
 - @backSpecialScene: Exit library.
 
 @government
@@ -47,18 +48,52 @@ go-to: menu
 
 **1932 (late)**: The incoming administration is Democratic, but internal doctrine remains unsettled. Party conferences become decisive for strategic direction, coalition viability, and response to extremism.
 
+**1933-1934**: The New Deal either stabilizes the constitutional order, is narrowed into managed reaction, or leaves the republic in systemic rupture. The outcome depends on recovery, public legitimacy, constitutional stress, conservative backlash, and radical momentum.
+
+@endgame_settlements
+go-to: menu
+
+= Endgame Settlements
+
+The campaign now distinguishes several broad endings.
+
+**Democratic stabilization** means the New Deal has reduced economic crisis, preserved public legitimacy, and built enough constitutional support to govern through elections and bargaining.
+
+**Contested New Deal** means the administration survives, but recovery and institutional reform remain incomplete.
+
+**Managed reaction** means democracy survives only by narrowing the reform program under pressure from courts, business, conservative legislators, and coalition defectors.
+
+**Systemic rupture** means the republic technically survives, but constitutional stress, radical momentum, or civil conflict have made normal government unstable.
+
+**Authoritarian takeover** means reactionary forces have broken democratic government outright.
+
 @curr_gov
 on-arrival: {!
 var partyNames = {
     "SPD": "Democratic Party",
     "KPD": "Socialist Party of America",
+    "SPA": "Socialist Party of America",
     "Z": "Farmer-Labor",
-    "DVP": "Republican Party",
-    "DNVP": "Republican Party",
-    "NSDAP": "National Union for Social Justice",
     "DDP": "Liberty League",
+    "DVP": "Republican Party",
+    "DNVP": "National Union for Social Justice",
+    "NSDAP": "Silver Legion",
     "I": "Independent"
 };
+var speakerNameMap = {
+    "Brüning": "Floyd B. Olson",
+    "BrÃ¼ning": "Floyd B. Olson",
+    "Wirth": "Henrik Shipstead",
+    "Papen": "the conservative caretaker",
+    "Schleicher": "the conservative operator",
+    "Hitler": "William Pelley",
+    "Thälmann": "Norman Thomas",
+    "ThÃ¤lmann": "Norman Thomas",
+    "Breitscheid": "Fiorello La Guardia",
+    "Müller": "Sam Rayburn",
+    "MÃ¼ller": "Sam Rayburn"
+};
+Q.speaker = speakerNameMap[Q.chancellor] || Q.chancellor;
 Q.library_speaker_party_display = partyNames[Q.chancellor_party] || Q.chancellor_party || "";
 !}
 go-to: cabinet if spd_in_government; menu if not spd_in_government
@@ -67,29 +102,29 @@ go-to: cabinet if spd_in_government; menu if not spd_in_government
 
 President: [+ president +]
 
-Speaker of the House: [+ chancellor +][? if library_speaker_party_display :  ([+ library_speaker_party_display +]) ?]
+Speaker of the House: [+ speaker +][? if library_speaker_party_display :  ([+ library_speaker_party_display +]) ?]
 
 House composition:
 
-Democratic Party: [+ spd_h_seats +] seats ([+ spd_h +]%)
+{!<span class="party-dem">Democratic Party</span>!}: [+ spd_h_seats +] seats ([+ spd_h +]%)
 [? if sapd_formed and sapd_h > 0: Left splinters: [+ sapd_h_seats +] seats ([+ sapd_h +]%) ?]
-Socialist Party of America: [+ kpd_h_seats +] seats ([+ kpd_h +]%)
-Farmer-Labor: [+ z_h_seats +] seats ([+ z_h +]%)
-Liberty League: [+ ddp_h_seats +] seats ([+ ddp_h +]%)
-Republican Party: [+ gop_h_seats +] seats ([+ gop_h +]%)
-National Union for Social Justice: [+ nusj_h_seats +] seats ([+ nusj_h +]%)
-Silver Legion: [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%)
+{!<span class="party-spa">Socialist Party of America</span>!}: [+ kpd_h_seats +] seats ([+ kpd_h +]%)
+{!<span class="party-fl">Farmer-Labor</span>!}: [+ z_h_seats +] seats ([+ z_h +]%)
+{!<span class="party-liberty">Liberty League</span>!}: [+ ddp_h_seats +] seats ([+ ddp_h +]%)
+{!<span class="party-gop">Republican Party</span>!}: [+ gop_h_seats +] seats ([+ gop_h +]%)
+{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ nusj_h_seats +] seats ([+ nusj_h +]%)
+{!<span class="party-silver">Silver Legion</span>!}: [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%)
 
 Senate composition:
 
-Democratic Party: [+ spd_s_seats +] seats ([+ spd_s +]%)
+{!<span class="party-dem">Democratic Party</span>!}: [+ spd_s_seats +] seats ([+ spd_s +]%)
 [? if sapd_formed and sapd_s > 0: Left splinters: [+ sapd_s_seats +] seats ([+ sapd_s +]%) ?]
-Socialist Party of America: [+ kpd_s_seats +] seats ([+ kpd_s +]%)
-Farmer-Labor: [+ z_s_seats +] seats ([+ z_s +]%)
-Liberty League: [+ ddp_s_seats +] seats ([+ ddp_s +]%)
-Republican Party: [+ gop_s_seats +] seats ([+ gop_s +]%)
-National Union for Social Justice: [+ nusj_s_seats +] seats ([+ nusj_s +]%)
-Silver Legion: [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
+{!<span class="party-spa">Socialist Party of America</span>!}: [+ kpd_s_seats +] seats ([+ kpd_s +]%)
+{!<span class="party-fl">Farmer-Labor</span>!}: [+ z_s_seats +] seats ([+ z_s +]%)
+{!<span class="party-liberty">Liberty League</span>!}: [+ ddp_s_seats +] seats ([+ ddp_s +]%)
+{!<span class="party-gop">Republican Party</span>!}: [+ gop_s_seats +] seats ([+ gop_s +]%)
+{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ nusj_s_seats +] seats ([+ nusj_s +]%)
+{!<span class="party-silver">Silver Legion</span>!}: [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
 
 Democratic position: [? if spd_toleration : external support ?][? if spd_in_government : governing - ?][? if spd_toleration == 0 and spd_in_government == 0 and spd_caretaker == 0 : opposition ?][? if spd_caretaker : caretaker administration ?]
 [? if in_weimar_coalition and spd_in_government: broad reform coalition ?][? if in_grand_coalition and spd_in_government: unity coalition ?][? if in_popular_front and spd_in_government: labor-progressive front ?][? if in_left_front and spd_in_government: left coalition ?][? if in_spd_majority and spd_in_government: Democratic majority ?][? if in_minority_government and spd_in_government: minority government ?][? if in_emergency_government and spd_in_government: emergency government ?]
@@ -103,11 +138,12 @@ on-arrival: {!
 var partyNames = {
     "SPD": "Democratic Party",
     "KPD": "Socialist Party of America",
+    "SPA": "Socialist Party of America",
     "Z": "Farmer-Labor",
-    "DVP": "Republican Party",
-    "DNVP": "Republican Party",
-    "NSDAP": "National Union for Social Justice",
     "DDP": "Liberty League",
+    "DVP": "Republican Party",
+    "DNVP": "National Union for Social Justice",
+    "NSDAP": "Silver Legion",
     "I": "Independent"
 };
 Q.labor_minister_party_display = partyNames[Q.labor_minister_party] || Q.labor_minister_party || "";
@@ -145,7 +181,7 @@ go-to: menu
 
 **Demographic Groups**
 
-**Working Class**: The urban working class - blue-collar workers in factories, workshops, mines, and the like. Most are socialist, supporting either the SPD or KPD. They make up 40-50% of the population.
+**Working Class**: The urban working class - blue-collar workers in factories, workshops, mines, and the like. Most are socialist, supporting either the SPD or SPA. They make up 40-50% of the population.
 
 **Old Mittelstand**: The old middle class consists of independent artisans, shopkeepers, and small-time businesspeople. They tend to be conservative and are the strongest base for the far right. 10-15% of the population.
 
@@ -155,7 +191,7 @@ go-to: menu
 
 **Catholics** are the largest religious minority, at about 30% of the population. They disproportionately support the Center Party (or the Bavarian People's Party in Bavaria).
 
-**Jews** account for between 0.5% to 1% of the population, and tend to support liberal parties, mostly the DDP, although substantial numbers support the SPD or KPD.
+**Jews** account for between 0.5% to 1% of the population, and tend to support liberal parties, mostly the DDP, although substantial numbers support the SPD or SPA.
 
 
 @public_opinion
@@ -226,35 +262,37 @@ Catholics: Democratic Party: [+ catholics_spd_display +]%, Farmer-Labor: [+ cath
 @parties
 go-to: menu
 
-**Democratic Party** - The governing coalition party in this scenario. Its internal wings include New Deal liberals, conservative Democrats, labor Democrats, and Southern Democrats.
+{!<span class="party-dem">Democratic Party</span>!} - The governing coalition party in this scenario. Its internal wings include New Deal liberals, conservative Democrats, labor Democrats, and Southern Democrats.
 
-**Farmer-Labor** - A labor-populist and agrarian reform bloc that can support relief, farm debt action, and public works when relations are strong.
+{!<span class="party-fl">Farmer-Labor</span>!} - A labor-populist and agrarian reform bloc that can support relief, farm debt action, and public works when relations are strong.
 
 Current relations: [+ z_relation : relationships +]
 
-**Liberty League** - Conservative anti-New Deal Democrats, business liberals, and allied independents open to selective cooperation on stabilization policy.
+{!<span class="party-liberty">Liberty League</span>!} - Conservative anti-New Deal Democrats, business liberals, and allied independents open to selective cooperation on stabilization policy.
 
 Current relations: [+ ddp_relation : relationships +]
 
-**Republican Party moderates** - Cautious reform Republicans willing to bargain under pressure while resisting broad structural change.
+{!<span class="party-gop">Republican Party</span>!} - Cautious reform Republicans and old guard conservatives. They can bargain under pressure, but resist broad structural change.
 
 Current relations: [+ dvp_relation : relationships +]
 
-**Republican Party old guard** - Hoover-aligned conservatives favoring fiscal restraint, anti-expansion policy, and firm opposition to ambitious federal intervention.
-
-Current relations: [+ dnvp_relation : relationships +]
-
-**Socialist Party of America** - Socialist alignment led by Norman Thomas. Potential tactical cooperation depends on Democratic leftward shifts and conference outcomes.
+{!<span class="party-spa">Socialist Party of America</span>!} - Socialist alignment led by Norman Thomas. Potential tactical cooperation depends on Democratic leftward shifts and conference outcomes.
 
 Current relations: [+ kpd_relation : relationships +]
 
 [? if sapd_formed: Left splinter alignment - minor socialist breakaway currents between the Democratic Party and Socialist Party of America. ?]
 
-**National Union for Social Justice** - Father Coughlin-aligned national-populist right. Not available for cooperative coalition governance with Democratic-led governments.
+{!<span class="party-nusj">National Union for Social Justice</span>!} - Father Coughlin-aligned national-populist right. Not available for cooperative coalition governance with Democratic-led governments.
+
+Current relations: [+ dnvp_relation : relationships +]
+
+{!<span class="party-silver">Silver Legion</span>!} - William Pelley-aligned extremist far right. It uses the old NSDAP-backed mechanics internally, but appears as Silver Legion in the U.S. scenario.
 
 Current relations: [+ nsdap_relation : relationships +]
 
 **Other parties** - smaller regional and issue parties with mixed ideological profiles; often decisive in close legislative arithmetic.
+
+Internal source mapping: Democratic Party = SPD, Socialist Party of America = KPD, Farmer-Labor = Z, Liberty League = DDP, Republican Party = DVP, National Union for Social Justice = DNVP, Silver Legion = NSDAP.
 
 @paramilitaries
 on-arrival: {!
@@ -526,9 +564,9 @@ if (d3 && window) {
 
 {!<tr><td><div class="box" style='background-color:#C1121F'> </div></td><td>!} Republican Party: {!</td><td>!} [+ gop_r +]% {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#a0a0a0'> </div></td><td>!} Silver Legion: {!</td><td>!} [+ other_r +] % {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#a0a0a0'> </div></td><td>!} Silver Legion: {!</td><td>!} [+ nsdap_r +]% {!</td></tr>!}
 
-{!<tr><td><div class="box" style='background-color:#954B00'> </div></td><td>!} National Union for Social Justice: {!</td><td>!} [+ nsdap_r +]% {!</td></tr>!}
+{!<tr><td><div class="box" style='background-color:#954B00'> </div></td><td>!} National Union for Social Justice: {!</td><td>!} [+ dnvp_r +]% {!</td></tr>!}
 {!</table>!}
 
 = Election history

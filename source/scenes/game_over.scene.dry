@@ -108,6 +108,35 @@ if (Q.factory_takeovers >= 2) {
 if ((Q.chancellor_party == "NSDAP" || Q.chancellor == "Hitler" || Q.president == "Hitler") && Q.total_defeat) {
     this.achieve('stolperstein');
 }
+Q.endgame_score = 0;
+Q.endgame_score += Math.max(0, 100 - (Q.unemployed || 0) * 4);
+Q.endgame_score += Math.max(0, Q.pro_republic || 0);
+Q.endgame_score += Math.max(0, Q.new_deal_legitimacy || 0);
+Q.endgame_score += (Q.constitutional_reform || 0) * 12;
+Q.endgame_score += (Q.constructive_vonc ? 8 : 0);
+Q.endgame_score += (Q.presidential_powers ? 8 : 0);
+Q.endgame_score -= Math.max(0, Q.radical_momentum || 0) * 2;
+Q.endgame_score -= Math.max(0, Q.conservative_backlash || 0) * 3;
+Q.endgame_score -= Math.max(0, Q.constitutional_stress || 0) * 12;
+Q.endgame_score -= Math.max(0, Q.coup_progress || 0) * 8;
+Q.endgame_score -= Math.max(0, Q.capital_strike_progress || 0) * 6;
+Q.economy_stabilized = ((Q.unemployed || 0) <= 10 && (Q.economic_growth || -99) >= -1 && (Q.economic_stress || 99) <= 8 && (Q.inflation || 0) < 8 && (Q.budget || 0) > -6) ? 1 : 0;
+Q.economy_improving = ((Q.unemployed || 0) <= 16 && (Q.economic_growth || -99) >= -3 && (Q.economic_stress || 99) <= 12 && (Q.inflation || 0) < 10) ? 1 : 0;
+if (Q.chancellor == "Hitler" || Q.president == "Hitler" || Q.chancellor_party == "NSDAP" || Q.total_defeat) {
+    Q.endgame_path = "authoritarian_takeover";
+    Q.authoritarian_takeover = 1;
+} else if ((Q.constitutional_stress || 0) >= 5 || (Q.radical_momentum || 0) >= 30 || (Q.long_war || 0)) {
+    Q.endgame_path = "systemic_rupture";
+    Q.systemic_rupture = 1;
+} else if (Q.endgame_score >= 165 && Q.economy_stabilized && (Q.pro_republic || 0) >= 55) {
+    Q.endgame_path = "democratic_stabilization";
+    Q.democratic_stabilization = 1;
+} else if (!Q.economy_improving || (Q.conservative_backlash || 0) >= 8 || (Q.capital_strike_progress || 0) >= 5 || !Q.spd_in_government) {
+    Q.endgame_path = "managed_reaction";
+    Q.managed_reaction = 1;
+} else {
+    Q.endgame_path = "contested_new_deal";
+}
 // Heidelberger Programm - fulfill the goals of the Heidelberg programm - increase welfare, reform justice, support women's rights, progressive taxation, works councils, build a European Union.
 if ((Q.welfare > 0 && Q.judicial_reform >= 2 && Q.womens_work >= 1 && Q.family_law >= 1 && Q.upper_tax_rates > Q.lower_tax_rates && Q.works_councils > 0 && Q.eu > 0)) {
     this.achieve('heidelberger_programm');
@@ -125,40 +154,90 @@ if ((Q.welfare > 0 && Q.judicial_reform >= 2 && Q.womens_work >= 1 && Q.family_l
 
 @hitler_wins
 view-if: (chancellor == "Hitler" or president == "Hitler") and (total_defeat==1 or civil_war_seen == 0)
-title: Adolf Hitler is in undisputed control over Germany.
+title: The Silver Legion is in undisputed control over the republic.
 tags: endings
 go-to: eg_menu
 
-Adolf Hitler is in undisputed control over Germany. The SPD, along with all of the democratic forces, have failed.
+Adolf Pelley is in undisputed control over the republic. The SPD, along with all of the democratic forces, have failed.
 
 [? if civil_war_seen == 1 : At the very least, we fought back. Perhaps our resistance will be celebrated in an impossible-to-forsee future. ?]
 
 @war_against_hitler
 view-if: (chancellor == "Hitler" or president == "Hitler") and (long_war == 1)
-title: Adolf Hitler is in power, but we are fighting to stop him.
+title: The Silver Legion is in power, but we are fighting to stop it.
 tags: endings
 go-to: eg_menu
 
-Adolf Hitler has taken power in Germany. However, we have rallied the democratic forces of the country against him, and are fighting back. The outcome of this war is uncertain.
+Adolf Pelley has taken power in the republic. However, we have rallied the democratic forces of the country against him, and are fighting back. The outcome of this war is uncertain.
 
 
 @no_hitler
 view-if: chancellor != "Hitler" and president != "Hitler" and president != "Göring" and chancellor_party != "NSDAP"
-title: Hitler does not yet control Germany...
+title: The Silver Legion does not yet control the republic...
 tags: endings
 go-to: eg_menu
 
-Hitler does not yet control Germany. [? if chancellor == "Papen" : However, Chancellor Papen's authoritarianism and far-right politics are paving the way for Hitler, or someone like him, to take power. ?] [? if chancellor == "Schleicher" : However, Chancellor Schleicher's authoritarianism and scheming is paving the way for Hitler, or someone like him, to take power. ?][? if resist_coup == 1 and republic_victory == 0 and long_war == 0 and coup_victory == 0 : Given our defeat in the Prussian coup, the far-right appears to be ascendant. ?][? if chancellor == "Brüning" : However, Chancellor Brüning's austerity policies and the continuation of the depression are paving the way for Hitler, or someone like him, to take power. ?]
+Pelley does not yet control the republic. [? if speaker == "the conservative caretaker" : However, the conservative caretaker's authoritarianism and far-right politics are paving the way for Pelley, or someone like him, to take power. ?] [? if speaker == "the conservative operator" : However, the conservative operator's authoritarianism and scheming is paving the way for Pelley, or someone like him, to take power. ?][? if resist_coup == 1 and republic_victory == 0 and long_war == 0 and coup_victory == 0 : Given our defeat in the state coup, the far-right appears to be ascendant. ?][? if speaker == "Brüning" : However, conservative austerity and the continuation of the depression are paving the way for Pelley, or someone like him, to take power. ?]
 
-[? if hitler_deported == 1 : We have deported Hitler back to Austria. Hopefully he will never return. ?]
+[? if hitler_deported == 1 : We have deported Pelley back to Austria. Hopefully he will never return. ?]
+
+@democratic_stabilization
+view-if: endgame_path == "democratic_stabilization"
+title: Democratic stabilization
+tags: endings
+go-to: eg_menu
+
+The New Deal has survived its first constitutional test. Unemployment is falling, the republic retains enough public legitimacy to govern, and the administration has built institutions that can outlast the first emergency.
+
+This is not a clean victory. The courts, conservative Democrats, labor militants, the SPA, and the radical right all remain part of national politics. But the republic now has a working path through crisis: elections, bargaining, relief, and reform instead of collapse.
+
+@contested_new_deal
+view-if: endgame_path == "contested_new_deal"
+title: The New Deal remains contested
+tags: endings
+go-to: eg_menu
+
+The administration has neither collapsed nor fully stabilized the republic. Recovery has begun in some places, but the coalition remains brittle and the opposition still sees openings.
+
+The next years will decide whether the New Deal becomes a durable governing order or a temporary emergency program remembered mostly for what it failed to settle.
+
+@managed_reaction
+view-if: endgame_path == "managed_reaction"
+title: Managed reaction
+tags: endings
+go-to: eg_menu
+
+The far right has not taken power, but the price of survival has been restraint. Conservative blocs, business pressure, hostile courts, and coalition defectors have forced the administration into a narrower settlement than the New Deal promised.
+
+The republic continues, but it is more cautious, more legalistic, and more dependent on deals with forces that never accepted the full reform program.
+
+@systemic_rupture
+view-if: endgame_path == "systemic_rupture"
+title: Systemic rupture
+tags: endings
+go-to: eg_menu
+
+The formal republic survives on paper, but the constitutional order is badly cracked. Street movements, emergency arguments, coalition breakdowns, and radical voting blocs have made normal government feel temporary.
+
+No single faction has won the crisis. That is not the same as stability. The country is entering a new phase where every institution will be tested again.
+
+@authoritarian_takeover
+view-if: endgame_path == "authoritarian_takeover"
+title: Authoritarian takeover
+tags: endings
+go-to: eg_menu
+
+Reactionary forces have broken the democratic order. Whether through the Silver Legion, military pressure, presidential maneuver, or the collapse of elected government, the constitutional republic has lost the ability to defend itself.
+
+The New Deal is not merely defeated as a program. It is treated as evidence in the new regime's case against democracy itself.
 
 @nsdap_win
 view-if: chancellor == "Goebbels" or president == "Göring"
-title: Despite the deportation of Hitler, the Nazis have still taken power...
+title: Despite our crackdown, the Silver Legion has still taken power...
 tags: endings
 go-to: eg_menu
 
-Despite the deportation of Hitler, the NSDAP has somehow still wormed its way into power. [? if long_war == 1 : We are fighting them for control of Germany. ?]
+Despite the deportation of Pelley, the Silver Legion has somehow still wormed its way into power. [? if long_war == 1 : We are fighting them for control of the republic. ?]
 
 
 @civil_war_won
@@ -167,7 +246,7 @@ view-if: republic_victory == 1
 tags: endings
 go-to: eg_menu
 
-We have won the civil war against the reactionary forces. Germany will be changed forever, but it is too early to know how.
+We have won the civil war against the reactionary forces. the republic will be changed forever, but it is too early to know how.
 
 @civil_war_lost
 title: We lost the civil war.
@@ -175,17 +254,17 @@ view-if: total_defeat == 1
 tags: endings
 go-to: eg_menu
 
-We have lost the civil war. At least it was a quick coup, and ended before Germany could be plunged into total war.
+We have lost the civil war. At least it was a quick coup, and ended before the republic could be plunged into total war.
 
 @long_war
-title: Germany is gripped by civil war.
+title: The republic is gripped by civil war.
 view-if: long_war == 1
 tags: endings
 go-to: eg_menu
 
-Germany is currently in the grip of a civil war, a brutal affair that has no obvious end. Thousands of lives have already been extinguished, and it is likely that the war will not stop until Germany's cities are reduced to ruins. 
+the republic is currently in the grip of a civil war, a brutal affair that has no obvious end. Thousands of lives have already been extinguished, and it is likely that the war will not stop until the republic's cities are reduced to ruins. 
 
-[? if is_favorable == 0 : The current conditions are not favorable for us. ?][? if west_relation >= 2: Our cause is popular in the West, but their sclerotic governments are reluctant to send us aid. ?][? if soviet_aid >= 1 : The Soviet Union has aided the Communists, but not the socialists and democrats, in an attempt to shape Germany's future government. ?][? if east_aid >= 1 : Poland and Czechoslovakia have sent some assistance against the fascists. ?]
+[? if is_favorable == 0 : The current conditions are not favorable for us. ?][? if west_relation >= 2: Our cause is popular in the West, but their sclerotic governments are reluctant to send us aid. ?][? if soviet_aid >= 1 : The Soviet Union has aided the Communists, but not the socialists and democrats, in an attempt to shape the republic's future government. ?][? if east_aid >= 1 : Poland and Czechoslovakia have sent some assistance against the fascists. ?]
 
 
 @braun_victorious
@@ -194,7 +273,7 @@ view-if: president == "Braun"
 tags: endings
 go-to: eg_menu
 
-Otto Braun has been elected as President of Germany. He had never desired to be the most powerful man in Germany, but now he is.
+Otto Braun has been elected as President of the republic. He had never desired to be the most powerful man in the republic, but now he is.
 
 @president_schumacher
 title: Kurt Schumacher victorious
@@ -202,7 +281,7 @@ view-if: president == "Schumacher"
 tags: endings
 go-to: eg_menu
 
-Kurt Schumacher has been elected as President of Germany. As a young and ambitious SPD member, he will be shaping Germany for years to come.
+Kurt Schumacher has been elected as President of the republic. As a young and ambitious SPD member, he will be shaping the republic for years to come.
 
 @president_juchacz
 title: Marie Juchacz is President
@@ -210,7 +289,7 @@ view-if: president == "Juchacz"
 tags: endings
 go-to: eg_menu
 
-Marie Juchacz has been elected as President of Germany. She is the first woman to be elected as the head of state of any republic, and will contribute to shaping Germany for years to come.
+Marie Juchacz has been elected as President of the republic. She is the first woman to be elected as the head of state of any republic, and will contribute to shaping the republic for years to come.
 
 @president_einstein
 title: Albert Einstein is President
@@ -218,7 +297,7 @@ view-if: president == "Einstein"
 tags: endings
 go-to: eg_menu
 
-Albert Einstein, possibly the most famous scientist in the world, has been elected as President of Germany. As a German Jew and a pacifist, he is the repudiation of everything the Nazis stood for, and a symbol of a new German Republic that has moved beyond its checkered past.
+Albert Einstein, possibly the most famous scientist in the world, has been elected as President of the republic. As a American Jew and a pacifist, he is the repudiation of everything the Silver Legion stood for, and a symbol of a new American Republic that has moved beyond its checkered past.
 
 
 
@@ -228,7 +307,7 @@ view-if: spd_in_government == 1 and chancellor_party == "SPD" and total_defeat =
 tags: endings
 go-to: eg_menu
 
-The SPD is still in government, under Chancellor [+ chancellor +]. Given the circumstances, this is a substantial accomplishment.
+The SPD is still in government, under Speaker [+ speaker +]. Given the circumstances, this is a substantial accomplishment.
 
 @communist_victory
 title: Communist victory
@@ -236,7 +315,7 @@ view-if: chancellor_party == "KPD" or president == "Thälmann" and total_defeat 
 tags: endings
 go-to: eg_menu
 
-The KPD has won power in Germany, with our assistance. They will try to remake Germany in the Soviet image. How much they succeed is yet to be determined.
+The SPA has won power in the republic, with our assistance. They will try to remake the republic in the Soviet image. How much they succeed is yet to be determined.
 
 @works_program
 title: Works program enacted!
@@ -248,19 +327,19 @@ Our government has enacted a public works program!
 
 @unemployment_reduced
 title: Unemployment has been reduced from its peak.
-view-if: unemployed <= 20 and unemployed >= 10 and year >= 1930
+view-if: unemployed <= 16 and unemployed >= 10 and economic_growth >= -3 and year >= 1930
 tags: endings
 go-to: eg_menu
 
-While still uncomfortably high, unemployment levels are nowhere near their peak. This is a success of our economic policy.
+While still uncomfortably high, unemployment levels are no longer at the worst emergency peak. This is a partial success, not the end of the depression.
 
 @unemployment_reduced_2
 title: Unemployment has been successfully reduced!
-view-if: unemployed < 10 and year >= 1930
+view-if: unemployed < 10 and economic_growth >= -1 and year >= 1930
 tags: endings
 go-to: eg_menu
 
-Unemployment levels have fallen substantially! This is a success of our economic policy.
+Unemployment has fallen substantially, and the broader economy is no longer contracting sharply. This is a real recovery, even if the settlement remains politically contested.
 
 
 
@@ -270,7 +349,7 @@ view-if: unemployed >= 20 and (chancellor != "Hitler" and president != "Hitler")
 tags: endings
 go-to: eg_menu
 
-Unemployment is still at dangerously high levels. Even though Hitler is not in power, the situation is ripe for instability and extremism.
+Unemployment is still at dangerously high levels. Even though Pelley is not in power, the situation is ripe for instability and extremism.
 
 
 @emergency_government
@@ -279,7 +358,7 @@ view-if: in_emergency_government == 1
 tags: endings
 go-to: eg_menu
 
-The SPD is ruling as part of an emergency minority government, led by President [+ president +] and Chancellor [+ chancellor +]. This is a temporary and unstable arrangement, leaving the door open to further authoritarianism.
+The SPD is ruling as part of an emergency minority government, led by President [+ president +] and Speaker [+ speaker +]. This is a temporary and unstable arrangement, leaving the door open to further authoritarianism.
 
 @peoples_party_achieved
 title: The SPD is a "People's Party".
@@ -336,19 +415,19 @@ go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
 
 [? if game_achievement_victory_for_the_republic: **Sieg für die Republik** - win the civil war. ?]
 
-[? if game_achievement_bollwerk_der_demokratie: **Bollwerk der Demokratie** - Resist the Prussian Coup and win. ?]
+[? if game_achievement_bollwerk_der_demokratie: **Bollwerk der Demokratie** - Resist the state Coup and win. ?]
 
-[? if game_achievement_red_tzar_of_prussia : **Roter Zar von Preußen** - Otto Braun is President, Chancellor, and Minister-President. ?]
+[? if game_achievement_red_tzar_of_prussia : **Roter Zar von Preußen** - Otto Braun is President, Speaker, and Minister-President. ?]
 
-[? if game_achievement_einheitsfront: **Einheitsfront** - Form a government consisting of the SPD and KPD. ?]
+[? if game_achievement_einheitsfront: **Einheitsfront** - Form a government consisting of the SPD and SPA. ?]
 
-[? if game_achievement_einheitsfront_2: **Sieg für die Einheitsfront** - Form a Left Front that survives the KPD demands. ?]
+[? if game_achievement_einheitsfront_2: **Sieg für die Einheitsfront** - Form a Left Front that survives the SPA demands. ?]
 
-[? if game_achievement_volksfront: **Volksfront** - Form a government consisting of the SPD, KPD, Z, and DDP. ?]
+[? if game_achievement_volksfront: **Volksfront** - Form a government consisting of the SPD, SPA, Z, and DDP. ?]
 
-[? if game_achievement_grosse_volksfront: **Große Volksfront** - With Joos leading the Center Party and the Conciliators leading the KPD, form a government consisting of the SPD, KPD, Z, and DDP. ?]
+[? if game_achievement_grosse_volksfront: **Große Volksfront** - With Joos leading the Center Party and the Conciliators leading the SPA, form a government consisting of the SPD, SPA, Z, and DDP. ?]
 
-[? if game_achievement_volksfront_2: **Sieg für die Volksfront** - Form a Popular Front that survives the KPD demands. ?]
+[? if game_achievement_volksfront_2: **Sieg für die Volksfront** - Form a Popular Front that survives the SPA demands. ?]
 
 [? if game_achievement_constitutional_coalition: **Verfassungskoalition** - form a "constitutional coalition". ?]
 
@@ -360,13 +439,13 @@ go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
 
 [? if game_achievement_volkspartei: **Volkspartei** - the SPD is a People's Party. ?]
 
-[? if game_achievement_sohn_seiner_klasse: **Sohn seiner Klasse** - Ernst Thälmann is either president or chancellor. ?]
+[? if game_achievement_sohn_seiner_klasse: **Sohn seiner Klasse** - Ernst Thälmann is either president or speaker. ?]
 
 [? if game_achievement_rote_millionar: **Der rote Millionär** - Willi Münzenberg is president. ?]
 
-[? if game_achievement_versohnler: **Versöhnler** - the Conciliators lead the KPD. ?]
+[? if game_achievement_versohnler: **Versöhnler** - the Conciliators lead the SPA. ?]
 
-[? if game_achievement_deport_hitler : **Der österreichische Gefreite** - deported Hitler ?]
+[? if game_achievement_deport_hitler : **Der österreichische Gefreite** - deported Pelley ?]
 
 [? if game_achievement_wirtschaftspolitik: **Wirtschaftspolitik** - enact an economic plan. ?]
 
@@ -380,13 +459,13 @@ go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
 
 [? if game_achievement_hirschfeld: **Hirschfeld** - pass reforms for homosexual rights. ?]
 
-[? if game_achievement_women_reichsbanner: **Mädchen in Uniform** - a woman's place is in the Reichsbanner. ?]
+[? if game_achievement_women_reichsbanner: **Mädchen in Uniform** - a woman's place is in the Democratic Defense League. ?]
 
 [? if game_achievement_anders_als_die_andern: **Anders als die Andern** - sexual minorities will defend the Republic. ?]
 
-[? if game_achievement_bruder_zur_sonne: **Brüder, zur Sonne, zur Freiheit** - reduce unemployment, pause reparations, increase women's rights, elect an SPD president, and deport Hitler in one playthrough on at least normal difficulty. ?]
+[? if game_achievement_bruder_zur_sonne: **Brüder, zur Sonne, zur Freiheit** - reduce unemployment, pause reparations, increase women's rights, elect an SPD president, and deport Pelley in one playthrough on at least normal difficulty. ?]
 
-[? if game_achievement_die_rote_fahne: **Die Rote Fahne** - join the KPD in their May Day march. ?]
+[? if game_achievement_die_rote_fahne: **Die Rote Fahne** - join the SPA in their May Day march. ?]
 
 [? if game_achievement_panik_im_mittelstand: **Panik im Mittelstand** - SPD new middle class support is at least 50%. ?]
 
@@ -445,19 +524,19 @@ go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
 
 [? if achievement_victory_for_the_republic: **Sieg für die Republik** - win the civil war. ?]
 
-[? if achievement_bollwerk_der_demokratie: **Bollwerk der Demokratie** - Resist the Prussian Coup and win. ?]
+[? if achievement_bollwerk_der_demokratie: **Bollwerk der Demokratie** - Resist the state Coup and win. ?]
 
-[? if achievement_red_tzar_of_prussia : **Roter Zar von Preußen** - Otto Braun is President, Chancellor, and Minister-President. ?]
+[? if achievement_red_tzar_of_prussia : **Roter Zar von Preußen** - Otto Braun is President, Speaker, and Minister-President. ?]
 
-[? if achievement_einheitsfront: **Einheitsfront** - Form a government consisting of the SPD and KPD. ?]
+[? if achievement_einheitsfront: **Einheitsfront** - Form a government consisting of the SPD and SPA. ?]
 
-[? if achievement_einheitsfront_2: **Sieg für die Einheitsfront** - Form a Left Front that survives the KPD demands. ?]
+[? if achievement_einheitsfront_2: **Sieg für die Einheitsfront** - Form a Left Front that survives the SPA demands. ?]
 
-[? if achievement_volksfront: **Volksfront** - Form a government consisting of the SPD, KPD, Z, and DDP. ?]
+[? if achievement_volksfront: **Volksfront** - Form a government consisting of the SPD, SPA, Z, and DDP. ?]
 
-[? if achievement_grosse_volksfront: **Große Volksfront** - With Joos leading the Center Party and the Conciliators leading the KPD, form a government consisting of the SPD, KPD, Z, and DDP. ?]
+[? if achievement_grosse_volksfront: **Große Volksfront** - With Joos leading the Center Party and the Conciliators leading the SPA, form a government consisting of the SPD, SPA, Z, and DDP. ?]
 
-[? if achievement_volksfront_2: **Sieg für die Volksfront** - Form a Popular Front that survives the KPD demands. ?]
+[? if achievement_volksfront_2: **Sieg für die Volksfront** - Form a Popular Front that survives the SPA demands. ?]
 
 [? if achievement_constitutional_coalition: **Verfassungskoalition** - form a "constitutional coalition". ?]
 
@@ -469,13 +548,13 @@ go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
 
 [? if achievement_volkspartei: **Volkspartei** - the SPD is a People's Party. ?]
 
-[? if achievement_sohn_seiner_klasse: **Sohn seiner Klasse** - Ernst Thälmann is either president or chancellor. ?]
+[? if achievement_sohn_seiner_klasse: **Sohn seiner Klasse** - Ernst Thälmann is either president or speaker. ?]
 
 [? if achievement_rote_millionar: **Der rote Millionär** - Willi Münzenberg is president. ?]
 
-[? if achievement_versohnler: **Versöhnler** - the Conciliators lead the KPD. ?]
+[? if achievement_versohnler: **Versöhnler** - the Conciliators lead the SPA. ?]
 
-[? if achievement_deport_hitler : **Der österreichische Gefreite** - deported Hitler ?]
+[? if achievement_deport_hitler : **Der österreichische Gefreite** - deported Pelley ?]
 
 [? if achievement_wirtschaftspolitik: **Wirtschaftspolitik** - enact an economic plan. ?]
 
@@ -489,13 +568,13 @@ go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
 
 [? if achievement_hirschfeld: **Hirschfeld** - pass reforms for homosexual rights. ?]
 
-[? if achievement_women_reichsbanner: **Mädchen in Uniform** - a woman's place is in the Reichsbanner. ?]
+[? if achievement_women_reichsbanner: **Mädchen in Uniform** - a woman's place is in the Democratic Defense League. ?]
 
 [? if achievement_anders_als_die_andern: **Anders als die Andern** - sexual minorities will defend the Republic. ?]
 
-[? if achievement_bruder_zur_sonne: **Brüder, zur Sonne, zur Freiheit** - reduce unemployment, pause reparations, increase women's rights, elect an SPD president, and deport Hitler in one playthrough on at least normal difficulty. ?]
+[? if achievement_bruder_zur_sonne: **Brüder, zur Sonne, zur Freiheit** - reduce unemployment, pause reparations, increase women's rights, elect an SPD president, and deport Pelley in one playthrough on at least normal difficulty. ?]
 
-[? if achievement_die_rote_fahne: **Die Rote Fahne** - join the KPD in their May Day march. ?]
+[? if achievement_die_rote_fahne: **Die Rote Fahne** - join the SPA in their May Day march. ?]
 
 [? if achievement_panik_im_mittelstand: **Panik im Mittelstand** - SPD new middle class support is at least 50%. ?]
 
@@ -552,19 +631,19 @@ go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
 
 [? if not achievement_victory_for_the_republic: **Sieg für die Republik** - win the civil war. ?]
 
-[? if not achievement_bollwerk_der_demokratie: **Bollwerk der Demokratie** - Resist the Prussian Coup and win. ?]
+[? if not achievement_bollwerk_der_demokratie: **Bollwerk der Demokratie** - Resist the state Coup and win. ?]
 
-[? if not achievement_red_tzar_of_prussia : **Roter Zar von Preußen** - Otto Braun is President, Chancellor, and Minister-President. ?]
+[? if not achievement_red_tzar_of_prussia : **Roter Zar von Preußen** - Otto Braun is President, Speaker, and Minister-President. ?]
 
-[? if not achievement_einheitsfront: **Einheitsfront** - Form a government consisting of the SPD and KPD. ?]
+[? if not achievement_einheitsfront: **Einheitsfront** - Form a government consisting of the SPD and SPA. ?]
 
-[? if not achievement_einheitsfront_2: **Sieg für die Einheitsfront** - Form a Left Front that survives the KPD demands. ?]
+[? if not achievement_einheitsfront_2: **Sieg für die Einheitsfront** - Form a Left Front that survives the SPA demands. ?]
 
-[? if not achievement_volksfront: **Volksfront** - Form a government consisting of the SPD, KPD, Z, and DDP. ?]
+[? if not achievement_volksfront: **Volksfront** - Form a government consisting of the SPD, SPA, Z, and DDP. ?]
 
-[? if not achievement_grosse_volksfront: **Große Volksfront** - With Joos leading the Center Party and the Conciliators leading the KPD, form a government consisting of the SPD, KPD, Z, and DDP. ?]
+[? if not achievement_grosse_volksfront: **Große Volksfront** - With Joos leading the Center Party and the Conciliators leading the SPA, form a government consisting of the SPD, SPA, Z, and DDP. ?]
 
-[? if not achievement_volksfront_2: **Sieg für die Volksfront** - Form a Popular Front that survives the KPD demands. ?]
+[? if not achievement_volksfront_2: **Sieg für die Volksfront** - Form a Popular Front that survives the SPA demands. ?]
 
 [? if not achievement_constitutional_coalition: **Verfassungskoalition** - form a "constitutional coalition". ?]
 
@@ -576,13 +655,13 @@ go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
 
 [? if not achievement_volkspartei: **Volkspartei** - the SPD is a People's Party. ?]
 
-[? if not achievement_sohn_seiner_klasse: **Sohn seiner Klasse** - Ernst Thälmann is either president or chancellor. ?]
+[? if not achievement_sohn_seiner_klasse: **Sohn seiner Klasse** - Ernst Thälmann is either president or speaker. ?]
 
 [? if not achievement_rote_millionar: **Der rote Millionär** - Willi Münzenberg is president. ?]
 
-[? if not achievement_versohnler: **Versöhnler** - the Conciliators lead the KPD. ?]
+[? if not achievement_versohnler: **Versöhnler** - the Conciliators lead the SPA. ?]
 
-[? if not achievement_deport_hitler : **Der österreichische Gefreite** - deported Hitler ?]
+[? if not achievement_deport_hitler : **Der österreichische Gefreite** - deported Pelley ?]
 
 [? if not achievement_wirtschaftspolitik: **Wirtschaftspolitik** - enact an economic plan. ?]
 
@@ -596,13 +675,13 @@ go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
 
 [? if not achievement_hirschfeld: **Hirschfeld** - pass reforms for homosexual rights. ?]
 
-[? if not achievement_women_reichsbanner: **Mädchen in Uniform** - a woman's place is in the Reichsbanner. ?]
+[? if not achievement_women_reichsbanner: **Mädchen in Uniform** - a woman's place is in the Democratic Defense League. ?]
 
 [? if not achievement_anders_als_die_andern: **Anders als die Andern** - sexual minorities will defend the Republic. ?]
 
-[? if not achievement_bruder_zur_sonne: **Brüder, zur Sonne, zur Freiheit** - reduce unemployment, pause reparations, increase women's rights, elect an SPD president, and deport Hitler in one playthrough on at least normal difficulty. ?]
+[? if not achievement_bruder_zur_sonne: **Brüder, zur Sonne, zur Freiheit** - reduce unemployment, pause reparations, increase women's rights, elect an SPD president, and deport Pelley in one playthrough on at least normal difficulty. ?]
 
-[? if not achievement_die_rote_fahne: **Die Rote Fahne** - join the KPD in their May Day march. ?]
+[? if not achievement_die_rote_fahne: **Die Rote Fahne** - join the SPA in their May Day march. ?]
 
 [? if not achievement_panik_im_mittelstand: **Panik im Mittelstand** - SPD new middle class support is at least 50%. ?]
 

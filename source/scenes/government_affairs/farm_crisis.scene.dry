@@ -1,0 +1,81 @@
+title: Farm Crisis
+new-page: true
+is-card: true
+card-image: img/map_3.jpg
+tags: congressional_affairs
+max-visits: 6
+view-if: farm_crisis_timer = 0
+on-arrival: farm_crisis_timer = 8
+
+= Farm Crisis
+
+Farm prices have collapsed, foreclosures spread through the Plains, and every auction risks becoming a political rally. Relief for agriculture can stabilize the countryside, but every route creates a different opposition.
+
+- @farm_crisis.price_supports: Pay growers to cut output and raise prices.
+- @farm_crisis.tenant_relief: Direct relief toward tenants, sharecroppers, and farm laborers.
+- @farm_crisis.foreclosure_moratorium: Back state foreclosure moratoriums.
+- @farm_crisis.market_credit: Offer cheap credit through conservative farm banks.
+- @root: Put the question aside.
+- @easy_discard
+- @cancel_advisor_action
+
+@price_supports
+title: Pay growers to cut output.
+on-arrival: {! 
+Q.farm_relief += 2;
+Q.rural_spd += 3;
+Q.z_relation += 2;
+Q.ddp_relation -= 2;
+Q.budget -= 1;
+Q.inflation += 1;
+Q.plains_distress -= 1;
+Q.new_deal_legitimacy += 2;
+!}
+
+Price supports bring immediate relief to landowners and commercial growers. The {!<span class="party-fl">Farmer-Labor</span>!} bloc likes the help, though tenants see less of the money than the speeches promise.
+
+@tenant_relief
+title: Relief for tenants and farm workers.
+on-arrival: {! 
+Q.farm_relief += 1;
+Q.tenant_farmer_support += 2;
+Q.rural_spd += 4;
+Q.workers_spd += 1;
+Q.z_relation += 4;
+Q.kpd_relation += 1;
+Q.reformist_dissent += 2;
+Q.southern_resistance += 2;
+Q.new_deal_legitimacy += 3;
+!}
+
+Checks, seed loans, and legal aid reach the people usually left out of courthouse politics. Southern conservatives howl, but the reform wing finally has a rural story it can defend.
+
+@foreclosure_moratorium
+title: Back foreclosure moratoriums.
+on-arrival: {! 
+Q.farm_relief += 1;
+Q.plains_distress -= 2;
+Q.rural_spd += 3;
+Q.dvp_relation -= 4;
+Q.ddp_relation -= 4;
+Q.supreme_court_hostility += 1;
+Q.liberty_litigation += 1;
+Q.new_deal_legitimacy += 2;
+!}
+
+The auction block slows down. Farm families get breathing room, banks get angry, and constitutional challenges begin moving through friendly courts.
+
+@market_credit
+title: Use conservative farm credit.
+on-arrival: {! 
+Q.farm_relief += 1;
+Q.dvp_relation += 2;
+Q.ddp_relation += 2;
+Q.rural_spd += 1;
+Q.z_relation -= 1;
+Q.budget -= 1;
+Q.agency_capacity += 1;
+Q.new_deal_legitimacy += 1;
+!}
+
+Cheap credit through existing banks calms lenders and helps some farmers survive. It is administratively easy, politically modest, and not nearly enough for the most desperate counties.

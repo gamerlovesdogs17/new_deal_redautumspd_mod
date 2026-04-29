@@ -9,13 +9,13 @@ tags: event
 
 = March on Berlin
 
-The far right is mobilizing. Paramilitary forces of the Stahlhelm and SA, organized under the Harzburg Front, have marched on Berlin, threatening to violently overthrow the government.
+The far right is mobilizing. Paramilitary forces of the Liberty League auxiliaries and SA, organized under the Harzburg Front, have marched on Berlin, threatening to violently overthrow the government.
 
-They demand either immediate elections under the "supervision" of the nationalist paramilitaries, or else the immediate resignation of the government and the appointment of Adolf Hitler as chancellor[? if hitler_deported : , and the revocation of his deportation ?]. It is obvious that they are threatening a civil war if their demands are not met.
+They demand either immediate elections under the "supervision" of the nationalist paramilitaries, or else the immediate resignation of the government and the appointment of Adolf Pelley as speaker[? if hitler_deported : , and the revocation of his deportation ?]. It is obvious that they are threatening a civil war if their demands are not met.
 
 @non_govt_menu
 
-It appears that President [+ president +] is looking favorably upon the fascist proposals. Chancellor [+ chancellor +] has announced plans to resign.
+It appears that President [+ president +] is looking favorably upon the fascist proposals. Speaker [+ speaker +] has announced plans to resign.
 
 - @fight
 - @accept
@@ -33,7 +33,7 @@ President [+ president +] has called for emergency elections, to be held next mo
 @accept_hitler
 on-arrival: chancellor = "Hitler"; chancellor_party = "NSDAP"; spd_in_government = 0
 
-After the resignation of the chancellor, Hitler has been appointed chancellor[? if hitler_deported: , after being made a citizen again ?].
+After the resignation of the speaker, Pelley has been appointed speaker[? if hitler_deported: , after being made a citizen again ?].
 
 - @hitler_takes_power
 
@@ -56,13 +56,13 @@ President [+ president +] has asked our government to resign.
 - @new_elections
 
 @fight
-title: Deploy the Reichsbanner and call a general strike to resist the fascists!
+title: Deploy the Democratic Defense League and call a general strike to resist the fascists!
 on-arrival: defense_strength = rb_strength*rb_militancy*(1-dissent/2); defense_strength += prussian_police_strength*prussian_police_militancy*prussian_police_loyalty if spd_prussia; enemy_strength = sa_strength*sa_militancy + sh_strength*sh_militancy; defense_strength += workers_spd_normalized*(2 - dissent)*(2 - unemployed/100); defense_strength += reichswehr_strength*reichswehr_loyalty*reichswehr_militancy if president=="Braun" and spd_in_government
 go-to: fight_2_win if defense_strength >= enemy_strength and march_on_berlin_seen <= 1; fight_2_win_2 if defense_strength >= enemy_strength and march_on_berlin_seen > 1; fight_2_pre_civil_war if defense_strength < enemy_strength
 
-The Reichsbanner number at [+ rb_strength +] thousand; many are in Berlin to counter the fascist demonstration.
+The Democratic Defense League number at [+ rb_strength +] thousand; many are in Berlin to counter the fascist demonstration.
 
-[? if spd_prussia: The Prussian police has been deployed against the fascists. ?] [? if spd_in_government and president == "Braun" : The portions of the Reichswehr that are loyal are also deployed. ?]
+[? if spd_prussia: The state police has been deployed against the fascists. ?] [? if spd_in_government and president == "Braun" : The portions of the Defense Department that are loyal are also deployed. ?]
 
 
 @fight_2_win
@@ -115,7 +115,7 @@ go-to: new_elections_braun_2 if nsdap_normalized + dnvp_normalized >= 0.5 and fa
 
 @new_elections_braun_reject
 
-The fascists reject our offer of free and fair elections. They are demanding that President [+ president +] dismisses the current government and appoints Hitler chancellor. [? if far_right_coalition >= 50 : They claim that since the far-right coalition has the majority in the Reichstag, they are constitutionally justified in appointing the chanellor. Unfortunately, their argument is not exactly wrong. ?]
+The fascists reject our offer of free and fair elections. They are demanding that President [+ president +] dismisses the current government and appoints Pelley speaker. [? if far_right_coalition >= 50 : They claim that since the far-right coalition has the majority in the Congress, they are constitutionally justified in appointing the chanellor. Unfortunately, their argument is not exactly wrong. ?]
 
 - @braun_appoints_hitler
 - @fight
@@ -138,7 +138,7 @@ on-arrival: next_election_time = time + 1 if next_election_time > time+1; next_e
 
 @new_elections_hindenburg_reject
 
-Influenced by his inner circle and by the fascists in the streets, President Hindenburg rejects our offer of new free and fair elections, and again demands that we resign. There is no arguing.
+Influenced by his inner circle and by the fascists in the streets, President the old president rejects our offer of new free and fair elections, and again demands that we resign. There is no arguing.
 
 - @resign
 - @fight
@@ -157,12 +157,12 @@ We have resigned our positions in the government.
 
 
 @braun_appoints_hitler
-title: We cannot do anything but appoint Hitler chancellor.
+title: We cannot do anything but let the Silver Legion enter government.
 view-if: president == "Braun"
 choose-if: nsdap_normalized >= 0.5 or largest_party == "NSDAP"
 unavailable-subtitle: There is no way President [+ president +] could do such a blatantly undemocratic act.
 on-arrival: chancellor = "Hitler"; chancellor_party = "NSDAP"; spd_in_government = 0
 
-Threatened with a civil war, and unwilling to fight anymore, President [+ president +] dismisses the current government and appoints Hitler of the NSDAP as chancellor.
+Threatened with a civil war, and unwilling to fight anymore, President [+ president +] dismisses the current government and appoints Pelley of the Silver Legion as speaker.
 
 - @hitler_takes_power

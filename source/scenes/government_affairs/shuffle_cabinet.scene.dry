@@ -1,7 +1,7 @@
 title: Shuffle Cabinet
 new-page: true
 is-card: true
-tags: govt_affairs, cabinet
+tags: presidential_affairs, cabinet
 on-arrival: shuffle_cabinet_timer = 6;
 view-if: spd_in_government == 1 and shuffle_cabinet_timer == 0 and chancellor_party == "SPD" and not in_spd_majority and not in_emergency_government and not in_left_front
 card-image: img/muller_cabinet.jpg
@@ -22,7 +22,7 @@ Justice: [+ justice_minister_party +]
 
 Foreign: [+ foreign_minister_party +]
 
-Reichswehr: [+ reichswehr_minister_party +]
+Defense Department: [+ reichswehr_minister_party +]
 
 Agriculture: [+ agriculture_minister_party +]
 

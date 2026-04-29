@@ -1,0 +1,47 @@
+title: Opposition Strategy
+new-page: true
+is-card: true
+tags: event
+view-if: 0
+on-arrival: opposition_strategy_timer = 7; month_actions += 1
+card-image: img/reichstag.jpg
+
+= Opposition Strategy
+
+The opposition is not passive. Republicans, the Liberty League, the Socialist Party of America, NUSJ, and the Silver Legion each look for pressure points against the administration.
+
+- @gop_obstruction
+- @liberty_court_campaign
+- @spa_left_pressure
+- @nusj_radio_campaign
+- @silver_street_drive
+
+@gop_obstruction
+title: GOP obstruction in Congress.
+on-arrival: gop_obstruction += 1; opposition_pressure += 1; resources -= 1 if resources > 0; governing_senate_support -= 2 if governing_senate_support > 2; dvp_relation -= 4
+
+Republican leadership slows committee work, forces procedural votes, and tries to make every bill look chaotic.
+
+@liberty_court_campaign
+title: Liberty League funds a court campaign.
+on-arrival: liberty_litigation += 1; opposition_pressure += 1; supreme_court_hostility += 1; ddp_relation -= 5; capital_strike_progress += 1
+
+The Liberty League turns legal resistance into a national fundraising machine. Every agency lawyer now expects a lawsuit.
+
+@spa_left_pressure
+title: SPA attacks from the left.
+on-arrival: opposition_pressure += 1; kpd_relation -= 3; workers_kpd += 3; unemployed_kpd += 3; left_dissent += 3; labor_dissent += 2
+
+Norman Thomas and the Socialist Party accuse the administration of saving capitalism from itself. Their critique bites hardest where unemployment remains severe.
+
+@nusj_radio_campaign
+title: NUSJ radio offensive.
+on-arrival: opposition_pressure += 1; workers_dnvp += 3; unemployed_dnvp += 4; old_middle_dnvp += 2; pro_republic -= 2; dnvp_relation -= 3
+
+Father Coughlin's network pushes a populist attack on bankers, bureaucracy, and the administration. The message is ugly, but it travels.
+
+@silver_street_drive
+title: Silver Legion street mobilization.
+on-arrival: opposition_pressure += 1; sa_strength += 60; sa_militancy += 0.05; workers_nsdap += 2; unemployed_nsdap += 3; coup_progress += 1; pro_republic -= 2
+
+The Silver Legion recruits through spectacle and intimidation. They are not large enough to govern, but they can poison public life.

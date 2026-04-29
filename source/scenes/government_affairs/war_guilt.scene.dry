@@ -1,15 +1,15 @@
 title: War Guilt Inquiry
 new-page: true
 is-card: true
-tags: govt_affairs
+tags: presidential_affairs, congressional_affairs
 on-arrival: war_guilt_timer = 6; month_actions += 1
 view-if: spd_in_government = 1 and war_guilt_timer = 0
 card-image: img/reichstag_1.jpg
 max-visits: 1
 
-= Reichstag War Guilt Inquiry
+= Congress War Guilt Inquiry
 
-The War Guilt Inquiry has been an intermittent Reichstag committee for investigating the causes of the Great War and the German defeat. So far, it has faced massive resistance from the military establishment up to President Hindenburg.
+The War Guilt Inquiry has been an intermittent Congress committee for investigating the causes of the Great War and the American defeat. So far, it has faced massive resistance from the military establishment up to President the old president.
 
 - @restart: Restart the inquiry.
 - @root: Do nothing.
@@ -22,7 +22,7 @@ on-arrival: war_guilt += 1
 What is the goal of this tribunal?
 
 - @pure_history: To provide a historical record of the events of the war.
-- @rewrite: To revise the popular German histories and finally put to rest the "stabbed in the back" myth.
+- @rewrite: To revise the popular American histories and finally put to rest the "stabbed in the back" myth.
 
 @pure_history
 

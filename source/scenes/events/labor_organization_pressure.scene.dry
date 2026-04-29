@@ -1,0 +1,45 @@
+title: Labor Organization Pressure
+new-page: true
+is-card: true
+tags: event
+view-if: spd_in_government = 1 and ((year = 1933 and month >= 3) or year > 1933) and labor_organization_pressure_timer = 0 and radical_pressure_timer = 0 and (labor_militancy >= 6 or cio_momentum + afl_momentum >= 4 or unemployed >= 18)
+on-arrival: labor_organization_pressure_timer = 14; radical_pressure_timer = 4; month_actions += 1
+card-image: img/adgb_logo.svg
+
+= Labor Organization Pressure
+
+Organizers, strike committees, and relief offices are all pressing the administration at once. The AFL wants recognition through orderly bargaining. The CIO current wants industrial organizing backed by federal power. Employers want injunctions and police protection.
+
+- @recognize_cio_drives
+- @afl_mediation
+- @relief_for_labor_peace
+- @injunction_crackdown
+- @easy_discard
+
+@recognize_cio_drives
+title: Recognize CIO organizing drives.
+subtitle: Strong labor gains; business and conservative Democrats recoil.
+on-arrival: labor_movement_alignment = "industrial"; cio_momentum += 2; workers_spd += 6; unemployed_spd += 3; labor_strength += 5; labor_dissent -= 6; left_dissent -= 2; ddp_relation -= 5; dvp_relation -= 4; conservative_backlash += 1; capital_strike_progress += 1; economic_growth += 0.2
+
+The administration treats industrial organizing as part of recovery, not a threat to it. Workers hear the signal clearly. So do employers.
+
+@afl_mediation
+title: Build an AFL mediation channel.
+subtitle: Stabilizes labor relations; disappoints militant organizers.
+on-arrival: labor_movement_alignment = "craft"; afl_momentum += 2; workers_spd += 3; labor_dissent -= 2; labor_strength += 2; reformist_dissent -= 2; center_dissent -= 1; ddp_relation += 2; dvp_relation += 2; capital_strike_progress -= 1 if capital_strike_progress > 0; cio_momentum -= 1 if cio_momentum > 0
+
+The administration gives established labor leaders a privileged channel into federal mediation. It is less explosive than industrial unionism and much easier to defend in Congress.
+
+@relief_for_labor_peace
+title: Trade relief money for labor peace.
+subtitle: Cuts militancy by reducing immediate desperation.
+on-arrival: budget -= 1 if budget > 0; unemployed -= 1 if unemployed > 6; labor_dissent -= 3; workers_spd += 2; unemployed_spd += 4; economic_stress -= 1 if economic_stress > 0; new_deal_legitimacy += 2 if new_deal_legitimacy < 95; pork_barrel_pressure += 1
+
+Relief administrators and labor leaders agree on the same immediate fact: hungry workers do not wait patiently for institutional reform. Money moves first; the politics follows.
+
+@injunction_crackdown
+title: Back injunctions and police order.
+subtitle: Calms employers; radicalizes labor and the SPA.
+on-arrival: labor_movement_alignment = "repressed"; labor_dissent += 8; left_dissent += 4; workers_kpd += 5; unemployed_kpd += 3; kpd_relation += 3; ddp_relation += 4; dvp_relation += 4; conservative_backlash -= 1 if conservative_backlash > 0; capital_strike_progress -= 1 if capital_strike_progress > 0; pro_republic -= 2
+
+Federal officials signal that strikes cannot outrun court orders or local police. Employers cheer. Labor organizers remember.

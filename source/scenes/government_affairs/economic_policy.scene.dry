@@ -1,7 +1,7 @@
 title: Economic Policy
 new-page: true
 is-card: true
-tags: govt_affairs, cabinet
+tags: congressional_affairs, cabinet
 on-arrival: economic_policy_timer += 12; month_actions += 1; nationalize_budget = 4; nationalize_budget -= 1 if works_councils >= 2; nationalize_budget -= 1 if works_councils >= 3; nationalize_budget -= 1 if socializations + nationalization_progress >= 2; wtb_budget = 4; wtb_budget -= 1 if works_councils >= 2 or socializations >= 1 or pro_labor >= 2
 view-if: spd_in_government = 1 and (economic_minister_party == "SPD" or finance_minister_party == "SPD") and economic_policy_timer <= 0 and economic_plan > 0
 card-image: img/portraits/SchmidtRobert.jpg
@@ -18,6 +18,8 @@ The conference has adopted an economic direction. Now the administration has to 
 - @implement_wtb_deficit
 - @nationalize_1
 - @nationalize_2
+- @moderate_plan_continue
+- @moderate_plan_continue_limited
 - @moderate_plan
 - @moderate_plan_limited_budget
 - @root: Do not implement the economic plan.
@@ -30,7 +32,7 @@ subtitle: -3 budget
 unavailable-subtitle: Unemployment is low enough that the emergency works drive has passed.
 view-if: wtb_implemented > 2 and budget >= 3 
 choose-if: unemployed > 8
-on-arrival: works_program += 1; budget -= 3; workers_spd += 7*(1-dissent); workers += 1 if works_program <= 4; unemployed -= 3 if unemployed > 8; unemployed_spd += 7*(1-dissent); workers_kpd -= 3; workers_nsdap -= 3; wtb_implemented += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 2; economic_growth += 1.6; economic_growth -= 0.6 if economic_growth > 5
+on-arrival: works_program += 1; budget -= 3; workers_spd += 7*(1-dissent); workers += 1 if works_program <= 4; unemployed -= 3 if unemployed > 8; unemployed_spd += 7*(1-dissent); workers_kpd -= 3; workers_nsdap -= 3; wtb_implemented += 1; z_relation += 2; ddp_relation -= 2; dvp_relation -= 2; kpd_relation += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 2; economic_growth += 1.6; economic_growth -= 0.6 if economic_growth > 5
 
 [? if works_program == 4 : We have opened the second phase of the Share Our Wealth recovery drive. ?][? if works_program > 4 :  We have continued the recovery drive. ?] In addition to public works, the administration is now focusing on rebuilding idle industries.
 
@@ -41,7 +43,7 @@ subtitle: -3 budget - we will enter a deficit.
 unavailable-subtitle: Unemployment is low enough that deficit-financed emergency works would be hard to justify.
 view-if: wtb_implemented > 2 and budget < 3 and budget >= -3
 choose-if: unemployed > 10
-on-arrival: works_program += 1; budget -= 3; workers_spd += 6*(1-dissent); workers += 1 if works_program <= 4; unemployed -= 3 if unemployed > 8; unemployed_spd += 6*(1-dissent); workers_kpd -= 2; workers_nsdap -= 2; coalition_dissent += 1; capital_strike_progress += 1; wtb_implemented += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 3; economic_growth += 1.6; economic_growth -= 0.6 if economic_growth > 5
+on-arrival: works_program += 1; budget -= 3; workers_spd += 6*(1-dissent); workers += 1 if works_program <= 4; unemployed -= 3 if unemployed > 8; unemployed_spd += 6*(1-dissent); workers_kpd -= 2; workers_nsdap -= 2; coalition_dissent += 1; capital_strike_progress += 1; wtb_implemented += 1; z_relation += 1; ddp_relation -= 3; dvp_relation -= 3; kpd_relation += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 3; economic_growth += 1.6; economic_growth -= 0.6 if economic_growth > 5
 
 We have continued the recovery drive despite the deficit. In addition to public works, the administration is now focusing on rebuilding idle industries.
 
@@ -63,7 +65,7 @@ subtitle: -[+ wtb_budget +] budget. [? if wtb_budget == 3 : Our pro-labor polici
 unavailable-subtitle: Unemployment is low enough that the emergency recovery program has passed.
 view-if: budget >= wtb_budget and wtb_implemented == 0 and wtb_adopted == 1
 choose-if: unemployed > 8
-on-arrival: budget -= wtb_budget; works_program += 1; unemployed -= 4; workers_spd += 8*(1-dissent); unemployed_spd += 8*(1-dissent); wtb_implemented += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 2; economic_growth += 2.8; pro_republic += 3*(1-dissent);
+on-arrival: budget -= wtb_budget; works_program += 1; unemployed -= 4; workers_spd += 8*(1-dissent); unemployed_spd += 8*(1-dissent); wtb_implemented += 1; z_relation += 2; kpd_relation += 1; ddp_relation -= 2; dvp_relation -= 2; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 2; economic_growth += 2.8; pro_republic += 3*(1-dissent);
 achievement: wirtschaftspolitik
 
 We have started to enact Share Our Wealth as an actual governing program. Money is beginning to flow through the economy through large-scale public works, relief, and direct purchasing power.
@@ -76,7 +78,7 @@ subtitle: -[+ wtb_budget +] budget - we will enter deficit spending. [? if wtb_b
 unavailable-subtitle: Unemployment is low enough that deficit-financed emergency works would be hard to justify.
 view-if: budget < wtb_budget and wtb_implemented == 0 and wtb_adopted == 1
 choose-if: unemployed > 8
-on-arrival: coalition_dissent += 1; coalition_dissent += 1 if historical_mode; coalition_dissent += 1 if chancellor == "Brüning"; works_program += 1; budget -= wtb_budget; unemployed -= 4; workers += 2; workers_spd += 8*(1-dissent); unemployed_spd += 8*(1-dissent); capital_strike_progress += 1; wtb_implemented += 1; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 3; economic_growth += 3; pro_republic += 3*(1-dissent);
+on-arrival: coalition_dissent += 1; coalition_dissent += 1 if historical_mode; coalition_dissent += 1 if chancellor == "Brüning"; works_program += 1; budget -= wtb_budget; unemployed -= 4; workers += 2; workers_spd += 8*(1-dissent); unemployed_spd += 8*(1-dissent); capital_strike_progress += 1; wtb_implemented += 1; z_relation += 1; kpd_relation += 1; ddp_relation -= 4; dvp_relation -= 4; kpd_coalition_dissent += 1; kpd_relation -= 5 if in_popular_front or in_left_front; inflation += 3; economic_growth += 3; pro_republic += 3*(1-dissent);
 achievement: wirtschaftspolitik
 
 We have entered the realm of deficit spending. Conservative Democrats and business allies are furious, but the works plan is enacted anyway. Money is beginning to flow through the economy through large-scale public works, relief, and direct purchasing power.
@@ -169,9 +171,9 @@ go-to: nationalize_deficit if budget < nationalize_budget; nationalize_no_defici
 title: Implement the Pragmatic New Deal job-creation plan.
 subtitle: -2 budget.
 unavailable-subtitle: -2 budget. [? if budget < 2 : We do not have the necessary budget. ?] [? if unemployed < 8 : Unemployment is low enough that job creation is not necessary. ?]
-view-if: moderate_plan_adopted == 1
+view-if: moderate_plan_adopted == 1 and moderate_plan_progress == 0
 choose-if: budget >= 2 and unemployed >= 8
-on-arrival: budget -= 2; works_program += 1; unemployed -= 3 if unemployed >= 8; inflation += 1.5; workers_spd += 6*(1-dissent); unemployed_spd += 4*(1-dissent); new_middle_spd += 3*(1-dissent); old_middle_spd += 2*(1-dissent); rural_spd += 2*(1-dissent); moderate_plan_progress += 1; kpd_coalition_dissent += 1; inflation += 1 if unemployed < 10; kpd_relation -= 5 if in_popular_front or in_left_front; economic_growth += 1.6; pro_republic += 3*(1-dissent);
+on-arrival: budget -= 2; works_program += 1; unemployed -= 3 if unemployed >= 8; inflation += 1.5; workers_spd += 6*(1-dissent); unemployed_spd += 4*(1-dissent); new_middle_spd += 3*(1-dissent); old_middle_spd += 2*(1-dissent); rural_spd += 2*(1-dissent); moderate_plan_progress += 1; z_relation += 1; ddp_relation += 1; dvp_relation += 1; kpd_coalition_dissent += 1; inflation += 1 if unemployed < 10; kpd_relation -= 5 if in_popular_front or in_left_front; economic_growth += 1.6; pro_republic += 3*(1-dissent);
 achievement: wirtschaftspolitik
 
 [? if moderate_plan_progress == 1 : We have started to implement the job-creation plan. Funds are sent to public works projects across the country, reducing unemployment. ?]
@@ -188,9 +190,9 @@ achievement: wirtschaftspolitik
 title: Partially implement the Pragmatic New Deal job-creation plan.
 subtitle: -1 budget.
 unavailable-subtitle: -1 budget. [? if budget < 1 : We do not have the necessary budget. ?] [? if unemployed < 8 : Unemployment is low enough that job creation is not necessary. ?]
-view-if: moderate_plan_adopted == 1
+view-if: moderate_plan_adopted == 1 and moderate_plan_progress == 0
 choose-if: budget >= 1 and unemployed >= 8
-on-arrival: budget -= 1; works_program += 1; unemployed -= 2 if unemployed >= 8; inflation += 1; workers_spd += 4*(1-dissent); unemployed_spd += 2*(1-dissent); new_middle_spd += 2*(1-dissent); old_middle_spd += 1*(1-dissent); rural_spd += 1*(1-dissent); moderate_plan_progress += 1; kpd_coalition_dissent += 1; inflation += 1 if unemployed < 10; kpd_relation -= 5 if in_popular_front or in_left_front; economic_growth += 0.7; pro_republic += 3*(1-dissent);
+on-arrival: budget -= 1; works_program += 1; unemployed -= 2 if unemployed >= 8; inflation += 1; workers_spd += 4*(1-dissent); unemployed_spd += 2*(1-dissent); new_middle_spd += 2*(1-dissent); old_middle_spd += 1*(1-dissent); rural_spd += 1*(1-dissent); moderate_plan_progress += 1; z_relation += 1; ddp_relation += 1; dvp_relation += 1; kpd_coalition_dissent += 1; inflation += 1 if unemployed < 10; kpd_relation -= 5 if in_popular_front or in_left_front; economic_growth += 0.7; pro_republic += 3*(1-dissent);
 achievement: wirtschaftspolitik
 
 [? if moderate_plan_progress == 1 : We have started to implement the job-creation plan. Funds are sent to public works projects across the country, reducing unemployment. ?]
@@ -202,3 +204,27 @@ achievement: wirtschaftspolitik
 [? if unemployed < 10 : Unemployment is low enough that the plan does not seem to have the intended effect. ?]
 
 [? if in_popular_front or in_left_front: The Socialist Party of America opposes the economic plan, seeing it as a rescue of capitalism rather than a step toward real socialism. ?]
+
+@moderate_plan_continue
+title: Review current results and continue the Pragmatic New Deal plan.
+subtitle: -2 budget.
+unavailable-subtitle: -2 budget. [? if budget < 2 : We do not have the necessary budget. ?] [? if unemployed < 8 : Unemployment is low enough that another full jobs appropriation would be hard to justify. ?]
+view-if: moderate_plan_adopted == 1 and moderate_plan_progress >= 1
+choose-if: budget >= 2 and unemployed >= 8
+on-arrival: budget -= 2; works_program += 1; unemployed -= 3 if unemployed >= 12 else unemployed -= 2; inflation += 1.2; workers_spd += 5*(1-dissent); unemployed_spd += 4*(1-dissent); new_middle_spd += 2*(1-dissent); old_middle_spd += 2*(1-dissent); rural_spd += 2*(1-dissent); moderate_plan_progress += 1; z_relation += 1; ddp_relation += 1; dvp_relation += 1; kpd_coalition_dissent += 1; kpd_relation -= 4 if in_popular_front or in_left_front; economic_growth += 1.2; economic_growth -= 0.4 if economic_growth > 5; pro_republic += 2*(1-dissent);
+
+[? if moderate_plan_progress == 2 : The first New Deal works appropriation is producing visible results: jobs are moving, local governments are cooperating, and recovery has a practical shape. ?]
+
+[? if moderate_plan_progress > 2 : The administration continues the job-creation plan, refining projects that worked and shifting money away from wasteful or politically captured offices. ?]
+
+[? if unemployed >= 12 : Unemployment is still high enough that a second round is easy to defend. ?][? if unemployed < 12 : Unemployment has improved, but another round can still prevent recovery from stalling. ?]
+
+@moderate_plan_continue_limited
+title: Review current results and authorize a limited New Deal extension.
+subtitle: -1 budget.
+unavailable-subtitle: -1 budget. [? if budget < 1 : We do not have the necessary budget. ?] [? if unemployed < 8 : Unemployment is low enough that another jobs appropriation would be hard to justify. ?]
+view-if: moderate_plan_adopted == 1 and moderate_plan_progress >= 1
+choose-if: budget >= 1 and unemployed >= 8
+on-arrival: budget -= 1; works_program += 1; unemployed -= 1.5 if unemployed >= 10 else unemployed -= 1; inflation += 0.7; workers_spd += 3*(1-dissent); unemployed_spd += 3*(1-dissent); new_middle_spd += 1*(1-dissent); old_middle_spd += 1*(1-dissent); rural_spd += 1*(1-dissent); moderate_plan_progress += 1; ddp_relation += 1; dvp_relation += 1; kpd_coalition_dissent += 1; kpd_relation -= 3 if in_popular_front or in_left_front; economic_growth += 0.6; pro_republic += 1*(1-dissent);
+
+The administration reviews the first round and keeps the program alive with a smaller appropriation. It is fiscally easier to defend, but it cannot move unemployment as quickly as a full extension.

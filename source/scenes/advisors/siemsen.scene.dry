@@ -1,13 +1,13 @@
-title: Anna Siemsen
+title: Jane Addams
 is-pinned-card: true
 tags: advisor, left
 card-image: img/portraits/SiemsenAnna.jpg
 view-if: siemsen_advisor = 1
 new-page: true 
 
-= Anna Siemsen
+= Jane Addams
 
-Anna Siemsen is an educational reform advocate and pacifist, who was one of the few German women to receive a PhD in the pre-war period. She was a former member of the USPD.
+Jane Addams is an educational reformer, settlement-house organizer, and pacifist whose networks can strengthen the party's schools, welfare, and peace movements.
 
 - @campaign_pacifism
 - @structure_
@@ -26,7 +26,7 @@ go-to: rally.pacifism
 @curriculum_
 title: Change the educational curriculum.
 choose-if: advisor_action_timer = 0 and spd_in_government and chancellor_party = "SPD" and spd_prussia and curriculum_timer = 0
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if not spd_in_government : The SPD is not currently in government. ?][? if chancellor_party != "SPD": The SPD must control the chancellorship. ?][? if not spd_prussia: The SPD must control the Prussian government. ?][? if curriculum_timer > 0 : It is too early to change the curriculum again. ?]
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if not spd_in_government : The Democratic Party is not currently in government. ?][? if speaker_party != "SPD": Democrats must control the speakership. ?][? if not spd_prussia: Democrats must control the key state governments. ?][? if curriculum_timer > 0 : It is too early to change the curriculum again. ?]
 on-arrival: advisor_action_timer = 6; last_advisor_action = 1
 go-to: education_science.curriculum
 
@@ -34,6 +34,6 @@ go-to: education_science.curriculum
 @structure_
 title: Change the structure and funding of education.
 choose-if: advisor_action_timer = 0 and spd_in_government and chancellor_party = "SPD" and spd_prussia
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if not spd_in_government : The SPD is not currently in government. ?][? if chancellor_party != "SPD": The SPD must control the chancellorship. ?][? if not spd_prussia: The SPD must control the Prussian government. ?]
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if not spd_in_government : The Democratic Party is not currently in government. ?][? if speaker_party != "SPD": Democrats must control the speakership. ?][? if not spd_prussia: Democrats must control the key state governments. ?]
 on-arrival: advisor_action_timer = 6; last_advisor_action = 1
 go-to: education_science.structure

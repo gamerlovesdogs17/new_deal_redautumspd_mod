@@ -1,0 +1,40 @@
+title: News: Dust Bowl Dispatch
+subtitle: The farm crisis becomes a national image.
+new-page: true
+is-card: true
+tags: event
+view-if: ((year = 1933 and month >= 3) or year > 1933) and news_cooldown_timer = 0 and plains_distress >= 3
+max-visits: 1
+on-arrival: plains_distress += 1; rural_spd -= 1; news_cooldown_timer = 3
+card-image: img/map_3.jpg
+
+= News: Dust Bowl Dispatch
+
+Photographs from the Plains are now moving through newspapers faster than relief checks. Blown soil, shuttered banks, and auction notices have turned the farm crisis into a national story.
+
+The administration can use the attention to build support for rural relief, but whichever story it tells will signal which allies matter most.
+
+- @federal_relief: Send a federal relief survey.
+- @farm_labor_hearings: Hold Farmer-Labor hearings.
+- @local_charity: Push local charity and farm banks.
+
+@federal_relief
+title: Send a federal relief survey.
+subtitle: Builds legitimacy and agency capacity.
+on-arrival: agency_capacity += 1; farm_relief += 1; rural_spd += 3; z_relation += 2; ddp_relation -= 1; dvp_relation -= 1; new_deal_legitimacy += 2 if new_deal_legitimacy < 95
+
+Federal survey teams arrive with cameras, crop reports, and promises that the Plains will not be left to auctioneers.
+
+@farm_labor_hearings
+title: Hold Farmer-Labor hearings.
+subtitle: Stronger rural-left ties; business opposition rises.
+on-arrival: tenant_farmer_support += 2; rural_spd += 4; z_relation += 4; kpd_relation += 1; ddp_relation -= 2; dvp_relation -= 2; conservative_backlash += 1; new_deal_legitimacy += 1 if new_deal_legitimacy < 95
+
+Tenant farmers, organizers, and county officials testify together. The hearings make Farmer-Labor cooperation more concrete and more threatening to conservative Democrats.
+
+@local_charity
+title: Push local charity and farm banks.
+subtitle: Calms conservatives; leaves tenants exposed.
+on-arrival: ddp_relation += 2; dvp_relation += 3; z_relation -= 2; rural_spd -= 1; tenant_farmer_support -= 1 if tenant_farmer_support > 0; plains_distress += 1; conservative_backlash -= 1 if conservative_backlash > 0
+
+The White House asks local banks, churches, and county committees to carry more of the burden. It is cheaper, quieter, and much weaker.

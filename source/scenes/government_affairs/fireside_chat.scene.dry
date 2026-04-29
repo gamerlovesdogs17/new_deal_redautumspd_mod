@@ -1,0 +1,41 @@
+title: Fireside Chat
+new-page: true
+is-card: true
+tags: presidential_affairs
+view-if: spd_in_government = 1 and fireside_chat_timer = 0
+on-arrival: fireside_chat_timer = 4; month_actions += 1
+card-image: img/radio.svg
+
+= Fireside Chat
+
+Radio lets the President speak past newspapers, party machines, and opposition rumor campaigns. The message matters.
+
+- @sell_recovery
+- @reassure_savers
+- @defend_democracy
+- @call_for_labor_peace
+- @easy_discard
+
+@sell_recovery
+title: Sell the recovery program.
+on-arrival: radio_reach += 1; new_deal_legitimacy += 5; workers_spd += 3; unemployed_spd += 4; resources += 1; ddp_relation -= 2; dvp_relation -= 2
+
+The President explains the recovery program in plain language. The details are complex, but the public hears urgency and confidence.
+
+@reassure_savers
+title: Reassure savers and banks.
+on-arrival: radio_reach += 1; banking_confidence += 2; new_deal_legitimacy += 3; old_middle_spd += 3; new_middle_spd += 3; capital_strike_progress -= 1 if capital_strike_progress > 0; workers_spd += 1
+
+The President tells families that their deposits are safer than panic makes them feel. The banking system gets a little breathing room.
+
+@defend_democracy
+title: Denounce political violence.
+on-arrival: radio_reach += 1; pro_republic += 5; coup_progress -= 1 if coup_progress > 0; workers_nsdap -= 2; unemployed_nsdap -= 2; workers_dnvp -= 1; sh_militancy -= 0.03; sa_militancy -= 0.03
+
+The broadcast frames democracy as a practical necessity, not a slogan. Anti-system groups hate being made to look reckless.
+
+@call_for_labor_peace
+title: Call for labor peace with rights.
+on-arrival: radio_reach += 1; labor_dissent -= 3; workers_spd += 2; ddp_relation += 1; dvp_relation += 1; economic_growth += 0.1; capital_strike_progress -= 1 if capital_strike_progress > 0
+
+The President asks employers to bargain and workers to organize responsibly. Nobody gets everything, which is why the message lands.

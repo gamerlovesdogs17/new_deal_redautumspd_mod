@@ -1,0 +1,83 @@
+title: State Governors
+new-page: true
+is-card: true
+card-image: img/map_2.jpg
+tags: presidential_affairs
+max-visits: 6
+view-if: state_governors_timer = 0
+on-arrival: state_governors_timer = 7
+
+= State Governors
+
+Relief now runs through statehouses as much as through Washington. Governors can sell a program, sabotage it, or turn it into a rival machine before the federal agencies even print the forms.
+
+{!<span class="party-dem">Democratic</span>!} governors want patronage and visible projects. {!<span class="party-fl">Farmer-Labor</span>!} governors want farm and labor concessions. Conservative state machines want money without transformation.
+
+- @state_governors.democratic_machine: Lean on Democratic governors to build a national patronage machine.
+- @state_governors.progressive_compacts: Offer regional compacts to progressive governors and Farmer-Labor administrations.
+- @state_governors.southern_bargain: Let southern courthouse machines administer relief with few questions.
+- @state_governors.federal_auditors: Send federal auditors and administrators around hostile statehouses.
+- @root: Table this.
+- @easy_discard
+- @cancel_advisor_action
+
+@democratic_machine
+title: Lean on Democratic governors.
+on-arrival: {! 
+Q.governor_network += 2;
+Q.agency_capacity += 1;
+Q.new_deal_legitimacy += 2;
+Q.center_strength += 3;
+Q.center_dissent -= 2;
+Q.z_relation -= 2;
+Q.ddp_relation -= 1;
+Q.resources += 1;
+!}
+
+The governors accept the bargain: visible works, local credit, and national coordination. It strengthens the {!<span class="party-dem">Democratic</span>!} machine, though it makes independent progressives suspicious.
+
+@progressive_compacts
+title: Build progressive state compacts.
+on-arrival: {! 
+Q.governor_network += 1;
+Q.agency_capacity += 1;
+Q.z_relation += 6;
+Q.kpd_relation += 2;
+Q.workers_spd += 2;
+Q.rural_spd += 3;
+Q.labor_strength += 2;
+Q.new_deal_legitimacy += 3;
+Q.farm_relief += 1;
+!}
+
+Olson, La Follette, and other progressive administrators push for a shared relief front. It makes the coalition less tidy, but the countryside and union halls notice.
+
+@southern_bargain
+title: Bargain with southern courthouse machines.
+on-arrival: {! 
+Q.governor_network += 2;
+Q.agency_capacity += 1;
+Q.reformist_strength += 3;
+Q.reformist_dissent -= 2;
+Q.labor_dissent += 3;
+Q.kpd_relation -= 3;
+Q.tenant_farmer_support -= 1;
+Q.southern_resistance += 1;
+Q.new_deal_legitimacy -= 1;
+!}
+
+The southern machines keep Congress quieter and delivery faster, but relief becomes narrower where tenants, Black workers, and union organizers need it most.
+
+@federal_auditors
+title: Bypass hostile statehouses.
+on-arrival: {! 
+Q.agency_capacity += 2;
+Q.governor_network -= 1;
+Q.supreme_court_hostility += 1;
+Q.dvp_relation -= 4;
+Q.ddp_relation -= 3;
+Q.new_deal_legitimacy += 2;
+Q.opposition_pressure += 1;
+!}
+
+Federal auditors and emergency administrators route aid around local obstruction. The program becomes cleaner and more national, while constitutional lawyers begin sharpening their knives.

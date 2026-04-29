@@ -1,4 +1,4 @@
-title: Confronting the Nazis
+title: Confronting the Silver Legion
 new-page: true
 is-card: true
 view-if: (nsdap_r >= 10 and nazi_urgency > 1) and confronting_nazis_timer == 0 and iron_front_formed == 0
@@ -6,15 +6,15 @@ on-arrival: confronting_nazis_seen += 1; confronting_nazis_timer = 5; month_acti
 card-image: img/iron_front.png
 tags: party_affairs; antifascism
 
-# Forming the Iron Front
+# Forming the Democratic Front
 
-The Nazis' strength is gaining, as shown by their recent election results and their violent presence in the streets. Their fascism threatens to plunge Germany once again into the abyss.
+The Silver Legion's strength is growing, as shown by recent election returns and its violent presence in the streets. Its fascism threatens constitutional government and every reform the coalition hopes to build.
 
-Many in our party are calling for urgent action. The "neorevisionist" faction, led by young socialists like Carlo Mierendorff and Julius Leber, have formed specifically around this cause. But many in all factions of the party are calling for action.
+Many in our party are calling for urgent action. The democratic front faction has formed specifically around this cause, but voices across the coalition now want a strategy against the far right.
 
-- @not_a_big_deal: The Nazis' moment will pass. Let's not get too hasty.
+- @not_a_big_deal: The Silver Legion's moment will pass. Let's not get too hasty.
 - @economic_crisis
-- @major_crisis: We must do something to confront the Nazis.
+- @major_crisis: We must do something to confront the Silver Legion.
 - @iron_front
 
 
@@ -22,7 +22,7 @@ Many in our party are calling for urgent action. The "neorevisionist" faction, l
 on-arrival: nazi_urgency -= 1; left_dissent += 5; neorevisionist_dissent += 15
 view-if: mierendorff_advisor = 0 and leber_advisor = 0 and schumacher_advisor = 0
 
-The Nazis are just another far-right movement that will die of its own contradictions sooner or later; we do not need to build a specific policy to combat them.
+The Silver Legion is just another far-right movement that will die of its own contradictions sooner or later; we do not need to build a specific policy to combat it.
 
 @economic_crisis
 title: We must address the economic crisis first.
@@ -33,23 +33,23 @@ go-to: crisis_program
 view-if: nazi_urgency < 5
 on-arrival: nazi_urgency += 1; neorevisionist_dissent -= 5; neorevisionist_strength += 5
 
-The Nazis are one of the foremost threats to the German republic. However, we are still formulating a strategy to confront them, and still trying to build up consensus within our party for action. Check back on this later.
+The Silver Legion is one of the foremost threats to the republic. However, we are still formulating a strategy to confront it, and still trying to build consensus within our party for action. Check back on this later.
 
 @iron_front
-title: Form the Iron Front!
-subtitle: The Iron Front consists of the SPD, the trade unions, and the Reichsbanner.
+title: Form the Democratic Front!
+subtitle: The Democratic Front consists of the Democratic Party, trade unions, veterans, and civic-defense leagues.
 view-if: nazi_urgency >= 3 and iron_front_formed == 0
 on-arrival: iron_front_formed = 1; radicalization += 1; nazi_urgency += 1; workers_spd += 5*(1-dissent); pro_republic += 5*(1-dissent); left_dissent -= 8; neorevisionist_dissent -= 10; neorevisionist_strength += 5
 achievement: eiserne_front
 
-The Nazi threat can no longer be ignored. We must build a new organization to confront them - the Iron Front - consisting of the SPD, the ADGB trade union federation, and the *Reichsbanner Schwarz-Rot-Gold*. We have a new symbol - the Three Arrows, pointing down towards the left.
+The fascist threat can no longer be ignored. We must build a new organization to confront it: the Democratic Front, linking the Democratic Party, trade unions, veterans, and civic-defense leagues. We have a new symbol: the Three Arrows, pointing down toward reaction.
 
 What do the three arrows stand for?
 
 - @unity: Unity, Activity, and Discipline.
 - @anti: Opposition to Fascism, Stalinism, and Monarchism.
-- @orgs: The SPD, ADGB, and Reichsbanner.
-- @wtb: Woytinsky, Tarnow, and Baade of the WTB-Plan
+- @orgs: The party, labor, and civic-defense leagues.
+- @wtb: Hopkins, Green, and Wallace of the public works plan.
 - @all: All of the above.
 
 @unity
@@ -70,4 +70,4 @@ go-to: if_end
 
 @if_end
 
-The Iron Front has given a new energy to our party.
+The Democratic Front has given a new energy to our party.

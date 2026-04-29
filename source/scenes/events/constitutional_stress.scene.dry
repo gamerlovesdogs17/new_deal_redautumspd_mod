@@ -1,0 +1,40 @@
+title: Constitutional Stress
+subtitle: The crisis is testing the rules themselves.
+new-page: true
+is-card: true
+tags: event
+view-if: ((year = 1933 and month >= 3) or year > 1933) and spd_in_government = 1 and news_cooldown_timer = 0 and constitutional_stress < 4 and (pro_republic < 45 or supreme_court_hostility >= 5 or conservative_backlash >= 9 or radical_momentum >= 24)
+max-visits: 2
+on-arrival: constitutional_stress += 1; news_cooldown_timer = 4
+card-image: img/reichstag.jpg
+
+= Constitutional Stress
+
+The argument is no longer only about policy. Courts, state officials, congressional opponents, street movements, and parts of the press now argue over whether the existing constitutional order can survive the New Deal at all.
+
+The administration has to decide what kind of precedent it wants to set before the next emergency decides for it.
+
+- @legalist_line
+- @emergency_line
+- @coalition_line
+
+@legalist_line
+title: Hold the legalist line.
+subtitle: Better for legitimacy, slower against threats.
+on-arrival: pro_republic += 3; supreme_court_hostility -= 1 if supreme_court_hostility > 0; agency_capacity -= 1 if agency_capacity > 0; new_deal_legitimacy += 1 if new_deal_legitimacy < 95
+
+Every order is narrowed, every brief is reviewed, and every agency is told to leave a record the courts can defend.
+
+@emergency_line
+title: Govern through emergency authority.
+subtitle: Faster action, higher constitutional stress.
+on-arrival: agency_capacity += 2; constitutional_stress += 1; ddp_relation -= 4; dvp_relation -= 4; pro_republic -= 2; new_deal_legitimacy += 2 if economic_stress >= 12
+
+The administration argues that a dying constitutional order cannot be saved by procedural paralysis.
+
+@coalition_line
+title: Broaden the constitutional coalition.
+subtitle: Trades policy speed for institutional support.
+on-arrival: z_relation += 3; ddp_relation += 2; dvp_relation += 1; coalition_dissent -= 1 if coalition_dissent > 0; left_dissent += 2; labor_dissent += 2; constitutional_stress -= 1 if constitutional_stress > 0
+
+The White House invites skeptical legislators, governors, and legal reformers into the process. The price is a slower New Deal.

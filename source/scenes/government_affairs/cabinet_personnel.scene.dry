@@ -1,0 +1,86 @@
+title: Cabinet Personnel
+new-page: true
+is-card: true
+card-image: img/muller_cabinet.jpg
+tags: cabinet, presidential_affairs
+max-visits: 5
+view-if: cabinet_personnel_timer = 0
+on-arrival: cabinet_personnel_timer = 9
+
+= Cabinet Personnel
+
+Cabinet seats remain under the party that holds the presidency, but appointments still decide how the state behaves. A secretary can make a program swift, cautious, legalistic, or openly partisan without changing a single statute.
+
+- @cabinet_personnel.technocrats: Promote technocrats and agency builders.
+- @cabinet_personnel.labor_allies: Put labor allies in the delivery agencies.
+- @cabinet_personnel.party_regulars: Reward party regulars and congressional managers.
+- @cabinet_personnel.business_reassurance: Choose business-facing administrators.
+- @root: Leave the cabinet balance alone.
+- @easy_discard
+- @cancel_advisor_action
+
+@technocrats
+title: Promote technocrats and agency builders.
+on-arrival: {! 
+Q.cabinet_style = "technocratic";
+Q.agency_capacity += 3;
+Q.new_deal_legitimacy += 1;
+Q.center_strength += 2;
+Q.labor_dissent += 1;
+Q.reformist_dissent += 1;
+Q.ddp_relation += 1;
+Q.dvp_relation += 1;
+Q.kpd_relation -= 1;
+Q.resources -= 1;
+!}
+
+The cabinet fills with administrators who can make forms, budgets, and field offices function. They lack a popular base, but the machinery starts working.
+
+@labor_allies
+title: Put labor allies in delivery agencies.
+on-arrival: {! 
+Q.cabinet_style = "labor";
+Q.agency_capacity += 1;
+Q.labor_strength += 3;
+Q.labor_dissent -= 3;
+Q.workers_spd += 3;
+Q.cio_momentum += 1;
+Q.dvp_relation -= 3;
+Q.ddp_relation -= 2;
+Q.opposition_pressure += 1;
+!}
+
+Labor gets people inside the agencies that matter. The {!<span class="party-dem">Democratic</span>!} coalition gains shop-floor credibility, while employers start treating every regulation as a declaration of war.
+
+@party_regulars
+title: Reward party regulars.
+on-arrival: {! 
+Q.cabinet_style = "regular";
+Q.governor_network += 1;
+Q.center_strength += 3;
+Q.center_dissent -= 3;
+Q.resources += 1;
+Q.agency_capacity += 1;
+Q.new_deal_legitimacy -= 1;
+Q.z_relation += 1;
+Q.ddp_relation += 1;
+Q.dvp_relation += 1;
+Q.kpd_relation -= 1;
+!}
+
+The old hands know who can move votes and who can bury a bill. The administration becomes easier to manage, if not cleaner or more inspiring.
+
+@business_reassurance
+title: Choose business-facing administrators.
+on-arrival: {! 
+Q.cabinet_style = "business";
+Q.ddp_relation += 4;
+Q.dvp_relation += 3;
+Q.capital_strike_progress -= 2;
+Q.gop_obstruction -= 1;
+Q.labor_dissent += 3;
+Q.left_dissent += 2;
+Q.agency_capacity += 1;
+!}
+
+Business-facing appointments lower the temperature with the {!<span class="party-gop">GOP</span>!} and the Liberty League. The left of the coalition reads it as retreat.

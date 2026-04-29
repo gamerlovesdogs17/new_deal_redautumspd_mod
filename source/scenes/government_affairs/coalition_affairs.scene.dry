@@ -1,48 +1,63 @@
 title: Coalition Affairs
 new-page: true
 is-card: true
-tags: govt_affairs
+tags: congressional_affairs
 on-arrival: month_actions += 1; coalition_affairs_timer = 5
-view-if: spd_in_government = 1 and coalition_dissent >= 1 and coalition_affairs_timer = 0 and (in_grand_coalition or in_weimar_coalition or in_popular_front)
+view-if: spd_in_government = 1 and coalition_dissent >= 1 and coalition_affairs_timer = 0
 card-image: img/muller_cabinet.jpg
-#subtitle: There is dissent within our coalition.
 
-= Coalition Affairs
+= Hold the Democratic Tent Together
 
-Our coalition is in trouble. The right-leaning members of the Center [? if in_grand_coalition: and DVP ?] are constantly criticizing us for our policies, and are threatening to call a vote of no confidence to collapse this government[? if spd_prussia :, or to do the same for our government in the state of Prussia ?].
+The New Deal coalition is fraying. New Deal liberals want faster relief, labor Democrats want stronger organizing rights, conservative Democrats want spending restraint, and Southern committee chairs want guarantees before they keep moving administration bills.
 
-How do we reduce tensions with the coalition?
+Coalition dissent: [+ coalition_dissent : coalition_dissent +]
 
-- @promise_cuts: Agree to the bourgeois plans to cut welfare.
-- @resources: Use our party resources to support our allies.
-- @bring_down: Instead, we will bring down the government with a no-confidence vote, and call for new elections.
+How should the administration spend its limited leverage?
+
+- @patronage: Trade patronage and local projects for votes.
+- @labor_concessions: Give labor Democrats a visible win.
+- @conservative_concessions: Reassure conservative Democrats and the Liberty League wing.
+- @fdr_personal: Have Roosevelt personally broker the deal.
+- @reset: Let the coalition rupture and reorganize around a narrower program.
 - @no_change: Take none of these actions.
 - @easy_discard
 
 
-@promise_cuts
-on-arrival: workers_spd -= 5; unemployed_spd -= 6; workers_kpd += 5; unemployed_kpd += 3; unemployed_nsdap += 3; left_dissent += 10; labor_dissent += 5; welfare -= 1; budget += 1; coalition_dissent = 0
-
-Fine. By cutting welfare, we have reduced dissent within the coalition.
-
-@resources
-subtitle: -2 resources
+@patronage
+subtitle: -2 political capital
 view-if: historical_mode = 0
-unavailable-subtitle: Not enough resources (need 2).
+unavailable-subtitle: Not enough political capital.
 choose-if: resources >= 2
-on-arrival: resources -= 2; coalition_dissent -= 1
+on-arrival: resources -= 2; coalition_dissent -= 2; pork_barrel_pressure += 1; governor_network += 1; committee_control += 1; new_deal_legitimacy -= 1; conservative_backlash += 1
 
-By transferring campaign funds to our coalition partners, we can make our policies more acceptable to them. Some would call this corruption, but perhaps it is necessary to save democracy.
+Patronage, committee favors, and local projects calm the congressional coalition. It is not elegant, but it keeps bills moving.
+
+@labor_concessions
+subtitle: Raises labor expectations and business resistance.
+on-arrival: coalition_dissent -= 1; labor_dissent -= 5; left_dissent -= 2; workers_spd += 3; unemployed_spd += 2; cio_momentum += 1; labor_militancy += 1; ddp_relation -= 3; dvp_relation -= 3; capital_strike_progress += 1; new_deal_legitimacy += 1
+
+The administration promises a clearer labor-rights bill and more sympathetic enforcement. Labor Democrats come back into line, while business-oriented allies warn that the White House is losing discipline.
+
+@conservative_concessions
+subtitle: Calms conservatives, angers labor and New Deal liberals.
+on-arrival: coalition_dissent = 0; reformist_dissent -= 5; neorevisionist_dissent -= 4; ddp_relation += 4; dvp_relation += 3; left_dissent += 4; labor_dissent += 5; workers_spd -= 2; unemployed_spd -= 2; capital_strike_progress -= 1 if capital_strike_progress > 0; conservative_backlash -= 1 if conservative_backlash > 0; new_deal_legitimacy -= 2
+
+The White House slows the most aggressive parts of the recovery agenda and lets conservative Democrats claim a procedural victory. The floor count improves, but labor notices.
+
+@fdr_personal
+subtitle: Uses presidential prestige.
+choose-if: new_deal_legitimacy >= 45
+unavailable-subtitle: New Deal legitimacy must be at least 45.
+on-arrival: coalition_dissent -= 2; new_deal_legitimacy -= 3; radio_reach += 1; center_dissent -= 3; z_relation += 2; ddp_relation += 1; dvp_relation += 1
+
+Roosevelt intervenes directly with faction leaders, governors, committee chairs, and radio allies. The coalition holds, but personal authority is a finite resource.
+
+@reset
+subtitle: Accept a narrower governing base.
+on-arrival: coalition_dissent = 0; in_grand_coalition = 0; in_weimar_coalition = 0; in_popular_front = 0; in_minority_government = 1; governing_house_support = spd_h; governing_senate_support = spd_s; bill_coalition_viable = 0; bill_coalition_viable = 1 if governing_senate_support >= 50; speaker_elected = 0; speaker_elected = 1 if governing_house_support >= 50; left_dissent -= 2; labor_dissent -= 2; reformist_dissent += 6; neorevisionist_dissent += 5; ddp_relation -= 5; dvp_relation -= 4; z_relation -= 3; legislative_gridlock = 0; legislative_gridlock = 1 if governing_senate_support < 50
+
+The administration stops pretending that every faction can be satisfied at once. A smaller New Deal bloc is easier to discipline, but every hard vote now has to be bargained separately.
 
 @no_change
 
-No. We will not do this.
-
-@bring_down
-subtitle: Bring down this government before our opponents do.
-on-arrival: spd_in_government = 0; in_grand_coalition = 0; in_weimar_coalition = 0; chancellor = "Brüning"; chancellor_party = "Z"; next_election_time = time + 3 if next_election_time > time+3; next_election_month = month + 3 if next_election_time >= time+3; next_election_year = year if next_election_time >= time+3; next_election_year += 1 if next_election_month > 12; next_election_month -= 12 if next_election_month > 12; spd_toleration = 0; left_strength += 8; pro_republic -= 5; new_middle_spd -= 3; rural_spd -= 3; old_middle_spd -= 3; catholics_spd -= 3; reformist_dissent += 5
-
-We have called for a vote of no confidence in ourselves, and have brought down this government. Chancellor [+ chancellor +] currently rules as acting chancellor.
-
-New elections have been set for [+ next_election_month : month +] [+ next_election_year +].
-
+The White House lets the argument continue. Nothing breaks today, but the next close vote will be harder.

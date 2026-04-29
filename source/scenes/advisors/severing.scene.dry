@@ -1,32 +1,32 @@
-title: Carl Severing
+title: Harold Ickes
 is-pinned-card: true
 tags: advisor, reformist
 card-image: img/portraits/SeveringCarl.jpg
 view-if: severing_advisor = 1
 new-page: true 
 
-= Carl Severing
+= Harold Ickes
 
-Severing has been Interior Minister for both the German Republic and for the state of Prussia, and his priority is using the security services to target the enemies of the republic.
+Ickes is a hard-edged administrator and public-works reformer whose priority is using federal and state power against corruption, machine abuses, and anti-democratic movements.
 
 - @prussian_bulwark
 - @police_affairs
 - @root: Return to main
 
 @prussian_bulwark
-title: Prussian Bulwark
-subtitle: Severing has influence over Prussian politics.
+title: Statehouse Bulwark
+subtitle: Ickes can lean on Democratic governors and state officials to defend the administration.
 choose-if: advisor_action_timer <= 0 and spd_prussia = 1
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if not spd_prussia : The SPD is not in control of Prussia. ?]
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if not spd_prussia : Democrats do not control the key state governments. ?]
 on-arrival: advisor_action_timer = 6; prussian_affairs_timer -= 6; last_advisor_action = 1
 go-to: prussian_affairs
 
 
 @police_affairs
-title: Police affairs 
-subtitle: We can set our police policy. 
+title: Law Enforcement Affairs 
+subtitle: We can set federal law-enforcement and public-order policy. 
 choose-if: advisor_action_timer == 0 and spd_in_government and interior_minister_party == "SPD"
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if not spd_in_government : The SPD is not in government. ?][? if interior_minister_party != "SPD": The SPD does not have the Interior ministry. ?]
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?][? if not spd_in_government : The Democratic Party is not in government. ?][? if interior_minister_party != "SPD": The Democratic Party does not have the Interior Department. ?]
 on-arrival: advisor_action_timer = 6; police_timer -= 6; last_advisor_action = 1
 go-to: police
 

@@ -3,68 +3,67 @@ new-page: true
 is-card: true
 tags: party_affairs
 view-if: ideology_timer = 0
-on-arrival: month_actions += 1; old_ideology = ideology; ideology_timer = 18
+on-arrival: month_actions += 1; old_ideology = ideology; changed = 0; ideology_timer = 18
 card-image: img/arbeiterbew.jpg
-max-visits: 3
-#subtitle: Setting the party's ideological direction.
+max-visits: 4
 
 = Questions of Ideology
 
-The SPD is torn between many different ideological currents. What should be our primary ideological guidance for now?
+The Democratic coalition is not a single doctrine. It is southern courthouse machines, northern city organizations, union halls, reform lawyers, farm insurgents, and a President trying to make all of them sound like one national mandate.
 
-[? if ideology != 0 : We have previously chosen a [+ ideology +] ideology. Changing it will likely have drawbacks. ?]
+[? if ideology != 0 : The coalition is currently organized around [+ ideology +]. Changing direction will raise dissent among factions that built their strategy around the old line. ?]
 
-- @class_struggle: Class struggle and preparing the proletariat for the revolution are our primary goals.
-- @centrist: The Center Marxism of Karl Kautsky remains the best way to resolve our internal contradictions.
-- @labor: We should work with the trade unions to improve the lives of workers.
-- @reform: Following Eduard Bernstein, we should work for ethical socialism, strengthen democracy, and expand the party's electorate.
+- @new_deal_liberalism: Make expansive New Deal liberalism the coalition's public doctrine.
+- @party_regularism: Emphasize party regularism, patronage, and practical coalition management.
+- @labor_democracy: Put labor democracy and industrial rights at the center of the coalition.
+- @constitutional_conservatism: Reassure conservatives with constitutional, balanced, business-facing reform.
 - @easy_discard
 
-@class_struggle
+@new_deal_liberalism
 on-arrival: {!
-if (Q.ideology && Q.ideology != "left") {
+if (Q.ideology && Q.ideology != "New Deal liberalism") {
     Q.changed = 1;
 }
 !}
 go-to: changed if changed = 1
-on-departure: ideology = "left"; left_strength += 10; communist_coalition += 1; left_dissent -= 5; z_relation -= 3; dvp_relation -= 5; nationalization_support += 1; kpd_relation += 3
+on-departure: ideology = "New Deal liberalism"; left_strength += 8; center_strength += 3; new_deal_legitimacy += 5; agency_capacity += 1; supreme_court_hostility += 1; ddp_relation -= 2; dvp_relation -= 4; workers_spd += 2; unemployed_spd += 3; left_dissent -= 4; center_dissent -= 2; labor_dissent += 1; reformist_dissent += 3
 
-The radical left of the party supports a course of class struggle, and potentially a reconcilliation with the Communists.
+The coalition presents itself as the only institution willing to use national power against national collapse. Reformers cheer; courts, business leagues, and conservative Democrats begin counting the precedents.
 
-@centrist
+@party_regularism
 on-arrival: {!
-if (Q.ideology && Q.ideology != "centrist") {
+if (Q.ideology && Q.ideology != "party regularism") {
     Q.changed = 1;
 }
 !}
 go-to: changed if changed = 1
-on-departure: ideology = "centrist"; center_strength += 10; center_dissent -= 10; left_dissent -= 5; reformist_dissent -= 5
+on-departure: ideology = "party regularism"; center_strength += 8; governor_network += 2; committee_control += 1; resources += 1; coalition_dissent -= 1 if coalition_dissent > 0; center_dissent -= 5; left_dissent += 2; labor_dissent += 2; reformist_dissent -= 1; z_relation += 1
 
-The Center Marxists, represented by Kautsky and Hilferding, support a middle course of preparing for revolution while building up the consciousness of the working class.
+The regulars promise fewer manifestos and more delivered favors. County chairs, governors, and committee men like the sound of that; ideological factions hear a machine being rebuilt around them.
 
-@labor
+@labor_democracy
 on-arrival: {!
-if (Q.ideology && Q.ideology != "labor") {
+if (Q.ideology && Q.ideology != "labor democracy") {
     Q.changed = 1;
 }
 !}
 go-to: changed if changed = 1
-on-departure: ideology = "labor"; labor_strength += 10; wtb_support += 1; labor_dissent -= 5; kpd_relation -= 3
+on-departure: ideology = "labor democracy"; labor_strength += 9; labor_dissent -= 6; cio_momentum += 1; workers_spd += 4; unemployed_spd += 2; kpd_relation += 2; dvp_relation -= 5; ddp_relation -= 3; capital_strike_progress += 1; new_deal_legitimacy += 2; center_dissent += 2; reformist_dissent += 4
 
-The labor wing of the party supports continued particpation in government in order to provide benefits to the workers, and the creation of public works programs for employment.
+The party names collective bargaining, wages, and industrial democracy as democratic rights. Workers hear a promise; employers hear a threat.
 
-@reform
+@constitutional_conservatism
 on-arrival: {!
-if (Q.ideology && Q.ideology != "reformist") {
+if (Q.ideology && Q.ideology != "constitutional conservatism") {
     Q.changed = 1;
 }
 !}
 go-to: changed if changed = 1
-on-departure: ideology = "reformist"; reformist_strength += 10; democratization += 1; reformist_dissent -= 5; z_relation += 5; dvp_relation += 5; kpd_relation -= 8; moderate_plan_support += 1
+on-departure: ideology = "constitutional conservatism"; reformist_strength += 8; reformist_dissent -= 5; ddp_relation += 5; dvp_relation += 4; supreme_court_hostility -= 1; capital_strike_progress -= 1 if capital_strike_progress > 0; old_middle_spd += 3; new_middle_spd += 2; left_dissent += 5; labor_dissent += 4; new_deal_legitimacy -= 2
 
-The reformist wing of the party seeks to preserve the Republic and the democratic system of government, and is most supportive of coalitions with the other pro-democracy parties.
+The coalition insists that recovery must be orderly, constitutional, and reassuring to property. It buys breathing room with courts and business, while the left wonders what the landslide was for.
 
 @changed
-on-arrival: left_dissent += 5; center_dissent += 5; labor_dissent += 5; reformist_dissent += 5
+on-arrival: left_dissent += 4; center_dissent += 4; labor_dissent += 4; reformist_dissent += 4; neorevisionist_dissent += 2; new_deal_legitimacy -= 1
 
-We have changed ideologies. Many in the party feel unmoored.
+The coalition has changed ideological direction. The new line may be useful, but every faction now reopens arguments it thought were settled.

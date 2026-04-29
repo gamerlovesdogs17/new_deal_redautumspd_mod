@@ -1,0 +1,45 @@
+title: Labor Movement Strategy
+new-page: true
+is-card: true
+tags: presidential_affairs, congressional_affairs, cabinet
+view-if: spd_in_government = 1 and labor_movement_timer = 0
+on-arrival: labor_movement_timer = 8; month_actions += 1
+card-image: img/adgb_logo.svg
+
+= Labor Movement Strategy
+
+The labor movement is reorganizing under pressure from unemployment, industrial conflict, and the New Deal. The administration can favor conservative craft unionism, back industrial organizing, or try to mediate.
+
+- @industrial_unions
+- @craft_compromise
+- @mediate_labor
+- @state_neutrality
+- @easy_discard
+
+@industrial_unions
+title: Back industrial union organizing.
+subtitle: Builds CIO momentum, provokes business.
+on-arrival: labor_movement_alignment = "industrial"; cio_momentum += 2; rb_strength += 80; workers_spd += 6; unemployed_spd += 3; labor_strength += 5; labor_dissent -= 6; ddp_relation -= 7; dvp_relation -= 5; capital_strike_progress += 1; economic_growth += 0.2
+
+The administration sides with mass industrial organizing. Workers feel the government is finally on their side, while business groups warn of class war.
+
+@craft_compromise
+title: Favor AFL-style craft union compromise.
+subtitle: Stable, but less exciting to industrial workers.
+on-arrival: labor_movement_alignment = "craft"; afl_momentum += 2; workers_spd += 2; labor_dissent += 3; reformist_dissent -= 3; center_dissent -= 2; ddp_relation += 3; dvp_relation += 2; capital_strike_progress -= 1 if capital_strike_progress > 0
+
+The administration works with established union leadership and keeps bargaining channels predictable. It calms employers, but industrial workers call it too timid.
+
+@mediate_labor
+title: Create a federal mediation board.
+subtitle: Balanced labor peace.
+on-arrival: labor_movement_alignment = "mediated"; cio_momentum += 1; afl_momentum += 1; workers_spd += 3; unemployed_spd += 2; z_relation += 2; ddp_relation += 1; labor_dissent -= 2; economic_growth += 0.1
+
+A federal mediation board gives workers a hearing while reducing the danger of runaway strikes. It is not dramatic, but it makes the state feel present.
+
+@state_neutrality
+title: Stay formally neutral.
+subtitle: Avoids a fight, wastes an opening.
+on-arrival: labor_movement_alignment = "neutral"; workers_spd -= 2; unemployed_spd -= 2; labor_dissent += 5; ddp_relation += 2; dvp_relation += 2; kpd_relation += 2
+
+The administration refuses to choose sides. Employers are relieved; labor organizers conclude that neutrality favors whoever already holds power.

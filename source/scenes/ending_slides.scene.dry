@@ -1,0 +1,111 @@
+title: Ending Slides
+view-if: game_over
+new-page: true
+on-arrival: {!
+const toolsWrapper = document.getElementById('tools_wrapper');
+if (toolsWrapper) {
+  toolsWrapper.style.display = 'none';
+}
+const elements = document.querySelectorAll('header, #content, footer');
+elements.forEach(el => {
+  el.style.maxWidth = '820px';
+});
+!}
+
+A chapter in American history closes.
+
+- @democratic_order
+- @contested_order
+- @narrow_order
+- @broken_order
+- @authoritarian_order
+- @civil_war_order
+- @go_back
+
+@democratic_order
+title: The Stabilized New Deal
+subtitle: Ending slide
+view-if: endgame_path == "democratic_stabilization"
+new-page: true
+
+The emergency years become the founding myth of a durable New Deal republic. Relief, public works, banking supervision, labor law, and national political management are no longer treated as desperate improvisations. They become the ordinary instruments by which Washington is expected to answer a national crisis.
+
+[? if radical_momentum >= 20 or final_radical_support >= 20: That victory is not the same as consensus. The SPA, NUSJ, Silver Legion, and their local auxiliaries remain large enough that every reform bill is also a fight over whether the country should move beyond the New Deal or roll it back. ?][? if conservative_backlash >= 7 or supreme_court_hostility >= 5: The courts, business federations, and conservative Democrats turn the late 1930s into a long institutional struggle over how much of the emergency state can become permanent law. ?][? if radical_momentum < 20 and final_radical_support < 20 and conservative_backlash < 7 and supreme_court_hostility < 5: The old party system reorganizes around acceptance of federal responsibility for recovery. Conservatives still oppose excess, patronage, and spending, but fewer can plausibly argue that Washington should return to pre-crisis habits. ?]
+
+Later schoolbooks call this the moment democratic government proved it could act under pressure. Party memoirs remember it less cleanly: a victory purchased through bargaining, patronage, legal fights, and compromises that later reformers never stop arguing about.
+
+- @go_back
+
+@contested_order
+title: The Unfinished New Deal
+subtitle: Ending slide
+view-if: endgame_path == "contested_new_deal"
+new-page: true
+
+The United States leaves the emergency years with the New Deal alive but unsettled. Washington is stronger than it was in 1932, but the country has not agreed on whether that power represents democratic rescue, partisan machine-building, or a temporary exception forced by depression.
+
+[? if final_economic_stress >= 8 or unemployed >= 12: Because unemployment remains painfully visible, every election after 1935 becomes a referendum on whether partial recovery is enough. County relief offices, labor halls, radio preachers, socialist locals, and conservative business leagues all compete to explain why prosperity has not arrived. ?][? if radical_momentum >= 20 or final_radical_support >= 18: The economy improves just enough to keep the administration standing, but not enough to restore the old party system. The SPA, NUSJ, and Silver Legion turn the late 1930s into a politics of mass meetings, loyalty campaigns, and competing claims to speak for betrayed Americans. ?][? if final_economic_stress < 8 and unemployed < 12 and radical_momentum < 20 and final_radical_support < 18: The next phase is legislative rather than revolutionary. The administration tries to convert emergency agencies into permanent law while conservatives and local machines try to keep the New Deal dependent on yearly bargains. ?]
+
+Later historians call this the unfinished New Deal: too successful to dismiss, too incomplete to settle the country's arguments, and too dependent on emergency politics to feel permanent.
+
+- @go_back
+
+@narrow_order
+title: The Narrow Republic
+subtitle: Ending slide
+view-if: endgame_path == "managed_reaction"
+new-page: true
+
+The constitutional republic survives, but the post-game United States is narrower and more cautious than New Dealers promised. The language of emergency remains while the policy imagination contracts.
+
+[? if final_economic_stress >= 11 or unemployed >= 16: With mass unemployment still dominating public life, conservative restraint becomes politically explosive. The administration's opponents argue that democracy saved procedure and abandoned people, while defenders insist that worse disorder was avoided only by slowing the reform drive. ?][? if conservative_backlash >= 8 or capital_strike_progress >= 5: Business resistance, hostile courts, and conservative committee chairs set the boundaries of the late 1930s. Relief continues, but planning, labor rights, and redistribution are cut down into programs acceptable to property and the bench. ?][? if final_economic_stress < 11 and unemployed < 16 and conservative_backlash < 8 and capital_strike_progress < 5: Politics settles into a wary center. Congress keeps enough relief to prevent collapse but avoids the deeper institutional fights that would have made the New Deal a true reconstruction of American capitalism. ?]
+
+The era is remembered as the Narrow Republic: elected government endured, but many Americans drew the lesson that constitutional survival and social recovery were not the same thing.
+
+- @go_back
+
+@broken_order
+title: The Broken Republic
+subtitle: Ending slide
+view-if: endgame_path == "systemic_rupture"
+new-page: true
+
+The United States enters the late 1930s as a republic in name and a permanent emergency in practice. No single faction has won the crisis, but the habits that made constitutional politics workable have broken down.
+
+[? if final_economic_stress >= 16 or (unemployed >= 22 and economic_growth < -5): The Depression does not recede into memory; it becomes the organizing fact of public life. State governments improvise, Congress lurches between relief and panic, and national leaders increasingly speak as if ordinary elections cannot solve ordinary hunger. ?][? if radical_momentum >= 30 or final_radical_support >= 25: Radical organizations become parallel civic worlds. SPA locals, NUSJ clubs, Silver Legion networks, unions, veterans' committees, and defense leagues compete for loyalty in ways that make formal party labels less important than street presence and organizational discipline. ?][? if final_economic_stress < 16 and radical_momentum < 30 and final_radical_support < 25: The rupture is institutional more than ideological. Courts, Congress, states, and the executive all survive, but each treats the others as obstacles to national rescue rather than legitimate partners. ?]
+
+Later writers describe these years as the broken republic: not yet dictatorship, not yet civil war everywhere, but a country where every institution is waiting for the next blow.
+
+- @go_back
+
+@authoritarian_order
+title: The Authoritarian Settlement
+subtitle: Ending slide
+view-if: endgame_path == "authoritarian_takeover"
+new-page: true
+
+The post-game history of the United States is written under coercion. The collapse of elected government turns the New Deal from a governing program into an accusation used against democracy, labor, and pluralism.
+
+[? if final_right_radical_support >= final_left_radical_support: The right consolidates by presenting itself as the only force that can end depression, disorder, and class conflict. Silver Legion cadres, national-populist broadcasters, business allies, and security officials divide the spoils of the new order while purging the old reform coalition. ?][? if final_right_radical_support < final_left_radical_support: The authoritarian settlement is unstable from the beginning because the socialist left remains too large to disappear. Repression drives organizers into underground papers, exile networks, unions, and local resistance rather than eliminating them. ?]
+
+Relief becomes loyalty policy. Jobs, food, permits, and police protection are distributed through political obedience, and communities learn quickly that survival depends on the new regime's categories of loyalty and suspicion.
+
+- @go_back
+
+@civil_war_order
+title: The Republic at War
+subtitle: Ending slide
+view-if: long_war == 1 or republic_victory == 1 or total_defeat == 1
+new-page: true
+
+[? if republic_victory == 1: Democratic forces win the war, but victory does not restore the old country. Emergency mobilization, armed labor, state guards, federal agencies, and anti-fascist committees all claim a share of legitimacy. Reconstruction begins with the knowledge that the republic survived only by becoming harder, more organized, and less innocent about force. ?][? if long_war == 1 and republic_victory != 1 and total_defeat != 1: The war does not end cleanly. Cities, counties, unions, militias, and state governments become the map of power. The old constitutional order remains a language everyone uses, but no one can make it command obedience everywhere at once. ?][? if total_defeat == 1: The democratic coalition loses the war quickly enough to prevent prolonged national ruin, but not quickly enough to save the republic. The memory of resistance survives in prisons, exile, union halls, churches, and family stories. ?]
+
+[? if final_economic_stress >= 12: Reconstruction is made harder by the economy left behind: unemployment at [+ final_unemployed_display +]%, growth at [+ final_growth_display +]%, and a stress index of [+ final_stress_display +]. ?][? if labor_militancy >= 6 or cio_momentum >= 3: Organized labor emerges from the crisis armed with leverage and expectation. No future government can treat workers as a passive constituency. ?][? if conservative_backlash >= 8: Conservative institutions do not disappear. They wait for exhaustion, fiscal strain, and fear to give them another opening. ?]
+
+- @go_back
+
+@go_back
+title: Return to ending menu
+go-to: game_over.eg_menu
+
+Return to the ending menu.

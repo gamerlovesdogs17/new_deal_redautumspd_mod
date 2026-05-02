@@ -330,6 +330,96 @@ if (Q.month_actions >= 1) {
     Q.radical_momentum = (Q.spa_votes || Q.kpd_votes || 0) + (Q.nusj_votes || Q.dnvp_votes || 0) + (Q.silver_legion_votes || Q.nsdap_votes || 0);
     Q.radical_momentum += Math.max(0, Q.economic_stress - 8);
     Q.radical_momentum += Math.max(0, 45 - Q.pro_republic) / 2;
+    // U.S. party-shift model inspired by Dynamic Social Democracy: parties
+    // accumulate internal pressure from conditions, then elections/conferences
+    // read the resulting alignment.
+    Q.liberty_league_reform = Q.liberty_league_reform || 0;
+    Q.liberty_league_reaction = Q.liberty_league_reaction || 0;
+    Q.gop_moderate_pull = Q.gop_moderate_pull || 0;
+    Q.gop_reactionary_pull = Q.gop_reactionary_pull || 0;
+    Q.farmer_labor_cooperation = Q.farmer_labor_cooperation || 0;
+    Q.farmer_labor_left_pull = Q.farmer_labor_left_pull || 0;
+    Q.spa_unity_pull = Q.spa_unity_pull || 0;
+    Q.spa_opposition_pull = Q.spa_opposition_pull || 0;
+    Q.nusj_populist_pull = Q.nusj_populist_pull || 0;
+    Q.nusj_authoritarian_pull = Q.nusj_authoritarian_pull || 0;
+
+    Q.liberty_league_reform += Math.max(0, (Q.ddp_relation || 0) - 45) / 80;
+    Q.liberty_league_reform += ((Q.dem_economic_plan == "pragmatic_new_deal" || Q.moderate_plan_adopted) ? 0.12 : 0);
+    Q.liberty_league_reform += ((Q.pro_republic || 0) >= 65 ? 0.08 : 0);
+    Q.liberty_league_reaction += Math.max(0, (Q.capital_strike_progress || 0) - 2) / 12;
+    Q.liberty_league_reaction += Math.max(0, (Q.supreme_court_hostility || 0) - 3) / 10;
+    Q.liberty_league_reaction += ((Q.dem_economic_plan == "share_our_wealth" || Q.dem_economic_plan == "structural_transformation") ? 0.18 : 0);
+
+    Q.gop_moderate_pull += Math.max(0, (Q.dvp_relation || 0) - 45) / 70;
+    Q.gop_moderate_pull += ((Q.gop_wing == "moderate_reform" || Q.gop_economic_plan == "limited_recovery") ? 0.12 : 0);
+    Q.gop_moderate_pull += ((Q.new_deal_legitimacy || 0) >= 60 && (Q.economic_stress || 0) <= 8 ? 0.08 : 0);
+    Q.gop_reactionary_pull += Math.max(0, (Q.conservative_backlash || 0) - 5) / 12;
+    Q.gop_reactionary_pull += Math.max(0, (Q.radio_reach || 0) - 1) / 18;
+    Q.gop_reactionary_pull += ((Q.gop_wing == "national_conservative" || Q.gop_economic_plan == "national_retrenchment") ? 0.16 : 0);
+
+    Q.farmer_labor_cooperation += Math.max(0, (Q.z_relation || 0) - 45) / 70;
+    Q.farmer_labor_cooperation += ((Q.farm_relief || 0) + (Q.tenant_farmer_support || 0)) / 30;
+    Q.farmer_labor_left_pull += Math.max(0, (Q.labor_militancy || 0) - 3) / 12;
+    Q.farmer_labor_left_pull += Math.max(0, (Q.kpd_relation || 0) - 45) / 90;
+    Q.farmer_labor_left_pull += ((Q.dem_economic_plan == "structural_transformation") ? 0.14 : 0);
+
+    Q.spa_unity_pull += Math.max(0, (Q.kpd_relation || 0) - 40) / 70;
+    Q.spa_unity_pull += (Q.dem_spa_cooperation ? 0.2 : 0);
+    Q.spa_unity_pull += ((Q.dem_economic_plan == "structural_transformation") ? 0.16 : 0);
+    Q.spa_opposition_pull += Math.max(0, 45 - (Q.kpd_relation || 0)) / 90;
+    Q.spa_opposition_pull += ((Q.dem_economic_plan == "pragmatic_new_deal" && (Q.economic_stress || 0) >= 10) ? 0.12 : 0);
+
+    Q.nusj_populist_pull += Math.max(0, (Q.economic_stress || 0) - 9) / 16;
+    Q.nusj_populist_pull += Math.max(0, (Q.radio_reach || 0) - 1) / 14;
+    Q.nusj_authoritarian_pull += Math.max(0, 50 - (Q.pro_republic || 0)) / 70;
+    Q.nusj_authoritarian_pull += Math.max(0, (Q.silver_legion_votes || Q.nsdap_votes || 0) - 3) / 18;
+    Q.nusj_authoritarian_pull += Math.max(0, (Q.coup_progress || 0) - 3) / 10;
+
+    var clampShift = function(value) {
+        return Math.max(0, Math.min(24, value));
+    };
+    Q.liberty_league_reform = clampShift(Q.liberty_league_reform);
+    Q.liberty_league_reaction = clampShift(Q.liberty_league_reaction);
+    Q.gop_moderate_pull = clampShift(Q.gop_moderate_pull);
+    Q.gop_reactionary_pull = clampShift(Q.gop_reactionary_pull);
+    Q.farmer_labor_cooperation = clampShift(Q.farmer_labor_cooperation);
+    Q.farmer_labor_left_pull = clampShift(Q.farmer_labor_left_pull);
+    Q.spa_unity_pull = clampShift(Q.spa_unity_pull);
+    Q.spa_opposition_pull = clampShift(Q.spa_opposition_pull);
+    Q.nusj_populist_pull = clampShift(Q.nusj_populist_pull);
+    Q.nusj_authoritarian_pull = clampShift(Q.nusj_authoritarian_pull);
+
+    Q.liberty_league_alignment = "business liberal";
+    if (Q.liberty_league_reform - Q.liberty_league_reaction >= 4) {
+        Q.liberty_league_alignment = "reform liberal";
+    } else if (Q.liberty_league_reaction - Q.liberty_league_reform >= 4) {
+        Q.liberty_league_alignment = "reactionary business";
+    }
+    Q.gop_alignment = "old guard";
+    if (Q.gop_moderate_pull - Q.gop_reactionary_pull >= 4) {
+        Q.gop_alignment = "moderate reform";
+    } else if (Q.gop_reactionary_pull - Q.gop_moderate_pull >= 4) {
+        Q.gop_alignment = "national conservative";
+    }
+    Q.farmer_labor_alignment = "independent farm-labor";
+    if (Q.farmer_labor_cooperation - Q.farmer_labor_left_pull >= 4) {
+        Q.farmer_labor_alignment = "cooperative populist";
+    } else if (Q.farmer_labor_left_pull - Q.farmer_labor_cooperation >= 4) {
+        Q.farmer_labor_alignment = "labor-left front";
+    }
+    Q.spa_alignment = "independent socialist";
+    if (Q.spa_unity_pull - Q.spa_opposition_pull >= 4) {
+        Q.spa_alignment = "unity socialist";
+    } else if (Q.spa_opposition_pull - Q.spa_unity_pull >= 4) {
+        Q.spa_alignment = "anti-administration socialist";
+    }
+    Q.nusj_alignment = "radio populist";
+    if (Q.nusj_authoritarian_pull - Q.nusj_populist_pull >= 4) {
+        Q.nusj_alignment = "authoritarian nationalist";
+    } else if (Q.nusj_populist_pull - Q.nusj_authoritarian_pull >= 4) {
+        Q.nusj_alignment = "economic populist";
+    }
     if (Q.difficulty >= 0 && (Q.spd_in_government || Q.spd_toleration)) {
         if (Q.economic_stress >= 9) {
             Q.new_deal_legitimacy -= 0.2;

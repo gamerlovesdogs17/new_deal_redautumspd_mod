@@ -10,12 +10,22 @@ Q.last_dem_conference_year = Q.year;
 
 var demTotal = 1100;
 Q.dem_total_delegates = demTotal;
+var demWonLastPres = Q.last_presidential_election_year && Q.last_presidential_winner_party == "SPD";
+var demLostLastPres = Q.last_presidential_election_year && Q.last_presidential_winner_party != "SPD";
+var weakDemMandate = demWonLastPres && (Q.last_dem_presidential_vote || 0) < 50;
+var strongDemMandate = demWonLastPres && (Q.last_dem_presidential_vote || 0) >= 55;
+var spaPressure = (Q.last_spa_presidential_vote || Q.kpd_votes || 0) >= 8;
+var nusjPressure = (Q.last_nusj_presidential_vote || Q.dnvp_votes || 0) >= 8;
+var flCoop = Q.farmer_labor_alignment == "cooperative populist" ? 4 : 0;
+var flLeft = Q.farmer_labor_alignment == "labor-left front" ? 4 : 0;
+var libertyReform = Q.liberty_league_alignment == "reform liberal" ? 3 : 0;
+var libertyReaction = Q.liberty_league_alignment == "reactionary business" ? 4 : 0;
 var demStrengths = {
-    left: Math.max(0, (Q.left_strength || 0) + (Q.kpd_relation >= 45 ? 4 : 0) + (Q.dem_spa_cooperation ? 6 : 0)),
-    regular: Math.max(0, (Q.center_strength || 0) + (Q.resources >= 4 ? 3 : 0)),
-    labor: Math.max(0, (Q.labor_strength || 0) + (Q.unemployed >= 18 ? 5 : 0) + (Q.labor_dem_leader == "Huey Long" ? 8 : 0)),
-    conservative: Math.max(0, (Q.reformist_strength || 0) + (Q.ddp_relation >= 45 ? 3 : 0) + (Q.capital_strike_progress >= 3 ? 4 : 0)),
-    southern: Math.max(0, (Q.neorevisionist_strength || 0) + (Q.labor_dem_leader == "Huey Long" ? 3 : 0))
+    left: Math.max(0, (Q.left_strength || 0) + (Q.kpd_relation >= 45 ? 4 : 0) + (Q.dem_spa_cooperation ? 6 : 0) + (spaPressure ? 6 : 0) + (demLostLastPres ? 4 : 0) + flLeft),
+    regular: Math.max(0, (Q.center_strength || 0) + (Q.resources >= 4 ? 3 : 0) + (strongDemMandate ? 7 : 0) + (weakDemMandate ? -3 : 0) + (demLostLastPres ? -6 : 0) + flCoop + libertyReform),
+    labor: Math.max(0, (Q.labor_strength || 0) + (Q.unemployed >= 18 ? 5 : 0) + (Q.labor_dem_leader == "Huey Long" ? 8 : 0) + (spaPressure ? 4 : 0) + (demLostLastPres ? 3 : 0) + flLeft),
+    conservative: Math.max(0, (Q.reformist_strength || 0) + (Q.ddp_relation >= 45 ? 3 : 0) + (Q.capital_strike_progress >= 3 ? 4 : 0) + (nusjPressure ? 5 : 0) + (weakDemMandate ? 3 : 0) + libertyReaction),
+    southern: Math.max(0, (Q.neorevisionist_strength || 0) + (Q.labor_dem_leader == "Huey Long" ? 3 : 0) + (Q.southern_resistance || 0) + (demLostLastPres ? 2 : 0) + libertyReaction)
 };
 var demStrengthTotal = demStrengths.left + demStrengths.regular + demStrengths.labor + demStrengths.conservative + demStrengths.southern;
 if (demStrengthTotal <= 0) {
@@ -32,16 +42,27 @@ Q.dem_structural_delegates = Math.round(Math.min(demTotal, Q.dem_left_delegates 
 Q.dem_new_deal_percent = Math.round(1000 * Q.dem_new_deal_delegates / demTotal) / 10;
 Q.dem_populist_percent = Math.round(1000 * Q.dem_populist_delegates / demTotal) / 10;
 Q.dem_structural_percent = Math.round(1000 * Q.dem_structural_delegates / demTotal) / 10;
+Q.dem_conference_mandate_note = "Delegate strength now reflects the last presidential result, SPA pressure, NUSJ pressure, unemployment, patronage, and outside socialist cooperation.";
 !}
 on-display: {!
 if (window && d3) {
     var demTotal = 1100;
+    var demWonLastPres = Q.last_presidential_election_year && Q.last_presidential_winner_party == "SPD";
+    var demLostLastPres = Q.last_presidential_election_year && Q.last_presidential_winner_party != "SPD";
+    var weakDemMandate = demWonLastPres && (Q.last_dem_presidential_vote || 0) < 50;
+    var strongDemMandate = demWonLastPres && (Q.last_dem_presidential_vote || 0) >= 55;
+    var spaPressure = (Q.last_spa_presidential_vote || Q.kpd_votes || 0) >= 8;
+    var nusjPressure = (Q.last_nusj_presidential_vote || Q.dnvp_votes || 0) >= 8;
+    var flCoop = Q.farmer_labor_alignment == "cooperative populist" ? 4 : 0;
+    var flLeft = Q.farmer_labor_alignment == "labor-left front" ? 4 : 0;
+    var libertyReform = Q.liberty_league_alignment == "reform liberal" ? 3 : 0;
+    var libertyReaction = Q.liberty_league_alignment == "reactionary business" ? 4 : 0;
     var demStrengths = {
-        left: Math.max(0, (Q.left_strength || 0) + (Q.kpd_relation >= 45 ? 4 : 0) + (Q.dem_spa_cooperation ? 6 : 0)),
-        regular: Math.max(0, (Q.center_strength || 0) + (Q.resources >= 4 ? 3 : 0)),
-        labor: Math.max(0, (Q.labor_strength || 0) + (Q.unemployed >= 18 ? 5 : 0) + (Q.labor_dem_leader == "Huey Long" ? 8 : 0)),
-        conservative: Math.max(0, (Q.reformist_strength || 0) + (Q.ddp_relation >= 45 ? 3 : 0) + (Q.capital_strike_progress >= 3 ? 4 : 0)),
-        southern: Math.max(0, (Q.neorevisionist_strength || 0) + (Q.labor_dem_leader == "Huey Long" ? 3 : 0))
+        left: Math.max(0, (Q.left_strength || 0) + (Q.kpd_relation >= 45 ? 4 : 0) + (Q.dem_spa_cooperation ? 6 : 0) + (spaPressure ? 6 : 0) + (demLostLastPres ? 4 : 0) + flLeft),
+        regular: Math.max(0, (Q.center_strength || 0) + (Q.resources >= 4 ? 3 : 0) + (strongDemMandate ? 7 : 0) + (weakDemMandate ? -3 : 0) + (demLostLastPres ? -6 : 0) + flCoop + libertyReform),
+        labor: Math.max(0, (Q.labor_strength || 0) + (Q.unemployed >= 18 ? 5 : 0) + (Q.labor_dem_leader == "Huey Long" ? 8 : 0) + (spaPressure ? 4 : 0) + (demLostLastPres ? 3 : 0) + flLeft),
+        conservative: Math.max(0, (Q.reformist_strength || 0) + (Q.ddp_relation >= 45 ? 3 : 0) + (Q.capital_strike_progress >= 3 ? 4 : 0) + (nusjPressure ? 5 : 0) + (weakDemMandate ? 3 : 0) + libertyReaction),
+        southern: Math.max(0, (Q.neorevisionist_strength || 0) + (Q.labor_dem_leader == "Huey Long" ? 3 : 0) + (Q.southern_resistance || 0) + (demLostLastPres ? 2 : 0) + libertyReaction)
     };
     var demStrengthTotal = demStrengths.left + demStrengths.regular + demStrengths.labor + demStrengths.conservative + demStrengths.southern;
     if (demStrengthTotal <= 0) {
@@ -88,6 +109,8 @@ if (window && d3) {
 = Democratic Leadership Conference
 
 The Democratic coalition convenes to decide both leadership emphasis and economic doctrine for the next phase of the crisis. Delegate strength now responds to faction strength, unemployment, available patronage, and outside socialist cooperation.
+
+[+ dem_conference_mandate_note +]
 
 {!<svg id="dem_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 
@@ -208,6 +231,52 @@ var reactionaryScore = 25;
 var limitedRecoveryScore = 28;
 var fiscalOrthodoxyScore = 32;
 var nationalRetrenchmentScore = 24;
+var gopWonLastPres = Q.last_presidential_election_year && Q.last_presidential_winner_party == "DVP";
+var gopLostLastPres = Q.last_presidential_election_year && Q.last_presidential_winner_party != "DVP";
+var gopCloseLastPres = gopLostLastPres && (Q.last_rep_presidential_vote || 0) >= 42;
+var gopCollapseLastPres = gopLostLastPres && (Q.last_rep_presidential_vote || 0) < 35;
+var radicalRightPressure = (Q.last_nusj_presidential_vote || Q.dnvp_votes || 0) + (Q.nsdap_votes || 0) >= 12;
+var socialistPressure = (Q.last_spa_presidential_vote || Q.kpd_votes || 0) >= 8;
+
+if (gopWonLastPres) {
+    oldGuardScore += 5;
+    moderateScore += 6;
+    limitedRecoveryScore += 8;
+}
+if (gopCloseLastPres) {
+    moderateScore += 8;
+    limitedRecoveryScore += 7;
+}
+if (gopCollapseLastPres) {
+    reactionaryScore += 6;
+    nationalRetrenchmentScore += 5;
+    fiscalOrthodoxyScore += 4;
+}
+if (radicalRightPressure) {
+    reactionaryScore += 10;
+    nationalRetrenchmentScore += 8;
+}
+if (socialistPressure) {
+    oldGuardScore += 4;
+    reactionaryScore += 5;
+    fiscalOrthodoxyScore += 4;
+}
+if (Q.gop_alignment == "moderate reform") {
+    moderateScore += 8;
+    limitedRecoveryScore += 7;
+}
+if (Q.gop_alignment == "national conservative") {
+    reactionaryScore += 8;
+    nationalRetrenchmentScore += 7;
+}
+if (Q.liberty_league_alignment == "reactionary business") {
+    oldGuardScore += 5;
+    fiscalOrthodoxyScore += 6;
+}
+if (Q.liberty_league_alignment == "reform liberal") {
+    moderateScore += 4;
+    limitedRecoveryScore += 3;
+}
 
 if (Q.dem_economic_plan == "pragmatic_new_deal") {
     moderateScore += 15;
@@ -325,6 +394,7 @@ if (moderateScore >= oldGuardScore && moderateScore >= reactionaryScore) {
     Q.sla_relation = Math.min(Math.max(Q.sla_relation, 4), 8);
 }
 Q.gop_leader = Q.gop_party_chair;
+Q.gop_conference_mandate_note = "Republican delegate strength now reacts to the last presidential result, GOP collapse or near-miss, radical-right pressure, socialist pressure, and the governing Democratic program.";
 
 // hard cooperation limits: National Union for Social Justice and Silver Legion never become coalition partners.
 Q.nusj_no_coop = 1;
@@ -357,6 +427,8 @@ if (window && d3) {
 !}
 
 Republican delegates conclude their conference for the cycle.
+
+[+ gop_conference_mandate_note +]
 
 {!<svg id="gop_conference_chart" style="width: 500px; height: 250px;"> </svg>!}
 

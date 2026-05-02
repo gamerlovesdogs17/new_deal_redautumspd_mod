@@ -1,0 +1,76 @@
+title: Crisis Management
+new-page: true
+is-card: true
+tags: presidential_affairs, congressional_affairs
+view-if: (dem_presidential_control or dem_congress_control) and crisis_management_timer = 0 and (capital_strike_progress >= 4 or coup_progress >= 4 or constitutional_stress >= 3 or supreme_court_hostility >= 4 or conservative_backlash >= 8)
+on-arrival: crisis_management_timer = 8; month_actions += 1
+card-image: img/paper.jpg
+
+= Crisis Management
+
+The administration is not facing a single crisis. Business resistance, court hostility, constitutional strain, factional distrust, and right-wing organizing are beginning to reinforce one another.
+
+Capital strike risk: [+ capital_strike_progress +]
+
+Coup risk: [+ coup_progress +]
+
+Constitutional stress: [+ constitutional_stress +]
+
+Court hostility: [+ supreme_court_hostility +]
+
+Coalition dissent: [+ coalition_dissent : coalition_dissent +]
+
+Which pressure point should we try to relieve?
+
+- @business_truce
+- @constitutional_channel
+- @security_coordination
+- @coalition_whip
+- @public_mandate
+- @root: Table this.
+- @easy_discard
+
+@business_truce
+title: Broker an emergency truce with business leaders.
+subtitle: Lowers strike pressure, angers labor and the left.
+choose-if: capital_strike_progress >= 2
+unavailable-subtitle: Capital strike pressure is not high enough to justify this.
+on-arrival: capital_strike_progress -= 2; supreme_court_hostility -= 1 if supreme_court_hostility > 0; ddp_relation += 3; dvp_relation += 4; reformist_dissent -= 3; left_dissent += 5; labor_dissent += 4; workers_spd -= 2; unemployed_spd -= 2; new_deal_legitimacy -= 2; conservative_backlash -= 1 if conservative_backlash > 0
+
+The White House offers legal assurances, slower implementation schedules, and a seat at the table. Investment begins to thaw, but labor organizers recognize the shape of a retreat.
+
+@constitutional_channel
+title: Move the fight into a constitutional channel.
+subtitle: Reduces stress, slows reform momentum.
+choose-if: constitutional_stress >= 2 or supreme_court_hostility >= 3
+unavailable-subtitle: Constitutional pressure is not yet the main problem.
+on-arrival: constitutional_stress -= 2 if constitutional_stress >= 2; constitutional_stress = 0 if constitutional_stress < 0; supreme_court_hostility -= 1 if supreme_court_hostility > 0; pro_republic += 4*(1-dissent); new_deal_legitimacy += 2; economic_growth -= 0.2; left_dissent += 2; labor_dissent += 2; resources -= 1 if resources > 0
+
+The administration slows the timetable, invites legal drafting committees, and reframes the dispute as a constitutional argument rather than a test of raw power. It buys legitimacy at the cost of momentum.
+
+@security_coordination
+title: Coordinate loyal police, guardsmen, and the Democratic Defense League.
+subtitle: Lowers coup risk, raises conservative fears.
+choose-if: coup_progress >= 3 and (dem_presidential_control or spd_prussia)
+unavailable-subtitle: We need either executive authority or a loyal state base to coordinate this safely.
+on-arrival: coup_progress -= 2; coup_progress = 0 if coup_progress < 0; rb_strength += 80; rb_militancy += 0.02; prussian_police_loyalty += 0.05 if spd_prussia; reichswehr_loyalty += 0.04 if dem_presidential_control; pro_republic += 2; dvp_relation -= 4; ddp_relation -= 2; conservative_backlash += 1; constitutional_stress += 1
+
+The loyal parts of the state begin sharing lists, routes, armories, and contingency plans with the Democratic Defense League. The far right loses surprise, but constitutional moderates dislike how much the emergency state now resembles mobilization.
+
+@coalition_whip
+title: Force an emergency coalition discipline vote.
+subtitle: Stabilizes Congress, spends political capital.
+choose-if: dem_congress_control and resources >= 1
+unavailable-subtitle: Requires congressional control and 1 political capital.
+on-arrival: resources -= 1; coalition_dissent -= 2; coalition_dissent = 0 if coalition_dissent < 0; committee_control += 1; governor_network += 1; z_relation += 2 if in_weimar_coalition or in_popular_front or in_grand_coalition; ddp_relation += 1; left_dissent += 2; reformist_dissent += 2; new_deal_legitimacy -= 1
+
+Committee chairs, governors, and faction leaders are forced to choose whether they are inside the governing coalition or merely bargaining against it. The vote clarifies the floor, but it burns goodwill.
+
+@public_mandate
+title: Turn the crisis into a public mandate campaign.
+subtitle: Uses legitimacy to pressure elites.
+choose-if: new_deal_legitimacy >= 45 and (radio_reach >= 1 or commercialized_media >= 2 or resources >= 1)
+unavailable-subtitle: Requires New Deal legitimacy of at least 45 and either radio/media reach or 1 political capital.
+on-arrival: resources -= 1 if radio_reach < 1 and commercialized_media < 2; new_deal_legitimacy -= 4; pro_republic += 5*(1-dissent); coalition_dissent -= 1 if coalition_dissent > 0; capital_strike_progress -= 1 if capital_strike_progress > 0; coup_progress -= 1 if coup_progress > 0; workers_spd += 3*(1-dissent); unemployed_spd += 3*(1-dissent); old_middle_spd -= 1; dvp_relation -= 2
+
+The administration goes over the heads of the factions, arguing that delay is itself a choice for depression and disorder. It works best while the New Deal still has public credit to spend.

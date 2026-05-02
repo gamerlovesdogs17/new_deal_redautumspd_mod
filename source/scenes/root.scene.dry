@@ -116,6 +116,23 @@ Q.last_gop_conference_year = 1930;
 Q.dem_spa_cooperation = 0;
 Q.nusj_no_coop = 1;
 Q.sla_no_coop = 1;
+// Dynamic party-pressure trackers. These adapt Dynamic Social Democracy's
+// party-shift idea to the U.S. setup without adding extra party fragments.
+Q.liberty_league_reform = 0;
+Q.liberty_league_reaction = 0;
+Q.liberty_league_alignment = "business liberal";
+Q.gop_moderate_pull = 2;
+Q.gop_reactionary_pull = 1;
+Q.gop_alignment = "old guard";
+Q.farmer_labor_cooperation = 1;
+Q.farmer_labor_left_pull = 1;
+Q.farmer_labor_alignment = "independent farm-labor";
+Q.spa_unity_pull = 0;
+Q.spa_opposition_pull = 2;
+Q.spa_alignment = "independent socialist";
+Q.nusj_populist_pull = 2;
+Q.nusj_authoritarian_pull = 1;
+Q.nusj_alignment = "radio populist";
 // canonical party leaders for this scenario
 Q.dem_leader = "Franklin D. Roosevelt";
 Q.gop_leader = "Herbert Hoover";
@@ -641,7 +658,7 @@ Q.timers = ['advisor_action', 'confronting_nazis', 'crisis_program',
             'fireside_chat',
             'spa_farmer_labor_pressure', 'nusj_silver_escalation',
             'labor_organization_pressure', 'radical_pressure',
-            'news_cooldown', 'opposition_strategy',
+            'news_cooldown', 'opposition_strategy', 'crisis_management',
             'state_governors', 'farm_crisis', 'cabinet_personnel',
             'congressional_affairs',
             'constitutional_reform', 'labor_rights',
@@ -710,6 +727,7 @@ Q.judicial_crisis_timer = 0;
 Q.labor_movement_timer = 0;
 Q.fireside_chat_timer = 0;
 Q.opposition_strategy_timer = 0;
+Q.crisis_management_timer = 0;
 Q.spa_farmer_labor_pressure_timer = 5;
 Q.nusj_silver_escalation_timer = 6;
 Q.labor_organization_pressure_timer = 5;

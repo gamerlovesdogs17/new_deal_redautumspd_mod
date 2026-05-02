@@ -131,6 +131,16 @@ Q.gop_wing_display = republicanWingNames[Q.gop_wing] || "Undecided";
 Q.gop_economic_plan_display = republicanEconomicPlanNames[Q.gop_economic_plan] || Q.gop_economic_plan_display || "Undecided";
 Q.gop_party_chair_display = leaderNames[Q.gop_party_chair] || Q.gop_party_chair || "undecided";
 Q.gop_leader_display = leaderNames[Q.gop_leader] || Q.gop_leader || Q.gop_party_chair_display;
+Q.liberty_league_alignment_display = Q.liberty_league_alignment || "business liberal";
+Q.gop_alignment_display = Q.gop_alignment || "old guard";
+Q.farmer_labor_alignment_display = Q.farmer_labor_alignment || "independent farm-labor";
+Q.spa_alignment_display = Q.spa_alignment || "independent socialist";
+Q.nusj_alignment_display = Q.nusj_alignment || "radio populist";
+Q.liberty_shift_display = Math.round(((Q.liberty_league_reform || 0) - (Q.liberty_league_reaction || 0)) * 10) / 10;
+Q.gop_shift_display = Math.round(((Q.gop_moderate_pull || 0) - (Q.gop_reactionary_pull || 0)) * 10) / 10;
+Q.fl_shift_display = Math.round(((Q.farmer_labor_cooperation || 0) - (Q.farmer_labor_left_pull || 0)) * 10) / 10;
+Q.spa_shift_display = Math.round(((Q.spa_unity_pull || 0) - (Q.spa_opposition_pull || 0)) * 10) / 10;
+Q.nusj_shift_display = Math.round(((Q.nusj_populist_pull || 0) - (Q.nusj_authoritarian_pull || 0)) * 10) / 10;
 Q.chancellor_party_display = partyNames[Q.chancellor_party] || Q.chancellor_party || "";
 var speakerNameMap = {
     "Brüning": "Floyd B. Olson",
@@ -306,6 +316,16 @@ Q.coup_risk_display = Math.round((Q.coup_progress || 0) * 10) / 10;
 {!<span>!}{!<span class="party-spa">Socialist Party of America</span>!}: [+ kpd_relation : relationships +]{!</span>!}
 {!<span>!}{!<span class="party-nusj">National Union for Social Justice</span>!}: [+ dnvp_relation : relationships +]{!</span>!}
 {!<span>!}{!<span class="party-silver">Silver Legion</span>!}: [+ nsdap_relation : relationships +]{!</span>!}
+{!</div>!}
+
+= Party Shifts
+
+{!<div class="politics-list">!}
+{!<div class="politics-row">!}{!<span class="party-fl">Farmer-Labor</span>!}{!<span>!}[+ farmer_labor_alignment_display +] ([+ fl_shift_display +]){!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-liberty">Liberty League</span>!}{!<span>!}[+ liberty_league_alignment_display +] ([+ liberty_shift_display +]){!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-gop">Republican Party</span>!}{!<span>!}[+ gop_alignment_display +] ([+ gop_shift_display +]){!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-spa">Socialist Party of America</span>!}{!<span>!}[+ spa_alignment_display +] ([+ spa_shift_display +]){!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-nusj">National Union for Social Justice</span>!}{!<span>!}[+ nusj_alignment_display +] ([+ nusj_shift_display +]){!</span>!}{!</div>!}
 {!</div>!}
 
 = Internal Factions of the Democratic Coalition

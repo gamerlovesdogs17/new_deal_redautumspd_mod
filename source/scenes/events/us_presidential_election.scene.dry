@@ -114,10 +114,77 @@ if (!Q.pres_nomination_done) {
     Q.pres_spa_active = 1;
     Q.pres_nusj_active = 1;
 }
-var baseDem = (Q.spd_votes || Q.spd_r || 42);
-var baseRep = (Q.dvp_votes || Q.dvp_r || 18);
-var baseSpa = Q.pres_spa_active ? (Q.kpd_votes || Q.kpd_r || 0) : 0;
-var baseNusj = Q.pres_nusj_active ? (Q.dnvp_votes || Q.dnvp_r || 0) : 0;
+var demVotePool = Q.spd_votes || Q.spd_r || 42;
+var repVotePool = Q.dvp_votes || Q.dvp_r || 18;
+var spaVotePool = Q.kpd_votes || Q.kpd_r || 0;
+var flVotePool = Q.z_votes || Q.z_r || 0;
+var libertyVotePool = Q.ddp_votes || Q.ddp_r || 0;
+var nusjVotePool = Q.dnvp_votes || Q.dnvp_r || 0;
+var silverVotePool = Q.nsdap_votes || Q.nsdap_r || 0;
+var baseDem = demVotePool;
+var baseRep = repVotePool;
+var baseSpa = Q.pres_spa_active ? spaVotePool : 0;
+var baseNusj = Q.pres_nusj_active ? nusjVotePool + silverVotePool * 0.7 : 0;
+Q.pres_dem_transferred_votes = 0;
+Q.pres_rep_transferred_votes = 0;
+Q.pres_spa_holdout_votes = baseSpa;
+Q.pres_nusj_transferred_votes = Q.pres_nusj_active ? silverVotePool * 0.7 : 0;
+var flDemTransfer = 0.75;
+var libertyDemTransfer = 0.65;
+var spaDemTransfer = 0.72;
+var libertyRepTransfer = 0.65;
+if (Q.farmer_labor_alignment == "cooperative populist") {
+    flDemTransfer += 0.1;
+} else if (Q.farmer_labor_alignment == "labor-left front") {
+    flDemTransfer -= 0.08;
+    spaDemTransfer += 0.08;
+}
+if (Q.liberty_league_alignment == "reform liberal") {
+    libertyDemTransfer += 0.12;
+    libertyRepTransfer -= 0.1;
+} else if (Q.liberty_league_alignment == "reactionary business") {
+    libertyDemTransfer -= 0.18;
+    libertyRepTransfer += 0.15;
+}
+if (Q.spa_alignment == "unity socialist") {
+    spaDemTransfer += 0.12;
+} else if (Q.spa_alignment == "anti-administration socialist") {
+    spaDemTransfer -= 0.18;
+}
+if (Q.pres_map_strategy == "broad_democratic") {
+    Q.pres_dem_transferred_votes += flVotePool * flDemTransfer + libertyVotePool * libertyDemTransfer;
+    Q.pres_rep_transferred_votes += libertyVotePool * 0.2;
+    baseDem += Q.pres_dem_transferred_votes;
+    baseRep += Q.pres_rep_transferred_votes;
+} else if (Q.pres_map_strategy == "labor_left") {
+    Q.pres_dem_transferred_votes += flVotePool * Math.max(0.6, flDemTransfer + 0.05) + spaVotePool * spaDemTransfer;
+    Q.pres_rep_transferred_votes += libertyVotePool * Math.max(0.5, libertyRepTransfer + 0.1);
+    baseDem += Q.pres_dem_transferred_votes;
+    baseRep += Q.pres_rep_transferred_votes;
+    baseSpa = spaVotePool * Math.max(0.08, 1 - spaDemTransfer);
+    Q.pres_spa_holdout_votes = baseSpa;
+} else if (Q.pres_map_strategy == "anti_reactionary") {
+    Q.pres_dem_transferred_votes += flVotePool * Math.max(0.65, flDemTransfer + 0.08) + libertyVotePool * Math.max(0.55, libertyDemTransfer + 0.08) + spaVotePool * Math.max(0.5, spaDemTransfer - 0.04);
+    Q.pres_rep_transferred_votes += libertyVotePool * 0.1;
+    baseDem += Q.pres_dem_transferred_votes;
+    baseRep += Q.pres_rep_transferred_votes;
+    baseSpa = spaVotePool * Math.max(0.1, 1 - Math.max(0.5, spaDemTransfer - 0.04));
+    Q.pres_spa_holdout_votes = baseSpa;
+} else {
+    Q.pres_rep_transferred_votes += libertyVotePool * libertyRepTransfer;
+    baseRep += Q.pres_rep_transferred_votes;
+}
+if (Q.gop_wing == "national_conservative") {
+    var reactionaryTransfer = nusjVotePool * 0.28 + silverVotePool * 0.18;
+    if (Q.nusj_alignment == "authoritarian nationalist") {
+        reactionaryTransfer += silverVotePool * 0.12;
+    } else if (Q.nusj_alignment == "economic populist") {
+        reactionaryTransfer -= nusjVotePool * 0.08;
+    }
+    baseRep += reactionaryTransfer;
+    baseNusj = Math.max(0, baseNusj - reactionaryTransfer);
+    Q.pres_rep_transferred_votes += reactionaryTransfer;
+}
 var crisisPenalty = 0;
 if ((Q.unemployed || 0) > 18) {
     crisisPenalty += 4;
@@ -137,50 +204,97 @@ Q.dem_presidential_vote = Math.round(1000 * democraticVote / totalVote) / 10;
 Q.rep_presidential_vote = Math.round(1000 * republicanVote / totalVote) / 10;
 Q.spa_presidential_vote = Math.round(1000 * socialistVote / totalVote) / 10;
 Q.nusj_presidential_vote = Math.round(1000 * nusjVote / totalVote) / 10;
+Q.pres_dem_transferred_votes = Math.round(Q.pres_dem_transferred_votes * 10) / 10;
+Q.pres_rep_transferred_votes = Math.round(Q.pres_rep_transferred_votes * 10) / 10;
+Q.pres_spa_holdout_votes = Math.round(Q.pres_spa_holdout_votes * 10) / 10;
+Q.pres_nusj_transferred_votes = Math.round(Q.pres_nusj_transferred_votes * 10) / 10;
 
 var states = [
-    ["WA",8,5,2,1],["ME",5,4,11,1],
-    ["MT",4,1,3,2],["ND",4,1,4,2],["MN",11,4,5,2],["WI",12,3,6,2],["MI",19,2,7,2],["NY",47,5,9,2],["VT",3,6,10,2],["NH",4,3,11,2],
-    ["OR",6,3,2,3],["ID",4,-5,3,3],["SD",4,-3,4,3],["IA",11,-2,5,3],["IL",29,3,6,3],["IN",14,-3,7,3],["OH",26,0,8,3],["PA",36,1,9,3],["MA",17,5,10,3],["RI",4,5,11,3],
-    ["CA",22,5,2,4],["NV",3,1,3,4],["WY",3,-4,4,4],["NE",7,-5,5,4],["MO",15,0,6,4],["KY",11,-2,7,4],["WV",8,1,8,4],["VA",11,-4,9,4],["MD",8,2,10,4],["CT",8,4,11,4],
-    ["AZ",3,-3,3,5],["UT",4,-4,4,5],["CO",6,-2,5,5],["KS",9,-6,6,5],["AR",9,-6,7,5],["TN",11,-4,8,5],["NC",13,-4,9,5],["SC",8,-9,10,5],["NJ",16,2,11,5],
-    ["NM",3,1,4,6],["OK",10,-3,6,6],["LA",10,-7,7,6],["MS",9,-9,8,6],["AL",9,-8,9,6],["GA",12,-8,10,6],["DE",3,2,11,6],
-    ["TX",23,-5,6,7],["FL",7,-3,10,7],["DC",3,8,11,7]
+    ["WA",8,14,"west labor farm",2,1],["ME",5,-12,"newengland business rural",11,1],
+    ["MT",4,15,"west farm",3,2],["ND",4,9,"farm plains",4,2],["MN",11,19,"farm labor industrial",5,2],["WI",12,14,"farm labor industrial",6,2],["MI",19,16,"industrial labor",7,2],["NY",47,18,"urban industrial newengland",9,2],["VT",3,-20,"newengland business rural",10,2],["NH",4,-8,"newengland business",11,2],
+    ["OR",6,13,"west labor farm",2,3],["ID",4,13,"west farm",3,3],["SD",4,7,"farm plains",4,3],["IA",11,9,"farm plains",5,3],["IL",29,13,"urban industrial labor",6,3],["IN",14,5,"industrial plains",7,3],["OH",26,10,"industrial",8,3],["PA",36,11,"industrial labor business",9,3],["MA",17,10,"urban industrial newengland",10,3],["RI",4,20,"urban industrial newengland",11,3],
+    ["CA",22,14,"west urban farm",2,4],["NV",3,17,"west",3,4],["WY",3,8,"west plains",4,4],["NE",7,6,"farm plains",5,4],["MO",15,15,"border farm urban",6,4],["KY",11,18,"border rural",7,4],["WV",8,17,"industrial labor border",8,4],["VA",11,20,"south",9,4],["MD",8,15,"border urban",10,4],["CT",8,8,"newengland urban business",11,4],
+    ["AZ",3,20,"west farm",3,5],["UT",4,18,"west",4,5],["CO",6,16,"west farm",5,5],["KS",9,-4,"farm plains business",6,5],["AR",9,34,"south farm",7,5],["TN",11,22,"south border rural",8,5],["NC",13,24,"south rural",9,5],["SC",8,42,"south",10,5],["NJ",16,12,"urban industrial business",11,5],
+    ["NM",3,25,"west farm",4,6],["OK",10,22,"farm plains south",6,6],["LA",10,36,"south",7,6],["MS",9,44,"south",8,6],["AL",9,36,"south",9,6],["GA",12,34,"south",10,6],["DE",3,10,"border business",11,6],
+    ["TX",23,30,"south farm",6,7],["FL",7,28,"south",9,7]
 ];
 var demEV = 0;
 var repEV = 0;
 var spaEV = 0;
 var nusjEV = 0;
 var map = [];
+var nationalDemMargin = Q.dem_presidential_vote - Q.rep_presidential_vote;
+var newDealBaselineMargin = 18;
+var nationalShift = nationalDemMargin - newDealBaselineMargin;
+var farmShift = (Q.farm_relief || 0) * 1.4 + (Q.agricultural_policy || 0) * 0.8 + (Q.tenant_farmer_support || 0) * 0.7 - (Q.plains_distress || 0) * 0.9;
+var laborShift = (Q.works_program || 0) * 0.9 + (Q.cio_momentum || 0) * 1.2 + Math.max(0, (Q.labor_strength || 0) - 20) * 0.08 - (Q.capital_strike_progress || 0) * 0.5;
+var businessShift = (Q.capital_strike_progress || 0) * 0.8 + (Q.liberty_litigation || 0) * 0.8 + Math.max(0, (Q.ddp_relation || 0) - 45) * 0.05;
+var southShift = -1 * ((Q.southern_resistance || 0) * 1.3 + Math.max(0, (Q.neorevisionist_dissent || 0) - 20) * 0.08);
+var radioShift = (Q.radio_reach || 0) * 0.9 + (Q.opposition_pressure || 0) * 0.7 + (Q.conservative_backlash || 0) * 0.35;
+var spaRegionalShift = Math.max(0, (Q.labor_militancy || 0) - 1) * 0.9 + Math.max(0, (Q.kpd_relation || 0) - 45) * 0.04;
+var hasTag = function(tags, tag) {
+    return tags.indexOf(tag) >= 0;
+};
 for (var i = 0; i < states.length; i++) {
     var st = states[i];
-    var demScore = Q.dem_presidential_vote + st[2];
-    var repScore = Q.rep_presidential_vote - st[2] * 0.6;
-    var spaScore = Q.spa_presidential_vote + (st[2] > 2 ? 2 : 0);
-    var nusjScore = Q.nusj_presidential_vote + (st[2] < -4 ? 3 : 0);
+    var tags = st[3];
+    var stateLean = st[2] + nationalShift;
+    if (hasTag(tags, "farm")) {
+        stateLean += farmShift;
+    }
+    if (hasTag(tags, "labor") || hasTag(tags, "industrial")) {
+        stateLean += laborShift;
+    }
+    if (hasTag(tags, "business") || hasTag(tags, "newengland")) {
+        stateLean -= businessShift;
+    }
+    if (hasTag(tags, "south")) {
+        stateLean += southShift;
+    }
+    if (hasTag(tags, "west") && Q.pres_map_strategy == "labor_left") {
+        stateLean += 1.5;
+    }
+    if (hasTag(tags, "urban") && Q.pres_map_strategy == "anti_reactionary") {
+        stateLean += 1.2;
+    }
+    if (Q.gop_wing == "moderate_reform" && (hasTag(tags, "plains") || hasTag(tags, "newengland"))) {
+        stateLean -= 2.5;
+    }
+    if (Q.gop_wing == "national_conservative" && hasTag(tags, "south")) {
+        stateLean -= 3.5;
+    }
+    var demScore = Q.dem_presidential_vote + stateLean * 0.45;
+    var repScore = Q.rep_presidential_vote - stateLean * 0.35 + (hasTag(tags, "business") ? businessShift * 0.35 : 0);
+    var spaScore = Q.spa_presidential_vote + (hasTag(tags, "labor") ? 2.4 + spaRegionalShift : 0) + (hasTag(tags, "urban") ? 1.1 : 0);
+    var nusjScore = Q.nusj_presidential_vote + (hasTag(tags, "south") ? 2.8 : 0) + (hasTag(tags, "rural") || hasTag(tags, "plains") ? 1.2 : 0) + radioShift;
     var cls = "party-dem";
     var label = Q.dem_nominee;
+    var winnerParty = "Democratic";
     if (repScore > demScore && repScore >= spaScore && repScore >= nusjScore) {
         cls = "party-gop";
         label = Q.rep_nominee;
+        winnerParty = "Republican";
         repEV += st[1];
     } else if (spaScore > demScore && spaScore > repScore && spaScore >= nusjScore) {
         cls = "party-spa";
         label = Q.spa_nominee;
+        winnerParty = "Socialist";
         spaEV += st[1];
     } else if (nusjScore > demScore && nusjScore > repScore && nusjScore > spaScore) {
         cls = "party-nusj";
         label = Q.nusj_nominee;
+        winnerParty = "NUSJ";
         nusjEV += st[1];
     } else {
         demEV += st[1];
     }
-    map.push('<span class="ev-state ' + cls + '" style="grid-column:' + st[3] + ';grid-row:' + st[4] + ';" title="' + label + ': ' + st[1] + ' EV">' + st[0] + '</span>');
+    map.push('<span class="ev-state ' + cls + '" style="grid-column:' + st[4] + ';grid-row:' + st[5] + ';" title="' + st[0] + ': ' + winnerParty + ' - ' + label + ', ' + st[1] + ' EV">' + st[0] + '</span>');
 }
 Q.dem_electoral_votes = demEV;
 Q.rep_electoral_votes = repEV;
 Q.spa_electoral_votes = spaEV;
 Q.nusj_electoral_votes = nusjEV;
+Q.pres_state_model_note = "State calls use a 48-state 1930s New Deal baseline, then shift by farm relief, industrial labor strength, business backlash, Southern resistance, GOP wing, and radio-right pressure.";
 Q.presidential_winner = Q.dem_nominee;
 Q.presidential_winner_party = "Democratic Party";
 if (repEV >= demEV && repEV >= spaEV && repEV >= nusjEV) {
@@ -211,6 +325,8 @@ The presidential results are in. A ticket needs 270 electoral votes to win outri
 
 {!<div id="pres_ev_map" class="ev-map"></div>!}
 
+[+ pres_state_model_note +]
+
 Electoral vote:
 
 {!<span class="party-dem">Democratic Party</span>!}: [+ dem_electoral_votes +] - [+ dem_nominee +]
@@ -240,6 +356,15 @@ Endorsements:
 {!<div>!}{!<span class="party-nusj">NUSJ ticket</span>!}: [+ nusj_ticket_endorsements +]{!</div>!}
 {!</div>!}
 
+Coalition transfer estimate:
+
+{!<div class="endorsement-list">!}
+{!<div>!}{!<span class="party-dem">Democratic ticket</span>!}: +[+ pres_dem_transferred_votes +] points from allied-party voters before national conditions are applied.{!</div>!}
+{!<div>!}{!<span class="party-gop">Republican ticket</span>!}: +[+ pres_rep_transferred_votes +] points from Liberty League and conservative anti-New Deal voters.{!</div>!}
+{!<div>!}{!<span class="party-spa">Socialist ticket</span>!}: [+ pres_spa_holdout_votes +] points remain with the independent socialist ballot line.{!</div>!}
+{!<div>!}{!<span class="party-nusj">NUSJ ticket</span>!}: +[+ pres_nusj_transferred_votes +] points from Silver Legion-aligned voters.{!</div>!}
+{!</div>!}
+
 [? if dem_electoral_votes >= 270 : [+ dem_nominee +] wins the presidency. ?]
 [? if rep_electoral_votes >= 270 : [+ rep_nominee +] wins the presidency. ?]
 [? if spa_electoral_votes >= 270 : [+ spa_nominee +] wins the presidency. ?]
@@ -255,19 +380,44 @@ if (Q.dem_electoral_votes >= 270 || (Q.dem_electoral_votes >= Q.rep_electoral_vo
     Q.president = Q.dem_nominee;
     Q.president_party = "SPD";
     Q.chancellor_party = "SPD";
+    Q.dem_presidential_control = 1;
+    Q.dem_conference_due = 1;
+    Q.gop_conference_due = 1;
 } else if (Q.rep_electoral_votes >= 270 || Q.rep_electoral_votes >= Q.spa_electoral_votes && Q.rep_electoral_votes >= Q.nusj_electoral_votes) {
     Q.president = Q.rep_nominee;
     Q.president_party = "DVP";
     Q.chancellor_party = "DVP";
+    Q.dem_presidential_control = 0;
+    Q.dem_conference_due = 1;
+    Q.gop_conference_due = 1;
 } else if (Q.spa_electoral_votes >= Q.nusj_electoral_votes) {
     Q.president = Q.spa_nominee;
     Q.president_party = "KPD";
     Q.chancellor_party = "KPD";
+    Q.dem_presidential_control = 0;
+    Q.dem_conference_due = 1;
+    Q.gop_conference_due = 1;
 } else {
     Q.president = Q.nusj_nominee;
     Q.president_party = "DNVP";
     Q.chancellor_party = "DNVP";
+    Q.dem_presidential_control = 0;
+    Q.dem_conference_due = 1;
+    Q.gop_conference_due = 1;
 }
+Q.dem_trifecta_control = Q.dem_presidential_control && Q.dem_congress_control ? 1 : 0;
+Q.last_presidential_winner_party = Q.president_party;
+Q.last_presidential_winner = Q.president;
+Q.last_presidential_election_year = Q.year;
+Q.last_dem_presidential_vote = Q.dem_presidential_vote;
+Q.last_rep_presidential_vote = Q.rep_presidential_vote;
+Q.last_spa_presidential_vote = Q.spa_presidential_vote;
+Q.last_nusj_presidential_vote = Q.nusj_presidential_vote;
+Q.last_dem_electoral_votes = Q.dem_electoral_votes;
+Q.last_rep_electoral_votes = Q.rep_electoral_votes;
+Q.last_spa_electoral_votes = Q.spa_electoral_votes;
+Q.last_nusj_electoral_votes = Q.nusj_electoral_votes;
+Q.dem_presidential_mandate = Q.dem_presidential_control ? Math.round((Q.dem_presidential_vote + Q.dem_electoral_votes / 531 * 100) / 2) : 0;
 Q.foreign_minister_party = Q.president_party;
 Q.interior_minister_party = Q.president_party;
 Q.justice_minister_party = Q.president_party;

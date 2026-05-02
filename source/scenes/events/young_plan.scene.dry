@@ -1,26 +1,26 @@
-title: Young Plan
+title: War Debt Settlement
 new-page: true
-subtitle: A new agreement on reparations
+subtitle: A new agreement on war debts
 tags: event
 view-if: year = 1929 and month >= 7 and in_right_coalition = 0 and young_plan_seen = 0
 on-arrival: young_plan_seen = 1
 max-visits: 1
 
-= Young Plan
+= War Debt Settlement
 
-The Young Plan is an agreement with the Western powers to reduce the republic's reparation payments and give us more fiscal autonomy. Simultaneously, France will agree to withdraw its military occupation from the Rhineland.
+A new war-debt settlement with the Western powers would reduce the republic's Great War payment burden and give us more fiscal autonomy. It would also signal that the international order is willing to adjust to the reality of the depression.
 
-While this seems to be a positive development for the country, the Right is campaigning hard against this plan, as are the Communists for whatever reason. They claim that any reparations are a form of national slavery, and have organized a referendum against it.
+While this seems to be a positive development for the country, the Right is campaigning hard against the plan, as are the Communists for their own reasons. They claim that any foreign debt settlement is a surrender to bankers and imperial creditors, and have organized a referendum against it.
 
-- @pro_plan: Campaign in favor of the Young Plan and against the referendum.
-- @no_plan: Do not campaign on the Young Plan, one way or another.
+- @pro_plan: Campaign in favor of the settlement and against the referendum.
+- @no_plan: Do not campaign on the settlement, one way or another.
 
 @pro_plan
 
-How should we campaign in favor of the Plan?
+How should we campaign in favor of the settlement?
 
 - @internationalism: As part of a broader campaign in favor of internationalism and pacifism.
-- @rational: The Young Plan is simply the most rational choice for the republic.
+- @rational: The settlement is simply the most rational choice for the republic.
 
 @internationalism
 on-arrival: nationalism -= 5*(1-dissent) if pacifism >= 2 else nationalism += 3; pacifism += 1; workers_spd += 5*(1-dissent) if pacifism >= 3 and nationalism <= 50; workers_nsdap += 4 if pacifism <= 3; rural_nsdap += 5; catholics_spd -= 4 if pacifism <= 3; rural_dvp -= 4
@@ -37,4 +37,4 @@ The referendum easily fails, with only around 15% of voters supporting it. It se
 @no_plan
 on-arrival: nationalism += 5; workers_spd -= 3; old_middle_spd -= 3; new_middle_spd -= 3; pacifism -= 1; workers_nsdap += 5; rural_nsdap += 5; rural_dnvp -= 5; catholics_spd -= 5; rural_dvp -= 5;
 
-The referendum easily fails with or without our presence in the campaign, with only around 15% of voters supporting it. However, nationalist sentiment is inflammed, and the right-wing parties are using our silence around the Plan as a tacit admission of its faults. Our silence has only emboldened the Right, especially the Silver Legion.
+The referendum easily fails with or without our presence in the campaign, with only around 15% of voters supporting it. However, nationalist sentiment is inflamed, and the right-wing parties are using our silence around the settlement as a tacit admission of its faults. Our silence has only emboldened the Right, especially the Silver Legion.

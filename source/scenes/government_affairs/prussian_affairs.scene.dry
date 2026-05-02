@@ -5,22 +5,22 @@ view-if: spd_prussia = 1 and prussian_affairs_timer <= 0
 on-arrival: prussian_affairs_timer += 6; month_actions += 1
 tags: presidential_affairs
 card-image: img/braun.jpg
-#subtitle: The state government of Prussia is a bulwark of democracy...
+#subtitle: The state governments are a bulwark of democracy...
 
-= state Affairs
+= State Affairs
 
-key states, by far the largest and most important state in the republic, is governed by our party, in a coalition with the Center and Democratic parties. It is the most stable and democratic state government in the republic, led by the able Otto Braun.
+Several key states are governed by our party in coalitions with Farmer-Labor and liberal Democrats. They are among the most stable and democratic state governments in the republic, and they can be used as a bulwark against authoritarian politics.
 
 We can enact policies in key states.
 
 - @police_loyalty: Bolster the loyalty of the police.
 - @police_strength: Recruit additional police.
 - @bureaucracy: Purge the bureaucracy of reactionary elements.
-- @ban_sa: Ban the SA, the Silver Legion paramilitary group.
-- @unban_sa: Reverse the SA ban.
-- @ban_rfb: Ban the SPA defense guards, the Communist paramilitary.
+- @ban_sa: Ban the Silver Legion militia.
+- @unban_sa: Reverse the Silver Legion militia ban.
+- @ban_rfb: Ban the SPA defense guards.
 - @unban_rfb: Reverse the SPA defense guards ban.
-- @ban_sh: Ban the Liberty League auxiliaries, the Nationalist paramilitary.
+- @ban_sh: Ban the Liberty League auxiliaries.
 - @unban_sh: Reverse the Liberty League auxiliaries ban.
 - @negotiate_concordat: Negotiate a concordat with the Vatican.
 - @sign_concordat: Sign a concordat with the Vatican.
@@ -48,50 +48,50 @@ on-arrival: prussian_police_loyalty += 0.05; nationalism -= 5; pacifism += 1; de
 The bureaucracy is deeply reactionary, and many abuse their power to favor the political right. By removing the pro-monarchy and pro-dictatorship elements, we can democratize it. Some of our opponents claim that we are infringing on individual freedoms, but perhaps the security of the republic requires it.
 
 @ban_sa
-view-if: nazi_urgency >= 3 and sa_banned == 0
+view-if: (nazi_urgency >= 3 or radical_momentum >= 12 or sa_strength >= 200 or coup_progress >= 3) and sa_banned == 0
 on-arrival: sa_strength *= 0.9; sa_strength *= 0.75 if prussian_police_loyalty >= 0.75; sa_banned = 1; dvp_relation -= 3; prussian_police_loyalty -= 0.05; sa_militancy -= 0.05; sa_ban_timer = 6;
 
-As it turns out, the Silver Legion SA has many allies in the police and bureaucracy. Our relationship with the police weakens, and the SA can still organize illegally, right under the police's noses. [? if prussian_police_loyalty >= 0.7 : Nevertheless, the SA is substantially weakened by our ban. ?] 
+As it turns out, the Silver Legion militia has many allies in the police and bureaucracy. Our relationship with the police weakens, and the militia can still organize illegally, right under the police's noses. [? if prussian_police_loyalty >= 0.7 : Nevertheless, the militia is substantially weakened by our ban. ?] 
 
 @unban_sa
 view-if: sa_banned = 1
 on-arrival: sa_banned = 0; sa_strength += 100; sa_militancy += 0.05
 
-The SA is no longer banned. They immediately go on a recruiting spree.
+The Silver Legion militia is no longer banned. They immediately go on a recruiting spree.
 
 @ban_sh
-on-arrival: sh_strength *= 0.85; sh_strength *= 0.7 if prussian_police_loyalty >= 0.75; sh_banned = 1; dvp_relation -= 5; prussian_police_loyalty -= 0.1; coalition_dissent += 1 if spd_in_government = 1 and in_grand_coalition = 1 and president = "Hindenburg"; sh_ban_timer = 6;
+on-arrival: sh_strength *= 0.85; sh_strength *= 0.7 if prussian_police_loyalty >= 0.75; sh_banned = 1; dvp_relation -= 5; prussian_police_loyalty -= 0.1; coalition_dissent += 1 if spd_in_government = 1 and in_grand_coalition = 1 and not dem_presidential_control; sh_ban_timer = 6;
 view-if: sh_banned == 0
 
-[? if president == "the old president": Banning the Liberty League auxiliaries weakens our relationship with President the old president, as well as the political right and the police. ?][? if president != "the old president": Banning the Liberty League auxiliaries weakens our relationship with the political right and the police. ?] [? if spd_in_government = 1 and in_grand_coalition = 1 and president = "the old president" : It also weakens our coalition due to the influence of the old president on the right wing of our coalition. ?] In addition, the Liberty League auxiliaries still operates out of public sight. 
+[? if not dem_presidential_control: Banning the Liberty League auxiliaries weakens our relationship with the conservative establishment, the political right, and the police. ?][? if dem_presidential_control: Banning the Liberty League auxiliaries weakens our relationship with the political right and the police. ?] [? if spd_in_government = 1 and in_grand_coalition = 1 and not dem_presidential_control : It also weakens our coalition due to conservative influence on the right wing of our coalition. ?] In addition, the Liberty League auxiliaries still operate out of public sight. 
 
 @unban_sh
 view-if: sh_banned = 1
 on-arrival: sh_banned = 0; sh_strength += 100
 
-The Liberty League auxiliaries is no longer banned.
+The Liberty League auxiliaries are no longer banned.
 
 
 @ban_rfb
 view-if: communist_coalition < 3 and rfb_banned = 0
 on-arrival: kpd_relation -= 15; rfb_strength -= 50; rfb_banned = 1; communist_coalition -= 1; z_relation += 5; dvp_relation += 5; prussian_police_loyalty += 0.1
 
-The ban is enthusiastically carried out by the police, perhaps too enthusiastically. The Communists take this as one more reason why the Socialists are traitors to the left. However, the moderate and center-right parties approve, as do the police.
+The ban is enthusiastically carried out by the police, perhaps too enthusiastically. The SPA takes this as one more reason to distrust the administration. However, moderate and center-right parties approve, as do the police.
 
 @unban_rfb
 view-if: rfb_banned = 1
 on-arrival: rfb_banned = 0; rfb_strength += 50; prussian_police_loyalty -= 0.1
 
-The Communist SPA defense guards is no longer banned.
+The SPA defense guards are no longer banned.
 
 @negotiate_concordat
 view-if: prussian_concordat_progress < 1
 on-arrival: prussian_concordat_progress += 1; z_relation += 2*(1-dissent);
 
-We are making progress towards negotiating a concordat between key states and the Catholic church.
+We are making progress towards negotiating a concordat between key state governments and the Catholic church.
 
 @sign_concordat
 view-if: prussian_concordat_progress >= 1 and prussian_concordat = 0
 on-arrival: prussian_concordat = 1; z_relation += 5; catholics_spd += 3*(1-dissent)
 
-We have signed a Concordat between the Free State of key states and the Roman Catholic Church, guaranteeing religious freedom for Catholics in key states. This sets the stage for the negotiation of a national Concordat covering all of the republic.
+We have signed a concordat between key state governments and the Roman Catholic Church, guaranteeing religious freedom for Catholics in those states. This sets the stage for the negotiation of a national concordat covering all of the republic.

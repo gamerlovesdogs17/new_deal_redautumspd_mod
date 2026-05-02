@@ -5,7 +5,7 @@ view-if: 0
 on-arrival: economic_growth += 1; budget -= 1; unemployed -= 3 if unemployed > 10; rural_dnvp += 3; old_middle_dnvp += 3; new_middle_dnvp += 3; workers_dnvp += 3
 new-page: true
 max-visits: 1
-face-image: img/portraits/the conservative operatorKurt.jpg
+face-image: img/portraits/SchleicherKurt.jpg
 tags: event
 
 = the conservative operator's Schemes

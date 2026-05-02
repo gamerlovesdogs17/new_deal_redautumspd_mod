@@ -6,7 +6,7 @@ on-arrival: old_chancellor = chancellor; spd_toleration = 0; chancellor = "Papen
 new-page: true
 tags: event
 max-visits: 1
-face-image: img/portraits/the conservative caretakerFranz.jpg
+face-image: img/portraits/PapenFranz.jpg
 
 President the old president's secretive group of advisors (often called the "camarilla") has turned against [+ old_speaker +], and the old president has dismissed the Speaker, replacing him with the more reactionary Franz von the conservative caretaker, an independent formerly of the Center Party. [? if year == 1932 and old_speaker == "Brüning": Brüning's final straw was his "agricultural settlement" policy, sending unemployed workers to homestead in underutilized lands (that happen to be owned by aristocrats). ?] [? if strife > 6 : Seeing the chaos that has gripped the country, the old president's advisors seem to believe that the country needs stronger, more authoritarian rulers, and they see the conservative caretaker as that kind of ruler. ?]
 

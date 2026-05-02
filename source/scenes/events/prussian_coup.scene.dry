@@ -6,11 +6,11 @@ on-arrival: prussian_coup_seen = 1
 new-page: true
 tags: event
 max-visits: 1
-face-image: img/Defense Department.jpg
+face-image: img/Reichswehr.jpg
 
 = Coup in key states
 
-A crisis! Speaker [+ speaker +] has ordered the dismissal of the state government in a procedure known as the *Reichsexecution*. His argument is that the state state government is unable to maintain order due to the battles on the streets between the SA, Democratic Defense League, and other paramilitaries. This is despite his own government legalizing them.
+A crisis! Speaker [+ speaker +] has ordered the dismissal of a state government through an emergency federal intervention. His argument is that the state government is unable to maintain order due to street battles between the Silver Legion, Democratic Defense League, and other paramilitaries. This is despite his own government legalizing them.
 
 The legality of the action is questionable. Many of our members are ready to resist.
 
@@ -24,7 +24,7 @@ subtitle: Labor will call a general strike. Civic-defense leagues and loyal elem
 unavailable-subtitle: We do not have the forces to resist.
 choose-if: rb_strength*rb_militancy >= 200
 
-The Defense Department and Liberty League auxiliaries are already surrounding Berlin, and the SA is supporting them. This could be civil war. We do realize that, correct? 
+The Defense Department and Liberty League auxiliaries are already surrounding the state capital, and the Silver Legion is supporting them. This could be civil war. We do realize that, correct? 
 
 - @defend_2: We will fight, even if it leads to a civil war.
 - @surrender
@@ -48,7 +48,7 @@ achievement: drei_pfeile
 
 @defend_2_civil_war
 
-Our forces confront the government troops and their supporters on the streets of Berlin, and armed fighting erupts. The reactionaries do not budge from their positions. We are caught at a disadvantage.
+Our forces confront the government troops and their supporters in the streets, and armed fighting erupts. The reactionaries do not budge from their positions. We are caught at a disadvantage.
 
 - @civil_war: It is a civil war.
 

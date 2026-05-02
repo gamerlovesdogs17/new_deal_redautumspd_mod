@@ -10,9 +10,9 @@ max-visits: 6
 
 = Democratic Defense League
 
-The *Democratic Defense League Schwarz-Rot-Gold* is a mass organization for the defense of the Republic against the extremists who threaten it. Some would call it a paramilitary, although currently it is hardly any sort of military. It is officially associated with the pro-democratic parties -the SPD, Center, and [+ ddp_name +], but by far the largest component is with the SPD.
+The *Democratic Defense League* is a mass organization for the defense of the Republic against the extremists who threaten it. Some would call it a paramilitary, although currently it is hardly any sort of military. It is officially associated with the pro-democratic parties - the Democrats, Farmer-Labor, and [+ ddp_name +], but by far the largest component is with the Democratic Party.
 
-[? if workers_spd < 46 or workers_spd < workers_nsdap or workers_spd < workers_kpd : The Democratic Defense League is having a more difficult time recruiting, as the SPD is no longer the dominant party among the workers. Many of its members have left. ?]
+[? if workers_spd < 46 or workers_spd < workers_nsdap or workers_spd < workers_kpd : The Democratic Defense League is having a more difficult time recruiting, as the Democrats are no longer the dominant party among workers. Many of its members have left. ?]
 
 - @militant: Fund more military-style training and equipment for the Democratic Defense League.
 - @militant_2: Use our existing resources to support more training for the Democratic Defense League.
@@ -30,9 +30,9 @@ unavailable-subtitle: Not enough resources ([+ rb_militarization_cost +] needed)
 subtitle: -[+ rb_militarization_cost +] resources
 on-arrival: resources -= rb_militarization_cost; rb_investment += 1; rb_strength += 100; rb_militancy += 0.05; left_strength += 2; left_dissent -= 2; reformist_dissent += 5; spd_militancy += 0.05; workers_spd += 2*(1-dissent); unemployed_spd += 2*(1-dissent); z_relation -= 5 if historical_mode 
 
-Some in our party decry the increasing militarization of the Democratic Defense League. They say it is emulating the right-wing nationalists or the communists, and risks alienating our allies in the centrist parties. On the other hand, more left-leaning radicals are being lured to our organizations, away from the communists.
+Some in our party decry the increasing militarization of the Democratic Defense League. They say it is emulating the right-wing nationalists or the SPA, and risks alienating our allies in the centrist parties. On the other hand, more left-leaning radicals are being lured to our organizations, away from the SPA.
 
-[? if historical_mode : The Center Party decries the militarization of the Democratic Defense League, and its members are leaving the republican organization. ?]
+[? if historical_mode : Farmer-Labor moderates decry the militarization of the Democratic Defense League, and their members are leaving the republican organization. ?]
 
 
 @militant_2
@@ -53,7 +53,7 @@ The Democratic Defense League is already serving the purpose it needs to serve. 
 subtitle: +1 resources
 on-arrival: resources += 1; rb_strength -= 100; rb_militancy -= 0.05; left_strength -= 2; left_dissent -= 2; spd_militancy -= 0.05; workers_kpd += 2; unemployed_kpd += 2
 
-Cutting resources to the Democratic Defense League causes a drop in the membership, and leads some would-be members to join the Communists instead.
+Cutting resources to the Democratic Defense League causes a drop in the membership, and leads some would-be members to join the SPA instead.
 
 
 @women_rb
@@ -66,7 +66,7 @@ go-to: homosexual if trans_rights or repealed_175 or reformed_183
 max-visits: 1
 achievement: women_reichsbanner
 
-The suggestion to allow women into the Democratic Defense League is ridiculed by most, except for Toni Sender. But this is an exceptional time, and we need anyone who is willing to join. Thus, we organize specialized units for women, [? if homosexual_rights > 0: and even some covert units for transsexuals and homosexuals ?].
+The suggestion to allow women into the Democratic Defense League is ridiculed by most, except for Mary McLeod Bethune. But this is an exceptional time, and we need anyone who is willing to join. Thus, we organize specialized units for women[? if homosexual_rights > 0: , and even some covert units for gay and trans supporters ?].
 
 After allowing women to join, the number of comrades who leave is more than balanced out by the number of radicalized women and others who join. However, many of our departed members were veterans, and many of the new members have no experience with military-style training.
 

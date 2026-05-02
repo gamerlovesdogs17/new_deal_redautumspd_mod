@@ -1,4 +1,4 @@
-title: Hoover Moratorium
+title: War Debt Moratorium
 subtitle: Owing to the economic crisis, our debt payments have been paused...
 new-page: true
 view-if: banking_crisis_seen = 1 and ((year == 1931 and month >= 6) or (year == 1932)) and reparations >= 0 and unemployed > 15
@@ -6,9 +6,9 @@ on-arrival: budget += 1; reparations_negotiation += 2; hoover_moratorium_seen = 
 tags: event
 max-visits: 1
 
-= Hoover Moratorium
+= War Debt Moratorium
 
-In light of the current economic situation, and the American banking crisis, President Herbert Hoover of the United States has issued a moratorium on war debt payments from the Great War, including the republic's. Our budget situation should improve somewhat.
+In light of the current economic situation and the banking crisis, President Hoover has issued a moratorium on Great War debt payments, including the republic's. Our budget situation should improve somewhat.
 
 [? if spd_in_government and foreign_minister_party == "SPD": Even though this is not our accomplishment, our foreign ministry is eager to take credit for this accomplishment. ?][? if not spd_in_government and foreign_minister_party != "SPD": Even though this is not the work of the foreign ministry, it is eager to take credit for this accomplishment. ?]
 

@@ -2,35 +2,79 @@ title: Shuffle Cabinet
 new-page: true
 is-card: true
 tags: presidential_affairs, cabinet
-on-arrival: shuffle_cabinet_timer = 6;
-view-if: dem_presidential_control and shuffle_cabinet_timer == 0 and chancellor_party == "SPD" and not in_spd_majority and not in_emergency_government and not in_left_front
+on-arrival: {!
+Q.shuffle_cabinet_timer = 6;
+var partyNames = {
+    "SPD": "Democratic Party",
+    "KPD": "Socialist Party of America",
+    "SPA": "Socialist Party of America",
+    "Z": "Farmer-Labor",
+    "DDP": "Liberty League",
+    "DVP": "Republican Party",
+    "DNVP": "National Union for Social Justice",
+    "NSDAP": "Silver Legion",
+    "I": "Independent"
+};
+Q.labor_minister_party_display = partyNames[Q.labor_minister_party] || Q.labor_minister_party || "";
+Q.interior_minister_party_display = partyNames[Q.interior_minister_party] || Q.interior_minister_party || "";
+Q.finance_minister_party_display = partyNames[Q.finance_minister_party] || Q.finance_minister_party || "";
+Q.economic_minister_party_display = partyNames[Q.economic_minister_party] || Q.economic_minister_party || "";
+Q.justice_minister_party_display = partyNames[Q.justice_minister_party] || Q.justice_minister_party || "";
+Q.foreign_minister_party_display = partyNames[Q.foreign_minister_party] || Q.foreign_minister_party || "";
+Q.reichswehr_minister_party_display = partyNames[Q.reichswehr_minister_party] || Q.reichswehr_minister_party || "";
+Q.agriculture_minister_party_display = partyNames[Q.agriculture_minister_party] || Q.agriculture_minister_party || "";
+!}
+view-if: dem_presidential_control and shuffle_cabinet_timer == 0
 card-image: img/muller_cabinet.jpg
 
-Do we wish to shuffle our cabinet? This might upset our current coalition.
+The presidency controls executive appointments, so this is no longer a coalition bargaining table. A reorganization changes administrative emphasis and political signals.
 
 Current cabinet:
 
-Labor: [+ labor_minister_party +]
+Labor: [+ labor_minister_party_display +]
 
-Interior: [+ interior_minister_party +]
+Interior: [+ interior_minister_party_display +]
 
-Finance: [+ finance_minister_party +]
+Finance: [+ finance_minister_party_display +]
 
-Economic: [+ economic_minister_party +]
+Economic: [+ economic_minister_party_display +]
 
-Justice: [+ justice_minister_party +]
+Justice: [+ justice_minister_party_display +]
 
-Foreign: [+ foreign_minister_party +]
+Foreign: [+ foreign_minister_party_display +]
 
-Defense Department: [+ reichswehr_minister_party +]
+Defense: [+ reichswehr_minister_party_display +]
 
-Agriculture: [+ agriculture_minister_party +]
+Agriculture: [+ agriculture_minister_party_display +]
 
-- @shuffle: Yes, do it.
+- @new_deal_administrators: Put New Deal administrators in charge.
+- @labor_enforcement: Recenter the cabinet on labor enforcement.
+- @congressional_managers: Bring in congressional managers.
+- @business_reassurance: Reassure business and conservative Democrats.
 - @root: No, there is no need.
 - @easy_discard
 - @cancel_advisor_action
 
-@shuffle
-on-arrival: coalition_dissent += 1; month_actions += 1
-go-to: election_1928.ministries
+@new_deal_administrators
+title: Put New Deal administrators in charge.
+on-arrival: month_actions += 1; cabinet_style = "technocratic"; agency_capacity += 2; new_deal_legitimacy += 1; center_strength += 1; labor_dissent += 1; reformist_dissent += 1
+
+The White House elevates administrators who can build agencies, write rules, and move money. The program becomes more capable, though factional politicians complain that they are being bypassed.
+
+@labor_enforcement
+title: Recenter the cabinet on labor enforcement.
+on-arrival: month_actions += 1; cabinet_style = "labor"; labor_dissent -= 3; labor_strength += 2; workers_spd += 2; cio_momentum += 1; agency_capacity += 1; dvp_relation -= 2; ddp_relation -= 2; conservative_backlash += 1
+
+Labor allies gain more influence over enforcement and relief delivery. Unions read the shift as a commitment, while employers and conservative Democrats harden against the administration.
+
+@congressional_managers
+title: Bring in congressional managers.
+on-arrival: month_actions += 1; cabinet_style = "regular"; governor_network += 1; committee_control += 1; center_dissent -= 2; resources += 1; new_deal_legitimacy -= 1
+
+The cabinet gets more people who understand committee chairs, state machines, and local obligations. It is less visionary, but the legislative arithmetic improves.
+
+@business_reassurance
+title: Reassure business and conservative Democrats.
+on-arrival: month_actions += 1; cabinet_style = "business"; ddp_relation += 3; dvp_relation += 2; capital_strike_progress -= 1 if capital_strike_progress > 0; gop_obstruction -= 1 if gop_obstruction > 0; labor_dissent += 3; left_dissent += 2; agency_capacity += 1
+
+The administration signals restraint to business leaders and conservative Democrats. It lowers immediate resistance, but labor and the New Deal left see the move as retreat.

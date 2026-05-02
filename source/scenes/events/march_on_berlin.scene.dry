@@ -71,7 +71,7 @@ achievement: drei_pfeile
 
 Our forces confront the fascists, and somehow, the fascists retreat! They were overwhelmed by our display of strength, and have chosen to slink away. The attempted coup is over, at least for now.
 
-The show of force has reinvigorated support for the republic and for the SPD, and has weakened the fascists.
+The show of force has reinvigorated support for the republic and for the Democrats, and has weakened the fascists.
 
 @fight_2_win_2
 on-arrival: coup_progress = 0; pro_republic += 5; workers_nsdap -= 2*(1-dissent); unemployed_nsdap -= 2*(1-dissent); new_middle_nsdap -= 2*(1-dissent); rb_strength *= 0.9; sa_strength *= 0.9; sh_strength *= 0.9
@@ -80,7 +80,7 @@ on-arrival: coup_progress = 0; pro_republic += 5; workers_nsdap -= 2*(1-dissent)
 
 Our forces confront the fascists, and somehow, the fascists retreat! They were overwhelmed by our display of strength, and have chosen to slink away. The attempted coup is over, at least for now.
 
-The show of force has reinvigorated support for the republic and for the SPD, and has weakened the fascists.
+The show of force has reinvigorated support for the republic and for the Democrats, and has weakened the fascists.
 
 
 @fight_2_pre_civil_war
@@ -147,7 +147,7 @@ Influenced by his inner circle and by the fascists in the streets, President [+ 
 
 @resign
 title: Resign our positions in the government.
-choose-if: president != "Braun"
+choose-if: not dem_presidential_control
 unavailable-subtitle: A Democratic White House cannot surrender its own administration here.
 on-arrival: chancellor = "Papen"; chancellor_party = "I"; spd_in_government = 0;
 go-to: accept
@@ -158,7 +158,7 @@ We have resigned our positions in the government.
 
 @braun_appoints_hitler
 title: We cannot do anything but let the Silver Legion enter government.
-view-if: president == "Braun"
+view-if: dem_presidential_control
 choose-if: nsdap_normalized >= 0.5 or largest_party == "NSDAP"
 unavailable-subtitle: There is no way President [+ president +] could do such a blatantly undemocratic act.
 on-arrival: chancellor = "Hitler"; chancellor_party = "NSDAP"; spd_in_government = 0

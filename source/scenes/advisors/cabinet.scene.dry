@@ -2,17 +2,80 @@ title: Cabinet
 is-pinned-card: true
 tags: advisor
 card-image: img/muller_cabinet.jpg
-view-if: difficulty < 0 and spd_in_government and chancellor_party = "SPD"
-on-arrival: last_cabinet_action = 1
+view-if: dem_presidential_control and spd_in_government
+on-arrival: {!
+var partyNames = {
+    "SPD": "Democratic Party",
+    "KPD": "Socialist Party of America",
+    "SPA": "Socialist Party of America",
+    "Z": "Farmer-Labor",
+    "DDP": "Liberty League",
+    "DVP": "Republican Party",
+    "DNVP": "National Union for Social Justice",
+    "NSDAP": "Silver Legion",
+    "I": "Independent"
+};
+Q.cabinet_style_display = Q.cabinet_style || "regular";
+Q.executive_party_display = partyNames[Q.president_party] || Q.president_party || "Democratic Party";
+Q.speaker_party_display = partyNames[Q.speaker_party] || Q.speaker_party || "";
+Q.labor_minister_party_display = partyNames[Q.labor_minister_party] || Q.labor_minister_party || "";
+Q.interior_minister_party_display = partyNames[Q.interior_minister_party] || Q.interior_minister_party || "";
+Q.finance_minister_party_display = partyNames[Q.finance_minister_party] || Q.finance_minister_party || "";
+Q.economic_minister_party_display = partyNames[Q.economic_minister_party] || Q.economic_minister_party || "";
+Q.justice_minister_party_display = partyNames[Q.justice_minister_party] || Q.justice_minister_party || "";
+Q.foreign_minister_party_display = partyNames[Q.foreign_minister_party] || Q.foreign_minister_party || "";
+Q.reichswehr_minister_party_display = partyNames[Q.reichswehr_minister_party] || Q.reichswehr_minister_party || "";
+Q.agriculture_minister_party_display = partyNames[Q.agriculture_minister_party] || Q.agriculture_minister_party || "";
+Q.cabinet_agency_capacity_display = Q.agency_capacity || 0;
+Q.cabinet_governor_network_display = Q.governor_network || 0;
+Q.cabinet_committee_control_display = Q.committee_control || 0;
+Q.cabinet_legitimacy_display = Math.round((Q.new_deal_legitimacy || 0) * 10) / 10;
+Q.cabinet_house_support_display = Math.round((Q.governing_house_support || 0) * 10) / 10;
+Q.cabinet_senate_support_display = Math.round((Q.governing_senate_support || 0) * 10) / 10;
+!}
 new-page: true 
 
 = Cabinet
 
-With the presidency and cabinet in Democratic hands, we can direct the affairs of the national government.
+The executive branch is controlled through the presidency, not through a parliamentary coalition cabinet. Appointments shape agency capacity, enforcement, and political credibility while Congress decides whether the program can pass.
 
-- #cabinet
-- @back: Return to main
+President: [+ president +] ([+ executive_party_display +])
 
-@back
-on-arrival: last_cabinet_action = 0
-go-to: root
+Speaker of the House: [+ speaker +][? if speaker_party_display :  ([+ speaker_party_display +]) ?]
+
+House governing support: [+ cabinet_house_support_display +]%
+
+Senate governing support: [+ cabinet_senate_support_display +]%
+
+Cabinet style: [+ cabinet_style_display +]
+
+Agency capacity: [+ cabinet_agency_capacity_display +]
+
+Governor network: [+ cabinet_governor_network_display +]
+
+Committee control: [+ cabinet_committee_control_display +]
+
+New Deal legitimacy: [+ cabinet_legitimacy_display +]%
+
+= Departments
+
+Labor: [+ labor_minister_party_display +]
+
+Interior: [+ interior_minister_party_display +]
+
+Finance: [+ finance_minister_party_display +]
+
+Economic: [+ economic_minister_party_display +]
+
+Justice: [+ justice_minister_party_display +]
+
+Foreign: [+ foreign_minister_party_display +]
+
+Defense: [+ reichswehr_minister_party_display +]
+
+Agriculture: [+ agriculture_minister_party_display +]
+
+- @cabinet_personnel: Set appointment strategy.
+- @shuffle_cabinet: Reorganize the administration.
+- @status.strategic_dashboard: Open strategic dashboard.
+- @root: Return to main.

@@ -9,7 +9,7 @@ max-visits: 1
 
 = Confronting Antisemitism
 
-Antisemitism has long been a latent feature of American society, but since the beginning of the economic depression, it has grown to a horrifying extent. The Silver Legion are the worst of it, but all the right-wing parties are deeply antisemitic. Regarding the SPD specifically, our right-wing enemies love to deploy their racist rhetoric against our many Jewish comrades, magnifying criticism of any minor transgression, and they call the entire SPD a Jewish party. We are a favorite target of their invectives.
+Antisemitism has long been a latent feature of American society, but since the beginning of the economic depression, it has grown to a horrifying extent. The Silver Legion are the worst of it, but all the right-wing parties are deeply antisemitic. Regarding the Democrats specifically, our right-wing enemies love to deploy their racist rhetoric against our many Jewish supporters, magnifying criticism of any minor transgression, and they call the entire party a Jewish party. We are a favorite target of their invectives.
 
 - @socialism_of_fools: Antisemitism is the "socialism of fools". We will defeat them with real socialism.
 - @if: Antisemitism is a crisis. Direct the full force of the Iron Front against antisemitism.
@@ -22,7 +22,7 @@ The best policy to deal with this sort of irrational, senseless hatred is to ign
 @if
 on-arrival: confronting_antisemitism += 2; sa_strength -= 20; democratization += 1; pacifism += 1; nationalism -= 5*(1-dissent); workers_nsdap -= 6*(1-dissent);
 
-We develop an entire campaign against antisemitism under the auspices of the Iron Front. Hopefully our campaign can sway the workers away from Silver Legionm.
+We develop an entire campaign against antisemitism under the auspices of the Iron Front. Hopefully our campaign can sway the workers away from the Silver Legion.
 
 @all
 

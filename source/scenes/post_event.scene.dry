@@ -22,6 +22,20 @@ if (Q.pro_republic < 0) {
 if (Q.pro_republic >= 100) {
     Q.pro_republic = 99;
 }
+
+for (var force of ['rb', 'sh', 'sa', 'rfb']) {
+    Q[force + '_strength'] = Math.max(0, Q[force + '_strength'] || 0);
+    Q[force + '_militancy'] = Math.max(0, Math.min(1, Q[force + '_militancy'] || 0));
+}
+for (var force of ['interior_police', 'prussian_police']) {
+    Q[force + '_strength'] = Math.max(0, Q[force + '_strength'] || 0);
+    Q[force + '_militancy'] = Math.max(0, Q[force + '_militancy'] || 0);
+    Q[force + '_loyalty'] = Math.max(0, Math.min(1, Q[force + '_loyalty'] || 0));
+}
+Q.reichswehr_strength = Math.max(0, Q.reichswehr_strength || 0);
+Q.reichswehr_militancy = Math.max(0, Q.reichswehr_militancy || 0);
+Q.reichswehr_loyalty = Math.max(0, Math.min(1, Q.reichswehr_loyalty || 0));
+
 // re-calculate party support
 // calculate normalized class voting for the achievements
 for (var c of Q.classes) {

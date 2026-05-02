@@ -8,7 +8,7 @@ face-image: img/redfront.jpg
 
 = May Day, 1929
 
-Tensions run high in Berlin. The Communists are planning a demonstration to commemorate the 10th anniversary of the Spartacist Uprising. No one has forgotten that it was our party members who ordered the uprising's suppression, and the Communists still blame us for the deaths of Rosa Luxemburg and Karl Liebknecht.
+Tensions run high in a major industrial city. The Communists are planning a demonstration to commemorate the 10th anniversary of a failed left uprising. No one has forgotten that it was our party members who ordered the uprising's suppression, and the Communists still blame us for the deaths that followed.
 
 Many non-communists are afraid of the possibility of another violent uprising, and our allies in the state coalition are asking the state Interior Ministry to ban the demonstrations.
 
@@ -21,7 +21,7 @@ Many non-communists are afraid of the possibility of another violent uprising, a
 on-arrival: blutmai = 1; kpd_relation -= 25; z_relation += 5; dvp_relation += 5; workers_spd -= 3; unemployed_spd -= 3; workers_kpd += 3; unemployed_kpd += 3; communist_coalition -= 3; strife += 1
 face-image: img/blutmai.jpg
 
-We issued the order to ban the demonstrations, and sent police to enforce the ban. There was a confrontation between the police and Communists, and violence erupted. Reports say that the Berlin police killed dozens of demonstrators and innocent bystanders. The Communists are already calling this incident *Blutmai*, "Bloody May".
+We issued the order to ban the demonstrations, and sent police to enforce the ban. There was a confrontation between the police and Communists, and violence erupted. Reports say that the police killed dozens of demonstrators and innocent bystanders. The Communists are already calling this incident "Bloody May".
 
 This may end any attempt at reconciliation with the SPA, but the Center and People's parties approve of our action.
 

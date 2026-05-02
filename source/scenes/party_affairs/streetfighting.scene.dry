@@ -8,7 +8,7 @@ tags: party_affairs; antifascism
 
 = Streetfighting
 
-Battles rage on the streets between the Silver Legion SA, nationalist Liberty League auxiliaries, communist Rotfrontkämpferbund (SPA defense guards), and our own Democratic Defense League. In some parts of the country, conditions are nearing civil war levels, as dozens of people are killed each month.
+Battles rage on the streets between the Silver Legion militia, nationalist Liberty League auxiliaries, SPA defense guards, and our own Democratic Defense League. In some parts of the country, conditions are nearing civil war levels, as dozens of people are killed each month.
 
 We must do something to protect the workers against these predations.
 
@@ -25,7 +25,7 @@ view-if: rb_militancy > 0.1 and rb_militancy < 0.5
 on-arrival: rb_militancy += 0.1; sa_strength += 40; rb_strength -= 100; 
 max-visits: 1
 
-Many Democratic Defense League members are not ready for actual fighting, and thus quit. However, the remainder are toughened as a result. Our confrontations also provide ample recruiting material for the Silver Legion SA.
+Many Democratic Defense League members are not ready for actual fighting, and thus quit. However, the remainder are toughened as a result. Our confrontations also provide ample recruiting material for the Silver Legion militia.
 
 @arm_rb
 subtitle: -[+ rb_militarization_cost +] resource
@@ -35,7 +35,7 @@ on-arrival: resources -= rb_militarization_cost; rb_militancy += 0.06; rb_streng
 
 We have increased training and purchased more armaments for the Democratic Defense League.
 
-[? if historical_mode : The Center Party decries the militarization of the Democratic Defense League, and its members are leaving the republican organization. ?]
+[? if historical_mode : Farmer-Labor moderates decry the militarization of the Democratic Defense League, and their members are leaving the republican organization. ?]
 
 
 @if_training

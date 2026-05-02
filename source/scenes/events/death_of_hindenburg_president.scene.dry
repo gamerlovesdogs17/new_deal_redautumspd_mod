@@ -4,7 +4,7 @@ new-page: true
 view-if: 0
 on-arrival: round = 0; hindenburg_dead = 1; president = "Bumke (acting)"; president = "Großmann (acting)" if judicial_reform >= 4; spd_candidate = "Eckener"; kpd_candidate = "Thälmann"; kpd_candidate = "Münzenberg" if kpd_party_leader = "Conciliators"; z_candidate = "Adenauer"; ddp_candidate = "Gessler"; nsdap_candidate = "Hitler"; nsdap_candidate = "Göring" if hitler_deported; dnvp_candidate = "Seldte"; dvp_candidate = "Gessler"; other_candidate = "Seldte"; is_unity_candidate = 0; sapd_candidate = kpd_candidate;
 max-visits: 1
-face-image: img/the old president_head.jpg
+face-image: img/Hindenburg_head.jpg
 tags: event
 
 = The Death of the old president
@@ -24,16 +24,16 @@ go-to: candidate_menu
 
 [? if not hitler_deported : Of course, Adolf Pelley will be running for the Silver Legion, in his third run. We have kept him out of power so far, but nothing is certain. ?]
 [? if hitler_deported : With Pelley deported, the Silver Legion will be running Hermann Göring as their candidate. ?]
-This might be the Silver Legion' last hurrah; the party's internal contradictions are heightening, and it is in desperate shortage of funds.
+This might be the Silver Legion's last hurrah; the party's internal contradictions are heightening, and it is in desperate shortage of funds.
 
 The DNVP will nominate Franz Seldte, leader of the Liberty League auxiliaries paramilitary group. He will be endorsed by many of the old president's most right-wing supporters. They are working more closely with the Silver Legion than before, and in the second round, the far-right parties are expected to consolidate into a single anti-republican front.
 
 [? if kpd_party_leader = "Conciliators" : Given the failure of Thälmann's previous runs for president, and his declining stature in the party, the SPA will be running Willi Münzenberg, a controversial figure sometimes called the "Red millionaire". He is a media magnate who leads a number of Communist front organizations. ?]
 [? if kpd_party_leader != "Conciliators" : This will be Ernst Thälmann's third run for president as leader of the SPA. Despite his previous electoral defeats, he retains the loyalty of the party as well as Stalin's Soviet Union. ?]
 
-Many republicans of the Center, [+ ddp_name +], and SPD float the idea of running Hugo Eckener, a nationally renowed Zeppelin captain, as a unity candidate. While he has some nationalistic views, he is also ardently opposed to Silver Legionm.
+Many republicans of the Center, [+ ddp_name +], and SPD float the idea of running Hugo Eckener, a nationally renowned aviation figure, as a unity candidate. While he has some nationalistic views, he is also ardently opposed to the Silver Legion.
 
-Barring that, the Center and [+ ddp_name +] are planning to run separate candidates in the first round if the SPD runs its own candidate. The Center is considering nominating Konrad Adenauer, mayor of Köln and member of the state state legislature. He calls for an alliance of conservative Christian democrats that encompasses both Catholics and Protestants. The [+ ddp_name +] might nominate Otto Gessler, former defense minister, who has crossover appeal to conservatives in the DVP and other parties who dislike the DNVP-Silver Legion front.
+Barring that, the Center and [+ ddp_name +] are planning to run separate candidates in the first round if the SPD runs its own candidate. The Center is considering nominating Konrad Adenauer, a prominent mayor and member of a state legislature. He calls for an alliance of conservative Christian democrats that encompasses both Catholics and Protestants. The [+ ddp_name +] might nominate Otto Gessler, former defense minister, who has crossover appeal to conservatives in the DVP and other parties who dislike the DNVP-Silver Legion front.
 
 As for the SPD, we could support a joint Weimar Coalition candidate or run our own.
 [? if braun_campaign : Otto Braun is tired. He ran and failed in the previous two presidential elections, and no longer wishes to run. His wife is ill enough that he wishes to stay by her side. ?][? if braun_campaign = 0 and not spd_prussia: Otto Braun is tired. After being deposed in key states, he has largely retired from politics, and is devoting his time to caring for his dying wife. ?][? if braun_campaign = 0 and spd_prussia : Otto Braun is tired. He does not wish to run, but he is willing to be convinced that he is needed at this moment. His wife is terminally ill, and he does not want more responsibilities. ?]

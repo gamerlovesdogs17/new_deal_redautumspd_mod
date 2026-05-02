@@ -13,11 +13,11 @@ In our media and campaign materials, who should we consider as our main opponent
 
 [? if enemies != 0 : Previously, we had considered the [+ enemies +] as our prior enemies. Is a change of direction necessary? ?]
 
-- @anti_dem: The anti-democratic parties of the far right and left - the SPA, Silver Legion, and DNVP.
-- @far_right: The far right - the Silver Legion and DNVP.
+- @anti_dem: The anti-democratic parties of the far right and left - the SPA, Silver Legion, and NUSJ.
+- @far_right: The far right - the Silver Legion and NUSJ.
 - @nsdap: The Silver Legion alone.
 - @kpd: The SPA.
-- @conservative: The conservative parties - the Center and DVP.
+- @conservative: The conservative parties - Farmer-Labor conservatives and Republican moderates.
 - @easy_discard
 
 @anti_dem
@@ -31,16 +31,16 @@ on-arrival: enemies = "far right"; left_strength += 5; left_dissent -= 5; worker
 Attacking the far right is popular among the entire party, although the left considers the conservative parties to be just as dangerous, while the right is critical of our lack of response to the SPA. Our conservative coalition partners are also skeptical of our lack of commitment to anti-communism.
 
 @nsdap
-on-arrival: enemies = "NSDAP"; neorevisionist_strength += 5; nazi_urgency += 1; workers_nsdap -= 4;
+on-arrival: enemies = "Silver Legion"; neorevisionist_strength += 5; nazi_urgency += 1; workers_nsdap -= 4;
 
 [? if nazi_urgency == 0 or nsdap_r < 10 : The Silver Legion is a tiny party right now, with more bark than bite. Many in our party are questioning our choices. ?][? if nazi_urgency > 0 and nsdap_r >= 10 : The Silver Legion are the most urgent problem for us to deal with. ?]
 
 @kpd
-on-arrival: enemies = "KPD"; reformist_strength += 5; left_dissent += 8; reformist_dissent -= 5; kpd_relation -= 15; dvp_relation += 5; z_relation += 5; workers_kpd -= 4;
+on-arrival: enemies = "SPA"; reformist_strength += 5; left_dissent += 8; reformist_dissent -= 5; kpd_relation -= 15; dvp_relation += 5; z_relation += 5; workers_kpd -= 4;
 
 Attacking the SPA is supported by all but the most left-wing socialists, and wins us some measure of approval among the conservative parties. However, If we are to reconcile with the SPA, this may not be the best choice.
 
 @conservative
-on-arrival: enemies = "bourgeois parties"; left_strength += 8; left_dissent -= 5; dvp_relation -= 5; z_relation -= 5; kpd_relation += 5; reformist_dissent += 8; workers_z -= 3; coalition_dissent += 1
+on-arrival: enemies = "conservative parties"; left_strength += 8; left_dissent -= 5; dvp_relation -= 5; z_relation -= 5; kpd_relation += 5; reformist_dissent += 8; workers_z -= 3; coalition_dissent += 1
 
 Our anti-conservative rhetoric is popular among the left, but may make it harder to build the coalitions that are necessary for government in the future.

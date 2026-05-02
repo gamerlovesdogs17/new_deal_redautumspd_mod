@@ -6,16 +6,16 @@ is-card: true
 on-arrival: month_actions += 1; inter_party_relationships_timer = 6;
 card-image: img/weimar_coalition_2.jpg
 max-visits: 12
-#subtitle: Building relations with the other political parties of Germany.
+#subtitle: Building relations with other political parties.
 
 = Inter-Party Relationships
 
-The SPD cannot govern by itself yet. Because we do not have an electoral majority, we need the support of other parties. Recently, our governments have consisted of the Weimar Coalition of the SPD, Center, and Democratic parties. We can reach out and build additional connections with these parties, or perhaps we can stand alone.
+The Democrats cannot govern by themselves yet. Because we do not have an electoral majority, we need the support of other parties. Recent governing arrangements have depended on Democrats, Farmer-Labor, liberals, and occasional Republican moderates. We can reach out and build additional connections with these parties, or perhaps we can stand alone.
 
-- @liberals: Strengthen our bonds with the left-liberal American Democratic Party and conservative-liberal American People's Party.
-- @center: Strengthen our bonds with the Catholic Center Party.
-- @kpd: Work towards repairing relationships with the Communist Party.
-- @spd_alone: The SPD can stand alone for now.
+- @liberals: Strengthen our bonds with liberals and Republican moderates.
+- @center: Strengthen our bonds with Farmer-Labor and Catholic moderates.
+- @kpd: Work towards repairing relationships with the SPA.
+- @spd_alone: The Democrats can stand alone for now.
 - @easy_discard
 
 
@@ -29,7 +29,7 @@ go-to: kpd_blutmai if blutmai = 1; kpd_1 if blutmai = 0 and kpd_coalition_succes
 @kpd_1
 on-arrival: kpd_relation += 6*(1 - dissent); communist_coalition += 1 if kpd_inter_party_seen <= 1; reformist_dissent += 2; z_relation -= 2; dvp_relation -= 3
 
-The communists are suspicious of our overtures, especially the Stalinist leadership, who persist in calling us "social fascists". However, connections are made at the grassroots and local levels.
+The SPA is suspicious of our overtures, especially its hardline leadership, who persist in calling us "social fascists". However, connections are made at the grassroots and local levels.
 
 @kpd_rectification_of_history
 
@@ -50,7 +50,7 @@ This leads to tensions with the moderates and reformists within our party, and c
 @no_history
 on-arrival: kpd_relation -= 3
 
-We have no need to apologize for the actions of Ebert and Noske; it is the Communists' fault for launching a violent insurrection.
+We have no need to apologize for past repression; it is the SPA's fault for tolerating violent insurrectionists.
 
 
 @kpd_2
@@ -61,7 +61,7 @@ After the success of the coalition government with the SPA, they are much more a
 @kpd_blutmai
 on-arrival: kpd_relation += 3*(1 - dissent); reformist_dissent += 1
 
-After the events of Blütmai, reconciling with the Communists is difficult, if not impossible. Nevertheless, we must try.
+After the recent street violence, reconciling with the SPA is difficult, if not impossible. Nevertheless, we must try.
 
 @center
 subtitle: -1 resources
@@ -73,7 +73,7 @@ go-to: center_op if z_in_government = 1 and spd_in_government = 0 and chancellor
 @center_op
 on-arrival: z_relation += 5*(1 - dissent)
 
-We are currently in opposition to the Center-led government, but that does not preclude the general building of feelings of good will.
+We are currently in opposition to a Farmer-Labor-led government, but that does not preclude the general building of good will.
 
 @center_coalition
 on-arrival: z_relation += 8*(1 - dissent)
@@ -97,21 +97,21 @@ The [+ ddp_name +] has been one of our closest allies through the course of the 
 @dvp_stresemann
 on-arrival: dvp_relation += 8*(1 - dissent)
 
-Gustav Stresemann, the leader of the DVP is the best foreign policy leaders of the republic, and while he has previously expressed monarchist tendencies, he has been friendly towards us.
+The Republican moderate leadership includes some of the best foreign-policy figures in the republic, and while they have conservative instincts, they have sometimes been friendly towards us.
 
 @dvp_loss
 on-arrival: dvp_relation += 5*(1 - dissent)
 
-With the death of Gustav Stresemann, the DVP is much less likely to be accommodating of us. In addition, the liberal parties are electorally in decline, so perhaps our efforts are best spent elsewhere.
+With the loss of moderate Republican leadership, the party is much less likely to be accommodating of us. In addition, the liberal parties are electorally in decline, so perhaps our efforts are best spent elsewhere.
 
-However, given the influence of the DVP among the other right-leaning parties [? if president == "the old president": and with President the old president ?], it can still be helpful to influence them.
+However, given the influence of Republican moderates among the other right-leaning parties [? if not dem_presidential_control: and with the White House ?], it can still be helpful to influence them.
 
 @dvp_moribund
 on-arrival: dvp_relation += 5*(1 - dissent)
 
-The liberal parties (both the [+ ddp_name +] and DVP) are electorally moribund, so perhaps our efforts are best spent elsewhere.
+The liberal and moderate Republican parties are electorally moribund, so perhaps our efforts are best spent elsewhere.
 
-However, given the influence of the DVP among the other right-leaning parties[? if president == "the old president": and with President the old president ?], it can still be helpful to influence them.
+However, given the influence of Republican moderates among the other right-leaning parties[? if not dem_presidential_control: and with the White House ?], it can still be helpful to influence them.
 
 @spd_alone
 

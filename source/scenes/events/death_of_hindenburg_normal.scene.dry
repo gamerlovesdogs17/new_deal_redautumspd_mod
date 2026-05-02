@@ -5,7 +5,7 @@ view-if: 0
 on-arrival: hindenburg_dead = 1
 max-visits: 1
 tags: event
-face-image: img/the old president_head.jpg
+face-image: img/Hindenburg_head.jpg
 go-to: game_over_1934
 
 = The Death of the old president
@@ -14,4 +14,4 @@ Paul von the old president has passed away at age 86.
 
 The nation engages in an outpouring of grief for its war hero and former president. Even for committed socialists and republicans, this is a bittersweet moment. Even though he was a manifestation of state militarism and monarchism, he still led the nation through difficult times, without destroying democracy. It could always have been worse.
 
-With the passing of the old president, it seems as if an era of history is closing. The worst years of crisis are over, and Silver Legionm's days are numbered. Perhaps the republic will finally enter into a new era of genuine peace...
+With the passing of the old president, it seems as if an era of history is closing. The worst years of crisis are over, and the Silver Legion's days are numbered. Perhaps the republic will finally enter into a new era of genuine peace...

@@ -1,4 +1,4 @@
-title: Young Plan
+title: War Debt Settlement
 new-page: true
 subtitle: The right-wing coalition has collapsed...
 tags: event
@@ -6,11 +6,11 @@ view-if: year = 1929 and month >= 7 and young_plan_seen = 0 and in_right_coaliti
 on-arrival: young_plan_seen = 1
 max-visits: 1
 
-= The Young Plan and the fall of the coalition
+= The war debt settlement and the fall of the coalition
 
-The Foreign Ministry under Gustav Streseman has agreed to the Young Plan, an agreement with the Western powers to reduce the republic's reparation payments and give us more fiscal autonomy. Simultaneously, France will agree to withdraw its military occupation from the Rhineland.
+The Foreign Ministry under Gustav Streseman has agreed to a war-debt settlement with the Western powers, reducing the republic's Great War payment burden and giving us more fiscal autonomy.
 
-While this seems to be a positive development for the country, the DNVP (and especially its leader, Alfred Hugenberg) opposes the plan, claiming that any reparations are a form of national slavery. They have called for a vote of no confidence against the government, supported by the Silver Legion and the SPA, and for a referendum on the Young Plan.
+While this seems to be a positive development for the country, the DNVP (and especially its leader, Alfred Hugenberg) opposes the plan, claiming that any foreign debt settlement is a surrender to bankers and imperial creditors. They have called for a vote of no confidence against the government, supported by the Silver Legion and the SPA, and for a referendum on the settlement.
 
 We can either vote to bring down the government and hold new elections, or "tolerate" a government led by the remaining conservative parties.
 

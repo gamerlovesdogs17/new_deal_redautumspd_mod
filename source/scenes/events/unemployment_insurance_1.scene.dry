@@ -11,14 +11,14 @@ face-image: img/Kollwitz_Arbeitslosigkeit.jpg
 
 = Unemployment Insurance Crisis
 
-The economic crisis has caused mass layoffs all throughout the republic, affecting the industrial working class the hardest. Our welfare spending is increasing due to the greater need.
+The economic crisis has caused mass layoffs throughout the republic, affecting the industrial working class the hardest. Our relief spending is increasing due to the greater need.
 
-In the midst of all this, our right-wing coalition partners in the DVP and Center parties have a plan to cut benefits for the unemployed, lower taxes on the rich, and raise taxes on the working class, as part of a plan to balance the budget and discipline labor. They do not see a possibility for compromise. If we do not accept, they could blow up the coalition.
+In the midst of all this, conservative Democrats and Republican moderates have a plan to cut benefits for the unemployed, lower taxes on the rich, and raise taxes on the working class, as part of a plan to balance the budget and discipline labor. They do not see a possibility for compromise. If we do not accept, they could blow up the coalition.
 
 [? if unemployment_insurance_crisis = 2 : This is the second such ultimatum thrown by the Right. Obviously, the conservative elite are trying to remove us from the government. ?]
 
 - @tax_rich: Why can't we simply tax the rich?
-- @gift: This is a gift to the Communists.
+- @gift: This is a gift to the SPA.
 
 @tax_rich
 max-visits: 1
@@ -29,7 +29,7 @@ The conservative parties, as representatives of the rich industrialists, would n
 @gift
 go-to: what_do
 
-This is a gift to the Communists, a boost to their theory that parliamentary democracy will never benefit the working class.
+This is a gift to the SPA, a boost to their theory that parliamentary democracy will never benefit the working class.
 
 @what_do
 on-arrival: dvp_relation += 5 if chancellor = "Braun"
@@ -46,16 +46,16 @@ on-arrival: time_to_election = 3; spd_in_government = 0; in_grand_coalition = 0;
 
 # TODO: if Braun is president, don't do this...
 
-Fine. If the conservative elite wish to blow up the government, let them do so. Socialists will not be complicit in the destruction of the working class.
+Fine. If the conservative elite wish to blow up the government, let them do so. The administration will not be complicit in the destruction of the working class.
 
-[? if speaker_party = "SPD" : Heinrich Brüning of the Center Party has been appointed Speaker. ?] Brüning now leads an all-conservative cabinet. Using the emergency powers of Article 48, Brüning and President the old president have passed the welfare cuts over the objections of the Congress.
+[? if speaker_party = "SPD" : A conservative caretaker has been appointed Speaker. ?] The caretaker now leads an all-conservative cabinet. Using emergency powers, the caretaker administration and the old president have passed the welfare cuts over the objections of Congress.
 
 New elections have been set for [+ next_election_month : month +] [+ next_election_year +].
 
 @accept
 on-arrival: workers_spd -= 0.15*workers_spd; unemployed_spd -= 0.3*unemployed_spd; workers_kpd += 7; workers_nsdap += 7; unemployed_kpd += 5; unemployed_nsdap += 5; left_dissent += 15; center_dissent += 10; labor_dissent += 15; reformist_dissent += 5; welfare -= 2; budget += 1; unemployed += 3; month += 1; pro_republic -= 4; kpd_relation -= 8; inflation -= 2; economic_growth -= 0.6
 
-Unfortunately, we must accept this ultimatum if we are to maintain this coalition. The Silver Legion and Communists are waiting in the wings for us to fail, ready to pounce upon the instability that would result from a breakup of the governing coalition.
+Unfortunately, we must accept this ultimatum if we are to maintain this coalition. The Silver Legion and SPA are waiting in the wings for us to fail, ready to pounce upon the instability that would result from a breakup of the governing coalition.
 
 The workers are furious at our betrayal, as are a good portion of our membership throughout the factions. Our loss is the SPA's gain, and even the Silver Legion, those lapdogs of the conservative elite, have joined in criticizing us for our austerity.
 
@@ -64,7 +64,7 @@ The workers are furious at our betrayal, as are a good portion of our membership
 unavailable-subtitle: We do not have good enough relations with the right-wing parties.
 choose-if: dvp_relation >= 35
 
-Thanks to our good relations, the DVP have offered a compromise that raises some taxes on the wealthy, along with lesser welfare cuts. Our members have mixed opinions on accepting this compromise. Reformists and Centrists support maintaining our government to keep the fascists and communists out, while Labor generally opposes any cuts, and the Left is opposed to compromises with the conservative elite.
+Thanks to our good relations, Republican moderates have offered a compromise that raises some taxes on the wealthy, along with lesser welfare cuts. Our members have mixed opinions on accepting this compromise. Conservative Democrats and party regulars support maintaining our government to keep the far right and SPA out, while Labor generally opposes any cuts, and the left is opposed to compromises with the conservative elite.
 
 - @accept_compromise: Accept the compromise.
 - @destroy: Reject the compromise and let this government fall.

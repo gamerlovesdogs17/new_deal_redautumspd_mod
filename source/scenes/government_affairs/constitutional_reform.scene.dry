@@ -101,9 +101,9 @@ We have successfully passed a constitutional amendment to ban votes of no confid
 subtitle: The president can no longer dissolve Congress at will or use emergency powers against state governments.
 on-arrival: {!
 Q.reform_support = Q.spd_normalized + Q.ddp_normalized + Q.kpd_normalized;
-if (Q.z_relation > 49 && (Q.president == "Hindenburg" || Q.president == "Eckener")) {
+if (Q.z_relation > 49 && !Q.dem_presidential_control) {
     Q.reform_support += Q.z_normalized;
-} else if (Q.president == "Braun") {
+} else if (Q.dem_presidential_control) {
     Q.reform_support += Q.z_normalized - 0.03;
 }
 !}
@@ -111,14 +111,14 @@ view-if: presidential_powers = 0
 
 The wide-ranging presidential powers promised by the constitution are a potential gateway to authoritarianism. Thus, we can support reforms that limit the powers of the president, ending his power to unilaterally terminate an elected government and to remove state governments.
 
-The SPA is in favor of this reform, having been targeted by emergency policing in the past. Liberals also support this. [? if president == "the old president": However, conservative opposition is vehement, as they see a reduction in presidential powers as disrespectful to the old establishment. ?] [? if z_relation <= 49 and president == "the old president" : Thus, moderate coalition partners have been influenced to oppose these reforms. ?] [? if z_relation > 49 and president == "the old president" : Despite this, moderate coalition partners support the proposed reform. ?] [? if president == "Braun" : Moderate coalition partners support this reform. ?]
+The SPA is in favor of this reform, having been targeted by emergency policing in the past. Liberals also support this. [? if not dem_presidential_control: However, conservative opposition is vehement, as they see a reduction in presidential powers as disrespectful to the old establishment. ?] [? if z_relation <= 49 and not dem_presidential_control : Thus, moderate coalition partners have been influenced to oppose these reforms. ?] [? if z_relation > 49 and not dem_presidential_control : Despite this, moderate coalition partners support the proposed reform. ?] [? if dem_presidential_control : Moderate coalition partners support this reform. ?]
 
 - @presidential_powers_2: Call a constitutional referendum to pass the reform!
 - @reforms_menu: See other reform options.
 
 @presidential_powers_2
 choose-if: reform_support >= pass_threshold
-unavailable-subtitle: We do not have enough support for this policy. [? if pro_republic < 65 : We should have an additional margin for the referendum since we need a majority of voters, and many voters who do not support the republic will not participate. ?] [? if z_relation <= 49 and president != "Braun" : Moderate coalition partners do not trust us enough to support this policy. ?]
+unavailable-subtitle: We do not have enough support for this policy. [? if pro_republic < 65 : We should have an additional margin for the referendum since we need a majority of voters, and many voters who do not support the republic will not participate. ?] [? if z_relation <= 49 and not dem_presidential_control : Moderate coalition partners do not trust us enough to support this policy. ?]
 on-arrival: constitutional_reform += 1; presidential_powers = 1
 achievement: verfassungsreform
 

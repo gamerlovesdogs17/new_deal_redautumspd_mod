@@ -26,7 +26,7 @@ tags: congressional_affairs, cabinet
 
 = Education and Science
 
-Education in the republic is an area of mixed responsibility between the state governments and the central government. The Weimar Constitution claims that schools are the domain of the central government, but in practice much of it is left to the states, as the Congress has historically been unable to pass an education law. Currently, with our control of key states and the Speakership, we can try to set policy for a large part of the country.
+Education in the republic is an area of mixed responsibility between state governments and the federal government. In practice, much is left to the states because Congress has historically been unable to pass a durable national education law. With our control of key states and the Speakership, we can try to set policy for a large part of the country.
 
 [? if major_curriculum: Current educational curriculum - [+ major_curriculum +], [+ minor_curriculum +] ?]
 
@@ -46,7 +46,7 @@ title: Increase funding for scientific research.
 choose-if: economic_minister_party = "SPD"
 unavailable-subtitle: This requires the Economic Ministry.
 
-Socialism has always stood for science and rationality. Despite the setbacks of the Great War, hyperinflation, and the politicized and reactionary attitudes of many academics, science in the American Republic is still the envy of the world. With a great expansion of funding, we hope to keep it that way, and expand on our achievements. 
+Social democracy has always stood for science and rationality. Despite the Depression, budget cuts, and the politicized and reactionary attitudes of many academics, science in the American Republic is still the envy of the world. With a major expansion of funding, we hope to keep it that way and expand on our achievements.
 
 - @kwg
 - @applied
@@ -56,12 +56,12 @@ Socialism has always stood for science and rationality. Despite the setbacks of 
 - @cancel_advisor_action
 
 @kwg
-title: Fund the Kaiser Wilhelm Society for basic scientific research.
+title: Fund the National Research Council for basic scientific research.
 subtitle: -1 budget
 choose-if: budget >= 1
 on-arrival: budget -= 1; science += 1; kwg_research += 1; economic_growth += 0.3 if economic_growth <= 8; new_middle_spd += 5*(1-dissent); ddp_relation += 5*(1-dissent); unemployed -= 0.2 if unemployed >= 4; west_relation += 1; science_funding += 1
 
-The Kaiser Wilhelm Society is one of the most respected scientific research institutions in the world, with physicist Albert Einstein as its most famous employee. Our research program is to provide the Society with additional resources to hire and train scientists and conduct fundamental research, based on the scientists' own interests.
+The National Research Council and allied university laboratories are among the most respected scientific institutions in the world, with physicist Albert Einstein as their most famous public advocate. Our program will provide additional resources to hire and train scientists and conduct fundamental research based on scientists' own interests.
 
 @applied
 title: Fund applied research in economically useful technologies.
@@ -87,7 +87,7 @@ choose-if: science_funding >= 1
 unavailable-subtitle: We have not funded science.
 on-arrival: budget += 1; science -= 1; science_funding -= 1; applied_research -= 0.33; kwg_research -= 0.33; medical_research -= 0.33; economic_growth -= 0.5; new_middle_spd -= 5; workers_spd -= 2; ddp_relation -= 5; unemployed += 0.3
 
-We have cut funding for science. This has a negative effect on our economic growth, and unemployed scientists are less likely to support the SPD.
+We have cut funding for science. This has a negative effect on our economic growth, and unemployed scientists are less likely to support the Democrats.
 
 
 @structure
@@ -108,7 +108,7 @@ unavailable-subtitle: -1 budget - requres a majority of parties to support secul
 choose-if: budget >= 1 and (progressive_coalition + dvp_r >= 50)
 view-if: secularized = 0
 
-Are you sure about this? The Weimar Coalition had an agreement to not touch religious schools; the Catholic Center Party will revolt.
+Are you sure about this? The old constitutional coalition had an agreement to not touch religious schools; Catholic moderates will revolt.
 
 - @secularize_2: Yes, do it.
 - @ed_menu: No, do not touch religious education.
@@ -120,9 +120,9 @@ go-to: vote_of_no_confidence.vonc_menu if in_weimar_coalition or in_grand_coalit
 
 # instant VONC from zentrum
 
-The SPD, [+ ddp_name +], DVP, and SPA vote in favor of secular education, overcoming the opposition of the religiously-oriented Center Party and DNVP. We have funded secular community schools to replace some previous denominational schools.
+The Democrats, [+ ddp_name +], Republican moderates, and SPA vote in favor of secular education, overcoming the opposition of religiously-oriented Farmer-Labor members and the NUSJ. We have funded secular community schools to replace some previous denominational schools.
 
-[? if in_weimar_coalition or in_grand_coalition or in_popular_front or in_emergency_government: Of course, the Center Party is in revolt at this proposal, and have called for a vote of no confidence in our government. ?]
+[? if in_weimar_coalition or in_grand_coalition or in_popular_front or in_emergency_government: Of course, religious moderates are in revolt at this proposal, and have called for a vote of no confidence in our government. ?]
 
 
 
@@ -133,8 +133,8 @@ choose-if: budget >= 1
 on-arrival: budget -= 1; public_hs += 1; workers_spd += 6*(1-dissent); unemployed_spd += 3*(1-dissent); prussian_police_loyalty += 0.04; education_science += 0.5; unemployed -= 0.2; economic_growth += 0.2; pro_republic += 4*(1-dissent);
 max-visits: 3
 
-# this makes the bureaucracy more proletarian
-We have funded more public secondary schools so that proletarian children may receive the same education as middle and upper-class children, and can be prepared for universities.
+# this broadens recruitment into public administration
+We have funded more public secondary schools so that working-class children may receive the same education as middle and upper-class children, and can be prepared for universities.
 
 
 @school_boards
@@ -148,7 +148,7 @@ We have created local elected school boards, and delegated some of the decision-
 @curriculum
 title: Change the educational curriculum.
 choose-if: curriculum_timer = 0
-unavailable-subtitle: [? if curriculum_timer > 0 : It is too early to change the curriculum again. ?][? if not spd_prussia: We are not in control of the state state government. ?]
+unavailable-subtitle: [? if curriculum_timer > 0 : It is too early to change the curriculum again. ?][? if not spd_prussia: We are not in control of the state government. ?]
 
 Many socialists believe that education in the republic is not fit for the modern era. Much of the educational system still follows imperial-era traditions of militaristic discipline, and far-right professors and students rule the universities. Nevertheless, there have been strides in bringing working-class children into the schools.
 

@@ -61,8 +61,8 @@ What endorsement strategy should the Democratic campaign pursue?
 @broad_democratic_front
 title: Build a broad Democratic front.
 subtitle: Ask Farmer-Labor and the Liberty League to stand down for the Democratic ticket.
-choose-if: z_relation >= 40 and ddp_relation >= 40
-unavailable-subtitle: Farmer-Labor and Liberty League relations must both be at least 40 before they will consider a joint endorsement.
+choose-if: z_relation >= 35 and ddp_relation >= 35
+unavailable-subtitle: Farmer-Labor and Liberty League relations must both be at least 35 before they will consider a joint endorsement.
 on-arrival: pres_map_strategy = "broad_democratic"; dem_ticket_endorsements = "Democratic Party, Farmer-Labor, Liberty League"; rep_ticket_endorsements = "Republican Party"; spa_ticket_endorsements = "Socialist Party of America"; nusj_ticket_endorsements = "National Union for Social Justice"; pres_dem_vote_bonus = 8; pres_rep_vote_bonus = 1; pres_spa_active = 1; pres_nusj_active = 1; z_relation += 4; ddp_relation += 5; left_dissent += 2; labor_dissent += 2;
 
 Farmer-Labor and the Liberty League agree to back the Democratic ticket. The price is a careful platform: relief and recovery, but no revolutionary language.
@@ -70,8 +70,8 @@ Farmer-Labor and the Liberty League agree to back the Democratic ticket. The pri
 @labor_left_front
 title: Build a labor-left front.
 subtitle: Ask Farmer-Labor and the Socialist Party of America to stand down for the Democratic ticket.
-choose-if: z_relation >= 40 and kpd_relation >= 45
-unavailable-subtitle: Farmer-Labor relations must be at least 40 and Socialist Party relations at least 45.
+choose-if: z_relation >= 35 and kpd_relation >= 40
+unavailable-subtitle: Farmer-Labor relations must be at least 35 and Socialist Party relations at least 40.
 on-arrival: pres_map_strategy = "labor_left"; dem_ticket_endorsements = "Democratic Party, Farmer-Labor, Socialist Party of America"; rep_ticket_endorsements = "Republican Party, Liberty League"; spa_ticket_endorsements = "Withdrawn for Democratic ticket"; nusj_ticket_endorsements = "National Union for Social Justice"; pres_dem_vote_bonus = 9; pres_rep_vote_bonus = 4; pres_spa_active = 0; pres_nusj_active = 1; kpd_relation += 8; z_relation += 4; ddp_relation -= 5; reformist_dissent += 5; center_dissent += 3; workers_spd += 2; unemployed_spd += 2;
 
 Farmer-Labor and the socialists agree to consolidate behind the Democratic ticket. Conservatives recoil, but labor organizers are energized.
@@ -79,8 +79,8 @@ Farmer-Labor and the socialists agree to consolidate behind the Democratic ticke
 @anti_reactionary_unity
 title: Build an anti-reactionary unity ticket.
 subtitle: Seek Farmer-Labor, Liberty League, and socialist endorsements all at once.
-choose-if: kpd_relation >= 45 and ddp_relation >= 45 and z_relation >= 45
-unavailable-subtitle: Relations with Farmer-Labor, Liberty League, and the Socialist Party must all be at least 45.
+choose-if: kpd_relation >= 40 and ddp_relation >= 40 and z_relation >= 40
+unavailable-subtitle: Relations with Farmer-Labor, Liberty League, and the Socialist Party must all be at least 40.
 on-arrival: pres_map_strategy = "anti_reactionary"; dem_ticket_endorsements = "Democratic Party, Farmer-Labor, Liberty League, Socialist Party of America"; rep_ticket_endorsements = "Republican Party"; spa_ticket_endorsements = "Withdrawn for Democratic ticket"; nusj_ticket_endorsements = "National Union for Social Justice"; pres_dem_vote_bonus = 12; pres_rep_vote_bonus = 1; pres_spa_active = 0; pres_nusj_active = 1; z_relation += 3; ddp_relation += 3; kpd_relation += 3; coalition_dissent += 2; center_dissent += 4; reformist_dissent += 4; labor_dissent += 2;
 
 It is an awkward bargain, but fear of reactionary politics is strong enough to hold the endorsement pact together through November.

@@ -24,7 +24,7 @@ As we have control over the Interior Ministry, we can direct police and intellig
 - @root: Take no action for now.
 
 @ban_sa
-view-if: nazi_urgency >= 3 and sa_banned == 0
+view-if: (nazi_urgency >= 3 or radical_momentum >= 12 or sa_strength >= 200 or coup_progress >= 3) and sa_banned == 0
 on-arrival: sa_strength *= 0.85; sa_strength *= 0.7 if interior_police_loyalty >= 0.7; sa_banned = 1; dvp_relation -= 3; prussian_police_loyalty -= 0.05; interior_police_loyalty -= 0.05; sa_militancy -= 0.05; sa_ban_timer = 6;
 
 As it turns out, the Silver Legion militia has many allies in the police and bureaucracy. Our relationship with the police weakens, and the Legion can still organize illegally, right under the police's noses. [? if interior_police_loyalty >= 0.7 : Nevertheless, the militia is substantially weakened by our ban. ?]
@@ -45,10 +45,10 @@ on-arrival: sa_strength *= 0.7; sa_militancy -= 0.05
 We have arrested more of the Silver Legion militia's leaders and confiscated their weapons.
 
 @ban_sh
-on-arrival: sh_strength *= 0.85; sh_strength *= 0.7 if interior_police_loyalty >= 0.7; sh_banned = 1; dvp_relation -= 5; prussian_police_loyalty -= 0.1; interior_police_loyalty -= 0.05; coalition_dissent += 1 if spd_in_government = 1 and in_grand_coalition = 1 and president = "Hindenburg"; sh_ban_timer = 6;
+on-arrival: sh_strength *= 0.85; sh_strength *= 0.7 if interior_police_loyalty >= 0.7; sh_banned = 1; dvp_relation -= 5; prussian_police_loyalty -= 0.1; interior_police_loyalty -= 0.05; coalition_dissent += 1 if spd_in_government = 1 and in_grand_coalition = 1 and not dem_presidential_control; sh_ban_timer = 6;
 view-if: sh_banned == 0
 
-[? if president == "the old president": Banning the Liberty League auxiliaries weakens our relationship with the old conservative establishment, the political right, and the police. ?][? if president != "the old president": Banning the Liberty League auxiliaries weakens our relationship with the political right and the police. ?] [? if spd_in_government = 1 and in_grand_coalition = 1 and president = "the old president" : It also weakens our coalition due to conservative influence on the right wing of our coalition. ?] In addition, the auxiliaries still operate out of public sight.
+[? if not dem_presidential_control: Banning the Liberty League auxiliaries weakens our relationship with the conservative establishment, the political right, and the police. ?][? if dem_presidential_control: Banning the Liberty League auxiliaries weakens our relationship with the political right and the police. ?] [? if spd_in_government = 1 and in_grand_coalition = 1 and not dem_presidential_control : It also weakens our coalition due to conservative influence on the right wing of our coalition. ?] In addition, the auxiliaries still operate out of public sight.
 
 @unban_sh
 view-if: sh_banned = 1
@@ -61,7 +61,7 @@ title: Further prosecute the Liberty League auxiliaries.
 view-if: sh_banned = 1
 choose-if: judicial_reform >= 4 and interior_police_loyalty >= 0.7
 unavailable-subtitle: [? if judicial_reform < 4 : The judiciary would not allow this. ?] [? if interior_police_loyalty < 0.7 : The police are too disloyal to be trusted with this. ?]
-on-arrival: sh_strength *= 0.7; sh_militancy -= 0.05; dvp_relation -= 5; prussian_police_loyalty -= 0.1; interior_police_loyalty -= 0.05; coalition_dissent += 1 if spd_in_government = 1 and in_grand_coalition = 1 and president = "Hindenburg";
+on-arrival: sh_strength *= 0.7; sh_militancy -= 0.05; dvp_relation -= 5; prussian_police_loyalty -= 0.1; interior_police_loyalty -= 0.05; coalition_dissent += 1 if spd_in_government = 1 and in_grand_coalition = 1 and not dem_presidential_control;
 
 We have arrested more of the Liberty League auxiliary leaders and confiscated their weapons.
 
@@ -81,6 +81,8 @@ The SPA defense guards are no longer banned.
 @persecute_rfb
 title: Further prosecute the SPA defense guards.
 view-if: rfb_banned = 1
+choose-if: judicial_reform >= 3 and interior_police_loyalty >= 0.65
+unavailable-subtitle: [? if judicial_reform < 3 : The judiciary would not allow this. ?] [? if interior_police_loyalty < 0.65 : The police are too disloyal to be trusted with this. ?]
 on-arrival: rfb_strength *= 0.7; rfb_militancy -= 0.05; kpd_relation -= 10; kpd_coalition_dissent += 1; z_relation += 5; dvp_relation += 5; prussian_police_loyalty += 0.1; interior_police_loyalty += 0.1; coalition_dissent -= 1 if coalition_dissent > 0 and n_rfb_persecuted = 0; n_rfb_persecuted += 1
 
 We have arrested more of the SPA defense guard leaders and confiscated their weapons.

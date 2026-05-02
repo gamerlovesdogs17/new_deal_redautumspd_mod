@@ -126,7 +126,7 @@ Senate composition:
 {!<span class="party-nusj">National Union for Social Justice</span>!}: [+ nusj_s_seats +] seats ([+ nusj_s +]%)
 {!<span class="party-silver">Silver Legion</span>!}: [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
 
-Democratic position: [? if spd_toleration : external support ?][? if spd_in_government : governing - ?][? if spd_toleration == 0 and spd_in_government == 0 and spd_caretaker == 0 : opposition ?][? if spd_caretaker : caretaker administration ?]
+Democratic position: [? if spd_toleration : external support ?][? if dem_presidential_control and spd_in_government : governing - ?][? if not dem_presidential_control and dem_congress_control : congressional majority - opposition presidency ?][? if not dem_presidential_control and not dem_congress_control and spd_in_government : congressional bloc - opposition presidency ?][? if spd_toleration == 0 and spd_in_government == 0 and spd_caretaker == 0 : opposition ?][? if spd_caretaker : caretaker administration ?]
 [? if in_weimar_coalition and spd_in_government: broad reform coalition ?][? if in_grand_coalition and spd_in_government: unity coalition ?][? if in_popular_front and spd_in_government: labor-progressive front ?][? if in_left_front and spd_in_government: left coalition ?][? if in_spd_majority and spd_in_government: Democratic majority ?][? if in_minority_government and spd_in_government: minority government ?][? if in_emergency_government and spd_in_government: emergency government ?]
 
 [? if spd_in_government and not in_spd_majority and not in_left_front : Coalition dissent: [+ coalition_dissent : coalition_dissent +] ?]
@@ -181,17 +181,17 @@ go-to: menu
 
 **Demographic Groups**
 
-**Working Class**: The urban working class - blue-collar workers in factories, workshops, mines, and the like. Most are socialist, supporting either the SPD or SPA. They make up 40-50% of the population.
+**Working Class**: Blue-collar workers in factories, workshops, mines, transport, and relief jobs. Most support either the Democratic Party or the SPA. They make up 40-50% of the population.
 
-**Old Mittelstand**: The old middle class consists of independent artisans, shopkeepers, and small-time businesspeople. They tend to be conservative and are the strongest base for the far right. 10-15% of the population.
+**Old Middle Class**: Independent shopkeepers, small business owners, professionals, and local proprietors. They tend to be conservative and are one of the strongest bases for the far right. 10-15% of the population.
 
-**New Mittelstand**: The new middle class consists of white-collar workers and government employees. This is the base of liberalism. 10-15% of the population.
+**New Middle Class**: White-collar workers, clerks, teachers, and public employees. This is a major base for liberal and reform politics. 10-15% of the population.
 
-**Rural**: Small and large farmers and independent rural workers. Protestant farmers often support the DNVP. 20-30% of the population.
+**Rural**: Small farmers, tenant farmers, large farmers, and independent rural workers. Their politics split between Democratic relief politics, Farmer-Labor insurgency, the GOP, and agrarian right-populism. 20-30% of the population.
 
-**Catholics** are the largest religious minority, at about 30% of the population. They disproportionately support the Center Party (or the Bavarian People's Party in Bavaria).
+**Catholics** are the largest religious minority, at about 30% of the population. They are politically mixed, with strong urban Democratic machines, labor networks, and some anti-New Deal conservative constituencies.
 
-**Jews** account for between 0.5% to 1% of the population, and tend to support liberal parties, mostly the DDP, although substantial numbers support the SPD or SPA.
+**Jews** account for between 0.5% to 1% of the population, and tend to support liberal, Democratic, and socialist currents while facing escalating pressure from the far right.
 
 
 @public_opinion

@@ -1,12 +1,12 @@
 title: We can prosecute Pelley.
 subtitle: He is openly organizing against constitutional government.
-unavailable-subtitle: [? if judicial_reform < 2 : Unfortunately, the reactionary judiciary will not cooperate. ?] [? if presidential_election_seen == 1 : Pelley has already been made a citizen of the republic, in the run-up to the presidential election. ?] [? if not spd_prussia : We cannot do this without the cooperation of the state police, who are not currently in our control. ?]
+unavailable-subtitle: [? if judicial_reform < 2 : Unfortunately, the reactionary judiciary will not cooperate. ?] [? if presidential_election_seen == 1 : Pelley has already used the presidential campaign to shield himself; moving now would be seen as a naked political prosecution. ?] [? if not spd_prussia : We cannot do this without the cooperation of state police we currently control. ?]
 view-if: dem_presidential_control and nazi_urgency >= 3 and hitler_deported = 0 and chancellor != "Papen" and chancellor != "Schleicher" and investigate_far_right >= 2
 choose-if: judicial_reform >= 2 and presidential_election_seen == 0 and spd_prussia == 1
 
-Is it really that simple? Won't his supporters react violently to this suggestion? And even if the deportation does succeed, won't he just re-enter the country, or perhaps organize from Austria? And, some people consider this to be an anti-democratic abuse of power, using the law in order to target a political opponent.
+Is it really that simple? Won't his supporters react violently to this suggestion? And even if the prosecution succeeds, won't he keep organizing through lieutenants and sympathetic newspapers? Some people consider this an anti-democratic abuse of power, using the law to target a political opponent.
 
-- @deport: Deport him!
+- @deport: Arrest and prosecute him.
 - @no_deport: No, we must not.
 
 @deport
@@ -14,7 +14,7 @@ go-to: deport_violence if sa_strength >= 200; deport_success if sa_strength < 20
 
 @deport_violence
 
-When the police approach, he is surrounded by his SA guards, preventing him from being extricated! We can attempt to force a confrontation, but that may have negative consequences. The Democratic Defense League may also attempt to draw off the SA.
+When the police approach, he is surrounded by Silver Legion guards, preventing him from being taken into custody. We can attempt to force a confrontation, but that may have negative consequences. The Democratic Defense League may also attempt to draw off the militia.
 
 - @force_approach: Force the approach!
 - @no_deport: Cancel the deportation.
@@ -37,25 +37,25 @@ go-to: force_fail if deportation_success == 0; force_success if deportation_succ
 @force_fail
 on-arrival: sa_strength += 50; workers_nsdap += 5; unemployed_nsdap += 5; new_middle_nsdap += 5; old_middle_nsdap += 5; rural_nsdap += 5; coup_progress += 3
 
-Unfortunately, our forces fail to disloge the SA from their positions surrounding Pelley. He is seen as both a strong and powerful leader and a victim, further reinforcing his image. The Silver Legion are left stronger than ever.
+Unfortunately, our forces fail to dislodge the Silver Legion from their positions surrounding Pelley. He is seen as both a strong leader and a victim, further reinforcing his image. The Silver Legion is left stronger than ever.
 
 @force_success
-on-arrival: hitler_deported = 1; sa_strength = sa_strength/2; workers_nsdap -= 10; new_middle_nsdap -= 10; old_middle_nsdap -= 10; rural_nsdap -= 10; unemployed_nsdap -= 10; sa_banned = 1; coup_progress -= 2; nsdap_leader = "Goebbels"
+on-arrival: hitler_deported = 1; sa_strength = sa_strength/2; workers_nsdap -= 10; new_middle_nsdap -= 10; old_middle_nsdap -= 10; rural_nsdap -= 10; unemployed_nsdap -= 10; sa_banned = 1; coup_progress -= 2; nsdap_leader = "Gerald Winrod"
 achievement: deport_hitler
 
-The confrontation ends with the police and Democratic Defense League prevailing, capturing Pelley so he can be deported! This is a sign of weakness, and his physical distance makes organizing difficult, impeding the Silver Legion effort to win more votes.
+The confrontation ends with the police and Democratic Defense League prevailing, capturing Pelley so he can be prosecuted. This is a sign of weakness, and his confinement makes organizing difficult, impeding the Silver Legion effort to win more votes.
 
-In Pelley's absence, Joseph Goebbels has become the temporary leader of the Silver Legion party, with substantial influence from Hermann Göring.
+In Pelley's absence, Gerald Winrod has become the temporary leader of the Silver Legion party, with substantial influence from regional militia commanders.
 
 @deport_success
-on-arrival: hitler_deported = 1; sa_strength = sa_strength/2; workers_nsdap -= 10; new_middle_nsdap -= 10; old_middle_nsdap -= 10; rural_nsdap -= 10; unemployed_nsdap -= 10; coup_progress -= 2; nsdap_leader = "Goebbels"
+on-arrival: hitler_deported = 1; sa_strength = sa_strength/2; workers_nsdap -= 10; new_middle_nsdap -= 10; old_middle_nsdap -= 10; rural_nsdap -= 10; unemployed_nsdap -= 10; coup_progress -= 2; nsdap_leader = "Gerald Winrod"
 achievement: deport_hitler
 
-Somehow, the plan worked! There was minimal resistance to Pelley's deportation. This is a sign of weakness, and his physical distance makes organizing difficult, impeding the Silver Legion effort to win more votes.
+Somehow, the plan worked. There was minimal resistance to Pelley's arrest. This is a sign of weakness, and his confinement makes organizing difficult, impeding the Silver Legion effort to win more votes.
 
-In Pelley's absence, Joseph Goebbels has become the temporary leader of the Silver Legion party, with substantial influence from Hermann Göring.
+In Pelley's absence, Gerald Winrod has become the temporary leader of the Silver Legion party, with substantial influence from regional militia commanders.
 
 @no_deport
 go-to: root
 
-We will not be deporting Pelley.
+We will not be prosecuting Pelley.

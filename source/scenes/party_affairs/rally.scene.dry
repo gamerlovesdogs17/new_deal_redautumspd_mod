@@ -9,7 +9,7 @@ go-to: main_rally; sa_disrupt if sa_strength > 180 and not sa_banned and not ret
 
 @sa_disrupt
 
-The Silver Legion SA has disrupted our rally! Their street troops are preventing us from meeting.
+The Silver Legion militia has disrupted our rally. Their street troops are preventing us from meeting.
 
 - @police_protect: Call the police to protect our rally.
 - @rb_protect: Use the Democratic Defense League to protect our rally.
@@ -29,7 +29,7 @@ The police successfully protected our rally, so it can go ahead as usual.
 @police_protect_lose
 on-arrival: strife += 1; workers_nsdap += 3
 
-Unfortunately, the police were unable or unwilling to hold back the SA mob. The Silver Legion have won this show of strength.
+Unfortunately, the police were unable or unwilling to hold back the Silver Legion mob. The Silver Legion have won this show of strength.
 
 @rb_protect
 on-arrival: rb_success = rb_strength*rb_militancy - sa_strength*sa_militancy; strife += 1
@@ -38,12 +38,12 @@ go-to: rb_protect_win if rb_success >= 0; rb_protect_lose if rb_success < 0
 @rb_protect_win
 go-to: main_rally
 
-The Democratic Defense League has successfully protected our rally against the SA! Our meeting can go ahead as usual.
+The Democratic Defense League has successfully protected our rally against the Silver Legion militia. Our meeting can go ahead as usual.
 
 @rb_protect_lose
 on-arrival: workers_nsdap += 3; rb_strength -= 50
 
-Unfortunately, the Democratic Defense League was not able to hold back the SA mob. The Silver Legion have won this show of strength.
+Unfortunately, the Democratic Defense League was not able to hold back the Silver Legion mob. The Silver Legion have won this show of strength.
 
 @both_protect
 view-if: spd_prussia
@@ -55,25 +55,25 @@ go-to: both_protect_win if rb_success >= 0; both_protect_lose if rb_success < 0
 @both_protect_win
 go-to: main_rally
 
-The police and Democratic Defense League have successfully protected our rally against the SA! Our meeting can go ahead as usual.
+The police and Democratic Defense League have successfully protected our rally against the Silver Legion militia. Our meeting can go ahead as usual.
 
 @both_protect_lose
 on-arrival: workers_nsdap += 3; rb_strength -= 50
 
-Unfortunately, the police and Democratic Defense League were not able to hold back the SA mob. The Silver Legion have won this show of strength.
+Unfortunately, the police and Democratic Defense League were not able to hold back the Silver Legion mob. The Silver Legion have won this show of strength.
 
 
 @cancel
 on-arrival: workers_nsdap += 3;
 
-The SA have won this show of strength.
+The Silver Legion has won this show of strength.
 
 @main_rally
 
-Mass rallies are a common feature of social democratic life, especially in the lead-up to an election. What is the primary theme of this rally?
+Mass rallies are a common feature of Democratic organizing, especially in the lead-up to an election. What is the primary theme of this rally?
 
 - @class_struggle: The class struggle of the working class against the conservative elite.
-- @welfare: Sozialpolitik - the maintenance and expansion of social welfare programs.
+- @welfare: Social welfare - the maintenance and expansion of relief and security programs.
 - @democracy: Expanding our nascent democracy and defending it against dictatorship and fascism.
 - @pacifism: Opposing war, nationalism, and militarism at all costs.
 - @wtb: Support the WTB plan!
@@ -112,7 +112,7 @@ choose-if: return_to_normalcy = 0
 unavailable-subtitle: The economic crisis is largely over now, and the public is no longer interested in hearing about it.
 on-arrival: wtb_support += 1; workers_spd += 6*(1-dissent); unemployed_spd += 6*(1-dissent); rural_spd += 3*(1-dissent); new_middle_spd += 3*(1-dissent); old_middle_spd += 3*(1-dissent);
 
-The WTB plan has become a popular rallying cry for our party. The workers are eager to go back to work, and that is exactly what the plan promises.
+The Public Works Plan has become a popular rallying cry for our party. The workers are eager to go back to work, and that is exactly what the plan promises.
 
 
 @local

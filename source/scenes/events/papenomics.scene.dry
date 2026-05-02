@@ -3,12 +3,12 @@ subtitle: Tax cuts for the rich
 view-if: 0
 on-arrival: old_middle_dnvp += 5; new_middle_dnvp += 3; rural_dnvp += 3; upper_tax_rates -= 1; budget -= 1; unemployed -= 2; economic_growth += 0.6; inflation += 1.2 if inflation < 0; budget -= 1
 max-visits: 1
-face-image: img/portraits/the conservative caretakerFranz.jpg
+face-image: img/portraits/PapenFranz.jpg
 tags: event
 new-page: true
 
-= the conservative caretaker's Economic Plan
+= Conservative Caretaker Economic Plan
 
-Speaker Franz von the conservative caretaker and his "Cabinet of Barons" are pushing forward an economic plan consisting of tax cuts for the very wealthy. This plan has the potential to lead to more economic growth, especially in comparison to Brüning's austerity program, but it also enriches the upper class and does nothing directly for the needy workers and unemployed.
+A conservative caretaker administration is pushing forward an economic plan built around tax cuts for the very wealthy. This may calm business and produce some short-term growth, but it enriches the upper class and does nothing directly for workers or the unemployed.
 
 - @root: The policy passes due to the emergency government; there is nothing we can do...

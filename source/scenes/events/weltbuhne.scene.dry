@@ -12,12 +12,12 @@ tags: event
 # If in a grand coalition then the SPD can pressure the coalition to cancel the trial at the expense of dissent.
 # If the trial goes ahead, then reparations negotiation process gets set back by a few steps and relations with the west suffers.
 
-= The Weltbühne Trial
+= The Free Press Trial
 
-The left-wing news and literary magazine Weltbühne has been targeted by the national authorities for allegedly revealing state secrets. The magazine published articles alleging a secret rearmament program by the Defense Department, in contravention of the Treaty of Versailles. The military authorities obviously do not want this information to be known. It does not help that the magazine's editor, Carl von Ossietzky, is a well-known pacifist.
+The left-wing news magazine *The Free Press* has been targeted by federal authorities for allegedly revealing state secrets. The magazine published articles alleging a secret Defense Department rearmament program in violation of treaty commitments. The military authorities obviously do not want this information to be known. It does not help that the magazine's editor is a well-known pacifist.
 
 [? if spd_in_government and justice_minister_party = "SPD" : With our control of the Justice Ministry, we could simply drop the case. ?]
-[? if spd_in_government and justice_minister_party != "SPD" : The Justice Ministry is seeking to persecute the editor and journalist of Weltbühne. We can try to persuade our coalition partners to drop the case, but they will likely resist. ?]
+[? if spd_in_government and justice_minister_party != "SPD" : The Justice Ministry is seeking to prosecute the editor and journalist of *The Free Press*. We can try to persuade our coalition partners to drop the case, but they will likely resist. ?]
 
 - @drop_case: Drop the case.
 - @let_persecute: Let justice take its course.
@@ -30,7 +30,7 @@ choose-if: spd_in_government and justice_minister_party = "SPD"
 unavailable-subtitle: [? if not spd_in_government : SPD not in government. ?] [? if spd_in_government and justice_minister_party != "SPD": The SPD does not control the Justice Ministry. ?]
 on-arrival: weltbuhne_dropped = 1; dvp_relation -= 4; nationalism -= 3*(1-dissent); coalition_dissent += 1 if in_grand_coalition; reichswehr_loyalty -= 0.1; west_relation += 1; east_relation += 1; coup_progress += 1; reparations_negotiation += 1; pacifism += 1
 
-The Justice Ministry has dropped all persecution of Carl von Ossietzky and Walter Kreiser, the journalist responsible for the offending publication. In fact, some say that the Weltbühne journalists should be feted as heroes.
+The Justice Ministry has dropped all prosecution of the editor and journalist responsible for the offending publication. In fact, some say that the Free Press journalists should be feted as heroes.
 
 The Western powers and all countries that feel threatened by American militarism are pleased that we have turned a chapter in our history.
 [? if in_grand_coalition: On the other hand, the right-wing members of our governing coalition disapprove of this action, as does the Defense Department. ?][? if not in_grand_coalition : On the other hand, the Defense Department disapproves of dropping the case. ?]
@@ -45,7 +45,7 @@ The case progresses slowly, given the military secrets involved, and there will 
 view-if: spd_in_government and justice_minister_party != "SPD"
 on-arrival: weltbuhne_dropped = 1; dvp_relation -= 5; nationalism += 3*(1-dissent); coalition_dissent += 1; coalition_dissent += 1 if in_grand_coalition; reichswehr_loyalty -= 0.1; coup_progress += 1; west_relation += 1; east_relation += 1; reparations_negotiation += 1
 
-We have pressured the Justice Ministry to drop the case against the Weltbühne, raising tensions with our coalition.
+We have pressured the Justice Ministry to drop the case against *The Free Press*, raising tensions with our coalition.
 
 The Western powers and all countries that feel threatened by American militarism are pleased that we have turned a chapter in our history.
 On the other hand, the Defense Department disapproves of dropping the case.

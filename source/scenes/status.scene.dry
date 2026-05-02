@@ -165,7 +165,7 @@ Q.radical_momentum_display = Math.round((Q.radical_momentum || 0) * 10) / 10;
 {!<span class="status-pill danger">!}Growth: [+ economic_growth_2 +]%{!</span>!}
 {!</div>!}
 
-Democratic position: [? if spd_toleration : external support ?][? if spd_in_government : governing - ?][? if spd_toleration == 0 and spd_in_government == 0 and spd_caretaker == 0 : opposition ?][? if spd_caretaker : caretaker administration ?]
+Democratic position: [? if spd_toleration : external support ?][? if dem_presidential_control and spd_in_government : governing - ?][? if not dem_presidential_control and dem_congress_control : congressional majority - opposition presidency ?][? if not dem_presidential_control and not dem_congress_control and spd_in_government : congressional bloc - opposition presidency ?][? if spd_toleration == 0 and spd_in_government == 0 and spd_caretaker == 0 : opposition ?][? if spd_caretaker : caretaker administration ?]
 [? if in_weimar_coalition and spd_in_government: broad reform coalition ?][? if in_grand_coalition and spd_in_government: unity coalition ?][? if in_popular_front and spd_in_government: labor-progressive front ?][? if in_left_front and spd_in_government: left coalition ?][? if in_spd_majority and spd_in_government: Democratic majority ?][? if in_minority_government and spd_in_government: minority government ?][? if in_emergency_government and spd_in_government: emergency government ?]
 
 [? if spd_in_government and not in_spd_majority and not in_left_front : Coalition dissent: [+ coalition_dissent : coalition_dissent +] ?]

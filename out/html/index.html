@@ -301,6 +301,7 @@
 
                 <div id="header-links">
                     <a id="stats-link" onclick="window.showStats();" href="#">Library</a>
+                    <a onclick="window.toggleNotesPanel();" href="#">Notes</a>
                     <a onclick="dendryUI.showSaveSlots();" href="#">Save/Load</a>
                     <a onclick="window.showOptions();" href="#">Options</a>
                 </div>
@@ -326,6 +327,26 @@
 
             </div>
 
+            <section id="congress_board" class="congress-board" aria-label="Congress display">
+                <div class="congress-board-header">
+                    <div>
+                        <h2>Congress Workboard</h2>
+                        <p id="congress_board_subtitle">House and Senate composition</p>
+                    </div>
+                    <div class="congress-board-controls">
+                        <button id="congress_house_button" class="congress-toggle active" type="button" onclick="window.setCongressChamber('house');">House</button>
+                        <button id="congress_senate_button" class="congress-toggle" type="button" onclick="window.setCongressChamber('senate');">Senate</button>
+                    </div>
+                </div>
+                <div class="congress-board-body">
+                    <div class="congress-map-wrap">
+                        <svg id="congress_map" class="congress-map" role="img" aria-label="Congress seat graph"></svg>
+                        <div id="congress_legend" class="congress-legend"></div>
+                    </div>
+                    <aside id="congress_branch_info" class="congress-info"></aside>
+                </div>
+            </section>
+
             <footer>
       <!--
       <p>
@@ -348,6 +369,13 @@
             <div id="music_track_title" class="music-track-title">Great Depression broadcast</div>
             <div id="music_track_note" class="music-track-note">Needle resting. Pick a record.</div>
         </div>
+    </div>
+    <div id="field_notes" class="field-notes" aria-label="Field notes panel" style="display: none;">
+        <div id="field_notes_handle" class="field-notes-handle">
+            <span>Field Notes</span>
+            <button type="button" onclick="window.toggleNotesPanel();" aria-label="Close notes">Close</button>
+        </div>
+        <textarea id="field_notes_text" spellcheck="true" placeholder="Write reminders, coalition math, or bill plans here."></textarea>
     </div>
   </body>
 </html>

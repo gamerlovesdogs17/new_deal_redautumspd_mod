@@ -2,7 +2,24 @@ title: Coalition Affairs
 new-page: true
 is-card: true
 tags: congressional_affairs
-on-arrival: month_actions += 1; coalition_affairs_timer = 5
+on-arrival: {!
+Q.month_actions = (Q.month_actions || 0) + 1;
+Q.coalition_affairs_timer = 5;
+
+function coloredEstimate(label, color) {
+    return '<span style="color:' + color + ';font-weight:bold">' + label + '</span>';
+}
+
+function pressureEstimate(value, guarded, high, critical) {
+    value = value || 0;
+    if (value >= critical) return coloredEstimate("critical", "#c62828");
+    if (value >= high) return coloredEstimate("high", "#d97706");
+    if (value >= guarded) return coloredEstimate("guarded", "#b58900");
+    return coloredEstimate("low", "#2e7d32");
+}
+
+Q.coalition_affairs_dissent_display = pressureEstimate(Q.coalition_dissent, 2, 3, 4);
+!}
 view-if: dem_house_control and coalition_dissent >= 1 and coalition_affairs_timer = 0
 card-image: img/muller_cabinet.jpg
 
@@ -10,7 +27,7 @@ card-image: img/muller_cabinet.jpg
 
 The New Deal coalition is fraying. New Deal liberals want faster relief, labor Democrats want stronger organizing rights, conservative Democrats want spending restraint, and Southern committee chairs want guarantees before they keep moving administration bills.
 
-Coalition dissent: [+ coalition_dissent : coalition_dissent +]
+Coalition dissent: [+ coalition_affairs_dissent_display +]
 
 How should the administration spend its limited leverage?
 

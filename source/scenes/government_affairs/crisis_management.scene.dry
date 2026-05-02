@@ -3,22 +3,43 @@ new-page: true
 is-card: true
 tags: presidential_affairs, congressional_affairs
 view-if: (dem_presidential_control or dem_congress_control) and crisis_management_timer = 0 and (capital_strike_progress >= 4 or coup_progress >= 4 or constitutional_stress >= 3 or supreme_court_hostility >= 4 or conservative_backlash >= 8)
-on-arrival: crisis_management_timer = 8; month_actions += 1
+on-arrival: {!
+Q.crisis_management_timer = 8;
+Q.month_actions = (Q.month_actions || 0) + 1;
+
+function coloredEstimate(label, color) {
+    return '<span style="color:' + color + ';font-weight:bold">' + label + '</span>';
+}
+
+function pressureEstimate(value, guarded, high, critical) {
+    value = value || 0;
+    if (value >= critical) return coloredEstimate("critical", "#c62828");
+    if (value >= high) return coloredEstimate("high", "#d97706");
+    if (value >= guarded) return coloredEstimate("guarded", "#b58900");
+    return coloredEstimate("low", "#2e7d32");
+}
+
+Q.crisis_capital_strike_display = pressureEstimate(Q.capital_strike_progress, 2, 6, 9);
+Q.crisis_coup_display = pressureEstimate(Q.coup_progress, 2, 6, 9);
+Q.crisis_constitutional_display = pressureEstimate(Q.constitutional_stress, 2, 4, 6);
+Q.crisis_court_display = pressureEstimate(Q.supreme_court_hostility, 2, 5, 8);
+Q.crisis_coalition_display = pressureEstimate(Q.coalition_dissent, 2, 3, 4);
+!}
 card-image: img/paper.jpg
 
 = Crisis Management
 
 The administration is not facing a single crisis. Business resistance, court hostility, constitutional strain, factional distrust, and right-wing organizing are beginning to reinforce one another.
 
-Capital strike risk: [+ capital_strike_progress +]
+Capital strike risk: [+ crisis_capital_strike_display +]
 
-Coup risk: [+ coup_progress +]
+Coup risk: [+ crisis_coup_display +]
 
-Constitutional stress: [+ constitutional_stress +]
+Constitutional stress: [+ crisis_constitutional_display +]
 
-Court hostility: [+ supreme_court_hostility +]
+Court hostility: [+ crisis_court_display +]
 
-Coalition dissent: [+ coalition_dissent : coalition_dissent +]
+Coalition dissent: [+ crisis_coalition_display +]
 
 Which pressure point should we try to relieve?
 

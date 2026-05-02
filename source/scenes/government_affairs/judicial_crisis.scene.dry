@@ -3,14 +3,34 @@ new-page: true
 is-card: true
 tags: presidential_affairs, congressional_affairs, cabinet
 view-if: dem_trifecta_control and judicial_crisis_timer = 0 and economic_plan > 0
-on-arrival: judicial_crisis_timer = 10; month_actions += 1; supreme_court_hostility += 1 if dem_economic_plan = "structural_transformation"; supreme_court_hostility += 1 if dem_economic_plan = "share_our_wealth"; liberty_litigation += 1 if ddp_relation < 45
+on-arrival: {!
+Q.judicial_crisis_timer = 10;
+Q.month_actions = (Q.month_actions || 0) + 1;
+if (Q.dem_economic_plan === "structural_transformation") Q.supreme_court_hostility = (Q.supreme_court_hostility || 0) + 1;
+if (Q.dem_economic_plan === "share_our_wealth") Q.supreme_court_hostility = (Q.supreme_court_hostility || 0) + 1;
+if ((Q.ddp_relation || 0) < 45) Q.liberty_litigation = (Q.liberty_litigation || 0) + 1;
+
+function coloredEstimate(label, color) {
+    return '<span style="color:' + color + ';font-weight:bold">' + label + '</span>';
+}
+
+function pressureEstimate(value, guarded, high, critical) {
+    value = value || 0;
+    if (value >= critical) return coloredEstimate("critical", "#c62828");
+    if (value >= high) return coloredEstimate("high", "#d97706");
+    if (value >= guarded) return coloredEstimate("guarded", "#b58900");
+    return coloredEstimate("low", "#2e7d32");
+}
+
+Q.judicial_court_hostility_display = pressureEstimate(Q.supreme_court_hostility, 2, 5, 8);
+!}
 card-image: img/supreme_court.jpg
 
 = Supreme Court Challenge
 
 Major New Deal measures are moving toward the courts. Business attorneys, Liberty League donors, and conservative judges argue that the administration has exceeded federal power.
 
-Court hostility: [+ supreme_court_hostility +]
+Court hostility: [+ judicial_court_hostility_display +]
 
 - @compromise
 - @court_packing

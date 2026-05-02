@@ -111,13 +111,13 @@ var partyNames = {
     "I": "Independent"
 };
 var partyTags = {
-    dem: '<span class="party-dem tooltip-text" title="Democratic Party - New Deal governing coalition.">DEM</span>',
-    spa: '<span class="party-spa tooltip-text" title="Socialist Party of America - democratic socialist left opposition.">SPA</span>',
-    fl: '<span class="party-fl tooltip-text" title="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>',
-    liberty: '<span class="party-liberty tooltip-text" title="Liberty League - anti-New Deal conservative liberal split.">LL</span>',
-    gop: '<span class="party-gop tooltip-text" title="Republican Party - conservative and moderate anti-New Deal opposition.">GOP</span>',
-    nusj: '<span class="party-nusj tooltip-text" title="National Union for Social Justice - Coughlinite national-populist right.">NUSJ</span>',
-    silver: '<span class="party-silver tooltip-text" title="Silver Legion - extremist far-right movement.">SL</span>'
+    dem: '<span class="party-dem tooltip-text" tabindex="0" data-tooltip="Democratic Party - New Deal governing coalition.">DEM</span>',
+    spa: '<span class="party-spa tooltip-text" tabindex="0" data-tooltip="Socialist Party of America - democratic socialist left opposition.">SPA</span>',
+    fl: '<span class="party-fl tooltip-text" tabindex="0" data-tooltip="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>',
+    liberty: '<span class="party-liberty tooltip-text" tabindex="0" data-tooltip="Liberty League - anti-New Deal conservative liberal split.">LL</span>',
+    gop: '<span class="party-gop tooltip-text" tabindex="0" data-tooltip="Republican Party - conservative and moderate anti-New Deal opposition.">GOP</span>',
+    nusj: '<span class="party-nusj tooltip-text" tabindex="0" data-tooltip="National Union for Social Justice - Coughlinite national-populist right.">NUSJ</span>',
+    silver: '<span class="party-silver tooltip-text" tabindex="0" data-tooltip="Silver Legion - extremist far-right movement.">SL</span>'
 };
 Q.party_dem_tag = partyTags.dem;
 Q.party_spa_tag = partyTags.spa;
@@ -240,19 +240,19 @@ Speaker of the House: [+ speaker +][? if speaker_party_display :  ([+ speaker_pa
 
 National legislature composition:
 
-{!<span class="party-dem tooltip-text" title="Democratic Party - New Deal governing coalition.">DEM</span>!}: House [+ dem_h_seats +] seats ([+ dem_h +]%) / Senate [+ dem_s_seats +] seats ([+ dem_s +]%)
+{!<span class="party-dem tooltip-text" tabindex="0" data-tooltip="Democratic Party - New Deal governing coalition.">DEM</span>!}: House [+ dem_h_seats +] seats ([+ dem_h +]%) / Senate [+ dem_s_seats +] seats ([+ dem_s +]%)
 
-{!<span class="party-spa tooltip-text" title="Socialist Party of America - democratic socialist left opposition.">SPA</span>!}: House [+ spa_h_seats +] seats ([+ spa_h +]%) / Senate [+ spa_s_seats +] seats ([+ spa_s +]%)
+{!<span class="party-spa tooltip-text" tabindex="0" data-tooltip="Socialist Party of America - democratic socialist left opposition.">SPA</span>!}: House [+ spa_h_seats +] seats ([+ spa_h +]%) / Senate [+ spa_s_seats +] seats ([+ spa_s +]%)
 
-{!<span class="party-fl tooltip-text" title="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>!}: House [+ fl_h_seats +] seats ([+ fl_h +]%) / Senate [+ fl_s_seats +] seats ([+ fl_s +]%)
+{!<span class="party-fl tooltip-text" tabindex="0" data-tooltip="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>!}: House [+ fl_h_seats +] seats ([+ fl_h +]%) / Senate [+ fl_s_seats +] seats ([+ fl_s +]%)
 
-{!<span class="party-liberty tooltip-text" title="Liberty League - anti-New Deal conservative liberal split.">LL</span>!}: House [+ liberty_league_h_seats +] seats ([+ liberty_league_h +]%) / Senate [+ liberty_league_s_seats +] seats ([+ liberty_league_s +]%)
+{!<span class="party-liberty tooltip-text" tabindex="0" data-tooltip="Liberty League - anti-New Deal conservative liberal split.">LL</span>!}: House [+ liberty_league_h_seats +] seats ([+ liberty_league_h +]%) / Senate [+ liberty_league_s_seats +] seats ([+ liberty_league_s +]%)
 
-{!<span class="party-gop tooltip-text" title="Republican Party - conservative and moderate anti-New Deal opposition.">GOP</span>!}: House [+ gop_h_seats +] seats ([+ gop_h +]%) / Senate [+ gop_s_seats +] seats ([+ gop_s +]%)
+{!<span class="party-gop tooltip-text" tabindex="0" data-tooltip="Republican Party - conservative and moderate anti-New Deal opposition.">GOP</span>!}: House [+ gop_h_seats +] seats ([+ gop_h +]%) / Senate [+ gop_s_seats +] seats ([+ gop_s +]%)
 
-{!<span class="party-nusj tooltip-text" title="National Union for Social Justice - Coughlinite national-populist right.">NUSJ</span>!}: House [+ nusj_h_seats +] seats ([+ nusj_h +]%) / Senate [+ nusj_s_seats +] seats ([+ nusj_s +]%)
+{!<span class="party-nusj tooltip-text" tabindex="0" data-tooltip="National Union for Social Justice - Coughlinite national-populist right.">NUSJ</span>!}: House [+ nusj_h_seats +] seats ([+ nusj_h +]%) / Senate [+ nusj_s_seats +] seats ([+ nusj_s +]%)
 
-{!<span class="party-silver tooltip-text" title="Silver Legion - extremist far-right movement.">SL</span>!}: House [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%) / Senate [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
+{!<span class="party-silver tooltip-text" tabindex="0" data-tooltip="Silver Legion - extremist far-right movement.">SL</span>!}: House [+ silver_legion_h_seats +] seats ([+ silver_legion_h +]%) / Senate [+ silver_legion_s_seats +] seats ([+ silver_legion_s +]%)
 
 [? if spd_in_government = 1 : Budget: [+ budget +] ?]
 
@@ -361,13 +361,13 @@ Q.coup_risk_display = pressureEstimate(Q.coup_progress, 2, 6, 9);
 = Party Leaders and Bloc Relations
 
 {!<div class="politics-list">!}
-{!<div class="politics-row">!}{!<span class="party-dem tooltip-text" title="Democratic Party - New Deal governing coalition.">DEM</span>!}{!<span>!}[+ dem_leader +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-gop tooltip-text" title="Republican Party - conservative and moderate anti-New Deal opposition.">GOP</span>!}{!<span>!}[+ gop_leader_display +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-spa tooltip-text" title="Socialist Party of America - democratic socialist left opposition.">SPA</span>!}{!<span>!}[+ spa_leader +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-fl tooltip-text" title="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>!}{!<span>!}[+ farmer_labor_leader +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-liberty tooltip-text" title="Liberty League - anti-New Deal conservative liberal split.">LL</span>!}{!<span>!}[+ liberty_league_leader +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-nusj tooltip-text" title="National Union for Social Justice - Coughlinite national-populist right.">NUSJ</span>!}{!<span>!}[+ nusj_leader +]{!</span>!}{!</div>!}
-{!<div class="politics-row">!}{!<span class="party-silver tooltip-text" title="Silver Legion - extremist far-right movement.">SL</span>!}{!<span>!}[+ sla_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-dem tooltip-text" tabindex="0" data-tooltip="Democratic Party - New Deal governing coalition.">DEM</span>!}{!<span>!}[+ dem_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-gop tooltip-text" tabindex="0" data-tooltip="Republican Party - conservative and moderate anti-New Deal opposition.">GOP</span>!}{!<span>!}[+ gop_leader_display +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-spa tooltip-text" tabindex="0" data-tooltip="Socialist Party of America - democratic socialist left opposition.">SPA</span>!}{!<span>!}[+ spa_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-fl tooltip-text" tabindex="0" data-tooltip="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>!}{!<span>!}[+ farmer_labor_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-liberty tooltip-text" tabindex="0" data-tooltip="Liberty League - anti-New Deal conservative liberal split.">LL</span>!}{!<span>!}[+ liberty_league_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-nusj tooltip-text" tabindex="0" data-tooltip="National Union for Social Justice - Coughlinite national-populist right.">NUSJ</span>!}{!<span>!}[+ nusj_leader +]{!</span>!}{!</div>!}
+{!<div class="politics-row">!}{!<span class="party-silver tooltip-text" tabindex="0" data-tooltip="Silver Legion - extremist far-right movement.">SL</span>!}{!<span>!}[+ sla_leader +]{!</span>!}{!</div>!}
 {!</div>!}
 
 {!<div class="relations-list">!}
@@ -404,19 +404,19 @@ Q.coup_risk_display = pressureEstimate(Q.coup_progress, 2, 6, 9);
 
 = Paramilitaries
 
-{!<span class="tooltip-text" title="Congress of Industrial Organizations mobilization network.">CIO Mobilization</span>!} Strength: [+ rb_strength : strength +]
+{!<span class="tooltip-text" tabindex="0" data-tooltip="Congress of Industrial Organizations mobilization network.">CIO Mobilization</span>!} Strength: [+ rb_strength : strength +]
 
 CIO Militancy: [+ rb_militancy : militancy +]
 
-{!<span class="tooltip-text" title="Socialist-aligned street organizations and strike defense groups.">Socialist Action Committees</span>!} Strength: [+ rfb_strength : strength +]
+{!<span class="tooltip-text" tabindex="0" data-tooltip="Socialist-aligned street organizations and strike defense groups.">Socialist Action Committees</span>!} Strength: [+ rfb_strength : strength +]
 
 Committee Militancy: [+ rfb_militancy : militancy +]
 
-{!<span class="tooltip-text" title="American Legion and allied conservative veteran networks.">American Legion Network</span>!} Strength: [+ sh_strength : strength +]
+{!<span class="tooltip-text" tabindex="0" data-tooltip="American Legion and allied conservative veteran networks.">American Legion Network</span>!} Strength: [+ sh_strength : strength +]
 
 Legion Militancy: [+ sh_militancy : militancy +]
 
-{!<span class="tooltip-text" title="Silver Legion and aligned militia organizations.">Silver Legion</span>!} Strength: [+ sa_strength : strength +]
+{!<span class="tooltip-text" tabindex="0" data-tooltip="Silver Legion and aligned militia organizations.">Silver Legion</span>!} Strength: [+ sa_strength : strength +]
 
 Militia Militancy: [+ sa_militancy : militancy +]
 
@@ -454,21 +454,21 @@ view-if: game_over
 
 (if the election were to be held now):
 
-{!<span class="party-dem tooltip-text" title="Democratic Party - New Deal governing coalition.">DEM</span>!}: [+ spd_votes +]%
+{!<span class="party-dem tooltip-text" tabindex="0" data-tooltip="Democratic Party - New Deal governing coalition.">DEM</span>!}: [+ spd_votes +]%
 
 [? if sapd_formed: SAPD: [+ sapd_votes +]% ?]
 
-{!<span class="party-fl tooltip-text" title="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>!}: [+ z_votes +]%
+{!<span class="party-fl tooltip-text" tabindex="0" data-tooltip="Farmer-Labor - agrarian-labor progressive bloc.">FL</span>!}: [+ z_votes +]%
 
-{!<span class="party-spa tooltip-text" title="Socialist Party of America - democratic socialist left opposition.">SPA</span>!}: [+ kpd_votes +]%
+{!<span class="party-spa tooltip-text" tabindex="0" data-tooltip="Socialist Party of America - democratic socialist left opposition.">SPA</span>!}: [+ kpd_votes +]%
 
-{!<span class="party-liberty tooltip-text" title="Liberty League - anti-New Deal conservative liberal split.">LL</span>!}: [+ liberty_league_votes +]%
+{!<span class="party-liberty tooltip-text" tabindex="0" data-tooltip="Liberty League - anti-New Deal conservative liberal split.">LL</span>!}: [+ liberty_league_votes +]%
 
-{!<span class="party-gop tooltip-text" title="Republican Party - conservative and moderate anti-New Deal opposition.">GOP</span>!}: [+ gop_votes +]%
+{!<span class="party-gop tooltip-text" tabindex="0" data-tooltip="Republican Party - conservative and moderate anti-New Deal opposition.">GOP</span>!}: [+ gop_votes +]%
 
-{!<span class="party-nusj tooltip-text" title="National Union for Social Justice - Coughlinite national-populist right.">NUSJ</span>!}: [+ nusj_votes +]%
+{!<span class="party-nusj tooltip-text" tabindex="0" data-tooltip="National Union for Social Justice - Coughlinite national-populist right.">NUSJ</span>!}: [+ nusj_votes +]%
 
-{!<span class="party-silver tooltip-text" title="Silver Legion - extremist far-right movement.">SL</span>!}: [+ silver_legion_votes +]%
+{!<span class="party-silver tooltip-text" tabindex="0" data-tooltip="Silver Legion - extremist far-right movement.">SL</span>!}: [+ silver_legion_votes +]%
 
 **Detailed results for each demographic**
 

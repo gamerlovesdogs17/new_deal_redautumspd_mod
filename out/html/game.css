@@ -1,7 +1,10 @@
 body {
   --bg-color: #f3f3e3;
   --border-color: #000;
-  --content-bg-color: #f3f3f3;
+  --content-bg-color: #f4efe4;
+  --panel-bg-color: #f7f1e5;
+  --panel-rule-color: rgba(79, 52, 30, 0.22);
+  --panel-accent-color: #7c2f24;
   --text-color: #431;
   --link-color: #900;
   --link-hover-color: rgba(0, 0, 0, 0.05);
@@ -15,6 +18,7 @@ body {
   font-family: "Minion Pro", Georgia, serif;
   background-color: var(--bg-color);
   padding: 0;
+  padding-bottom: 4.5rem;
   line-height: 155%;
   overflow-y: scroll;
 }
@@ -22,6 +26,9 @@ body.dark-mode {
   --bg-color: #000;
   --border-color: #fff;
   --content-bg-color: #242424;
+  --panel-bg-color: #27231e;
+  --panel-rule-color: rgba(255, 255, 255, 0.16);
+  --panel-accent-color: #d18b62;
   --text-color: #efefef;
   --link-color: #ff8080;
   --link-hover-color: rgba(255, 255, 255, 0.06);
@@ -185,11 +192,16 @@ blockquote + blockquote.attribution {
   margin: 0 auto;
 }
 .tools {
-  padding: 0.6em;
+  padding: 0.7em 0.75em;
   width: 14rem;
   color: var(--text-color);
-  background-color: var(--content-bg-color);
-  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0.05)),
+    var(--panel-bg-color);
+  border: 1px solid var(--panel-rule-color);
+  border-top: 4px solid var(--panel-accent-color);
+  box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
 }
 .tools.left {
   float: left;
@@ -202,25 +214,26 @@ blockquote + blockquote.attribution {
 #qualities,
 #strategic_qualities {
   text-indent: 0;
-  line-height: 1.3em;
-  font-size: 0.95em;
+  line-height: 1.25em;
+  font-size: 0.9em;
 }
 #qualities p,
 #strategic_qualities p {
   text-indent: 0;
-  margin-bottom: 0.55em;
+  margin-bottom: 0.45em;
 }
 #qualities h1,
 #strategic_qualities h1 {
-  font-size: 0.95em;
-  font-weight: normal;
+  font-size: 0.82em;
+  font-weight: bold;
   text-align: left;
   text-transform: uppercase;
-  letter-spacing: 0;
-  margin: 0.9em 0 0.35em 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.18);
-  text-shadow: rgba(255, 255, 255, 0.75) 2px 2px 2px,
-               rgba(0, 0, 0, 0.1) -1px -1px 2px;
+  letter-spacing: 0.05em;
+  margin: 0.85em 0 0.45em 0;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--panel-rule-color);
+  color: var(--panel-accent-color);
+  text-shadow: none;
 }
 #qualities h1 + p:first-line,
 #strategic_qualities h1 + p:first-line {
@@ -233,45 +246,141 @@ blockquote + blockquote.attribution {
 
 .strategic-list {
   display: grid;
-  gap: 0.35em;
+  gap: 0.25em;
+  margin-top: 0.25em;
 }
 
 .strategic-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.4em;
-  align-items: baseline;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding-bottom: 0.25em;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.08em;
+  align-items: start;
+  border-bottom: 1px solid var(--panel-rule-color);
+  padding: 0.24em 0;
 }
 
 .strategic-row span:last-child {
-  text-align: right;
+  text-align: left;
+  font-size: 0.95em;
   font-variant-numeric: tabular-nums;
+}
+.strategic-row span:first-child {
+  color: rgba(68, 51, 34, 0.82);
+  font-size: 0.88em;
+}
+body.dark-mode .strategic-row span:first-child {
+  color: rgba(239, 239, 239, 0.78);
 }
 
 
 /* tabs */
 .tab_container {
-    background-color: var(--tab-bg-color);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background-color: var(--panel-rule-color);
     margin-top: -0.6em;
     margin-left: -0.6em;
     margin-right: -0.6em;
+    margin-bottom: 0.6em;
 }
 .tab_button {
     font-family: "Minion Pro", Georgia, serif;
-    background-color: var(--tab-color);
+    background-color: rgba(255, 255, 255, 0.45);
     color: var(--text-color);
-    /*float: left;*/
     border: none;
     outline: none;
-    padding: 10px;
+    padding: 0.5em 0.35em;
+    font-size: 0.88em;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
 }
 .tab_button.active {
-    background-color: var(--content-bg-color);
+    background-color: var(--panel-bg-color);
+    color: var(--panel-accent-color);
+    font-weight: bold;
 }
 .tab_button:hover {
     background-color: var(--tab-hover-color);
+}
+
+.music-player {
+    position: fixed;
+    left: 50%;
+    bottom: 0.65rem;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: grid;
+    grid-template-columns: auto auto auto minmax(10rem, 20rem);
+    align-items: center;
+    gap: 0.55rem;
+    max-width: calc(100% - 1.4rem);
+    padding: 0.5rem 0.65rem;
+    color: #2f261d;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0.08)),
+      #efe3cd;
+    border: 1px solid rgba(70, 48, 28, 0.35);
+    border-top: 3px solid #7c2f24;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+}
+.music-badge {
+    padding: 0.18rem 0.4rem;
+    border: 1px solid rgba(70, 48, 28, 0.28);
+    color: #7c2f24;
+    font-size: 0.78rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+.music-button {
+    font-family: "Minion Pro", Georgia, serif;
+    color: #f7f1e5;
+    background: #6d3327;
+    border: 1px solid #4b2119;
+    padding: 0.28rem 0.55rem;
+    cursor: pointer;
+}
+.music-button:hover {
+    background: #8a3d2d;
+}
+.music-copy {
+    min-width: 0;
+    line-height: 1.12;
+}
+.music-track-title {
+    overflow: hidden;
+    color: #2f261d;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.music-track-note {
+    overflow: hidden;
+    color: rgba(47, 38, 29, 0.72);
+    font-size: 0.82rem;
+    font-style: italic;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+body.dark-mode .music-player {
+    color: #efefef;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+      #27231e;
+    border-color: rgba(255,255,255,0.18);
+    border-top-color: #d18b62;
+}
+body.dark-mode .music-badge {
+    color: #d18b62;
+    border-color: rgba(255,255,255,0.18);
+}
+body.dark-mode .music-track-title {
+    color: #efefef;
+}
+body.dark-mode .music-track-note {
+    color: rgba(239, 239, 239, 0.72);
 }
 
 
@@ -525,6 +634,13 @@ img {
       float: none;
       right: 0;
   }
+  .tab_container {
+      grid-template-columns: repeat(4, 1fr);
+  }
+  .tab_button {
+      font-size: 0.78em;
+      padding: 0.45em 0.2em;
+  }
   #mid_panel {
       margin: 0 auto;
   }
@@ -551,6 +667,24 @@ img {
     max-width: 120px;
     margin-right: 1em;
     vertical-align: top;
+  }
+  .music-player {
+      grid-template-columns: auto auto 1fr;
+      gap: 0.35rem;
+      bottom: 0.35rem;
+      padding: 0.42rem;
+  }
+  .music-badge {
+      display: none;
+  }
+  .music-button {
+      padding: 0.25rem 0.42rem;
+  }
+  .music-track-title {
+      font-size: 0.92rem;
+  }
+  .music-track-note {
+      font-size: 0.75rem;
   }
 }
 

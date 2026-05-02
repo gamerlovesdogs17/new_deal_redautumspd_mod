@@ -97,11 +97,13 @@
   window.disableAudio = function() {
       window.dendryUI.toggle_audio(false);
       window.dendryUI.saveSettings();
+      window.syncMusicPlayerState();
   };
 
   window.enableAudio = function() {
       window.dendryUI.toggle_audio(true);
       window.dendryUI.saveSettings();
+      window.syncMusicPlayerState();
   };
 
   window.enableImages = function() {
@@ -254,6 +256,135 @@
       return bar;
   };
 
+  var musicTracks = [
+    {
+      title: "Brother, Can You Spare a Dime?",
+      note: "breadline ballad",
+      src: "music/1930_1950/brother_can_you_spare_a_dime.mp3"
+    },
+    {
+      title: "The Boulevard of Broken Dreams",
+      note: "late-night dance hall",
+      src: "music/1930_1950/the_boulevard_of_broken_dreams.mp3"
+    }
+  ];
+  var currentMusicTrack = 0;
+
+  function getMusicTrackBySrc(src) {
+      for (var i = 0; i < musicTracks.length; i++) {
+          if (src && src.indexOf(musicTracks[i].src) >= 0) {
+              return i;
+          }
+      }
+      return -1;
+  }
+
+  function updateMusicDisplay(index, noteOverride) {
+      if (musicTracks.length === 0) {
+          return;
+      }
+      currentMusicTrack = ((index % musicTracks.length) + musicTracks.length) % musicTracks.length;
+      var track = musicTracks[currentMusicTrack];
+      $('#music_track_title').text(track.title);
+      $('#music_track_note').text(noteOverride || track.note);
+  }
+
+  function playBaseMusicTrack(index, autoplay) {
+      if (!window.dendryUI || musicTracks.length === 0) {
+          return;
+      }
+      var trackIndex = ((index % musicTracks.length) + musicTracks.length) % musicTracks.length;
+      var track = musicTracks[trackIndex];
+      var audio = window.dendryUI.currentAudio;
+      if (!audio) {
+          audio = new Audio(track.src);
+          window.dendryUI.currentAudio = audio;
+      } else if (audio.src.indexOf(track.src) < 0) {
+          audio.pause();
+          audio.src = track.src;
+      }
+      audio.loop = false;
+      audio.volume = Math.min(audio.volume || 0.35, 0.45);
+      audio.onended = function() {
+          window.shuffleMusicTrack(true);
+      };
+      window.dendryUI.currentAudioURL = track.src;
+      updateMusicDisplay(trackIndex);
+      if (autoplay && !window.dendryUI.disable_audio) {
+          audio.play().then(function() {
+              $('#music_play_button').text('Pause');
+          }).catch(function() {
+              $('#music_play_button').text('Play');
+              $('#music_track_note').text('Click again to start the record.');
+          });
+      }
+  }
+
+  window.syncMusicPlayerState = function() {
+      if (!window.dendryUI) {
+          return;
+      }
+      var audio = window.dendryUI.currentAudio;
+      var currentTrack = audio ? getMusicTrackBySrc(audio.currentSrc || audio.src) : -1;
+      if (currentTrack >= 0) {
+          updateMusicDisplay(currentTrack);
+      }
+      if (window.dendryUI && window.dendryUI.disable_audio) {
+          $('#music_play_button').text('Play');
+          $('#music_track_note').text('Music disabled in options.');
+      } else if (audio && !audio.paused) {
+          $('#music_play_button').text('Pause');
+      } else {
+          $('#music_play_button').text('Play');
+      }
+  };
+
+  window.toggleMusicPlayer = function() {
+      if (!window.dendryUI) {
+          return;
+      }
+      if (window.dendryUI.disable_audio) {
+          window.enableAudio();
+      }
+      var audio = window.dendryUI.currentAudio;
+      if (!audio) {
+          playBaseMusicTrack(currentMusicTrack, true);
+          return;
+      }
+      if (audio.paused) {
+          audio.play().then(function() {
+              $('#music_play_button').text('Pause');
+              window.syncMusicPlayerState();
+          }).catch(function() {
+              $('#music_track_note').text('Click again to start the record.');
+          });
+      } else {
+          audio.pause();
+          $('#music_play_button').text('Play');
+      }
+  };
+
+  window.shuffleMusicTrack = function(forcePlay) {
+      if (!window.dendryUI) {
+          return;
+      }
+      var audio = window.dendryUI.currentAudio;
+      var wasPlaying = forcePlay || (audio && !audio.paused);
+      var nextTrack = currentMusicTrack;
+      if (musicTracks.length > 1) {
+          while (nextTrack === currentMusicTrack) {
+              nextTrack = Math.floor(Math.random() * musicTracks.length);
+          }
+      }
+      playBaseMusicTrack(nextTrack, wasPlaying);
+      $('#music_play_button').text(wasPlaying ? 'Pause' : 'Play');
+  };
+
+  function initializeMusicPlayer() {
+      updateMusicDisplay(currentMusicTrack, 'Using the game music channel.');
+      window.syncMusicPlayerState();
+  }
+
 
   window.justLoaded = true;
   window.statusTab = "status";
@@ -265,6 +396,7 @@
     if (window.dendryUI.dark_mode) {
         document.body.classList.add('dark-mode');
     }
+    initializeMusicPlayer();
     window.pinnedCardsDescription = "Advisor cards - actions are only usable once per 6 months.";
   };
 

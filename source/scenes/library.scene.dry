@@ -200,7 +200,7 @@ Q.pro_republic_disp = Math.round(Q.pro_republic);
 Q.nationalism_disp = Math.round(Q.nationalism);
 Q.socialism_disp = Math.round(Q.socialism);
 !}
-view-if: (not historical_mode) or game_over
+view-if: game_over
 go-to: election_algorithm
 set-jump: election_projections
 
@@ -214,7 +214,7 @@ Support for the Republic: [+ pro_republic_disp +]%
 
 
 @election_projections
-view-if: (not historical_mode) or game_over
+view-if: game_over
 go-to: menu
 
 **Projected election results** (if the election were to be held now):
@@ -306,35 +306,35 @@ go-to: menu
 
 **CIO Mobilization Network**: Mass labor-organizing capacity aligned with union expansion and strike coordination.
 
-Strength: [+ rb_strength +] thousand
+Strength: [+ rb_strength : strength +]
 
 Militarization: [+ rb_militancy : militancy +]
 
 **Socialist Action Committees**: Socialist Party-adjacent street and strike-defense formations.
 
-Strength: [+ rfb_strength +] thousand
+Strength: [+ rfb_strength : strength +]
 
 Militarization: [+ rfb_militancy : militancy +]
 
 **American Legion Network**: Conservative veterans' organization with strong civic and political mobilization potential.
 
-Strength: [+ sh_strength +] thousand
+Strength: [+ sh_strength : strength +]
 
 Militarization: [+ sh_militancy : militancy +]
 
 **Silver Legion Militias**: Reactionary paramilitary activism tied to escalatory right-wing politics.
 
-Strength: [+ sa_strength +] thousand
+Strength: [+ sa_strength : strength +]
 
 Militarization: [+ sa_militancy : militancy +]
 
 **Official military/paramilitary groups:**
 
-**National Guard and federal troops**: [+ reichswehr_strength +] thousand personnel.
+**National Guard and federal troops**: [+ reichswehr_strength : strength +]
 
 Loyalty: [+ reichswehr_loyalty : loyalty +]
 
-**State police forces**: [+ prussian_police_strength +] thousand members.
+**State police forces**: [+ prussian_police_strength : strength +]
 
 Loyalty: [+ prussian_police_loyalty : loyalty +]
 
@@ -524,7 +524,7 @@ if (d3 && window) {
     //document.getElementById('election_history').innerHTML = svg.outerHTML;
 
     // party support records should not have so many ticks
-    if (!Q.historical_mode || Q.game_over) {
+    if (Q.game_over) {
         var lines_2 = d3.linegraph(true, true,
             Q.parties,
             {'spd': '#2f65a8', 'kpd': '#8B0000', 'ddp': '#DCCA4A', 'z': '#000', 'dvp': '#C1121F', 'dnvp': '#C1121F', 'nsdap': '#954B00', 'other': '#a0a0a0', 'sapd': '#c40000'},
@@ -577,7 +577,7 @@ if (d3 && window) {
 
 = Party support history
 
-[? if historical_mode: Not available in historical mode. ?]
+[? if not game_over: Detailed party support history becomes available after the campaign. ?]
 
 {!<svg id="party_support_history" style="width: 500px; height: 400px;"> </svg>!}
 

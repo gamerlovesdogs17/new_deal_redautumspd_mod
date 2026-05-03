@@ -12,6 +12,8 @@ Q.economic_growth_2 = '0';
 if (Q.economic_growth) {
     Q.economic_growth_2 = Q.economic_growth.toFixed(1);
 }
+Q.resources = Math.max(0, Q.resources || 0);
+Q.resources_display = Math.floor(Q.resources);
 if (typeof Q.dnvp_relation === "undefined") {
     Q.dnvp_relation = Q.DNVP_relation || 18;
 }
@@ -200,7 +202,7 @@ Q.speaker_party_display = partyNames[Q.speaker_party] || Q.speaker_party || "";
 
 {!<div class="status-grid">!}
 {!<span class="status-pill">!}Date: [+ month : month +] [+ year +]{!</span>!}
-{!<span class="status-pill">!}Political capital: [+ resources +]{!</span>!}
+{!<span class="status-pill">!}Political capital: [+ resources_display +]{!</span>!}
 {!<span class="status-pill danger">!}Unemployment: [+ unemployed_2 +]%{!</span>!}
 {!<span class="status-pill danger">!}Growth: [+ economic_growth_2 +]%{!</span>!}
 {!</div>!}

@@ -876,6 +876,143 @@ body.dark-mode .congress-note {
     color: rgba(239, 239, 239, 0.68);
 }
 
+.political-weather {
+    max-width: 540px;
+    margin: 1em auto 0 auto;
+    padding: 0.8em 0.9em;
+    box-sizing: border-box;
+    color: var(--text-color);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0.05)),
+      var(--panel-bg-color);
+    border: 1px solid var(--panel-rule-color);
+    border-top: 4px solid #315b62;
+    box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.18);
+}
+.weather-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.8em;
+    border-bottom: 1px solid var(--panel-rule-color);
+    padding-bottom: 0.55em;
+}
+.political-weather h2 {
+    margin: 0;
+    color: #315b62;
+    font-size: 0.95em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.weather-header p {
+    margin: 0.15em 0 0 0;
+    color: rgba(68, 51, 34, 0.78);
+    font-size: 0.88em;
+    text-indent: 0;
+}
+.weather-stamp {
+    flex: 0 0 auto;
+    padding: 0.18em 0.42em;
+    border: 1px solid var(--panel-rule-color);
+    color: rgba(68, 51, 34, 0.78);
+    font-size: 0.78em;
+    font-style: italic;
+    white-space: nowrap;
+}
+.weather-tiles {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.35em;
+    margin-top: 0.65em;
+}
+.weather-tile {
+    min-width: 0;
+    min-height: 5.15em;
+    padding: 0.45em 0.42em;
+    border: 1px solid var(--panel-rule-color);
+    border-top: 4px solid #315b62;
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.3);
+    cursor: help;
+    font-family: "Minion Pro", Georgia, serif;
+    text-align: left;
+}
+.weather-tile:hover,
+.weather-tile:focus {
+    background: rgba(255, 255, 255, 0.52);
+    outline: none;
+    box-shadow: inset 0 0 0 1px rgba(49, 91, 98, 0.28);
+}
+.weather-tile-title,
+.weather-tile-note {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.weather-tile-title {
+    color: rgba(68, 51, 34, 0.78);
+    font-size: 0.74em;
+    line-height: 1.05;
+    text-transform: uppercase;
+}
+.weather-tile strong {
+    display: block;
+    margin: 0.18em 0 0.1em 0;
+    font-size: 1em;
+    line-height: 1.05;
+}
+.weather-tile-note {
+    display: -webkit-box;
+    color: rgba(68, 51, 34, 0.72);
+    font-size: 0.73em;
+    line-height: 1.15;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.weather-low {
+    border-top-color: #2f6f4e;
+}
+.weather-guarded {
+    border-top-color: #b58900;
+}
+.weather-high {
+    border-top-color: #b45f25;
+}
+.weather-critical {
+    border-top-color: #9a2d25;
+}
+.weather-watch {
+    margin-top: 0.65em;
+    padding: 0.45em 0.55em;
+    border-left: 3px solid #315b62;
+    background: rgba(0, 0, 0, 0.035);
+    font-size: 0.88em;
+    line-height: 1.3;
+}
+body.dark-mode .political-weather {
+    border-top-color: #7fb0b8;
+}
+body.dark-mode .political-weather h2 {
+    color: #7fb0b8;
+}
+body.dark-mode .weather-header p,
+body.dark-mode .weather-stamp,
+body.dark-mode .weather-tile-title,
+body.dark-mode .weather-tile-note {
+    color: rgba(239, 239, 239, 0.72);
+}
+body.dark-mode .weather-tile {
+    background: rgba(255, 255, 255, 0.07);
+}
+body.dark-mode .weather-tile:hover,
+body.dark-mode .weather-tile:focus {
+    background: rgba(255, 255, 255, 0.12);
+}
+body.dark-mode .weather-watch {
+    border-left-color: #7fb0b8;
+    background: rgba(255, 255, 255, 0.06);
+}
+
 .field-notes {
     position: fixed;
     left: 18px;
@@ -958,6 +1095,19 @@ body.dark-mode .field-notes textarea {
 @media screen and (max-width: 560px) {
   .congress-board {
       margin: 0.7em 0.4em 0 0.4em;
+  }
+  .political-weather {
+      margin: 0.7em 0.4em 0 0.4em;
+  }
+  .weather-header {
+      display: block;
+  }
+  .weather-stamp {
+      display: inline-block;
+      margin-top: 0.45em;
+  }
+  .weather-tiles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .congress-board-header {
       display: block;

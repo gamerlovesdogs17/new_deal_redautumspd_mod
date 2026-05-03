@@ -223,6 +223,7 @@
 
   window.onDisplayContent = function() {
       window.updateSidebar();
+      window.renderPoliticalWeather();
       window.renderCongressBoard();
   };
 
@@ -365,6 +366,86 @@
       return (value === undefined || value === null || Number.isNaN(value)) ? fallback : value;
   }
 
+  function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+  }
+
+  function weatherBand(score) {
+      if (score >= 8) {
+          return {label: 'Storm', className: 'critical', summary: 'dangerous'};
+      }
+      if (score >= 5) {
+          return {label: 'Unsettled', className: 'high', summary: 'worsening'};
+      }
+      if (score >= 2.5) {
+          return {label: 'Watch', className: 'guarded', summary: 'guarded'};
+      }
+      return {label: 'Clear', className: 'low', summary: 'steady'};
+  }
+
+  function weatherReadings() {
+      var unemployed = qValue('unemployed', 0);
+      var economicGrowth = qValue('economic_growth', 0);
+      var inflation = Math.abs(qValue('inflation', 0));
+      var economic = clamp((unemployed - 8) / 2.8 + Math.max(0, -economicGrowth) * 0.9 + Math.max(0, inflation - 4) * 0.35, 0, 10);
+      var institutional = clamp(qValue('supreme_court_hostility', 0) * 0.85 + qValue('constitutional_stress', 0) * 1.05 + qValue('conservative_backlash', 0) * 0.35, 0, 10);
+      var street = clamp(qValue('coup_progress', 0) * 0.9 + qValue('radical_momentum', 0) * 0.08 + Math.max(0, qValue('sa_strength', 0) - 120) / 180 + Math.max(0, qValue('sh_strength', 0) - 80) / 220, 0, 10);
+      var market = clamp(qValue('capital_strike_progress', 0) * 1.05 + qValue('liberty_litigation', 0) * 0.75 + Math.max(0, 42 - qValue('dvp_relation', 42)) * 0.04, 0, 10);
+      var coalition = clamp(qValue('coalition_dissent', 0) * 1.4 + qValue('kpd_coalition_dissent', 0) * 1.15 + Math.max(0, 45 - qValue('governing_house_support', 45)) * 0.05 + Math.max(0, 45 - qValue('governing_senate_support', 45)) * 0.05, 0, 10);
+      return [
+          {key: 'economic', title: 'Relief Lines', score: economic, detail: 'unemployment, growth, and price strain'},
+          {key: 'institutional', title: 'Institutions', score: institutional, detail: 'courts, constitutional stress, and conservative vetoes'},
+          {key: 'street', title: 'Street Pressure', score: street, detail: 'militia danger, radical momentum, and coup plotting'},
+          {key: 'market', title: 'Capital Desk', score: market, detail: 'business resistance and litigation'},
+          {key: 'coalition', title: 'Floor Count', score: coalition, detail: 'coalition discipline and chamber reliability'}
+      ];
+  }
+
+  function weatherWatchCopy(reading) {
+      var notes = {
+          economic: 'Relief and jobs are the fastest way to change the national mood.',
+          institutional: 'Legal fights are becoming a governing constraint, not just background opposition.',
+          street: 'Security policy and public legitimacy matter before the next rally turns into a test of force.',
+          market: 'Business resistance can quietly turn good legislation into implementation trouble.',
+          coalition: 'The next close vote may be decided before it reaches the floor.'
+      };
+      return notes[reading.key] || 'Conditions are mixed; avoid spending political capital blindly.';
+  }
+
+  window.renderPoliticalWeather = function() {
+      var board = $('#political_weather');
+      if (!board.length || !window.dendryUI || !window.dendryUI.dendryEngine) {
+          return;
+      }
+      var readings = weatherReadings();
+      var worst = readings.reduce(function(current, next) {
+          return next.score > current.score ? next : current;
+      }, readings[0]);
+      var worstBand = weatherBand(worst.score);
+      $('#weather_stamp').text((qValue('month', '') || '') + ' ' + (qValue('year', '') || ''));
+      $('#weather_subtitle').text('Overall climate: ' + worstBand.summary);
+      var tiles = $('#weather_tiles');
+      tiles.empty();
+      readings.forEach(function(reading) {
+          var band = weatherBand(reading.score);
+          var tile = $('<button type="button" class="weather-tile"></button>');
+          tile.addClass('weather-' + band.className);
+          tile.attr('data-weather-key', reading.key);
+          tile.attr('title', reading.detail);
+          tile.append($('<span class="weather-tile-title"></span>').text(reading.title));
+          tile.append($('<strong></strong>').text(band.label));
+          tile.append($('<span class="weather-tile-note"></span>').text(reading.detail));
+          tile.on('mouseenter focus', function() {
+              $('#weather_watch').html('<strong>' + reading.title + ':</strong> ' + weatherWatchCopy(reading));
+          });
+          tile.on('mouseleave blur', function() {
+              $('#weather_watch').html('<strong>Watch item:</strong> ' + weatherWatchCopy(worst));
+          });
+          tiles.append(tile);
+      });
+      $('#weather_watch').html('<strong>Watch item:</strong> ' + weatherWatchCopy(worst));
+  };
+
   function chamberTotal(chamber) {
       return chamber == 'senate' ? 96 : 435;
   }
@@ -413,6 +494,11 @@
           other.seats = Math.max(0, other.seats + drift);
       }
       return data;
+  }
+
+  function updateCongressButtons(chamber) {
+      $('#congress_house_button').toggleClass('active', chamber == 'house');
+      $('#congress_senate_button').toggleClass('active', chamber == 'senate');
   }
 
   function setCongressFocus(partyKey) {
@@ -544,24 +630,47 @@
       panel.append($('<div class="congress-note"></div>').text(party ? 'Hover another bloc to compare pressure points.' : 'Hover a dot or legend item to isolate a party bloc and see how it is likely to behave.'));
   };
 
-  window.setCongressChamber = function(chamber) {
+  window.setCongressChamber = function(chamber, evt) {
+      if (evt && evt.preventDefault) {
+          evt.preventDefault();
+          evt.stopPropagation();
+      }
       window.congressChamber = chamber == 'senate' ? 'senate' : 'house';
-      $('#congress_house_button').toggleClass('active', window.congressChamber == 'house');
-      $('#congress_senate_button').toggleClass('active', window.congressChamber == 'senate');
+      updateCongressButtons(window.congressChamber);
       window.renderCongressBoard();
+      return false;
   };
 
   window.renderCongressBoard = function() {
       if (!window.dendryUI || !window.dendryUI.dendryEngine) {
-          return;
+          return false;
       }
       var chamber = window.congressChamber || 'house';
-      var data = getCongressData(chamber);
-      $('#congress_board_subtitle').text(chamberLabel(chamber) + ' composition and governing pressure');
-      renderCongressMap(data, chamber);
-      renderCongressLegend(data);
-      window.updateCongressInfoPanel(null);
+      updateCongressButtons(chamber);
+      try {
+          var data = getCongressData(chamber);
+          $('#congress_board_subtitle').text(chamberLabel(chamber) + ' composition and governing pressure');
+          renderCongressMap(data, chamber);
+          renderCongressLegend(data);
+          window.updateCongressInfoPanel(null);
+      } catch (err) {
+          console.error('Congress Workboard failed to render', err);
+          $('#congress_branch_info').html('<h3>' + chamberLabel(chamber) + '</h3><div class="congress-note">The chamber display could not refresh from the current save state. Toggle again after the next page update.</div>');
+          return false;
+      }
+      return true;
   };
+
+  function initializeCongressBoard() {
+      $('#congress_house_button').off('click.congress').on('click.congress', function(evt) {
+          return window.setCongressChamber('house', evt);
+      });
+      $('#congress_senate_button').off('click.congress').on('click.congress', function(evt) {
+          return window.setCongressChamber('senate', evt);
+      });
+      updateCongressButtons(window.congressChamber || 'house');
+      window.renderCongressBoard();
+  }
 
   var musicTracks = [
     {
@@ -849,6 +958,7 @@
     }
     initializeMusicPlayer();
     initializeNotesPanel();
+    initializeCongressBoard();
     window.pinnedCardsDescription = "Advisor cards - actions are only usable once per 6 months.";
   };
 

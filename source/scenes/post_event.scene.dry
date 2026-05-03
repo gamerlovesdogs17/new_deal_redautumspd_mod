@@ -3,6 +3,13 @@ new-page: true
 on-arrival: {!
 Q.last_advisor_action = 0;
 Q.last_cabinet_action = 0;
+function clampPoliticalCapital() {
+    Q.resources = Math.max(0, Q.resources || 0);
+    if (Q.resources < 0.001) {
+        Q.resources = 0;
+    }
+}
+clampPoliticalCapital();
 // make sure no stat is below 0.
 for (var c of Q.classes) {
     for (var party of Q.parties) {
@@ -287,13 +294,17 @@ if (Q.month_actions >= 1) {
     Q.non_dem_senate_control = Q.dem_senate_control ? 0 : 1;
     Q.non_dem_congressional_control = (Q.non_dem_house_control || Q.non_dem_senate_control) ? 1 : 0;
     if ((Q.spd_in_government || Q.spd_toleration) && !Q.speaker_elected) {
-        Q.resources -= 1;
+        if (Q.resources > 0) {
+            Q.resources -= 1;
+        }
         Q.pro_republic -= 1;
         Q.center_dissent += 1;
         Q.reformist_dissent += 1;
     }
     if ((Q.spd_in_government || Q.spd_toleration) && Q.speaker_elected && !Q.bill_coalition_viable) {
-        Q.resources -= 1;
+        if (Q.resources > 0) {
+            Q.resources -= 1;
+        }
         Q.economic_growth -= 0.1;
         Q.unemployed += 0.1;
         Q.left_dissent += 1;
@@ -305,6 +316,7 @@ if (Q.month_actions >= 1) {
         }
         Q.pro_republic += 0.3;
     }
+    clampPoliticalCapital();
     // U.S. crisis resolver layer. These Q values are the canonical pressure
     // gauges for new scenes; older variables feed them until fully migrated.
     Q.economic_stress = 0;
@@ -849,6 +861,7 @@ Q.dem_trifecta_control = (Q.dem_presidential_control && Q.dem_congress_control) 
 Q.non_dem_house_control = Q.dem_house_control ? 0 : 1;
 Q.non_dem_senate_control = Q.dem_senate_control ? 0 : 1;
 Q.non_dem_congressional_control = (Q.non_dem_house_control || Q.non_dem_senate_control) ? 1 : 0;
+clampPoliticalCapital();
 Q.has_event = 0;
 // check if there are any cards in #event, and then go to main if not.
 var scene = this.game.scenes['post_event.events_choice'];
